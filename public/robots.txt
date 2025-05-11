@@ -1,0 +1,14 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+
+External Dependency:
+
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm install react-router-dom
+npm install react-scroll
+npm install gh-pages
+npm install @supabase/supabase-js
+npm install slick-carousel
