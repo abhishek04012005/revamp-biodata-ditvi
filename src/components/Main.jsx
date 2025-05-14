@@ -6,14 +6,13 @@ import WeWork from './WeWork/WeWork'
 import ContactUs from './ContactUs/ContactUs'
 import BlogHome from './BlogHome/BlogHome'
 import Testimonial from './Testimonial/Testimonial'
-import BlogDetail from './BlogDetail/BlogDetail'
+
 
 const Main = () => {
     return (
         <>
 
             <Hero />
-            {/* <BlogDetail/> */}
             <BiodataHome />
             <WhyUs />
             <WeWork />

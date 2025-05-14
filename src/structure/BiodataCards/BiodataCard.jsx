@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowForward, ArrowBack, Star, Visibility, ShoppingCart } from '@mui/icons-material';
 import HeaderSection from '../HeaderSection/HeaderSection';
 import './BiodataCard.css';
+import GetNow from '../GetNow/GetNow';
 
 
 
@@ -132,51 +133,6 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true }) => {
         ]
     };
 
-
-    // return (
-    //     <>
-    //         <section className="biodata-cards">
-    //             <div className="animated-circle circle-1"></div>
-    //             <div className="animated-circle circle-2"></div>
-    //             <Container>
-    //                 <HeaderSection title={title} subtitle={subtitle} />
-    //                 <div className="cards-slider">
-    //                     <Slider {...settings}>
-    //                         {biodataDetails.map((biodata) => (
-    //                             <div className="slider-item" key={biodata.id}>
-    //                                 <BioDataCardStructure
-    //                                     data={biodata}
-    //                                     isHovered={hoveredCard === biodata.id}
-    //                                     onHover={() => setHoveredCard(biodata.id)}
-    //                                     onLeave={() => setHoveredCard(null)}
-    //                                     onGetNow={() => {
-    //                                         setSelectedModel(biodata.modelName);
-    //                                         setIsPopupOpen(true);
-    //                                     }}
-    //                                     onPreview={() => navigate(`/biodata/${biodata.modelName}`, {
-    //                                         state: { biodata }
-    //                                     })}
-    //                                 />
-    //                             </div>
-    //                         ))}
-    //                     </Slider>
-    //                 </div>
-    //                 <div className="biodata-more">
-    //                     <button
-    //                         className="biodata-more-btn"
-    //                         onClick={() => navigate(`/${title.toLowerCase().replace(/\s+/g, '-')}`)}
-    //                     >
-    //                         <span>View More</span>
-    //                         <ArrowForward />
-    //                     </button>
-    //                 </div>
-    //             </Container>
-
-
-    //         </section>
-    //     </>
-    // )
-
     const renderCards = () => {
         if (isSlider) {
             return (
@@ -247,21 +203,17 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true }) => {
                     )}
                 </Container>
             </section>
+            <GetNow
+                isOpen={isPopupOpen}
+                onClose={() => {
+                    setIsPopupOpen(false);
+                    setSelectedModel('');
+                }}
+                modelNumber={selectedModel}
+            />
         </>
     );
 };
 export default BiodataCard
 
 
-
-{/* <GetNowPopUp
-        isOpen={isPopupOpen}
-        onClose={() => {
-            setIsPopupOpen(false);
-            setSelectedModel('');
-        }}
-        modelNumber={selectedModel}
-        language={languageEnglish}
-        modelType={modelTypeProfessional}
-
-    /> */}

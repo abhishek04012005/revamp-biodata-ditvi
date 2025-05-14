@@ -3,8 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './BlogDetail.css'
 import Background from '../../structure/Background/Background'
 import Container from '../../structure/Container/Container'
-import { ThumbUp, Bookmark, BookmarkBorder, Share } from '@mui/icons-material'
+import { ThumbUp, Bookmark, BookmarkBorder, Share, Person, CalendarToday, AccessTime } from '@mui/icons-material'
+import { Snackbar } from '@mui/material';
 import blogPosts from '../../json/blog'
+import HeaderSection from '../../structure/HeaderSection/HeaderSection';
 
 
 const createSlug = (title) => {
@@ -14,13 +16,15 @@ const createSlug = (title) => {
 };
 
 const BlogDetail = () => {
+
     const { slug } = useParams();
     const navigate = useNavigate();
-    const [isBookmarked, setIsBookmarked] = useState(false);
-    const [hasLiked, setHasLiked] = useState(false);
     const [post, setPost] = useState(null);
     const [relatedPosts, setRelatedPosts] = useState([]);
-
+    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [hasLiked, setHasLiked] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     useEffect(() => {
         const currentPost = blogPosts.find(post => createSlug(post.title) === slug);
@@ -51,10 +55,34 @@ const BlogDetail = () => {
     }
 
     const handleShare = async () => {
+        const url = window.location.href;
 
-    }
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: post.title,
+                    text: post.excerpt,
+                    url: url
+                });
+            } catch (error) {
+                console.log('Error sharing:', error);
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(url);
+                setSnackbarMessage('Link copied to clipboard!');
+                setOpenSnackbar(true);
+            } catch (err) {
+                setSnackbarMessage('Failed to copy link');
+                setOpenSnackbar(true);
+            }
+        }
+    };
 
-
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
+    if (!post) return null;
 
     return (
         <>
@@ -98,7 +126,82 @@ const BlogDetail = () => {
                             <div className="blogdetail-header">
                                 <div className="blogdetail-category">{post.category}</div>
                                 <h1 className="blogdetail-title">{post.title}</h1>
+
+
+                                <div className="blogdetail-meta">
+                                    <div className="blogdetail-meta-item">
+                                        <Person />
+                                        <span>{post.author}</span>
+                                    </div>
+                                    <div className="blogdetail-meta-item">
+                                        <CalendarToday />
+                                        <span>{post.date}</span>
+                                    </div>
+                                    <div className="blogdetail-meta-item">
+                                        <AccessTime />
+                                        <span>{post.readTime}</span>
+                                    </div>
+                                </div>
+
                             </div>
+
+                            <div className="blogdetail-featured-image">
+                                <img src={post.image} alt={post.title} />
+                            </div>
+
+                            <div className="blogdetail-content">
+                                <div
+                                    className="blogdetail-text"
+                                    dangerouslySetInnerHTML={{ __html: post.content }}
+                                />
+
+                                <div className="blogdetail-tags">
+                                    {post.tags.map((tag, index) => (
+                                        <span key={index} className="blogdetail-tag">
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                </div>
+
+                            </div>
+
+                            {relatedPosts.length > 0 && (
+                                <div className="blogdetail-related">
+                                    <HeaderSection title="Related Articles" subtitle={`Here is related post`} />
+                                    <div className="blogdetail-related-grid">
+                                        {relatedPosts.map(relatedPost => (
+                                            <div
+                                                key={relatedPost.id}
+                                                className="blogdetail-related-card"
+                                                onClick={() => navigate(`/blog/${createSlug(relatedPost.title)}`)}
+                                            >
+                                                <div className="related-image">
+                                                    <img src={relatedPost.image} alt={relatedPost.title} />
+                                                    <div className="related-category">
+                                                        {relatedPost.category}
+                                                    </div>
+                                                </div>
+                                                <div className="related-content">
+                                                    <h3>{relatedPost.title}</h3>
+                                                    <p>{relatedPost.excerpt}</p>
+                                                    <div className="related-meta">
+                                                        <span>{relatedPost.date}</span>
+                                                        <span>{relatedPost.readTime}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            <Snackbar
+                                open={openSnackbar}
+                                autoHideDuration={3000}
+                                onClose={handleCloseSnackbar}
+                                message={snackbarMessage}
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                            />
 
                         </div>
                     </Container>

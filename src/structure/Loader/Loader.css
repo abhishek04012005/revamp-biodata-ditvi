@@ -1,0 +1,147 @@
+.loader-container {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+}
+
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Rings Animation */
+.loader-rings {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.loader-rings div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 4px solid transparent;
+    border-radius: 50%;
+    animation: rotate 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-top-color: var(--primary-color);
+}
+
+.loader-rings div:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loader-rings div:nth-child(2) {
+    animation-delay: -0.3s;
+    width: 80%;
+    height: 80%;
+    left: 10%;
+    top: 10%;
+}
+
+.loader-rings div:nth-child(3) {
+    animation-delay: -0.6s;
+    width: 60%;
+    height: 60%;
+    left: 20%;
+    top: 20%;
+}
+
+.loader-rings div:nth-child(4) {
+    animation-delay: -0.9s;
+    width: 40%;
+    height: 40%;
+    left: 30%;
+    top: 30%;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Dots Animation */
+.loader-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.loader-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    animation: bounce 1.4s infinite ease-in-out;
+}
+
+.loader-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loader-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+/* Text Animation */
+.loader-text {
+    display: flex;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.loader-text span {
+    animation: wave 1.8s infinite;
+    display: inline-block;
+}
+
+@keyframes wave {
+    0%, 40%, 100% {
+        transform: translateY(0);
+    }
+    20% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Apply wave animation delay to each letter */
+.loader-text span:nth-child(2) { animation-delay: 0.1s; }
+.loader-text span:nth-child(3) { animation-delay: 0.2s; }
+.loader-text span:nth-child(4) { animation-delay: 0.3s; }
+.loader-text span:nth-child(5) { animation-delay: 0.4s; }
+.loader-text span:nth-child(6) { animation-delay: 0.5s; }
+.loader-text span:nth-child(8) { animation-delay: 0.6s; }
+.loader-text span:nth-child(9) { animation-delay: 0.7s; }
+.loader-text span:nth-child(10) { animation-delay: 0.8s; }
+.loader-text span:nth-child(11) { animation-delay: 0.9s; }
+.loader-text span:nth-child(12) { animation-delay: 1s; }
+.loader-text span:nth-child(13) { animation-delay: 1.1s; }
+.loader-text span:nth-child(14) { animation-delay: 1.2s; }
+
+/* Theme Support */
+[data-theme="dark"] .loader-container {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+[data-theme="dark"] .loader-text {
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .loader-rings {
+        width: 80px;
+        height: 80px;
+    }
+
+    .loader-text {
+        font-size: 1rem;
+    }
+}

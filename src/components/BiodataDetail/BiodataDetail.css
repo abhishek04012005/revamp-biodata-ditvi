@@ -1,0 +1,438 @@
+/* Variables */
+:root {
+    --section-padding: clamp(80px, 10vw, 100px);
+    --card-radius: 20px;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 20px 40px rgba(255, 135, 15, 0.2);
+    --transition: all 0.3s ease;
+}
+
+/* Animations */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes btnShine {
+    100% {
+        left: 200%;
+    }
+}
+
+/* Main Layout */
+.biodatadetail-inner {
+    position: relative;
+    padding-top: 0;
+    z-index: 1;
+}
+
+/* Header */
+.biodatadetail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.biodatadetail-title {
+    color: var(--primary-color);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    animation: slideUp 0.6s ease-out;
+}
+
+.biodatadetail-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.biodatadetail-back:hover {
+    transform: translateX(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+/* Main Content Grid */
+.biodetail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    background: rgb(255, 255, 255);
+    padding: 2rem;
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+}
+
+/* Image Section */
+.biodatadetail-image-wrapper {
+    position: relative;
+}
+
+.biodatadetail-image {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: var(--transition);
+}
+
+.biodatadetail-image.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.biodatadetail-image img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease;
+}
+
+.biodatadetail-image:hover img {
+    transform: scale(1.05);
+}
+
+/* Tags */
+.biodatadetail-tags {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.biodatadetail-premium,
+.biodatadetail-discount {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.biodatadetail-premium {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.biodatadetail-discount {
+    background: white;
+    color: var(--primary-color);
+}
+
+/* Rating */
+.biodatadetail-rating {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.biodatadetail-star {
+    color: #FFD700;
+    font-size: 1.2rem;
+}
+
+.biodatadetail-reviews {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Info Section */
+.biodatadetail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background: rgba(255, 135, 15, 0.02);
+    border-radius: 15px;
+}
+
+.biodatadetail-model h2 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.biodatadetail-divider {
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
+}
+
+/* Price Section */
+.biodatadetail-price {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.biodatadetail-price-original,
+.biodatadetail-price-final {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-label {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+
+.biodatadetail-price-original .price-value {
+    text-decoration: line-through;
+    color: var(--text-light);
+}
+
+.biodatadetail-price-final .price-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+
+
+/* CTA Button */
+.biodatadetail-cta {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.biodatadetail-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+}
+
+.biodatadetail-btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: btnShine 3s linear infinite;
+}
+
+/* Description Section */
+.biodatadetail-description {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.biodatadetail-description-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.biodatadetail-description-text {
+    color: var(--text-dark);
+    line-height: 1.8;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .biodetail-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .biodatadetail-info {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .biodatadetail-inner {
+        margin-top: -8rem;
+    }
+
+    .biodetail-content {
+        padding: 0.5rem;
+    }
+
+    .biodatadetail-inner {
+        padding: 6rem 1rem 2rem;
+    }
+
+    .biodatadetail-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .biodatadetail-description {
+        padding: 0.5rem;
+    }
+
+    .biodatadetail-description-text {
+        font-size: 0.9rem;
+    }
+
+    .radio-group {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Options Section */
+.biodatadetail-options {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    background: rgba(255, 135, 15, 0.03);
+    border-radius: 15px;
+    margin: 1.5rem 0;
+}
+
+.options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.options-title {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    margin: 0;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.variant-option {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    background: white;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+.variant-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 135, 15, 0.1);
+}
+
+.variant-option.active {
+    border-color: var(--primary-color);
+    background: rgba(255, 135, 15, 0.05);
+}
+
+.variant-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.variant-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    transition: color 0.3s ease;
+}
+
+.variant-option:hover .variant-label {
+    color: var(--primary-color);
+}
+
+.variant-option.active .variant-label {
+    color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .biodatadetail-options {
+        display: flex;
+    }
+
+    .radio-group {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .variant-option {
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        width: 30%;
+    }
+}
+
+/* Animation for active state */
+@keyframes selectPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.variant-option.active {
+    animation: selectPulse 0.3s ease;
+}
