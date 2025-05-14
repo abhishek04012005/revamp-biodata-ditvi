@@ -14,6 +14,7 @@ import BiodataDetail from './components/BiodataDetail/BiodataDetail';
 import GetNow from './structure/GetNow/GetNow';
 import AdminLogin from './components/Admin/AdminLogin/AdminLogin';
 import AdminDashboard from './components/Admin/AdminDashboard/AdminDashboard';
+import ProductionDashboard from './components/Admin/ProductionDashboard/ProductionDashboard';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/get-now" element={<GetNow />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/production" element={<ProductionDashboard />} />
         </Routes>
         <Footer />
       </Router>
