@@ -23,25 +23,67 @@ const AdminDashboard = () => {
         { icon: <CheckCircle />, title: "Completed", value: 14 }
     ];
 
-    const dummyData = [
+    const isBackwardDisabled = (statusLevel) => statusLevel === 1;
+    const isForwardDisabled = (statusLevel) => statusLevel === 5;
+
+    const STATUS_CONFIG = {
+        1: { label: 'New Request', color: '#FF870F' },
+        2: { label: 'In Progress', color: '#2196F3' },
+        3: { label: 'In Production', color: '#9C27B0' },
+        4: { label: 'Quality Check', color: '#FF9800' },
+        5: { label: 'Completed', color: '#4CAF50' }
+    };
+
+    const [requests, setRequests] = useState([
         {
             id: '01',
             name: 'Tony Stark',
             mobile: '9264248504',
             date: '07-02-1999',
-            status: 'Completed'
+            statusLevel: 1
+        },
+        {
+            id: '02',
+            name: ' Stark',
+            mobile: '9264248504',
+            date: '07-02-1999',
+            statusLevel: 1
         }
-
-    ];
+    ]);
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    const handleStatusChange = (direction, id) => {
 
-        console.log(`Status ${direction} for ID: ${id}`);
+    const handleStatusChange = (direction, id) => {
+        setRequests(prevData =>
+            prevData.map(request => {
+                if (request.id === id) {
+                    let newStatus;
+                    if (direction === 'forward') {
+                        newStatus = request.statusLevel + 1;
+                        if (newStatus > 5) newStatus = 1;
+                    } else {
+                        newStatus = request.statusLevel - 1;
+                        if (newStatus < 1) newStatus = 5;
+                    }
+                    return { ...request, statusLevel: newStatus };
+                }
+                return request;
+            })
+        );
     };
+
+    const getStatusStyle = (statusLevel) => ({
+        backgroundColor: `${STATUS_CONFIG[statusLevel].color}20`,
+        color: STATUS_CONFIG[statusLevel].color,
+        padding: '0.5rem 1rem',
+        borderRadius: '20px',
+        fontWeight: '500',
+        fontSize: '0.9rem',
+        display: 'inline-block'
+    });
 
     const handleDelete = (id) => {
 
@@ -93,23 +135,29 @@ const AdminDashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dummyData.map((request) => (
+                                {requests.map((request) => (
                                     <tr key={request.id}>
                                         <td>{request.id}</td>
                                         <td>{request.name}</td>
                                         <td>{request.mobile}</td>
                                         <td>{request.date}</td>
-                                        <td>{request.status}</td>
+                                        <td>
+                                            <span style={getStatusStyle(request.statusLevel)}>
+                                                {STATUS_CONFIG[request.statusLevel].label}
+                                            </span>
+                                        </td>
                                         <td className="dashboard-status-actions">
                                             <button
                                                 className="dashboard-action-btn backward"
                                                 onClick={() => handleStatusChange('backward', request.id)}
+                                                disabled={isBackwardDisabled(request.statusLevel)}
                                             >
                                                 <ArrowBack />
                                             </button>
                                             <button
                                                 className="dashboard-action-btn forward"
                                                 onClick={() => handleStatusChange('forward', request.id)}
+                                                disabled={isForwardDisabled(request.statusLevel)}
                                             >
                                                 <ArrowForward />
                                             </button>
