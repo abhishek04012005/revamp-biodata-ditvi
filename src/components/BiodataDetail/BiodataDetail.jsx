@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './BiodataDetail.css'
 import Background from '../../structure/Background/Background'
 import { ArrowBack, LocalOffer, Star, Description, ShoppingCart } from '@mui/icons-material';
 import Container from '../../structure/Container/Container'
-import { languageEnglish, languageHindi, modelTypeProfessional, modelTypeStudent } from '../../json/biodataDetails';
+import Languages from '../../json/Languages';
+import ModelTypes from '../../json/ModelTypes';
 import GetNow from '../../structure/GetNow/GetNow';
+import biodataDetails from '../../json/biodataDetails';
 
 const BiodataDetail = () => {
-
+    const { modelNumber } = useParams();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedModel, setSelectedModel] = useState('');
+    const [selectedModel, setSelectedModel] = useState(modelNumber);
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState(languageEnglish);
-    const [selectedType, setSelectedType] = useState(modelTypeProfessional);
+    const [selectedLanguage, setSelectedLanguage] = useState(Languages.English.Code);
+    const [selectedType, setSelectedType] = useState(ModelTypes.Professional.Code);
     const { state } = useLocation();
     const navigate = useNavigate();
     const { biodata } = state || {};
@@ -24,15 +26,10 @@ const BiodataDetail = () => {
     }
 
     const getCurrentImage = () => {
-        return biodata?.[selectedLanguage === languageEnglish ?
-            (selectedType === modelTypeProfessional ? 'image' : 'studentImage') :
-            (selectedType === modelTypeProfessional ? 'hindiImage' : 'hindiStudentImage')
+        return biodata?.[selectedLanguage === Languages.English.Code ?
+            (selectedType === ModelTypes.Professional.Code ? 'image' : 'studentImage') :
+            (selectedType === ModelTypes.Professional.Code ? 'hindiImage' : 'hindiStudentImage')
         ] || biodata?.image || '';
-    };
-
-    const handleGetNow = (modelNumber) => {
-        setSelectedModel(modelNumber);
-        setIsPopupOpen(true);
     };
 
     const handleLanguageChange = (language) => {
@@ -112,23 +109,23 @@ const BiodataDetail = () => {
                                     <div className="options-group">
                                         <h4 className="options-title">Language:</h4>
                                         <div className="radio-group">
-                                            <label className={`variant-option ${selectedLanguage === languageEnglish ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedLanguage === Languages.English.Code ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="language"
-                                                    value={languageEnglish}
-                                                    checked={selectedLanguage === languageEnglish}
-                                                    onChange={() => handleLanguageChange(languageEnglish)}
+                                                    value={Languages.English.Code}
+                                                    checked={selectedLanguage === Languages.English.Code}
+                                                    onChange={() => handleLanguageChange(Languages.English.Code)}
                                                 />
                                                 <span className="variant-label">English</span>
                                             </label>
-                                            <label className={`variant-option ${selectedLanguage === languageHindi ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedLanguage === Languages.Hindi.Code ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="language"
-                                                    value={languageHindi}
-                                                    checked={selectedLanguage === languageHindi}
-                                                    onChange={() => handleLanguageChange(languageHindi)}
+                                                    value={Languages.Hindi.Code}
+                                                    checked={selectedLanguage === Languages.Hindi.Code}
+                                                    onChange={() => handleLanguageChange(Languages.Hindi.Code)}
                                                 />
                                                 <span className="variant-label">Hindi</span>
                                             </label>
@@ -138,23 +135,23 @@ const BiodataDetail = () => {
                                     <div className="options-group">
                                         <h4 className="options-title">Type:</h4>
                                         <div className="radio-group">
-                                            <label className={`variant-option ${selectedType === modelTypeProfessional ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedType === ModelTypes.Professional.Code ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="type"
-                                                    value={modelTypeProfessional}
-                                                    checked={selectedType === modelTypeProfessional}
-                                                    onChange={() => handleTypeChange(modelTypeProfessional)}
+                                                    value={ModelTypes.Professional.Code}
+                                                    checked={selectedType === ModelTypes.Professional.Code}
+                                                    onChange={() => handleTypeChange(ModelTypes.Professional.Code)}
                                                 />
                                                 <span className="variant-label">Professional</span>
                                             </label>
-                                            <label className={`variant-option ${selectedType === modelTypeStudent ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedType === ModelTypes.Student.Code ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="type"
-                                                    value={modelTypeStudent}
-                                                    checked={selectedType === modelTypeStudent}
-                                                    onChange={() => handleTypeChange(modelTypeStudent)}
+                                                    value={ModelTypes.Student.Code}
+                                                    checked={selectedType === ModelTypes.Student.Code}
+                                                    onChange={() => handleTypeChange(ModelTypes.Student.Code)}
                                                 />
                                                 <span className="variant-label">Student</span>
                                             </label>
@@ -167,7 +164,10 @@ const BiodataDetail = () => {
 
                                 <button
                                     className="biodatadetail-cta"
-                                    onClick={() => handleGetNow(biodata.modelName)}
+                                    onClick={() => {
+                                        setSelectedModel(modelNumber);
+                                        setIsPopupOpen(true);
+                                    }}
                                 >
                                     <ShoppingCart />
                                     <span>Get Now</span>
@@ -196,6 +196,8 @@ const BiodataDetail = () => {
                     setSelectedModel('');
                 }}
                 modelNumber={selectedModel}
+                language={selectedLanguage}
+                type={selectedType}
             />
         </>
     )
