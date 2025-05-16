@@ -13,7 +13,7 @@ const BiodataMaster = () => {
                     <div
                         className="biodata-master-a4-container"
                         style={{
-                            // backgroundImage: `url(${BackgroundBiodata1111})`,
+                            backgroundImage: `url(${BackgroundBiodata1111})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',

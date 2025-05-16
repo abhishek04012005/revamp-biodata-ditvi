@@ -1,0 +1,258 @@
+.create-biodata {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
+    padding: 4rem 0;
+    margin-top: 4rem;
+}
+
+.create-biodata-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header Styles */
+.stepper-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.stepper-header h1 {
+    font-size: 2.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.stepper-header p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+/* Stepper Progress Styles */
+.stepper-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+    padding: 0 2rem;
+}
+
+.stepper-progress::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+.step-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-icon-wrapper {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 0 0 5px rgba(255, 135, 15, 0.1);
+}
+
+.step.completed .step-icon-wrapper {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.step-content {
+    position: relative;
+}
+
+.step-number {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+}
+
+.step-title {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.step-connector {
+    position: absolute;
+    top: 30px;
+    right: -50%;
+    width: 100%;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: -1;
+}
+
+.step.completed .step-connector {
+    background: var(--primary-color);
+}
+
+/* Content Wrapper Styles */
+.step-content-wrapper {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    min-height: 400px;
+}
+
+/* Navigation Buttons */
+.stepper-navigation {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    margin-top: 2rem;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-button.back {
+    background: white;
+    color: var(--text-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button.next {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .create-biodata-content {
+        padding: 0 1rem;
+    }
+
+    .stepper-progress {
+        padding: 0;
+    }
+
+    .step-title {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .create-biodata {
+        padding: 2rem 0;
+    }
+
+    .stepper-header h1 {
+        font-size: 2rem;
+    }
+
+    .stepper-progress {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .stepper-progress::before {
+        display: none;
+    }
+
+    .step {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        padding: 0;
+    }
+
+    .step-icon-wrapper {
+        margin: 0 1rem 0 0;
+        width: 50px;
+        height: 50px;
+    }
+
+    .step-connector {
+        display: none;
+    }
+
+    .step-content-wrapper {
+        padding: 1.5rem;
+    }
+
+    .stepper-navigation {
+        padding: 0;
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .nav-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .stepper-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .step-content-wrapper {
+        padding: 1rem;
+    }
+}
+
+/* Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-content-wrapper {
+    animation: slideIn 0.3s ease-out;
+}

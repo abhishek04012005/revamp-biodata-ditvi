@@ -39,9 +39,9 @@ const ChooseOption = () => {
     };
 
     const handleUploadClick = () => {
-        fileInputRef.current?.click();
+        // Instead of opening file input directly, navigate to upload page
+        navigate('/upload-biodata');
     };
-
     return (
         <section className="choose-option">
 
