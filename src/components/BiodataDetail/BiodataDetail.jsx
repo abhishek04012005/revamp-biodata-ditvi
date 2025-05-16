@@ -14,8 +14,8 @@ const BiodataDetail = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedModel, setSelectedModel] = useState(modelNumber);
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState(Languages.English.Code);
-    const [selectedType, setSelectedType] = useState(ModelTypes.Professional.Code);
+    const [selectedLanguage, setSelectedLanguage] = useState(Languages.English.Name);
+    const [selectedType, setSelectedType] = useState(ModelTypes.Professional.Name);
     const { state } = useLocation();
     const navigate = useNavigate();
     const { biodata } = state || {};
@@ -26,9 +26,9 @@ const BiodataDetail = () => {
     }
 
     const getCurrentImage = () => {
-        return biodata?.[selectedLanguage === Languages.English.Code ?
-            (selectedType === ModelTypes.Professional.Code ? 'image' : 'studentImage') :
-            (selectedType === ModelTypes.Professional.Code ? 'hindiImage' : 'hindiStudentImage')
+        return biodata?.[selectedLanguage === Languages.English.Name ?
+            (selectedType === ModelTypes.Professional.Name ? 'image' : 'studentImage') :
+            (selectedType === ModelTypes.Professional.Name ? 'hindiImage' : 'hindiStudentImage')
         ] || biodata?.image || '';
     };
 
@@ -88,7 +88,7 @@ const BiodataDetail = () => {
 
                             <div className="biodatadetail-info">
                                 <div className="biodatadetail-model">
-                                    <h2>Model No: {biodata.modelName}</h2>
+                                    <h2>Model No: {biodata.modelNumber}</h2>
                                     <div className="biodatadetail-divider"></div>
                                 </div>
 
@@ -109,23 +109,23 @@ const BiodataDetail = () => {
                                     <div className="options-group">
                                         <h4 className="options-title">Language:</h4>
                                         <div className="radio-group">
-                                            <label className={`variant-option ${selectedLanguage === Languages.English.Code ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedLanguage === Languages.English.Name ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="language"
-                                                    value={Languages.English.Code}
-                                                    checked={selectedLanguage === Languages.English.Code}
-                                                    onChange={() => handleLanguageChange(Languages.English.Code)}
+                                                    value={Languages.English.Name}
+                                                    checked={selectedLanguage === Languages.English.Name}
+                                                    onChange={() => handleLanguageChange(Languages.English.Name)}
                                                 />
                                                 <span className="variant-label">English</span>
                                             </label>
-                                            <label className={`variant-option ${selectedLanguage === Languages.Hindi.Code ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedLanguage === Languages.Hindi.Name ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="language"
-                                                    value={Languages.Hindi.Code}
-                                                    checked={selectedLanguage === Languages.Hindi.Code}
-                                                    onChange={() => handleLanguageChange(Languages.Hindi.Code)}
+                                                    value={Languages.Hindi.Name}
+                                                    checked={selectedLanguage === Languages.Hindi.Name}
+                                                    onChange={() => handleLanguageChange(Languages.Hindi.Name)}
                                                 />
                                                 <span className="variant-label">Hindi</span>
                                             </label>
@@ -135,23 +135,23 @@ const BiodataDetail = () => {
                                     <div className="options-group">
                                         <h4 className="options-title">Type:</h4>
                                         <div className="radio-group">
-                                            <label className={`variant-option ${selectedType === ModelTypes.Professional.Code ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedType === ModelTypes.Professional.Name ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="type"
-                                                    value={ModelTypes.Professional.Code}
-                                                    checked={selectedType === ModelTypes.Professional.Code}
-                                                    onChange={() => handleTypeChange(ModelTypes.Professional.Code)}
+                                                    value={ModelTypes.Professional.Name}
+                                                    checked={selectedType === ModelTypes.Professional.Name}
+                                                    onChange={() => handleTypeChange(ModelTypes.Professional.Name)}
                                                 />
                                                 <span className="variant-label">Professional</span>
                                             </label>
-                                            <label className={`variant-option ${selectedType === ModelTypes.Student.Code ? 'active' : ''}`}>
+                                            <label className={`variant-option ${selectedType === ModelTypes.Student.Name ? 'active' : ''}`}>
                                                 <input
                                                     type="radio"
                                                     name="type"
-                                                    value={ModelTypes.Student.Code}
-                                                    checked={selectedType === ModelTypes.Student.Code}
-                                                    onChange={() => handleTypeChange(ModelTypes.Student.Code)}
+                                                    value={ModelTypes.Student.Name}
+                                                    checked={selectedType === ModelTypes.Student.Name}
+                                                    onChange={() => handleTypeChange(ModelTypes.Student.Name)}
                                                 />
                                                 <span className="variant-label">Student</span>
                                             </label>
@@ -195,9 +195,12 @@ const BiodataDetail = () => {
                     setIsPopupOpen(false);
                     setSelectedModel('');
                 }}
-                modelNumber={selectedModel}
-                language={selectedLanguage}
-                type={selectedType}
+                modelDetails = {{
+                    modelNumber: selectedModel,
+                    language: selectedLanguage,
+                    type: selectedType,
+                    amount: biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.discountedPrice,
+                }}
             />
         </>
     )

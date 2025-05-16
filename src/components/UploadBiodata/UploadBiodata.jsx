@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
-    Image,
     Description,
     Check,
     ArrowForward,
@@ -9,8 +9,14 @@ import {
 import './UploadBiodata.css';
 import Container from '../../structure/Container/Container';
 import HeaderSection from '../../structure/HeaderSection/HeaderSection';
+import { UploadFile } from '../../supabase/UploadFile';
+import { BiodataRequestsStorage } from '../../supabase/BiodataRequests';
+import StorageBucket from '../../constants/StorageBucket';
 
 const UploadBiodata = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { requestNumber, userDetails, modelDetails } = location.state || {};
     const [currentStep, setCurrentStep] = useState(1);
     const [imageFile, setImageFile] = useState(null);
     const [biodataFile, setBiodataFile] = useState(null);
@@ -83,13 +89,31 @@ const UploadBiodata = () => {
         }
     ];
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!imageFile || !biodataFile) {
             setError('Please upload both files before continuing');
             return;
         }
-        // Handle submission logic here
-        console.log('Files:', { imageFile, biodataFile });
+
+        try {
+            const profileUrl = await UploadFile(imageFile, `${requestNumber}_profile`, StorageBucket.UPLOAD_BIODATA);
+            const biodataUrl = await UploadFile(biodataFile, `${requestNumber}_biodata`, StorageBucket.UPLOAD_BIODATA);
+            await BiodataRequestsStorage.saveBiodataRequestFromUploadBiodata({
+                requestNumber: requestNumber,
+                userDetails: userDetails,
+                modelDetails: modelDetails,
+                profileUrl: profileUrl,
+                biodataUrl: biodataUrl,
+            });
+            navigate('/confirmation', { state: { 
+            requestNumber: requestNumber,
+            userDetails: userDetails,
+            modelDetails: modelDetails,
+         } });
+        }
+        catch (error) {
+            console.error('Error submitting form:', error);
+        }
     };
 
     return (

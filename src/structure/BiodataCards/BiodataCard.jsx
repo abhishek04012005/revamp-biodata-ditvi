@@ -209,9 +209,12 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true }) => {
                     setIsPopupOpen(false);
                     setSelectedModel('');
                 }}
-                modelNumber={selectedModel}
-                language={biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.language}
-                type={biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.type}
+                modelDetails={{
+                    modelNumber:selectedModel,
+                    language:biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.language,
+                    type:biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.type,
+                    amount:biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.discountedPrice,
+                }}
             />
         </>
     );

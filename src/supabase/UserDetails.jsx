@@ -1,17 +1,13 @@
-import { supabase } from './supabase';
+import { supabase } from './Supabase';
 
 export const UserDetailsStorage = {
     async saveUserDetails(userDetails) {
-      console.log('Saving User details:', userDetails);
     try {
       const { data, error } = await supabase
         .from('user_details')
         .insert({  
-          name: userDetails.name,
-          mobile_number: userDetails.mobileNumber,
-          model_number: userDetails.modelNumber,
-          language: userDetails.language,
-          type: userDetails.type,
+          user_details: userDetails.userDetails,
+          model_details: userDetails.modelDetails,
         })
         .select('id, request_number')
         .single();

@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './GetNow.css'
-import { UserDetailsStorage } from '../../db/userDetails';
+import { UserDetailsStorage } from '../../supabase/UserDetails';
 
-const GetNow=({ isOpen, onClose, modelNumber, language, type }) => {
-
+const GetNow=({ isOpen, onClose, modelDetails }) => {
     const navigate = useNavigate();
-
-    console.log('GetNow component rendered with modelNumber:', modelNumber);
-    console.log('GetNow component rendered with language:', language);
-    console.log('GetNow component rendered with type:', type);
     const [formData, setFormData] = useState({
         name: '',
         mobileNumber: '',
@@ -25,14 +20,18 @@ const GetNow=({ isOpen, onClose, modelNumber, language, type }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Add form submission logic here
             const userDetail = await UserDetailsStorage.saveUserDetails({
-                ...formData,
-                modelNumber: modelNumber,
-                language: language,
-                type: type,
+                userDetails: {
+                    name: formData.name,
+                    mobileNumber: formData.mobileNumber,
+                },
+                modelDetails: {
+                    modelNumber: modelDetails.modelNumber,
+                    language: modelDetails.language,
+                    type: modelDetails.type,
+                    amount: modelDetails.amount,
+                }
             });
-            console.log('Form submitted:', { ...formData, modelNumber });
 
             // Reset form data
             setFormData({
@@ -46,8 +45,12 @@ const GetNow=({ isOpen, onClose, modelNumber, language, type }) => {
             // Navigate to check-option route
             navigate('/choose-option', {
                 state: {
-                    modelNumber,
-                    userData: formData
+                    requestNumber: userDetail.request_number,
+                    userDetails: {
+                        name: formData.name,
+                        mobileNumber: formData.mobileNumber,
+                    },
+                    modelDetails: modelDetails
                 }
             });
 
