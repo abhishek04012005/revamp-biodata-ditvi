@@ -605,6 +605,7 @@ const CreateBiodata = () => {
                               checked={
                                 formData.familyData[2].married[idx] === "Yes"
                               }
+                           
                               onChange={(e) => {
                                 const newFamilyData = [...formData.familyData];
                                 newFamilyData[2].married[idx] = e.target.value;
