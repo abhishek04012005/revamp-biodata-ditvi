@@ -1,8 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import './AdminHeader.css'
 import { Person, Logout } from '@mui/icons-material'
+import { useAdmin } from '../AdminContext/AdminContex';
 
 const AdminHeader = () => {
+    const navigate = useNavigate();
+    const { logoutAdmin } = useAdmin();
+
+    const handleLogout = () => {
+        logoutAdmin();
+        navigate('/admin/login');
+    }
+    
     return (
         <>
             <header className="dashboard-header">
@@ -15,7 +25,7 @@ const AdminHeader = () => {
                         </h2>
                     </div>
                 </div>
-                <button className="dashboard-logout-btn">
+                <button className="dashboard-logout-btn" onClick={handleLogout}>
                     <Logout />
                     <span>Logout</span>
                 </button>
