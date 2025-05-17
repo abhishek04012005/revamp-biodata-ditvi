@@ -49,6 +49,14 @@ const ChooseOption = () => {
          } });
     };
 
+    const handleCreateBiodata = () => {
+        navigate('/create-biodata', { state: { 
+            requestNumber: requestNumber,
+            userDetails: userDetails,
+            modelDetails: modelDetails,
+         } });
+    };
+
     return (
         <section className="choose-option">
 
@@ -82,7 +90,7 @@ const ChooseOption = () => {
                             icon={<Create />}
                             title="Create New Biodata"
                             description="Start fresh and create your biodata from scratch"
-                            onClick={() => navigate('/create-biodata')}
+                            onClick={handleCreateBiodata}
                         />
                     </div>
                 </div>
