@@ -13,11 +13,11 @@ CREATE TABLE public.admin_login (
     username TEXT NOT NULL,
     password TEXT NOT NULL,
     name TEXT NOT NULL,
-    is_active BOOLEAN DEFAULT TRUE,
+    active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
-INSERT INTO "public"."admin_login" ("id", "username", "password", "name", "is_active", "created_at") VALUES ('963b8f3c-f7de-426b-8953-89e7e94a49c4', 'admin', 'Admin@3112', 'Super Admin', 'true', '2025-05-17 06:44:51.465523+00');
+INSERT INTO "public"."admin_login" ("id", "username", "password", "name", "active", "created_at") VALUES ('963b8f3c-f7de-426b-8953-89e7e94a49c4', 'admin', 'Admin@3112', 'Super Admin', 'true', '2025-05-17 06:44:51.465523+00');
 
 
 CREATE TABLE public.biodata_requests (

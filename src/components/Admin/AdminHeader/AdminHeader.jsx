@@ -6,7 +6,7 @@ import { useAdmin } from '../AdminContext/AdminContex';
 
 const AdminHeader = () => {
     const navigate = useNavigate();
-    const { logoutAdmin } = useAdmin();
+    const { logoutAdmin, adminData } = useAdmin();
 
     const handleLogout = () => {
         logoutAdmin();
@@ -21,7 +21,7 @@ const AdminHeader = () => {
                     <div className="dashboard-admin-info">
                         <span className="dashboard-admin-welcome">Welcome,</span>
                         <h2 className='dashboard-admin-name'>
-                            User123
+                            {adminData?.name || 'No Admin'}
                         </h2>
                     </div>
                 </div>

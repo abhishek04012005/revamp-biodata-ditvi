@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminDashboard.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import {
@@ -12,82 +12,63 @@ import {
     Delete
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { BiodataRequestsStorage } from '../../../supabase/BiodataRequests';
+import formatDate from '../../../utils/DateHelper';
+import { getLatestStatusId, getLatestStatusText, getStatusStyle } from '../../../utils/StatusHelper';
+import { MOVE_BACKWARD, MOVE_FORWARD } from '../../../constants/StatusSteps';
+import { getFlowTypeById } from '../../../constants/FlowType';
 
 const AdminDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [requests, setRequests] = useState([]);
+    useEffect(() => {
+        fetchRequests();
+    }, []);
+
+    const fetchRequests = async () => {
+        try {
+            const response = await BiodataRequestsStorage.getAllBiodataRequest();
+            if (response) {
+                setRequests(response);
+            } else {
+                console.error('No requests found');
+            }
+        }
+        catch (error) {
+            console.error('Error fetching requests:', error);
+        }
+    }
 
     const stats = [
-        { icon: <Dashboard />, title: "Total Requests", value: 125 },
+        { icon: <Dashboard />, title: "Total Requests", value: requests.length },
         { icon: <People />, title: "Active Users", value: 100 },
         { icon: <Description />, title: "In Production", value: 66 },
         { icon: <CheckCircle />, title: "Completed", value: 14 }
     ];
 
-    const isBackwardDisabled = (statusLevel) => statusLevel === 1;
-    const isForwardDisabled = (statusLevel) => statusLevel === 5;
-
-    const STATUS_CONFIG = {
-        1: { label: 'New Request', color: '#FF870F' },
-        2: { label: 'In Progress', color: '#2196F3' },
-        3: { label: 'In Production', color: '#9C27B0' },
-        4: { label: 'Quality Check', color: '#FF9800' },
-        5: { label: 'Completed', color: '#4CAF50' }
-    };
-
-    const [requests, setRequests] = useState([
-        {
-            id: '01',
-            name: 'Tony Stark',
-            mobile: '9264248504',
-            date: '07-02-1999',
-            statusLevel: 1
-        },
-        {
-            id: '02',
-            name: ' Stark',
-            mobile: '9264248504',
-            date: '07-02-1999',
-            statusLevel: 1
-        }
-    ]);
+    const isBackwardDisabled = (statusId) => [0, 1].includes(statusId);
+    const isForwardDisabled = (statusId) => statusId === 4;
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
     };
 
 
-    const handleStatusChange = (direction, id) => {
-        setRequests(prevData =>
-            prevData.map(request => {
-                if (request.id === id) {
-                    let newStatus;
-                    if (direction === 'forward') {
-                        newStatus = request.statusLevel + 1;
-                        if (newStatus > 5) newStatus = 1;
-                    } else {
-                        newStatus = request.statusLevel - 1;
-                        if (newStatus < 1) newStatus = 5;
-                    }
-                    return { ...request, statusLevel: newStatus };
-                }
-                return request;
-            })
-        );
+    const handleStatusChange = async (direction, requestId) => {
+        const request = requests.find(r => r.id === requestId);
+        if (!request) return;
+
+        const currentStatusArray = request.status || [];
+        direction === MOVE_FORWARD
+            ? currentStatusArray.push({ id: getLatestStatusId(currentStatusArray) + 1, created: new Date().toISOString() })
+            : currentStatusArray.length && currentStatusArray.pop();
+        await BiodataRequestsStorage.updateStatusBiodataRequestById(requestId, currentStatusArray);
+        fetchRequests();
     };
 
-    const getStatusStyle = (statusLevel) => ({
-        backgroundColor: `${STATUS_CONFIG[statusLevel].color}20`,
-        color: STATUS_CONFIG[statusLevel].color,
-        padding: '0.5rem 1rem',
-        borderRadius: '20px',
-        fontWeight: '500',
-        fontSize: '0.9rem',
-        display: 'inline-block'
-    });
-
-    const handleDelete = (id) => {
-
-        console.log(`Deleting request ID: ${id}`);
+    const handleDelete = async (id) => {
+        await BiodataRequestsStorage.deleteBiodataRequestById(id);
+        fetchRequests();
     };
 
     return (
@@ -125,6 +106,7 @@ const AdminDashboard = () => {
                             <thead>
                                 <tr>
                                     <th>Request No.</th>
+                                    <th>Flow Type</th>
                                     <th>Name</th>
                                     <th>Mobile Number</th>
                                     <th>Created Date</th>
@@ -137,27 +119,29 @@ const AdminDashboard = () => {
                             <tbody>
                                 {requests.map((request) => (
                                     <tr key={request.id}>
-                                        <td>{request.id}</td>
-                                        <td>{request.name}</td>
-                                        <td>{request.mobile}</td>
-                                        <td>{request.date}</td>
+                                        <td>{request.request_number}</td>
+                                        <td>{getFlowTypeById(request.flow_type)}</td>
+                                        <td>{request.user_details?.name}</td>
+                                        <td>{request.user_details?.mobileNumber}</td>
+                                        <td>{formatDate(request.created_at)}</td>
+
                                         <td>
-                                            <span style={getStatusStyle(request.statusLevel)}>
-                                                {STATUS_CONFIG[request.statusLevel].label}
+                                            <span style={getStatusStyle(getLatestStatusId(request.status))}>
+                                                {getLatestStatusText(request.status)}
                                             </span>
                                         </td>
                                         <td className="dashboard-status-actions">
                                             <button
                                                 className="dashboard-action-btn backward"
-                                                onClick={() => handleStatusChange('backward', request.id)}
-                                                disabled={isBackwardDisabled(request.statusLevel)}
+                                                onClick={() => handleStatusChange(MOVE_BACKWARD, request.id)}
+                                                disabled={isBackwardDisabled(getLatestStatusId(request.status))}
                                             >
                                                 <ArrowBack />
                                             </button>
                                             <button
                                                 className="dashboard-action-btn forward"
-                                                onClick={() => handleStatusChange('forward', request.id)}
-                                                disabled={isForwardDisabled(request.statusLevel)}
+                                                onClick={() => handleStatusChange(MOVE_FORWARD, request.id)}
+                                                disabled={isForwardDisabled(getLatestStatusId(request.status))}
                                             >
                                                 <ArrowForward />
                                             </button>

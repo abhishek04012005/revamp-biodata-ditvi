@@ -24,9 +24,9 @@ const AdminLogin = () => {
         setLoading(true);
 
         try {
-            const data = await AdmingLoginStorage.adminLogin(credentials);
-            if (data) {
-                loginAdmin(data);
+            const response = await AdmingLoginStorage.adminLogin(credentials);
+            if (response.success) {
+                loginAdmin(response.data);
                 navigate('/admin/dashboard');
             } else {
                 setError('Invalid credentials');

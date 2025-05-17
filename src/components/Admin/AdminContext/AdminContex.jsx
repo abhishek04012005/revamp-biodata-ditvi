@@ -23,10 +23,12 @@ export const AdminProvider = ({ children }) => {
 
 
     const loginAdmin = (data) => {
+        console.log('Admin data:', data);
         localStorage.setItem('adminSession', 'true');
         localStorage.setItem('adminData', JSON.stringify(data));
         setIsAdmin(true);
         setAdminData(data);
+        console.log('Admin logged in:', adminData);
     }
 
     const logoutAdmin = () => {

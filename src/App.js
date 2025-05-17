@@ -1,7 +1,8 @@
 import './App.css';
 import Main from './components/Main';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AdminProvider } from './components/Admin/AdminContext/AdminContex'
+// import { AdminProvider } from './components/Admin/AdminContext/AdminContex';
+import AdminRoute from './components/Admin/AdminContext/AdminRoute';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import AllBlog from './components/AllBlog/AllBlog';
@@ -19,6 +20,7 @@ import BiodataMaster from './structure/BiodataMaster/BiodataMaster';
 import UploadBiodata from './components/UploadBiodata/UploadBiodata';
 import CreateBiodata from './components/CreateBiodata/CreateBiodata';
 import RequestConfirmation from './components/Admin/RequestConfirmation/RequestConfirmation';
+import { AdminProvider } from './components/Admin/AdminContext/AdminContex';
 
 
 function App() {
@@ -37,7 +39,7 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/choose-option" element={<ChooseOption />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
             <Route path="/admin/production" element={<ProductionDashboard />} />
             <Route path="/admin/biodata-master" element={<BiodataMaster />} />
             <Route path="/upload-biodata" element={<UploadBiodata />} />
@@ -45,13 +47,12 @@ function App() {
             <Route path="/confirmation" element={<RequestConfirmation />} />
 
             {/* Admin Routes */}
-              <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route
               path="/admin/dashboard"
               element={
                 <AdminRoute>
                   <AdminDashboard />
-
                 </AdminRoute>
               }
             />

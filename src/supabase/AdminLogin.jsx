@@ -8,12 +8,12 @@ export const AdmingLoginStorage = {
             .select()
             .eq('username', credential.username)
             .eq('password', credential.password)
-            .eq('is_active', true)
+            .eq('active', true)
             .single('id, username, name');
 
         if (error) throw error;
 
-        return data ? { success: true } : { success: false, message: 'Invalid credentials' };
+        return data ? { success: true, data : data } : { success: false, message: 'Invalid credentials' };
 
         } 
         catch (error) {
