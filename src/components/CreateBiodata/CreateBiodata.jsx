@@ -5,14 +5,15 @@ import Loader from "../../structure/Loader/Loader";
 import "./CreateBiodata.css";
 import {
   defaultName,
-  personalData,
-  professionalData,
-  educationData,
+  PersonalData,
+  ProfessionalData,
+  EducationData,
   familyData,
   contactData,
 } from "../../json/createBiodata";
 import { Mode } from "@mui/icons-material";
 import ModelTypes from "../../json/ModelTypes";
+import { BiodataRequestsStorage } from "../../supabase/BiodataRequests";
 
 const CreateBiodata = () => {
   const location = useLocation();
@@ -23,40 +24,18 @@ const CreateBiodata = () => {
 
   const [formData, setFormData] = useState({
     profileImage: null,
-    name: defaultName,
-    personalData: personalData.map(({ label, value }) => ({ label, value })),
-    professionalData: [...professionalData],
-    examPreparing: {
-      name: "",
-      subject: "",
-      year: "",
-    },
-    examPreparing: {
-      name: "",
-    },
-    examQualified: {
-      name: "",
-    },
-    educationData: [...educationData],
-    familyData: [...familyData],
-    contactData: contactData,
-    biodataDetails: {
-      modelNumber: null,
-      language: null,
-      modelType: "student",
-      guestName: null,
-      mobileNumber: null,
-    },
-    guestDetailId: null,
-    requestNumber: null,
-    status: [
-      {
-        status: 1,
-        status_number: 1,
-        updated_at: new Date().toISOString(),
-      },
-    ],
+    name: '',
+    userDetails: userDetails,
+    modelDetails: modelDetails,
+    personalDetails: PersonalData.map(({ label, value }) => ({ label, value })),
+    professionalDetails: ProfessionalData.map(({ label, value }) => ({ label, value })),
+    examinaitonDetails: {},
+    educationDetails: EducationData.map(group => group.map(({ label, value }) => ({ label, value }))),
+    familyDetails: [],
+    contactDetails: {},
   });
+  console.log("Form Data educationDetails:", formData.educationDetails);
+  console.log("Form Data professionalDetails:", formData.professionalDetails);
   const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB in bytes
   const handleNext = () => {
     setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
@@ -106,22 +85,22 @@ const CreateBiodata = () => {
   };
 
   const handleAddEducation = () => {
-    if (formData.educationData.length < 5) {
+    if (formData.educationDetails.length < 5) {
       setFormData((prev) => ({
         ...prev,
-        educationData: [
+        educationDetails: [
           { degree: "", institution: "", year: "", score: "" },
-          ...prev.educationData,
+          ...prev.educationDetails,
         ],
       }));
     }
   };
 
   const handleDeleteEducation = (indexToDelete) => {
-    if (formData.educationData.length > 1) {
+    if (formData.educationDetails.length > 1) {
       setFormData((prev) => ({
         ...prev,
-        educationData: prev.educationData.filter(
+        educationDetails: prev.educationDetails.filter(
           (_, index) => index !== indexToDelete
         ),
       }));
@@ -130,6 +109,31 @@ const CreateBiodata = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (currentStep !== steps.length - 1) {
+            handleNext();
+            return;
+        }
+
+    try {
+      setIsLoading(true);
+      const response = await BiodataRequestsStorage.saveBiodataRequestFromCreateBiodata({
+        requestNumber: requestNumber,
+        userDetails: userDetails,
+        modelDetails: modelDetails,
+        profileImage: formData.profileImage,
+        personalDetails: formData.personalDetails,
+        professionalDetails: formData.professionalDetails,
+        examinationDetails: formData.examPreparing,
+        educationDetails: formData.educationDetails,
+        familyDetails: formData.familyDetails,
+        contactDetails: formData.contactDetails
+      });
+      console.log("Biodata saved successfully:", response);
+    }
+    catch (error) {
+      console.error("Error saving biodata:", error);
+      alert("Failed to save biodata");
+    }
 
     if (currentStep !== steps.length - 1) {
       handleNext();
@@ -168,7 +172,7 @@ const CreateBiodata = () => {
                   accept="image/*"
                   className="create-biodata-image-input"
                   style={{ display: "none" }}
-                  onChange={handleImageChange}
+                  // onChange={handleImageChange}
                 />
                 <span className="create-biodata-upload-button">
                   {formData.profileImage ? "Change Image" : "Upload Image"}
@@ -223,16 +227,16 @@ const CreateBiodata = () => {
                 }
                 required
               />
-              {formData.personalData.map((field, index) => (
+              {formData.personalDetails.map((field, index) => (
                 <input
                   key={index}
                   type="text"
                   placeholder={field.label}
                   value={field.value}
                   onChange={(e) => {
-                    const newPersonalData = [...formData.personalData];
+                    const newPersonalData = [...formData.personalDetails];
                     newPersonalData[index].value = e.target.value;
-                    setFormData({ ...formData, personalData: newPersonalData });
+                    setFormData({ ...formData, personalDetails: newPersonalData });
                   }}
                   required
                 />
@@ -256,16 +260,16 @@ const CreateBiodata = () => {
                     className="exam-input"
                     placeholder="Examination Preparing"
                     value={
-                      formData.professionalData[0].examPreparing?.name || ""
+                      formData.professionalDetails[0].examPreparing?.name || ""
                     }
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        professionalData: [
+                        professionalDetails: [
                           {
-                            ...formData.professionalData[0],
+                            ...formData.professionalDetails[0],
                             examPreparing: {
-                              ...formData.professionalData[0].examPreparing,
+                              ...formData.professionalDetails[0].examPreparing,
                               name: e.target.value,
                             },
                           },
@@ -282,16 +286,16 @@ const CreateBiodata = () => {
                     className="exam-input"
                     placeholder="Examination Qualified"
                     value={
-                      formData.professionalData[0].examQualified?.name || ""
+                      formData.professionalDetails[0].examQualified?.name || ""
                     }
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        professionalData: [
+                        professionalDetails: [
                           {
-                            ...formData.professionalData[0],
+                            ...formData.professionalDetails[0],
                             examQualified: {
-                              ...formData.professionalData[0].examQualified,
+                              ...formData.professionalDetails[0].examQualified,
                               name: e.target.value,
                             },
                           },
@@ -303,74 +307,20 @@ const CreateBiodata = () => {
               </div>
             ) : (
               <div className="professional-inputs">
+                {formData.professionalDetails.map((field, index) => (
                 <input
+                  key={index}
                   type="text"
-                  placeholder="Company"
-                  value={formData.professionalData[0].company}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          company: e.target.value,
-                        },
-                      ],
-                    })
-                  }
+                  placeholder={field.label}
+                  value={field.value}
+                  onChange={(e) => {
+                    const newProfessionalDetails = [...formData.professionalDetails];
+                    newProfessionalDetails[index].value = e.target.value;
+                    setFormData({ ...formData, professionalDetails: newProfessionalDetails });
+                  }}
                   required
                 />
-                <input
-                  type="text"
-                  placeholder="Position"
-                  value={formData.professionalData[0].position}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          position: e.target.value,
-                        },
-                      ],
-                    })
-                  }
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Experience (years)"
-                  value={formData.professionalData[0].experience}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          experience: e.target.value,
-                        },
-                      ],
-                    })
-                  }
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Salary (LPA)"
-                  value={formData.professionalData[0].salary}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          salary: e.target.value,
-                        },
-                      ],
-                    })
-                  }
-                  required
-                />
+              ))}
               </div>
             )}
           </div>
@@ -381,99 +331,48 @@ const CreateBiodata = () => {
             <div className="create-biodata-section">
               <h2>Education Information</h2>
 
-              {formData.educationData.length < 5 && (
+              {formData.educationDetails.length < 5 && (
                 <button
                   type="button"
                   className="create-biodata-add-btn"
                   onClick={handleAddEducation}
                 >
-                  + Add Education ({5 - formData.educationData.length}{" "}
+                  + Add Education ({5 - formData.educationDetails.length}{" "}
                   remaining)
                 </button>
               )}
 
-              {formData.educationData.map((education, index) => (
+              {formData.educationDetails.map((education, index) => (
                 <div key={index} className="education-group">
                   <div className="education-header">
-                    <h3>Education {formData.educationData.length - index}</h3>
+                    <h3>Education {formData.educationDetails.length - index}</h3>
                   </div>
                   <div className="education-inputs">
-                    <input
-                      type="text"
-                      placeholder="Degree"
-                      value={education.degree}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          degree: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="Institution"
-                      value={education.institution}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          institution: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="Year"
-                      value={education.year}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          year: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="Score"
-                      value={education.score}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          score: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-
-                    {formData.educationData.length > 1 && (
+                    {formData.educationDetails.map((group, groupIndex) => (
+                      <div key={groupIndex}>
+                        {group.map((field, fieldIndex) => (
+                          <input
+                            key={fieldIndex}
+                            type="text"
+                            placeholder={field.label}
+                            value={field.value}
+                            onChange={(e) => {
+                              const newEducationData = [...formData.educationDetails];
+                              newEducationData[groupIndex][fieldIndex].value = e.target.value;
+                              setFormData({ ...formData, educationDetails: newEducationData });
+                            }}
+                            required
+                          />
+                        ))}
+                      </div>
+                    ))}
+                    {formData.educationDetails.length > 1 && (
                       <button
                         type="button"
                         onClick={() => handleDeleteEducation(index)}
                         className="create-biodata-delete-btn"
                       >
-                        Remove Education {formData.educationData.length - index}
+                        Remove Education {formData.educationDetails.length - index}
                       </button>
                     )}
                   </div>
@@ -714,12 +613,12 @@ const CreateBiodata = () => {
                       <>
                         <p>
                           <strong>Examination Preparing:</strong>{" "}
-                          {formData.professionalData[0].examPreparing?.name ||
+                          {formData.professionalDetails[0].examPreparing?.name ||
                             "N/A"}
                         </p>
                         <p>
                           <strong>Examination Qualified:</strong>{" "}
-                          {formData.professionalData[0].examQualified?.name ||
+                          {formData.professionalDetails[0].examQualified?.name ||
                             "N/A"}
                         </p>
                       </>
@@ -727,19 +626,19 @@ const CreateBiodata = () => {
                       <>
                         <p>
                           <strong>Company:</strong>{" "}
-                          {formData.professionalData[0].company}
+                          {formData.professionalDetails[0].company}
                         </p>
                         <p>
                           <strong>Position:</strong>{" "}
-                          {formData.professionalData[0].position}
+                          {formData.professionalDetails[0].position}
                         </p>
                         <p>
                           <strong>Experience:</strong>{" "}
-                          {formData.professionalData[0].experience} years
+                          {formData.professionalDetails[0].experience} years
                         </p>
                         <p>
                           <strong>Salary:</strong> ₹
-                          {formData.professionalData[0].salary} LPA
+                          {formData.professionalDetails[0].salary} LPA
                         </p>
                       </>
                     )}
@@ -749,10 +648,10 @@ const CreateBiodata = () => {
                 <section className="preview-group">
                   <h3>Education Information</h3>
                   <div className="preview-details">
-                    {formData.educationData.map((edu, index) => (
+                    {formData.educationDetails.map((edu, index) => (
                       <div key={index} className="education-item">
                         <h4>
-                          Education {formData.educationData.length - index}
+                          Education {formData.educationDetails.length - index}
                         </h4>
                         <p>
                           <strong>Degree:</strong> {edu.degree}

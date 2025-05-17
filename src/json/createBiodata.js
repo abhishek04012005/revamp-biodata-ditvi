@@ -15,48 +15,28 @@ const ICON_MAPPING = {
     "Caste": <Person className="g1111-icon" />
 };
 
-
-const personalData = [
-    { label: "Date of Birth", value: "01 January 1995" },
-    { label: "Height", value: "5'10\"" },
-    { label: "Complexion", value: "Fair" },
-    { label: "Caste", value: "Hindu, Brahmin" }
+const PersonalData = [
+    { label: 'Date of Birth', value: '' },
+    { label: 'Height', value: '' },
+    { label: 'Complexion', value: '' },
+    { label: 'Caste', value: '' }
 ];
 
-const professionalData = [
-    {
-        company: "TCS",
-        position: "Software Engineer",
-        experience: "2+",
-        salary: "8 LPA"
-    }
+const ProfessionalData = [
+    { label: 'Company', value: '' },
+    { label: 'Position', value: '' },
+    { label: 'Experience (in years)', value: '' },
+    { label: 'Salary', value: '' }
 ];
 
-const educationData = [
-    {
-        degree: "Post Graduation (MCA)",
-        institution: "RGPV, Bhopal (M.P)",
-        year: "2021-2023",
-        score: "8.5 CGPA"
-    },
-    {
-        degree: "Graduation (BCA)",
-        institution: "RGPV, Bhopal (M.P)",
-        year: "2018-2021",
-        score: "8.0 CGPA"
-    },
-    {
-        degree: "12th Standard",
-        institution: "CBSE",
-        year: "2017-2018",
-        score: "85%"
-    },
-    {
-        degree: "10th Standard",
-        institution: "CBSE",
-        year: "2015-2016",
-        score: "88%"
-    }
+const EducationData = [
+    [
+        { label: 'Degree', value: '' },
+    { label: 'Institution', value: '' },
+    { label: 'Year', value: '' },
+    { label: 'Score', value: '' }
+]
+    
 ];
 
 
@@ -95,6 +75,6 @@ const contactData = {
 
 export {
 
-    personalData, educationData, professionalData, contactData, familyData, defaultName, ICON_MAPPING
+    PersonalData, EducationData, ProfessionalData, contactData, familyData, defaultName, ICON_MAPPING
 
 };

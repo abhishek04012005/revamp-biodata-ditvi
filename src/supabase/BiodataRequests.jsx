@@ -1,7 +1,7 @@
 import { FlowType } from '../constants/FlowType';
 import { supabase } from './Supabase';
 
-const biodataRequestsTableName= 'biodata_requests';
+const biodataRequestsTableName= 'biodata_request';
 
 export const BiodataRequestsStorage = {
 
@@ -85,6 +85,39 @@ export const BiodataRequestsStorage = {
         }
       },
 
+      async saveBiodataRequestFromCreateBiodata(biodataRequest) { 
+        try {
+          const { data, error } = await supabase
+            .from(biodataRequestsTableName)
+            .insert({
+            request_number: biodataRequest.requestNumber,
+            status: [{
+              id: 0,
+              created: new Date().toISOString(),
+            }],
+            flow_type: FlowType.FLOW_CREATE_BIODATA,
+            user_details: biodataRequest.userDetails,
+            model_details: biodataRequest.modelDetails,
+            profile_url: biodataRequest.profileUrl,
+            personal_details: biodataRequest.personalDetails,
+            professional_details: biodataRequest.professionalDetails,
+            examination_details: biodataRequest.examinationDetails,
+            education_details: biodataRequest.educationDetails,
+            family_details: biodataRequest.familyDetails,
+            contact_details: biodataRequest.contactDetails,
+            })
+            .select('*')
+            .single();
+    
+          if (error) throw error;
+    
+          return data;
+        } catch (error) {
+          console.error('Error saveBiodataRequestFromCreateBiodata:', error);
+          throw error;
+        }
+      
+      },
       async updateStatusBiodataRequestById(requestId, status) {
         try {
           const { data, error } = await supabase

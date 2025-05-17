@@ -247,7 +247,7 @@ select:focus {
 }
 
 .preview-image img {
-  width: 100%;
+  width: 50%;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -326,10 +326,6 @@ select:focus {
   }
 }
 
-
-
-
-
 /* Radio Button Group Styling */
 .create-biodata-sibling-radio-group {
   display: flex;
@@ -354,7 +350,7 @@ select:focus {
   padding: 8px 16px;
   background-color: #fff;
   border: 2px solid #FF8C42;
-  border-radius: 6px;
+  border-radius: 50px;
   color: #FF8C42;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -368,15 +364,3 @@ select:focus {
   background-color: #FF8C42;
   color: white;
 }
-
-/* .create-biodata-sibling-radio-input:focus + .create-biodata-sibling-radio-label {
-  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.3);
-} */
-
-/* Disabled state */
-/* .create-biodata-sibling-radio-input:disabled + .create-biodata-sibling-radio-label {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background-color: #f5f5f5;
-} */
-
