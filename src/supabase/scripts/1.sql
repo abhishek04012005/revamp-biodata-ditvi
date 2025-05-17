@@ -22,12 +22,20 @@ INSERT INTO "public"."admin_login" ("id", "username", "password", "name", "activ
 
 CREATE TABLE public.biodata_requests (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    flow_type int2 NOT NULL,
     request_number int4 NOT NULL,
+    flow_type int2 NOT NULL,
     user_details JSONB NOT NULL,
     model_details JSONB NOT NULL,
     profile_url TEXT NULL,
     biodata_url TEXT NULL,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE public.user_feedback (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    request_number int4 NOT NULL,
+    rating int2 NOT NULL,
+    comment TEXT NULL,
     created_at TIMESTAMPTZ DEFAULT now()
 );
 

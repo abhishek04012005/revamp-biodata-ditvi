@@ -44,7 +44,7 @@ function App() {
             <Route path="/upload-biodata" element={<UploadBiodata />} />
             <Route path="/create-biodata" element={<CreateBiodata />} />
             <Route path="/confirmation" element={<RequestConfirmation />} />
-            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/feedback/:requestNumber" element={<Feedback />} />
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route
