@@ -21,13 +21,24 @@ const CreateBiodata = () => {
     name: defaultName,
     personalData: personalData.map(({ label, value }) => ({ label, value })),
     professionalData: [...professionalData],
+    examPreparing: {
+      name: "",
+      subject: "",
+      year: "",
+    },
+    examPreparing: {
+      name: "",
+    },
+    examQualified: {
+      name: "",
+    },
     educationData: [...educationData],
     familyData: [...familyData],
     contactData: contactData,
     biodataDetails: {
       modelNumber: null,
       language: null,
-      modelType: null,
+      modelType: "student",
       guestName: null,
       mobileNumber: null,
     },
@@ -224,83 +235,141 @@ const CreateBiodata = () => {
             </div>
           </>
         );
-      case 2: //Professional Information
+      case 2: // Professional Information
         return (
-          <>
-            <div className="create-biodata-section">
-              <h2>Professional Information</h2>
-              <input
-                type="text"
-                placeholder="Company"
-                value={formData.professionalData[0].company}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    professionalData: [
-                      {
-                        ...formData.professionalData[0],
-                        company: e.target.value,
-                      },
-                    ],
-                  })
-                }
-                required
-              />
-              <input
-                type="text"
-                placeholder="Position"
-                value={formData.professionalData[0].position}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    professionalData: [
-                      {
-                        ...formData.professionalData[0],
-                        position: e.target.value,
-                      },
-                    ],
-                  })
-                }
-                required
-              />
-              <input
-                type="text"
-                placeholder="Experience (years)"
-                value={formData.professionalData[0].experience}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    professionalData: [
-                      {
-                        ...formData.professionalData[0],
-                        experience: e.target.value,
-                      },
-                    ],
-                  })
-                }
-                required
-              />
-              <input
-                type="text"
-                placeholder="Salary (LPA)"
-                value={formData.professionalData[0].salary}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    professionalData: [
-                      {
-                        ...formData.professionalData[0],
-                        salary: e.target.value,
-                      },
-                    ],
-                  })
-                }
-                required
-              />
-            </div>
-          </>
-        );
+          <div className="create-biodata-section">
+            <h2>
+              {formData.biodataDetails?.modelType === "student"
+                ? "Job Preparing Details"
+                : "Professional Information"}
+            </h2>
+            {formData.biodataDetails?.modelType === "student" ? (
+              <div className="examination-details">
+                <div className="examination-group">
+                  <input
+                    type="text"
+                    className="exam-input"
+                    placeholder="Examination Preparing"
+                    value={
+                      formData.professionalData[0].examPreparing?.name || ""
+                    }
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        professionalData: [
+                          {
+                            ...formData.professionalData[0],
+                            examPreparing: {
+                              ...formData.professionalData[0].examPreparing,
+                              name: e.target.value,
+                            },
+                          },
+                        ],
+                      })
+                    }
+                    required
+                  />
+                </div>
 
+                <div className="examination-group">
+                  <input
+                    type="text"
+                    className="exam-input"
+                    placeholder="Examination Qualified"
+                    value={
+                      formData.professionalData[0].examQualified?.name || ""
+                    }
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        professionalData: [
+                          {
+                            ...formData.professionalData[0],
+                            examQualified: {
+                              ...formData.professionalData[0].examQualified,
+                              name: e.target.value,
+                            },
+                          },
+                        ],
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="professional-inputs">
+                <input
+                  type="text"
+                  placeholder="Company"
+                  value={formData.professionalData[0].company}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      professionalData: [
+                        {
+                          ...formData.professionalData[0],
+                          company: e.target.value,
+                        },
+                      ],
+                    })
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Position"
+                  value={formData.professionalData[0].position}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      professionalData: [
+                        {
+                          ...formData.professionalData[0],
+                          position: e.target.value,
+                        },
+                      ],
+                    })
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Experience (years)"
+                  value={formData.professionalData[0].experience}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      professionalData: [
+                        {
+                          ...formData.professionalData[0],
+                          experience: e.target.value,
+                        },
+                      ],
+                    })
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Salary (LPA)"
+                  value={formData.professionalData[0].salary}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      professionalData: [
+                        {
+                          ...formData.professionalData[0],
+                          salary: e.target.value,
+                        },
+                      ],
+                    })
+                  }
+                  required
+                />
+              </div>
+            )}
+          </div>
+        );
       case 3: //Education Information
         return (
           <>
@@ -518,7 +587,9 @@ const CreateBiodata = () => {
                                 });
                               }}
                             />
-                            <span className="create-biodata-sibling-radio-label">No</span>
+                            <span className="create-biodata-sibling-radio-label">
+                              No
+                            </span>
                           </label>
                           <label className="create-biodata-sibling-radio-option">
                             <input
@@ -538,12 +609,14 @@ const CreateBiodata = () => {
                                 });
                               }}
                             />
-                            <span className="create-biodata-sibling-radio-label">Yes</span>
+                            <span className="create-biodata-sibling-radio-label">
+                              Yes
+                            </span>
                           </label>
                         </div>
                         <button
                           type="button"
-                        //   onClick={() => handleRemoveSibling("brother", idx)}
+                          //   onClick={() => handleRemoveSibling("brother", idx)}
                           className="create-biodata-delete-btn"
                         >
                           Remove Brother
@@ -554,14 +627,175 @@ const CreateBiodata = () => {
                 </div>
               </div>
 
-                {/* Sister Section */}
+              {/* Sister Section */}
 
-                <div className="create-biodata-family-group">
-                    
-                </div>
-
+              <div className="create-biodata-family-group"></div>
             </div>
           </>
+        );
+      case 5: //Contact Information
+        return (
+          <>
+            <div className="create-biodata-section">
+              <h2>Contact Information</h2>
+              <textarea
+                placeholder="Address"
+                value={formData.contactData.address}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    contactData: {
+                      ...formData.contactData,
+                      address: e.target.value,
+                    },
+                  })
+                }
+                required
+              />
+              <input
+                type="text"
+                placeholder="Mobile Number"
+                value={formData.contactData.mobile}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    contactData: {
+                      ...formData.contactData,
+                      mobile: e.target.value,
+                    },
+                  })
+                }
+                required
+              />
+            </div>
+          </>
+        );
+      case 6: // Preview Section
+        return (
+          <div className="create-biodata-preview">
+            <h2>Preview Your Biodata</h2>
+
+            <div className="preview-section">
+              <div className="preview-image">
+                {formData.profileImage && (
+                  <img src={formData.profileImage} alt="Profile Preview" />
+                )}
+              </div>
+
+              <div className="preview-content">
+                <section className="preview-group">
+                  <h3>Personal Information</h3>
+                  <div className="preview-details">
+                    <p>
+                      <strong>Name:</strong> {formData.name.value}
+                    </p>
+                    {formData.personalData.map((field, index) => (
+                      <p key={index}>
+                        <strong>{field.label}:</strong> {field.value}
+                      </p>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="preview-group">
+                  <h3>
+                    {formData.biodataDetails?.modelType === "student"
+                      ? "Job Preparing Details"
+                      : "Professional Information"}
+                  </h3>
+                  <div className="preview-details">
+                    {formData.biodataDetails?.modelType === "student" ? (
+                      <>
+                        <p>
+                          <strong>Examination Preparing:</strong>{" "}
+                          {formData.professionalData[0].examPreparing?.name ||
+                            "N/A"}
+                        </p>
+                        <p>
+                          <strong>Examination Qualified:</strong>{" "}
+                          {formData.professionalData[0].examQualified?.name ||
+                            "N/A"}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p>
+                          <strong>Company:</strong>{" "}
+                          {formData.professionalData[0].company}
+                        </p>
+                        <p>
+                          <strong>Position:</strong>{" "}
+                          {formData.professionalData[0].position}
+                        </p>
+                        <p>
+                          <strong>Experience:</strong>{" "}
+                          {formData.professionalData[0].experience} years
+                        </p>
+                        <p>
+                          <strong>Salary:</strong> ₹
+                          {formData.professionalData[0].salary} LPA
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </section>
+
+                <section className="preview-group">
+                  <h3>Education Information</h3>
+                  <div className="preview-details">
+                    {formData.educationData.map((edu, index) => (
+                      <div key={index} className="education-item">
+                        <h4>
+                          Education {formData.educationData.length - index}
+                        </h4>
+                        <p>
+                          <strong>Degree:</strong> {edu.degree}
+                        </p>
+                        <p>
+                          <strong>Institution:</strong> {edu.institution}
+                        </p>
+                        <p>
+                          <strong>Year:</strong> {edu.year}
+                        </p>
+                        <p>
+                          <strong>Score:</strong> {edu.score}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="preview-group">
+                  <h3>Family Information</h3>
+                  <div className="preview-details">
+                    {formData.familyData.slice(0, 2).map((member, index) => (
+                      <div key={index} className="family-item">
+                        <h4>{member.relation}</h4>
+                        <p>
+                          <strong>Name:</strong> {member.name[0]}
+                        </p>
+                        <p>
+                          <strong>Occupation:</strong> {member.occupation[0]}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="preview-group">
+                  <h3>Contact Information</h3>
+                  <div className="preview-details">
+                    <p>
+                      <strong>Address:</strong> {formData.contactData.address}
+                    </p>
+                    <p>
+                      <strong>Mobile:</strong> {formData.contactData.mobile}
+                    </p>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
         );
     }
   };

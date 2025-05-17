@@ -18,6 +18,7 @@ import BiodataMaster from './structure/BiodataMaster/BiodataMaster';
 import UploadBiodata from './components/UploadBiodata/UploadBiodata';
 import CreateBiodata from './components/CreateBiodata/CreateBiodata';
 import RequestConfirmation from './components/Admin/RequestConfirmation/RequestConfirmation';
+import Feedback from './components/Feedback/Feedback';
 
 
 function App() {
@@ -41,7 +42,12 @@ function App() {
           <Route path="/admin/biodata-master" element={<BiodataMaster />} />
           <Route path="/upload-biodata" element={<UploadBiodata />} />
           <Route path="/create-biodata" element={<CreateBiodata />} />
+<<<<<<< HEAD
           <Route path="/confirmation" element={<RequestConfirmation />} />
+=======
+          <Route path="/confirmation/requestion-number" element={<RequestConfirmation />} />
+          <Route path="/feedback" element={<Feedback />} />
+>>>>>>> 95bafcd (create-biodata)
         </Routes>
         <Footer />
       </Router>
