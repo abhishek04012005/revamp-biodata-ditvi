@@ -28,7 +28,7 @@
     height: 400px;
     top: -100px;
     left: -100px;
-    animation: float 8s ease-in-out infinite;
+    animation: floatContact 8s ease-in-out infinite;
 }
 
 .contact-circle.circle-2 {
@@ -36,7 +36,7 @@
     height: 300px;
     bottom: -50px;
     right: -50px;
-    animation: float 8s ease-in-out infinite -4s;
+    animation: floatContact 8s ease-in-out infinite -4s;
 }
 
 
@@ -155,7 +155,7 @@
 .contact-image-card {
     width: 100%;
     max-width: 500px;
-    animation: float 6s ease-in-out infinite;
+    animation: floatContact 6s ease-in-out infinite;
 }
 
 .contact-image-card img {
@@ -164,7 +164,7 @@
     object-fit: contain;
 }
 
-@keyframes float {
+@keyframes floatContact {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-20px); }
 }

@@ -5,6 +5,9 @@ import { UserDetailsStorage } from '../../supabase/UserDetails';
 
 const GetNow=({ isOpen, onClose, modelDetails }) => {
     const navigate = useNavigate();
+
+    
+
     const [formData, setFormData] = useState({
         name: '',
         mobileNumber: '',

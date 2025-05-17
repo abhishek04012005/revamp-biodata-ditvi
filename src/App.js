@@ -1,7 +1,6 @@
 import './App.css';
 import Main from './components/Main';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import { AdminProvider } from './components/Admin/AdminContext/AdminContex';
 import AdminRoute from './components/Admin/AdminContext/AdminRoute';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -21,6 +20,7 @@ import UploadBiodata from './components/UploadBiodata/UploadBiodata';
 import CreateBiodata from './components/CreateBiodata/CreateBiodata';
 import RequestConfirmation from './components/Admin/RequestConfirmation/RequestConfirmation';
 import { AdminProvider } from './components/Admin/AdminContext/AdminContex';
+import Feedback from './components/Feedback/Feedback';
 
 
 function App() {
@@ -39,13 +39,12 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/choose-option" element={<ChooseOption />} />
-            {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
             <Route path="/admin/production" element={<ProductionDashboard />} />
             <Route path="/admin/biodata-master" element={<BiodataMaster />} />
             <Route path="/upload-biodata" element={<UploadBiodata />} />
             <Route path="/create-biodata" element={<CreateBiodata />} />
             <Route path="/confirmation" element={<RequestConfirmation />} />
-
+            <Route path="/feedback" element={<Feedback />} />
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route
