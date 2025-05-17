@@ -1,258 +1,227 @@
-.create-biodata {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
-    padding: 4rem 0;
-    margin-top: 4rem;
+:root {
+    --form-gradient: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 40px rgba(255, 135, 15, 0.2);
 }
 
-.create-biodata-content {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 2rem;
+.create-biodata-stepper {
+    max-width: 800px;
+    margin: 8rem auto 2rem;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    position: relative;
 }
 
-/* Header Styles */
-.stepper-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.stepper-header h1 {
-    font-size: 2.5rem;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-}
-
-.stepper-header p {
-    color: var(--text-light);
-    font-size: 1.1rem;
-}
-
-/* Stepper Progress Styles */
-.stepper-progress {
+.create-biodata-stepper-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 3rem;
     position: relative;
-    padding: 0 2rem;
-}
-
-.stepper-progress::before {
-    content: '';
-    position: absolute;
-    top: 30px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #e0e0e0;
     z-index: 1;
 }
 
-.step {
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    text-align: center;
-    padding: 0 1rem;
+.create-biodata-stepper-header::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
 }
 
-.step-icon-wrapper {
-    width: 60px;
-    height: 60px;
-    background: white;
+.create-biodata-step-number {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    background: white;
+    border: 2px solid #e0e0e0;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
-    border: 2px solid #e0e0e0;
+    margin: 0 auto 0.5rem;
+    font-weight: bold;
+    color: #666;
     transition: all 0.3s ease;
 }
 
-.step.active .step-icon-wrapper {
+
+
+.create-biodata-step {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    max-width: 120px;
+}
+
+.create-biodata-step.active .create-biodata-step-number {
     border-color: var(--primary-color);
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
+    color: var(--primary-color);
     box-shadow: 0 0 0 5px rgba(255, 135, 15, 0.1);
 }
 
-.step.completed .step-icon-wrapper {
+.create-biodata-step.completed .create-biodata-step-number {
     background: var(--primary-color);
     border-color: var(--primary-color);
     color: white;
 }
 
-.step-content {
-    position: relative;
-}
-
-.step-number {
-    display: block;
-    font-size: 0.9rem;
-    color: var(--text-light);
-    margin-bottom: 0.3rem;
-}
-
-.step-title {
-    font-weight: 500;
-    color: var(--text-dark);
-}
-
-.step-connector {
-    position: absolute;
-    top: 30px;
-    right: -50%;
-    width: 100%;
-    height: 2px;
-    background: #e0e0e0;
-    z-index: -1;
-}
-
-.step.completed .step-connector {
-    background: var(--primary-color);
-}
-
-/* Content Wrapper Styles */
-.step-content-wrapper {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
+.create-biodata-form-navigation {
+    padding: clamp(1rem, 3vw, 2rem);
+    border-radius: 15px;
     margin-bottom: 2rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    min-height: 400px;
 }
 
-/* Navigation Buttons */
-.stepper-navigation {
+.create-biodata-form-navigation {
     display: flex;
     justify-content: space-between;
-    padding: 0 2rem;
     margin-top: 2rem;
+    padding-top: 1rem;
+    gap: 1rem;
 }
 
-.nav-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
+.create-biodata-nav-button {
+    padding: 0.8rem 1.5rem;
     border: none;
     border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 120px;
+    transition: all 0.3s ease;
+}
+
+.create-biodata-nav-button.next {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.create-biodata-nav-button.prev {
+    background: white;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.create-biodata-nav-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.create-biodata-section {
+    background: white;
+    padding: clamp(1rem, 3vw, 2rem);
+    border-radius: 15px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+}
+
+.create-biodata-section h2 {
+    color: var(--primary-color);
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 135, 15, 0.1);
+}
+
+.create-biodata-upload-button {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.create-biodata-upload-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.create-biodata-image-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.create-biodata-image-upload-label {
+    cursor: pointer;
+}
+
+.create-biodata-image-preview {
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.create-biodata-preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.create-biodata-remove-image-btn {
+    margin-top: 1rem;
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.nav-button.back {
-    background: white;
-    color: var(--text-dark);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.nav-button.next {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-}
-
-.nav-button:hover {
+.create-biodata-remove-image-btn:hover {
+    background: #cc0000;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
-.nav-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: var(--form-gradient);
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-/* Responsive Styles */
-@media (max-width: 992px) {
-    .create-biodata-content {
-        padding: 0 1rem;
-    }
-
-    .stepper-progress {
-        padding: 0;
-    }
-
-    .step-title {
-        font-size: 0.9rem;
-    }
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(255, 135, 15, 0.1);
+    transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
-    .create-biodata {
-        padding: 2rem 0;
-    }
-
-    .stepper-header h1 {
-        font-size: 2rem;
-    }
-
-    .stepper-progress {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .stepper-progress::before {
-        display: none;
-    }
-
-    .step {
-        display: flex;
-        align-items: center;
-        text-align: left;
-        padding: 0;
-    }
-
-    .step-icon-wrapper {
-        margin: 0 1rem 0 0;
-        width: 50px;
-        height: 50px;
-    }
-
-    .step-connector {
-        display: none;
-    }
-
-    .step-content-wrapper {
-        padding: 1.5rem;
-    }
-
-    .stepper-navigation {
-        padding: 0;
-        flex-direction: column-reverse;
-        gap: 1rem;
-    }
-
-    .nav-button {
-        width: 100%;
-        justify-content: center;
-    }
+.create-biodata-add-btn {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-@media (max-width: 576px) {
-    .stepper-header h1 {
-        font-size: 1.8rem;
-    }
-
-    .step-content-wrapper {
-        padding: 1rem;
-    }
-}
-
-/* Animation */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.step-content-wrapper {
-    animation: slideIn 0.3s ease-out;
+.create-biodata-delete-btn  {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    cursor: pointer;
 }
