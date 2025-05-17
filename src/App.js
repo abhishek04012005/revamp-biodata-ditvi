@@ -42,12 +42,8 @@ function App() {
           <Route path="/admin/biodata-master" element={<BiodataMaster />} />
           <Route path="/upload-biodata" element={<UploadBiodata />} />
           <Route path="/create-biodata" element={<CreateBiodata />} />
-<<<<<<< HEAD
           <Route path="/confirmation" element={<RequestConfirmation />} />
-=======
-          <Route path="/confirmation/requestion-number" element={<RequestConfirmation />} />
           <Route path="/feedback" element={<Feedback />} />
->>>>>>> 95bafcd (create-biodata)
         </Routes>
         <Footer />
       </Router>
