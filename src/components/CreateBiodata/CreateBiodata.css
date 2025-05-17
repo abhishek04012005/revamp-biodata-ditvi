@@ -327,105 +327,7 @@ select:focus {
 }
 
 
-/* .create-biodata-sibling-radio-label {
-    display: block;
-    padding: 1rem;
-    text-align: center;
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
 
-.create-biodata-sibling-radio-input:checked+.create-biodata-sibling-radio-label {
-    border-color: var(--primary-color);
-    background: rgba(255, 135, 15, 0.05);
-    color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-} */
-
-/* Radio Button Styling */
-.create-biodata-sibling-radio-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.sibling-radio-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-}
-
-.create-biodata-sibling-radio-input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.create-biodata-sibling-radio-label {
-  position: relative;
-  padding-left: 28px;
-  cursor: pointer;
-  font-size: 14px;
-  user-select: none;
-  color: #2c3e50;
-}
-
-.create-biodata-sibling-radio-label::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  border: 2px solid #FF8C42;
-  border-radius: 50%;
-  background-color: transparent;
-  transition: all 0.3s ease;
-}
-
-.create-biodata-sibling-radio-label::after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #FF8C42;
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-.create-biodata-sibling-radio-input:checked + .create-biodata-sibling-radio-label::before {
-  border-color: #FF8C42;
-  background-color: #fff;
-}
-
-.create-biodata-sibling-radio-input:checked + .create-biodata-sibling-radio-label::after {
-  opacity: 1;
-}
-
-.create-biodata-sibling-radio-input:focus + .create-biodata-sibling-radio-label::before {
-  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.2);
-}
-
-/* Hover effect */
-.sibling-radio-option:hover .create-biodata-sibling-radio-label::before {
-  border-color: #ff7a1f;
-}
-
-/* Disabled state */
-.create-biodata-sibling-radio-input:disabled + .create-biodata-sibling-radio-label {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
 
 
 /* Radio Button Group Styling */
@@ -452,7 +354,7 @@ select:focus {
   padding: 8px 16px;
   background-color: #fff;
   border: 2px solid #FF8C42;
-  /* border-radius: 6px; */
+  border-radius: 6px;
   color: #FF8C42;
   font-weight: 500;
   transition: all 0.3s ease;
