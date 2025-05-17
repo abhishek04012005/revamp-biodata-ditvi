@@ -1,5 +1,6 @@
 /* eslint-disable default-case */
 import React, { useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from "../../structure/Loader/Loader";
 import "./CreateBiodata.css";
 import {
@@ -10,11 +11,15 @@ import {
   familyData,
   contactData,
 } from "../../json/createBiodata";
+import { Mode } from "@mui/icons-material";
+import ModelTypes from "../../json/ModelTypes";
 
 const CreateBiodata = () => {
+  const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const { requestNumber, userDetails, modelDetails } = location.state || {};
 
   const [formData, setFormData] = useState({
     profileImage: null,
@@ -239,11 +244,11 @@ const CreateBiodata = () => {
         return (
           <div className="create-biodata-section">
             <h2>
-              {formData.biodataDetails?.modelType === "student"
+              {modelDetails?.type === ModelTypes.Student.Name
                 ? "Job Preparing Details"
                 : "Professional Information"}
             </h2>
-            {formData.biodataDetails?.modelType === "student" ? (
+            {modelDetails?.type === ModelTypes.Student.Name ? (
               <div className="examination-details">
                 <div className="examination-group">
                   <input
@@ -811,8 +816,8 @@ const CreateBiodata = () => {
                 index === currentStep ? "active" : ""
               } ${index < currentStep ? "completed" : ""}`}
             >
-              <div className="create-biodata-step-number">{index + 1}</div>
-              <div className="create-biodata-step-label">{step}</div>
+              <div className="create-biodata-step-number">{index +1}</div>
+              <div className="create-biodata-step-label">{step === 'Professional' && modelDetails?.type === ModelTypes.Student.Name ? 'Examination': step}</div>
             </div>
           ))}
         </div>
