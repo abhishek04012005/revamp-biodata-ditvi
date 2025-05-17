@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './GetNow.css'
+import { UserDetailsStorage } from '../../supabase/UserDetails';
 
-const GetNow = ({ isOpen, onClose, modelNumber }) => {
+const GetNow=({ isOpen, onClose, modelDetails }) => {
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         name: '',
-        whatsapp: '',
+        mobileNumber: '',
     });
 
     const handleChange = (e) => {
@@ -20,13 +20,23 @@ const GetNow = ({ isOpen, onClose, modelNumber }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Add form submission logic here
-            console.log('Form submitted:', { ...formData, modelNumber });
+            const userDetail = await UserDetailsStorage.saveUserDetails({
+                userDetails: {
+                    name: formData.name,
+                    mobileNumber: formData.mobileNumber,
+                },
+                modelDetails: {
+                    modelNumber: modelDetails.modelNumber,
+                    language: modelDetails.language,
+                    type: modelDetails.type,
+                    amount: modelDetails.amount,
+                }
+            });
 
             // Reset form data
             setFormData({
                 name: '',
-                whatsapp: ''
+                mobileNumber: ''
             });
 
             // Close the modal
@@ -35,8 +45,12 @@ const GetNow = ({ isOpen, onClose, modelNumber }) => {
             // Navigate to check-option route
             navigate('/choose-option', {
                 state: {
-                    modelNumber,
-                    userData: formData
+                    requestNumber: userDetail.request_number,
+                    userDetails: {
+                        name: formData.name,
+                        mobileNumber: formData.mobileNumber,
+                    },
+                    modelDetails: modelDetails
                 }
             });
 
@@ -86,13 +100,15 @@ const GetNow = ({ isOpen, onClose, modelNumber }) => {
                     <div className="getnow-form-group">
                         <label htmlFor="whatsapp">WhatsApp Number:</label>
                         <input
-                            id="whatsapp"
+                            id="mobileNumber"
                             type="tel"
-                            name="whatsapp"
+                            name="mobileNumber"
                             placeholder="Enter your WhatsApp number"
-                            value={formData.whatsapp}
+                            value={formData.mobileNumber}
                             onChange={handleChange}
                             pattern="[0-9]{10}"
+                            maxLength={10}
+                            minLength={10}
                             title="Please enter a valid 10-digit phone number"
                             required
                         />

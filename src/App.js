@@ -11,7 +11,6 @@ import ScrollToTop from './structure/ScrollToTop/ScrollToTop';
 import ChooseOption from './components/ChooseOption/ChooseOption';
 import BlogDetail from './components/BlogDetail/BlogDetail';
 import BiodataDetail from './components/BiodataDetail/BiodataDetail';
-import GetNow from './structure/GetNow/GetNow';
 import AdminLogin from './components/Admin/AdminLogin/AdminLogin';
 import AdminDashboard from './components/Admin/AdminDashboard/AdminDashboard';
 import ProductionDashboard from './components/Admin/ProductionDashboard/ProductionDashboard';
@@ -30,20 +29,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/biodata" element={<AllBiodata />} />
-          <Route path="/biodata/:modelName" element={<BiodataDetail />} />
+          <Route path="/biodata/:modelNumber" element={<BiodataDetail />} />
           <Route path="/blog" element={<AllBlog />} />
           <Route path="/blog/:slug" element={<BlogDetail />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/choose-option" element={<ChooseOption />} />
-          <Route path="/get-now" element={<GetNow />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/production" element={<ProductionDashboard />} />
           <Route path="/admin/biodata-master" element={<BiodataMaster />} />
           <Route path="/upload-biodata" element={<UploadBiodata />} />
           <Route path="/create-biodata" element={<CreateBiodata />} />
-          <Route path="/confirmation/requestion-number" element={<RequestConfirmation />} />
+          <Route path="/confirmation" element={<RequestConfirmation />} />
         </Routes>
         <Footer />
       </Router>

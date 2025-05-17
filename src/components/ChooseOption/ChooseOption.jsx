@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './ChooseOption.css';
 import { WhatsApp, Upload, Create, ArrowForward } from '@mui/icons-material';
 import Container from '../../structure/Container/Container';
+import { BiodataRequestsStorage } from '../../supabase/BiodataRequests';
 
 
 const OptionCard = ({ icon, title, description, onClick, primary }) => (
@@ -14,43 +15,52 @@ const OptionCard = ({ icon, title, description, onClick, primary }) => (
 );
 
 const ChooseOption = () => {
+    const location = useLocation();
+    const { requestNumber, userDetails, modelDetails } = location.state || {};
     const navigate = useNavigate();
     const fileInputRef = useRef(null);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [error, setError] = useState('');
 
-    const handleWhatsAppClick = () => {
+    const handleWhatsAppClick = async () => {
+        try {
+                await BiodataRequestsStorage.saveBiodataRequestFromWhatsapp({
+                    requestNumber: requestNumber,
+                    userDetails: userDetails,
+                    modelDetails: modelDetails
+                });
+                navigate('/confirmation', { state: { 
+                    requestNumber: requestNumber,
+                    userDetails: userDetails,
+                    modelDetails: modelDetails,
+                } });
+            }
+        catch (error) {
+            console.error('Error submitting form:', error);
+        }
         window.open('https://wa.me/919263767441?text=Hello%20Ditvi%20Biodata%2C%0AI%20want%20to%20learn%20more%20about%20your%20services.%0A%0AThank%20You%20%3A)', '_blank');
     };
 
-    const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-
-        if (file && allowedTypes.includes(file.type)) {
-            setUploadedFile(file);
-            setError('');
-            // You can add your file upload logic here
-            // For example, send to server or process the file
-            navigate('/upload-biodata', { state: { file } });
-        } else {
-            setError('Please upload a valid document (PDF or Word file)');
-        }
+    const handleUploadBiodata = () => {
+        navigate('/upload-biodata', { state: { 
+            requestNumber: requestNumber,
+            userDetails: userDetails,
+            modelDetails: modelDetails,
+         } });
     };
 
-    const handleUploadClick = () => {
-        // Instead of opening file input directly, navigate to upload page
-        navigate('/upload-biodata');
+    const handleCreateBiodata = () => {
+        navigate('/create-biodata', { state: { 
+            requestNumber: requestNumber,
+            userDetails: userDetails,
+            modelDetails: modelDetails,
+         } });
     };
+
     return (
         <section className="choose-option">
 
             <Container>
-
-
-
-
-
                 <div className="choose-option-content">
                     <div className="choose-option-header">
                         <h1>How Would You Like to Proceed?</h1>
@@ -68,18 +78,11 @@ const ChooseOption = () => {
                         />
 
                         <div className="option-card-wrapper">
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleFileUpload}
-                                accept=".pdf,.doc,.docx"
-                                style={{ display: 'none' }}
-                            />
                             <OptionCard
                                 icon={<Upload />}
                                 title="Upload Existing Biodata"
                                 description="Already have a biodata? Upload it here for redesigning"
-                                onClick={handleUploadClick}
+                                onClick={handleUploadBiodata}
                             />
                         </div>
 
@@ -87,7 +90,7 @@ const ChooseOption = () => {
                             icon={<Create />}
                             title="Create New Biodata"
                             description="Start fresh and create your biodata from scratch"
-                            onClick={() => navigate('/create-biodata')}
+                            onClick={handleCreateBiodata}
                         />
                     </div>
                 </div>

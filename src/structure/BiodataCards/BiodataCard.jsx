@@ -47,7 +47,7 @@ const BioDataCardStructure = ({ data, isHovered, onHover, onLeave, onGetNow, onP
                     <div className="biodata-card-overlay">
                         <div className="biodata-overlay-content">
                             <span className="biodata-model-label">Model No.</span>
-                            <h3 className="biodata-model-name">{data.modelName}</h3>
+                            <h3 className="biodata-model-name">{data.modelNumber}</h3>
                             <div className="biodata-rating">
                                 {[...Array(5)].map((_, i) => (
                                     <Star key={i} className="biodata-star" />
@@ -146,10 +146,10 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true }) => {
                                     onHover={() => setHoveredCard(biodata.id)}
                                     onLeave={() => setHoveredCard(null)}
                                     onGetNow={() => {
-                                        setSelectedModel(biodata.modelName);
+                                        setSelectedModel(biodata.modelNumber);
                                         setIsPopupOpen(true);
                                     }}
-                                    onPreview={() => navigate(`/biodata/${biodata.modelName}`, {
+                                    onPreview={() => navigate(`/biodata/${biodata.modelNumber}`, {
                                         state: { biodata }
                                     })}
                                 />
@@ -170,10 +170,10 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true }) => {
                         onHover={() => setHoveredCard(biodata.id)}
                         onLeave={() => setHoveredCard(null)}
                         onGetNow={() => {
-                            setSelectedModel(biodata.modelName);
+                            setSelectedModel(biodata.modelNumber);
                             setIsPopupOpen(true);
                         }}
-                        onPreview={() => navigate(`/biodata/${biodata.modelName}`, {
+                        onPreview={() => navigate(`/biodata/${biodata.modelNumber}`, {
                             state: { biodata }
                         })}
                     />
@@ -209,7 +209,12 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true }) => {
                     setIsPopupOpen(false);
                     setSelectedModel('');
                 }}
-                modelNumber={selectedModel}
+                modelDetails={{
+                    modelNumber:selectedModel,
+                    language:biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.language,
+                    type:biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.type,
+                    amount:biodataDetails.find(biodata => biodata.modelNumber === selectedModel)?.discountedPrice,
+                }}
             />
         </>
     );
