@@ -30,51 +30,33 @@ const ProfessionalData = [
 ];
 
 const EducationData = [
-    [
-        { label: 'Degree', value: '' },
+    { label: 'Degree', value: '' },
     { label: 'Institution', value: '' },
     { label: 'Year', value: '' },
     { label: 'Score', value: '' }
-]
-    
 ];
 
+const createEmptyPerson = () => ({
+    name: '',
+    married: '',
+    occupation: ''
+});
 
-const familyData = [
-    {
-        relation: "Father",
-        name: ["Mr. Suraj Kumar"],
-        married: ["-"],
-        occupation: ["Business"]
-    },
-    {
-        relation: "Mother",
-        name: ["Mrs. Surbhi Kumari"],
-        married: ["-"],
-        occupation: ["Homemaker"]
-    },
-    {
-        relation: "Brother(s)",
-        name: ["Mr. Vishal Kumar", "Mr. Vaibhav Kumar"],
-        married: ["Yes", "No"],
-        occupation: ["Businessman", "Software Engineer"]
-    },
-    {
-        relation: "Sister(s)",
-        name: ["Mrs. Komal Kumari", "Ms. Mehak Kumari"],
-        married: ["Yes", "No"],
-        occupation: ["Housewife", "Studying"]
-    }
-];
-
-const contactData = {
-    address: "H.No. 521, Vijay Nagar Square, Indore, \nMadhya Pradesh-402310",
-    mobile: "+91 9263767441"
+const FamilyData = {
+    father: { label: 'Father', value: createEmptyPerson() },
+    mother: { label: 'Mother', value: createEmptyPerson() },
+    brothers: { label: 'Brother(s)', value: [] },
+    sisters: { label: 'Sister(s)', value: [] }
 };
+
+const ContactData = [
+    { label: 'Address', value: '' },
+    { label: 'MobileNo', value: '' }
+];
 
 
 export {
 
-    PersonalData, EducationData, ProfessionalData, contactData, familyData, defaultName, ICON_MAPPING
+    PersonalData, EducationData, ProfessionalData, ContactData, FamilyData, createEmptyPerson, defaultName, ICON_MAPPING,
 
 };
