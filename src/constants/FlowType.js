@@ -4,10 +4,10 @@ export const FlowType = {
   FLOW_CREATE_BIODATA: 3,
 }
 
-const GET_FLOW_TYPE_BY_ID = {
+const FLOW_TYPE_BY_ID = {
   [FlowType.FLOW_WHATSAPP]: 'WhatsApp',
   [FlowType.FLOW_UPLOAD_BIODATA]: 'Upload Biodata',
   [FlowType.FLOW_CREATE_BIODATA]: 'Create Biodata',
 }
 
-export const getFlowTypeById = (id) => GET_FLOW_TYPE_BY_ID[id] || 'Unknown Flow Type';
+export const getFlowTypeById = (id) => FLOW_TYPE_BY_ID[id] || 'Unknown Flow Type';

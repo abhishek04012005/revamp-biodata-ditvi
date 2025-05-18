@@ -4,15 +4,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from "../../structure/Loader/Loader";
 import "./CreateBiodata.css";
 import {
-  defaultName,
-  personalData,
-  professionalData,
-  educationData,
-  familyData,
-  contactData,
+  PersonalData,
+  ProfessionalData,
+  EducationData,
+  createEmptyPerson,
+  FamilyData,
 } from "../../json/createBiodata";
 import { Mode } from "@mui/icons-material";
 import ModelTypes from "../../json/ModelTypes";
+import { BiodataRequestsStorage } from "../../supabase/BiodataRequests";
 
 const CreateBiodata = () => {
   const location = useLocation();
@@ -23,40 +23,17 @@ const CreateBiodata = () => {
 
   const [formData, setFormData] = useState({
     profileImage: null,
-    name: defaultName,
-    personalData: personalData.map(({ label, value }) => ({ label, value })),
-    professionalData: [...professionalData],
-    examPreparing: {
-      name: "",
-      subject: "",
-      year: "",
-    },
-    examPreparing: {
-      name: "",
-    },
-    examQualified: {
-      name: "",
-    },
-    educationData: [...educationData],
-    familyData: [...familyData],
-    contactData: contactData,
-    biodataDetails: {
-      modelNumber: null,
-      language: null,
-      modelType: "student",
-      guestName: null,
-      mobileNumber: null,
-    },
-    guestDetailId: null,
-    requestNumber: null,
-    status: [
-      {
-        status: 1,
-        status_number: 1,
-        updated_at: new Date().toISOString(),
-      },
-    ],
+    name: '',
+    userDetails: userDetails,
+    modelDetails: modelDetails,
+    personalDetails: PersonalData.map(({ label, value }) => ({ label, value })),
+    professionalDetails: ProfessionalData.map(({ label, value }) => ({ label, value })),
+    examinaitonDetails: {},
+    educationDetails: [EducationData.map(({ label, value }) => ({ label, value }))],
+    familyDetails: FamilyData,
+    contactDetails: {},
   });
+  
   const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB in bytes
   const handleNext = () => {
     setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
@@ -105,23 +82,20 @@ const CreateBiodata = () => {
     }
   };
 
-  const handleAddEducation = () => {
-    if (formData.educationData.length < 5) {
-      setFormData((prev) => ({
-        ...prev,
-        educationData: [
-          { degree: "", institution: "", year: "", score: "" },
-          ...prev.educationData,
-        ],
-      }));
-    }
-  };
+       const handleAddEducation = () => {
+          if (formData.educationDetails.length < 5) {
+        setFormData(prev => ({
+            ...prev,
+            educationDetails: [...prev.educationDetails, EducationData.map(({ label }) => ({ label, value: '' }))]
+        }));
+      }
+        };
 
   const handleDeleteEducation = (indexToDelete) => {
-    if (formData.educationData.length > 1) {
+    if (formData.educationDetails.length > 1) {
       setFormData((prev) => ({
         ...prev,
-        educationData: prev.educationData.filter(
+        educationDetails: prev.educationDetails.filter(
           (_, index) => index !== indexToDelete
         ),
       }));
@@ -130,6 +104,31 @@ const CreateBiodata = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (currentStep !== steps.length - 1) {
+            handleNext();
+            return;
+        }
+
+    try {
+      setIsLoading(true);
+      const response = await BiodataRequestsStorage.saveBiodataRequestFromCreateBiodata({
+        requestNumber: requestNumber,
+        userDetails: userDetails,
+        modelDetails: modelDetails,
+        profileImage: formData.profileImage,
+        personalDetails: formData.personalDetails,
+        professionalDetails: formData.professionalDetails,
+        examinationDetails: formData.examPreparing,
+        educationDetails: formData.educationDetails,
+        familyDetails: formData.familyDetails,
+        contactDetails: formData.contactDetails
+      });
+      console.log("Biodata saved successfully:", response);
+    }
+    catch (error) {
+      console.error("Error saving biodata:", error);
+      alert("Failed to save biodata");
+    }
 
     if (currentStep !== steps.length - 1) {
       handleNext();
@@ -137,7 +136,7 @@ const CreateBiodata = () => {
     }
 
     // Validate contact data
-    if (!formData.contactData?.address || !formData.contactData?.mobile) {
+    if (!formData.contactDetails?.address || !formData.contactDetails?.mobile) {
       alert("Please fill in all contact information");
       return;
     }
@@ -155,6 +154,53 @@ const CreateBiodata = () => {
     "Preview",
   ];
 
+  const setFamilyDetails = (relation, index, key, value) => {
+        setFormData(prev => ({
+            ...prev,
+            familyDetails: {
+                ...prev.familyDetails,
+                [relation]: {
+                    ...prev.familyDetails[relation],
+                    value: Array.isArray(prev.familyDetails[relation].value)
+                        ? prev.familyDetails[relation].value.map((person, i) => 
+                            i === index ? { ...person, [key]: value } : person
+                        )
+                        : { ...prev.familyDetails[relation].value, [key]: value }
+                }
+            }
+        }));
+    };
+
+    // Function to add a sibling (brother/sister)
+    const handleAddSibling = (relation) => {
+        if (formData.familyDetails[relation].value.length < 6) {
+            setFormData(prev => ({
+                ...prev,
+                familyDetails: {
+                    ...prev.familyDetails,
+                    [relation]: {
+                        ...prev.familyDetails[relation],
+                        value: [...prev.familyDetails[relation].value, createEmptyPerson()]
+                    }
+                }
+            }));
+        }
+    };
+
+    // Function to remove a sibling (brother/sister)
+    const handleRemoveSibling = (relation, index) => {
+        setFormData(prev => ({
+            ...prev,
+            familyDetails: {
+                ...prev.familyDetails,
+                [relation]: {
+                    ...prev.familyDetails[relation],
+                    value: prev.familyDetails[relation].value.filter((_, i) => i !== index)
+                }
+            }
+        }));
+    };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
@@ -168,7 +214,7 @@ const CreateBiodata = () => {
                   accept="image/*"
                   className="create-biodata-image-input"
                   style={{ display: "none" }}
-                  onChange={handleImageChange}
+                  // onChange={handleImageChange}
                 />
                 <span className="create-biodata-upload-button">
                   {formData.profileImage ? "Change Image" : "Upload Image"}
@@ -223,16 +269,16 @@ const CreateBiodata = () => {
                 }
                 required
               />
-              {formData.personalData.map((field, index) => (
+              {formData.personalDetails.map((field, index) => (
                 <input
                   key={index}
                   type="text"
                   placeholder={field.label}
                   value={field.value}
                   onChange={(e) => {
-                    const newPersonalData = [...formData.personalData];
+                    const newPersonalData = [...formData.personalDetails];
                     newPersonalData[index].value = e.target.value;
-                    setFormData({ ...formData, personalData: newPersonalData });
+                    setFormData({ ...formData, personalDetails: newPersonalData });
                   }}
                   required
                 />
@@ -256,16 +302,16 @@ const CreateBiodata = () => {
                     className="exam-input"
                     placeholder="Examination Preparing"
                     value={
-                      formData.professionalData[0].examPreparing?.name || ""
+                      formData.professionalDetails[0].examPreparing?.name || ""
                     }
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        professionalData: [
+                        professionalDetails: [
                           {
-                            ...formData.professionalData[0],
+                            ...formData.professionalDetails[0],
                             examPreparing: {
-                              ...formData.professionalData[0].examPreparing,
+                              ...formData.professionalDetails[0].examPreparing,
                               name: e.target.value,
                             },
                           },
@@ -282,16 +328,16 @@ const CreateBiodata = () => {
                     className="exam-input"
                     placeholder="Examination Qualified"
                     value={
-                      formData.professionalData[0].examQualified?.name || ""
+                      formData.professionalDetails[0].examQualified?.name || ""
                     }
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        professionalData: [
+                        professionalDetails: [
                           {
-                            ...formData.professionalData[0],
+                            ...formData.professionalDetails[0],
                             examQualified: {
-                              ...formData.professionalData[0].examQualified,
+                              ...formData.professionalDetails[0].examQualified,
                               name: e.target.value,
                             },
                           },
@@ -303,74 +349,20 @@ const CreateBiodata = () => {
               </div>
             ) : (
               <div className="professional-inputs">
+                {formData.professionalDetails.map((field, index) => (
                 <input
+                  key={index}
                   type="text"
-                  placeholder="Company"
-                  value={formData.professionalData[0].company}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          company: e.target.value,
-                        },
-                      ],
-                    })
-                  }
+                  placeholder={field.label}
+                  value={field.value}
+                  onChange={(e) => {
+                    const newProfessionalDetails = [...formData.professionalDetails];
+                    newProfessionalDetails[index].value = e.target.value;
+                    setFormData({ ...formData, professionalDetails: newProfessionalDetails });
+                  }}
                   required
                 />
-                <input
-                  type="text"
-                  placeholder="Position"
-                  value={formData.professionalData[0].position}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          position: e.target.value,
-                        },
-                      ],
-                    })
-                  }
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Experience (years)"
-                  value={formData.professionalData[0].experience}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          experience: e.target.value,
-                        },
-                      ],
-                    })
-                  }
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Salary (LPA)"
-                  value={formData.professionalData[0].salary}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      professionalData: [
-                        {
-                          ...formData.professionalData[0],
-                          salary: e.target.value,
-                        },
-                      ],
-                    })
-                  }
-                  required
-                />
+              ))}
               </div>
             )}
           </div>
@@ -380,105 +372,50 @@ const CreateBiodata = () => {
           <>
             <div className="create-biodata-section">
               <h2>Education Information</h2>
-
-              {formData.educationData.length < 5 && (
+              {formData.educationDetails.length < 5 && (
                 <button
                   type="button"
                   className="create-biodata-add-btn"
                   onClick={handleAddEducation}
                 >
-                  + Add Education ({5 - formData.educationData.length}{" "}
+                  + Add Education ({5 - formData.educationDetails.length}{" "}
                   remaining)
                 </button>
               )}
 
-              {formData.educationData.map((education, index) => (
+              {formData.educationDetails.map((educationGroup, index) => (
                 <div key={index} className="education-group">
-                  <div className="education-header">
-                    <h3>Education {formData.educationData.length - index}</h3>
-                  </div>
-                  <div className="education-inputs">
-                    <input
-                      type="text"
-                      placeholder="Degree"
-                      value={education.degree}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          degree: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="Institution"
-                      value={education.institution}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          institution: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="Year"
-                      value={education.year}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          year: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="Score"
-                      value={education.score}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationData];
-                        newEducationData[index] = {
-                          ...newEducationData[index],
-                          score: e.target.value,
-                        };
-                        setFormData({
-                          ...formData,
-                          educationData: newEducationData,
-                        });
-                      }}
-                      required
-                    />
-
-                    {formData.educationData.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteEducation(index)}
-                        className="create-biodata-delete-btn"
-                      >
-                        Remove Education {formData.educationData.length - index}
-                      </button>
-                    )}
-                  </div>
+                    <div className="education-header">
+                        <h3>Education {formData.educationDetails.length - index}</h3>
+                    </div>
+                    <div className="education-inputs">
+                        {educationGroup.map((field, fieldIndex) => (
+                            <input
+                                key={fieldIndex}
+                                type="text"
+                                placeholder={field.label}
+                                value={field.value}
+                                onChange={(e) => {
+                                    const newEducationData = formData.educationDetails.map((group, i) =>
+                                        i === index ? group.map((f, fi) => (fi === fieldIndex ? { ...f, value: e.target.value } : f)) : group
+                                    );
+                                    setFormData({ ...formData, educationDetails: newEducationData });
+                                }}
+                                required
+                            />
+                        ))}
+                        {formData.educationDetails.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={() => handleDeleteEducation(index)}
+                                className="create-biodata-delete-btn"
+                            >
+                                Remove Education {formData.educationDetails.length - index}
+                            </button>
+                        )}
+                    </div>
                 </div>
-              ))}
+            ))}
             </div>
           </>
         );
@@ -488,170 +425,112 @@ const CreateBiodata = () => {
             <div className="create-biodata-section">
               <h2>Family Information</h2>
 
-              {/* Parents */}
-              {formData.familyData.slice(0, 2).map((member, index) => (
-                <div key={index} className="create-biodata-family-group">
-                  <h3>{member.relation}</h3>
-                  <div className="create-biodata-family-inputs">
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      value={member.name[0] || ""}
-                      onChange={(e) => {
-                        const newFamilyData = [...formData.familyData];
-                        newFamilyData[index].name = [e.target.value];
-                        setFormData({ ...formData, familyData: newFamilyData });
-                      }}
-                      required
-                    />
-                    <input
-                      style={{ display: "none" }}
-                      type="text"
-                      value="-"
-                      disabled
-                      className="married-status-disabled"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Occupation"
-                      value={member.occupation[0] || ""}
-                      onChange={(e) => {
-                        const newFamilyData = [...formData.familyData];
-                        newFamilyData[index].occupation = [e.target.value];
-                        setFormData({ ...formData, familyData: newFamilyData });
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-              ))}
-
-              {/* Brother Section */}
-              <div className="create-biodata-family-group">
-                <div className="sibling-header">
-                  <h3>Brother(s)</h3>
-                  {formData.familyData[2].name.length +
-                    formData.familyData[3].name.length <
-                    6 && (
-                    <button
-                      type="button"
-                      // onClick={() => handleAddSibling('brother')}
-                      className="create-biodata-add-btn"
-                    >
-                      + Add Brother
-                    </button>
-                  )}
-                </div>
-                <div className="create-biodata-siblings-grid">
-                  {formData.familyData[2].name.map((name, idx) => (
-                    <div className="create-biodata-sibling-row">
-                      <div className="create-biodata-sibling-inputs">
+            {/* Parents Section */}
+            {['father', 'mother'].map((relation) => (
+                <div key={relation} className="create-biodata-family-group">
+                    <h3>{formData.familyDetails[relation].label}</h3>
+                    <div className="create-biodata-family-inputs">
                         <input
-                          type="text"
-                          placeholder={`Brother ${idx + 1} Name`}
-                          value={name}
-                          onChange={(e) => {
-                            const newFamilyData = [...formData.familyData];
-                            newFamilyData[2].name[idx] = e.target.value;
-                            setFormData({
-                              ...formData,
-                              familyData: newFamilyData,
-                            });
-                          }}
+                            type="text"
+                            placeholder="Name"
+                            value={formData.familyDetails[relation].value.name}
+                            onChange={(e) => setFamilyDetails(relation, null, 'name', e.target.value)}
+                            required
                         />
                         <input
-                          type="text"
-                          placeholder="Occupation"
-                          value={formData.familyData[2].occupation[idx] || ""}
-                          onChange={(e) => {
-                            const newFamilyData = [...formData.familyData];
-                            newFamilyData[2].occupation[idx] = e.target.value;
-                            setFormData({
-                              ...formData,
-                              familyData: newFamilyData,
-                            });
-                          }}
+                            style={{ display: 'none' }}
+                            type="text"
+                            value="-"
+                            disabled
+                            className="married-status-disabled"
                         />
-                        <div className="create-biodata-sibling-radio-group">
-                          <label htmlFor="married">Married: </label>
-                          <label className="sibling-radio-option">
-                            <input
-                              type="radio"
-                              className="create-biodata-sibling-radio-input"
-                              name={`married-brother-${idx}`}
-                              value="No"
-                              checked={
-                                formData.familyData[2].married[idx] === "No"
-                              }
-                              onChange={(e) => {
-                                const newFamilyData = [...formData.familyData];
-                                newFamilyData[2].married[idx] = e.target.value;
-                                setFormData({
-                                  ...formData,
-                                  familyData: newFamilyData,
-                                });
-                              }}
-                            />
-                            <span className="create-biodata-sibling-radio-label">
-                              No
-                            </span>
-                          </label>
-                          <label className="create-biodata-sibling-radio-option">
-                            <input
-                              type="radio"
-                              className="create-biodata-sibling-radio-input"
-                              name={`married-brother-${idx}`}
-                              value="Yes"
-                              checked={
-                                formData.familyData[2].married[idx] === "Yes"
-                              }
-                           
-                              onChange={(e) => {
-                                const newFamilyData = [...formData.familyData];
-                                newFamilyData[2].married[idx] = e.target.value;
-                                setFormData({
-                                  ...formData,
-                                  familyData: newFamilyData,
-                                });
-                              }}
-                            />
-                            <span className="create-biodata-sibling-radio-label">
-                              Yes
-                            </span>
-                          </label>
-                        </div>
-                        <button
-                          type="button"
-                          //   onClick={() => handleRemoveSibling("brother", idx)}
-                          className="create-biodata-delete-btn"
-                        >
-                          Remove Brother
-                        </button>
-                      </div>
+                        <input
+                            type="text"
+                            placeholder="Occupation"
+                            value={formData.familyDetails[relation].value.occupation}
+                            onChange={(e) => setFamilyDetails(relation, null, 'occupation', e.target.value)}
+                            required
+                        />
                     </div>
-                  ))}
                 </div>
-              </div>
+            ))}
 
-              {/* Sister Section */}
-
-              <div className="create-biodata-family-group"></div>
+            {/* Sibling Section */}
+            {['brothers', 'sisters'].map((relation) => (
+                <div key={relation} className="create-biodata-family-group">
+                    <div className="sibling-header">
+                        <h3>{formData.familyDetails[relation].label}</h3>
+                        {formData.familyDetails[relation].value.length < 6 && (
+                            <button type="button" onClick={() => handleAddSibling(relation)} className="create-biodata-add-btn">
+                                + Add {relation === 'brothers' ? 'Brother' : 'Sister'}
+                            </button>
+                        )}
+                    </div>
+                    <div className="create-biodata-siblings-grid">
+                        {formData.familyDetails[relation].value.map((sibling, idx) => (
+                            <div key={idx} className="create-biodata-sibling-row">
+                                <div className="create-biodata-sibling-inputs">
+                                    <input
+                                        type="text"
+                                        placeholder={`${relation === 'brothers' ? 'Brother' : 'Sister'} ${idx + 1} Name`}
+                                        value={sibling.name}
+                                        onChange={(e) => setFamilyDetails(relation, idx, 'name', e.target.value)}
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Occupation"
+                                        value={sibling.occupation}
+                                        onChange={(e) => setFamilyDetails(relation, idx, 'occupation', e.target.value)}
+                                    />
+                                    <div className="create-biodata-sibling-radio-group">
+                                        <label>Married:</label>
+                                        <label className="sibling-radio-option">
+                                            <input
+                                                type="radio"
+                                                className="create-biodata-sibling-radio-input"
+                                                name={`married-${relation}-${idx}`}
+                                                value="No"
+                                                checked={sibling.married === 'No'}
+                                                onChange={(e) => setFamilyDetails(relation, idx, 'married', e.target.value)}
+                                            />
+                                            <span>No</span>
+                                        </label>
+                                        <label className="sibling-radio-option">
+                                            <input
+                                                type="radio"
+                                                className="create-biodata-sibling-radio-input"
+                                                name={`married-${relation}-${idx}`}
+                                                value="Yes"
+                                                checked={sibling.married === 'Yes'}
+                                                onChange={(e) => setFamilyDetails(relation, idx, 'married', e.target.value)}
+                                            />
+                                            <span>Yes</span>
+                                        </label>
+                                    </div>
+                                    <button type="button" onClick={() => handleRemoveSibling(relation, idx)} className="create-biodata-delete-btn">
+                                        Remove {relation === 'brothers' ? 'Brother' : 'Sister'}
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
             </div>
           </>
         );
       case 5: //Contact Information
         return (
-          <>
             <div className="create-biodata-section">
               <h2>Contact Information</h2>
               <textarea
                 placeholder="Address"
-                value={formData.contactData.address}
+                value={formData.contactDetails.address}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    contactData: {
-                      ...formData.contactData,
+                    contactDetails: {
+                      ...formData.contactDetails,
                       address: e.target.value,
                     },
                   })
@@ -661,12 +540,12 @@ const CreateBiodata = () => {
               <input
                 type="text"
                 placeholder="Mobile Number"
-                value={formData.contactData.mobile}
+                value={formData.contactDetails.mobile}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    contactData: {
-                      ...formData.contactData,
+                    contactDetails: {
+                      ...formData.contactDetails,
                       mobile: e.target.value,
                     },
                   })
@@ -674,135 +553,96 @@ const CreateBiodata = () => {
                 required
               />
             </div>
-          </>
         );
       case 6: // Preview Section
-        return (
-          <div className="create-biodata-preview">
+      return (
+        <div className="create-biodata-preview">
             <h2>Preview Your Biodata</h2>
 
             <div className="preview-section">
-              <div className="preview-image">
-                {formData.profileImage && (
-                  <img src={formData.profileImage} alt="Profile Preview" />
-                )}
-              </div>
-
-              <div className="preview-content">
+                {/* Personal Information */}
                 <section className="preview-group">
-                  <h3>Personal Information</h3>
-                  <div className="preview-details">
-                    <p>
-                      <strong>Name:</strong> {formData.name.value}
-                    </p>
-                    {formData.personalData.map((field, index) => (
-                      <p key={index}>
-                        <strong>{field.label}:</strong> {field.value}
-                      </p>
-                    ))}
-                  </div>
+                    <h3>Personal Information</h3>
+                    <div className="preview-details">
+                        {/* Personal Data */}
+                        {formData.personalDetails?.map((field, index) => (
+                            <p key={index}>
+                                <strong>{field.label}:</strong> {field.value || "Not Provided"}
+                            </p>
+                        ))}
+                    </div>
+                </section>
+                   {/* Professional Information */}
+                <section className="preview-group">
+                    <h3>Professional Information</h3>
+                    <div className="preview-details">
+                        {formData.professionalDetails.map((field, index) => (
+                            <p key={index}>
+                                <strong>{field.label}:</strong> {field.value || "Not Provided"}
+                            </p>
+                        ))}
+                    </div>
                 </section>
 
+                {/* Education Information */}
                 <section className="preview-group">
-                  <h3>
-                    {formData.biodataDetails?.modelType === "student"
-                      ? "Job Preparing Details"
-                      : "Professional Information"}
-                  </h3>
-                  <div className="preview-details">
-                    {formData.biodataDetails?.modelType === "student" ? (
-                      <>
-                        <p>
-                          <strong>Examination Preparing:</strong>{" "}
-                          {formData.professionalData[0].examPreparing?.name ||
-                            "N/A"}
-                        </p>
-                        <p>
-                          <strong>Examination Qualified:</strong>{" "}
-                          {formData.professionalData[0].examQualified?.name ||
-                            "N/A"}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p>
-                          <strong>Company:</strong>{" "}
-                          {formData.professionalData[0].company}
-                        </p>
-                        <p>
-                          <strong>Position:</strong>{" "}
-                          {formData.professionalData[0].position}
-                        </p>
-                        <p>
-                          <strong>Experience:</strong>{" "}
-                          {formData.professionalData[0].experience} years
-                        </p>
-                        <p>
-                          <strong>Salary:</strong> ₹
-                          {formData.professionalData[0].salary} LPA
-                        </p>
-                      </>
-                    )}
-                  </div>
+                    <h3>Education Information</h3>
+                    <div className="preview-details">
+                        {formData.educationDetails.map((eduGroup, index) => (
+                            <div key={index} className="education-item">
+                                <h4>Education {formData.educationDetails.length - index}</h4>
+                                {eduGroup.map((field, fieldIndex) => (
+                                    <p key={fieldIndex}>
+                                        <strong>{field.label}:</strong> {field.value || "Not Provided"}
+                                    </p>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
                 </section>
 
+                {/* Family Information */}
                 <section className="preview-group">
-                  <h3>Education Information</h3>
-                  <div className="preview-details">
-                    {formData.educationData.map((edu, index) => (
-                      <div key={index} className="education-item">
-                        <h4>
-                          Education {formData.educationData.length - index}
-                        </h4>
-                        <p>
-                          <strong>Degree:</strong> {edu.degree}
-                        </p>
-                        <p>
-                          <strong>Institution:</strong> {edu.institution}
-                        </p>
-                        <p>
-                          <strong>Year:</strong> {edu.year}
-                        </p>
-                        <p>
-                          <strong>Score:</strong> {edu.score}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                    <h3>Family Information</h3>
+                    <div className="preview-details">
+                        {/* Parents Section */}
+                        {['father', 'mother'].map((relation) => (
+                            <div key={relation} className="family-item">
+                                <h4>{formData.familyDetails?.[relation]?.label}</h4>
+                                <p><strong>Name:</strong> {formData.familyDetails?.[relation]?.value?.name || "Not Provided"}</p>
+                                <p><strong>Occupation:</strong> {formData.familyDetails?.[relation]?.value?.occupation || "Not Provided"}</p>
+                            </div>
+                        ))}
+
+                        {/* Siblings Section */}
+                        {['brothers', 'sisters'].map((relation) => (
+                            <div key={relation} className="family-item">
+                                <h4>{formData.familyDetails?.[relation]?.label}</h4>
+                                {formData.familyDetails?.[relation]?.value?.map((sibling, idx) => (
+                                    <div key={idx} className="sibling-item">
+                                        <p><strong>Name:</strong> {sibling?.name || "Not Provided"}</p>
+                                        <p><strong>Occupation:</strong> {sibling?.occupation || "Not Provided"}</p>
+                                        <p><strong>Married:</strong> {sibling?.married || "Not Provided"}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
                 </section>
 
+                {/* Contact Information */}
                 <section className="preview-group">
-                  <h3>Family Information</h3>
-                  <div className="preview-details">
-                    {formData.familyData.slice(0, 2).map((member, index) => (
-                      <div key={index} className="family-item">
-                        <h4>{member.relation}</h4>
-                        <p>
-                          <strong>Name:</strong> {member.name[0]}
-                        </p>
-                        <p>
-                          <strong>Occupation:</strong> {member.occupation[0]}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                    <h3>Contact Information</h3>
+                    <div className="preview-details">
+                        <p><strong>Address:</strong> {formData.contactDetails?.address || "Not Provided"}</p>
+                        <p><strong>Mobile:</strong> {formData.contactDetails?.mobile || "Not Provided"}</p>
+                    </div>
                 </section>
-
-                <section className="preview-group">
-                  <h3>Contact Information</h3>
-                  <div className="preview-details">
-                    <p>
-                      <strong>Address:</strong> {formData.contactData.address}
-                    </p>
-                    <p>
-                      <strong>Mobile:</strong> {formData.contactData.mobile}
-                    </p>
-                  </div>
-                </section>
-              </div>
             </div>
-          </div>
-        );
+        </div>
+    );
+
+
     }
   };
 

@@ -15,86 +15,48 @@ const ICON_MAPPING = {
     "Caste": <Person className="g1111-icon" />
 };
 
-
-const personalData = [
-    { label: "Date of Birth", value: "01 January 1995" },
-    { label: "Height", value: "5'10\"" },
-    { label: "Complexion", value: "Fair" },
-    { label: "Caste", value: "Hindu, Brahmin" }
+const PersonalData = [
+    { label: 'Date of Birth', value: '' },
+    { label: 'Height', value: '' },
+    { label: 'Complexion', value: '' },
+    { label: 'Caste', value: '' }
 ];
 
-const professionalData = [
-    {
-        company: "TCS",
-        position: "Software Engineer",
-        experience: "2+",
-        salary: "8 LPA"
-    }
+const ProfessionalData = [
+    { label: 'Company', value: '' },
+    { label: 'Position', value: '' },
+    { label: 'Experience (in years)', value: '' },
+    { label: 'Salary', value: '' }
 ];
 
-const educationData = [
-    {
-        degree: "Post Graduation (MCA)",
-        institution: "RGPV, Bhopal (M.P)",
-        year: "2021-2023",
-        score: "8.5 CGPA"
-    },
-    {
-        degree: "Graduation (BCA)",
-        institution: "RGPV, Bhopal (M.P)",
-        year: "2018-2021",
-        score: "8.0 CGPA"
-    },
-    {
-        degree: "12th Standard",
-        institution: "CBSE",
-        year: "2017-2018",
-        score: "85%"
-    },
-    {
-        degree: "10th Standard",
-        institution: "CBSE",
-        year: "2015-2016",
-        score: "88%"
-    }
+const EducationData = [
+    { label: 'Degree', value: '' },
+    { label: 'Institution', value: '' },
+    { label: 'Year', value: '' },
+    { label: 'Score', value: '' }
 ];
 
+const createEmptyPerson = () => ({
+    name: '',
+    married: '',
+    occupation: ''
+});
 
-const familyData = [
-    {
-        relation: "Father",
-        name: ["Mr. Suraj Kumar"],
-        married: ["-"],
-        occupation: ["Business"]
-    },
-    {
-        relation: "Mother",
-        name: ["Mrs. Surbhi Kumari"],
-        married: ["-"],
-        occupation: ["Homemaker"]
-    },
-    {
-        relation: "Brother(s)",
-        name: ["Mr. Vishal Kumar", "Mr. Vaibhav Kumar"],
-        married: ["Yes", "No"],
-        occupation: ["Businessman", "Software Engineer"]
-    },
-    {
-        relation: "Sister(s)",
-        name: ["Mrs. Komal Kumari", "Ms. Mehak Kumari"],
-        married: ["Yes", "No"],
-        occupation: ["Housewife", "Studying"]
-    }
-];
-
-const contactData = {
-    address: "H.No. 521, Vijay Nagar Square, Indore, \nMadhya Pradesh-402310",
-    mobile: "+91 9263767441"
+const FamilyData = {
+    father: { label: 'Father', value: createEmptyPerson() },
+    mother: { label: 'Mother', value: createEmptyPerson() },
+    brothers: { label: 'Brother(s)', value: [] },
+    sisters: { label: 'Sister(s)', value: [] }
 };
+
+const ContactData = [
+    { label: 'Address', value: '' },
+    { label: 'MobileNo', value: '' }
+];
 
 
 export {
 
-    personalData, educationData, professionalData, contactData, familyData, defaultName, ICON_MAPPING
+    PersonalData, EducationData, ProfessionalData, ContactData, FamilyData, createEmptyPerson, defaultName, ICON_MAPPING,
 
 };

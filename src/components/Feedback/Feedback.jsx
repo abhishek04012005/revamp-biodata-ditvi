@@ -1,22 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import "./Feedback.css";
+import { UserFeedbackStorage } from "../../supabase/UserFeedback";
 
 const Feedback = () => {
+  const { requestNumber } = useParams();
   const [formData, setFormData] = useState({
     rating: 0,
-    message: "",
+    comment: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState("");
+  const [comment, setComment] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
+
+  useEffect(() => {
+    UserFeedbackStorage.getUserFeedback(requestNumber)
+      .then((response) => {
+        if (response) {
+          setShowThankYou(true);
+          setComment("Feedback already submitted");
+          setFormData({
+            rating: response.rating,
+            comment: response.comment,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user feedback:", error);
+      });
+  },[]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
-      message: e.target.value,
+      comment: e.target.value,
     }));
   };
 
@@ -31,18 +51,31 @@ const Feedback = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setShowThankYou(true);
+    try {
+      const response = await UserFeedbackStorage.saveUserFeedback({
+        requestNumber: requestNumber,
+        comment: formData.comment,
+        rating: formData.rating,
+      });
+      if (response) {
+        setComment("Feedback submitted successfully!");
+        setShowThankYou(true);
+        // setTimeout(() => {
+        //   setShowThankYou(false);
+        //   setFormData({ rating: 0, comment: "" });
+        //   setComment("");
+        // }, 3000);
+      } else {
+        setComment("Failed to submit feedback.");
+      }
+    }
+    catch (error) {
+      console.error("Error submitting feedback:", error);
+      setComment("An error occurred while submitting feedback.");
+    }
+    finally {
       setIsSubmitting(false);
-      setTimeout(() => {
-        setShowThankYou(false);
-        setMessage("Thank you for your valuable feedback!");
-        setFormData({
-          rating: 0,
-          message: "",
-        });
-      }, 2000);
-    }, 1500);
+    }
   };
 
   return (
@@ -91,7 +124,7 @@ const Feedback = () => {
             <div className="message-container">
               <textarea
                 placeholder="Share your thoughts with us..."
-                value={formData.message}
+                value={formData.comment}
                 onChange={handleChange}
                 rows="4"
                 className="animated-textarea"
@@ -101,7 +134,7 @@ const Feedback = () => {
             <button
               type="submit"
               className={`submit-btn ${isSubmitting ? 'loading' : ''}`}
-              disabled={isSubmitting || formData.rating === 0}
+              disabled={isSubmitting || formData.rating === 0 || formData.comment === ""}
             >
               <span className="btn-content">
                 {isSubmitting ? "Submitting..." : "Submit Feedback"}
@@ -109,7 +142,7 @@ const Feedback = () => {
               <span className="btn-shine"></span>
             </button>
 
-            {message && <div className="message success">{message}</div>}
+            {comment && <div className="message success">{comment}</div>}
           </form>
         </div>
 
