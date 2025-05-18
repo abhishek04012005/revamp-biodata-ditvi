@@ -95,7 +95,6 @@ const CheckStatus = () => {
       <div className="status-card">
         <div 
           className="status-header" 
-          style={{ background: steps[currentStatus - 1].color.main }}
         >
           <div className="header-content">
             <div className="header-left">

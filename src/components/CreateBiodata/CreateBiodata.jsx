@@ -99,8 +99,8 @@ const CreateBiodata = () => {
       setFormData((prev) => ({
         ...prev,
         educationDetails: [
-          ...prev.educationDetails,
           EducationData.map(({ label }) => ({ label, value: "" })),
+          ...prev.educationDetails,
         ],
       }));
     }
@@ -195,7 +195,7 @@ const CreateBiodata = () => {
           ...prev.familyDetails,
           [relation]: {
             ...prev.familyDetails[relation],
-            value: [...prev.familyDetails[relation].value, createEmptyPerson()],
+            value: [createEmptyPerson(), ...prev.familyDetails[relation].value],
           },
         },
       }));
@@ -565,7 +565,10 @@ const CreateBiodata = () => {
                                 type="text"
                                 placeholder={`${
                                   relation === "brothers" ? "Brother" : "Sister"
-                                } ${idx + 1} Name`}
+                                } ${
+                                  formData.familyDetails[relation].value
+                                    .length - idx
+                                } Name`}
                                 value={sibling.name}
                                 onChange={(e) =>
                                   setFamilyDetails(
@@ -701,6 +704,19 @@ const CreateBiodata = () => {
             <h2>Preview Your Biodata</h2>
 
             <div className="preview-section">
+              {/* Profile Image */}
+              {formData.profileImage && (
+                <section className="preview-group profile-image-preview">
+                  <h3>Profile Image</h3>
+                  <div className="preview-image-container">
+                    <img
+                      src={formData.profileImage}
+                      alt="Profile Preview"
+                      className="preview-profile-image"
+                    />
+                  </div>
+                </section>
+              )}
               {/* Personal Information */}
               <section className="preview-group">
                 <h3>Personal Information</h3>
