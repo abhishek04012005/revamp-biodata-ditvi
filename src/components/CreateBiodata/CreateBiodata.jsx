@@ -231,7 +231,7 @@ const CreateBiodata = () => {
                   accept="image/*"
                   className="create-biodata-image-input"
                   style={{ display: "none" }}
-                  // onChange={handleImageChange}
+                  onChange={handleImageChange}
                 />
                 <span className="create-biodata-upload-button">
                   {formData.profileImage ? "Change Image" : "Upload Image"}
