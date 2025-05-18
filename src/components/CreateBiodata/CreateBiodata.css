@@ -364,3 +364,112 @@ select:focus {
   background-color: #FF8C42;
   color: white;
 }
+
+.create-biodata-label-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+.create-biodata-label {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  width: 30%;
+  text-align: left;
+}
+
+
+/* Radio Button Group Styles */
+.sibling-radio-option {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1rem;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.sibling-radio-option:hover {
+  background-color: rgba(255, 140, 66, 0.1);
+}
+
+.create-biodata-sibling-radio-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sibling-radio-option span {
+  position: relative;
+  padding-left: 28px;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.sibling-radio-option span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid #FF8C42;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.create-biodata-sibling-radio-input:checked + span::before {
+  border-color: #FF8C42;
+  background-color: #FF8C42;
+}
+
+.create-biodata-sibling-radio-input:checked + span::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+/* Radio Group Container */
+.create-biodata-sibling-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+/* Focus and Active States */
+.create-biodata-sibling-radio-input:focus + span::before {
+  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.2);
+}
+
+/* Disabled State */
+.sibling-radio-option.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .create-biodata-sibling-radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .sibling-radio-option {
+    margin-right: 0;
+    width: 100%;
+  }
+}
