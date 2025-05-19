@@ -67,7 +67,6 @@
     overflow: hidden;
     background: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
     padding: clamp(5rem, 8vw, 10rem) 1rem 2rem;
-    margin-top: 4rem;
     min-height: 78vh;
 }
 
