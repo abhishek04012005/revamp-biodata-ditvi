@@ -9,13 +9,17 @@ import {
   EducationData,
   createEmptyPerson,
   FamilyData,
+  ExaminationData,
 } from "../../json/createBiodata";
 import { Mode } from "@mui/icons-material";
 import ModelTypes from "../../json/ModelTypes";
-import { BiodataRequestsStorage } from "../../supabase/BiodataRequests";
+import { UploadFile } from '../../supabase/UploadFile';
+import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
+import StorageBucket from "../../constants/StorageBucket";
 
 const CreateBiodata = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -34,7 +38,9 @@ const CreateBiodata = () => {
     professionalDetails: ProfessionalData.map(
       ({ label, value, placeholder }) => ({ label, value, placeholder })
     ),
-    examinaitonDetails: {},
+    examinaitonDetails: ExaminationData.map(
+      ({ label, value, placeholder }) => ({ label, value, placeholder })
+    ),
     educationDetails: [
       EducationData.map(({ label, value, placeholder }) => ({
         label,
@@ -119,6 +125,12 @@ const CreateBiodata = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+     if (currentStep === 0 && !formData.profileImage) {
+        alert("Please upload a profile image before proceeding");
+        return;
+    }
+
     if (currentStep !== steps.length - 1) {
       handleNext();
       return;
@@ -126,37 +138,32 @@ const CreateBiodata = () => {
 
     try {
       setIsLoading(true);
+      const profileUrl = await UploadFile(selectedImage, `${requestNumber}_profile`, StorageBucket.CREATE_BIODATA);
       const response =
-        await BiodataRequestsStorage.saveBiodataRequestFromCreateBiodata({
+        await BiodataRequestStorage.saveBiodataRequestFromCreateBiodata({
           requestNumber: requestNumber,
           userDetails: userDetails,
           modelDetails: modelDetails,
-          profileImage: formData.profileImage,
+          profileUrl: profileUrl,
           personalDetails: formData.personalDetails,
           professionalDetails: formData.professionalDetails,
-          examinationDetails: formData.examPreparing,
+          examinationDetails: formData.examinaitonDetails,
           educationDetails: formData.educationDetails,
           familyDetails: formData.familyDetails,
           contactDetails: formData.contactDetails,
         });
+
+        setIsLoading(false);
+        navigate('/confirmation', { state: { 
+            requestNumber: requestNumber,
+            userDetails: userDetails,
+            modelDetails: modelDetails,
+         } });
       console.log("Biodata saved successfully:", response);
     } catch (error) {
       console.error("Error saving biodata:", error);
       alert("Failed to save biodata");
     }
-
-    if (currentStep !== steps.length - 1) {
-      handleNext();
-      return;
-    }
-
-    // Validate contact data
-    if (!formData.contactDetails?.address || !formData.contactDetails?.mobile) {
-      alert("Please fill in all contact information");
-      return;
-    }
-
-    setIsLoading(true);
   };
 
   const steps = [
@@ -274,21 +281,6 @@ const CreateBiodata = () => {
           <>
             <div className="create-biodata-section">
               <h2>Personal Information</h2>
-              <div className="create-biodata-label-input">
-                <label className="create-biodata-label">Name:</label>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={formData.name.value}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      name: { value: e.target.value },
-                    })
-                  }
-                  required
-                />
-              </div>
               {formData.personalDetails.map((field, index) => (
                 <>
                   <div className="create-biodata-label-input">
@@ -316,66 +308,40 @@ const CreateBiodata = () => {
             </div>
           </>
         );
-      case 2: // Professional Information
+      case 2: // Professional/Examination Information
         return (
           <div className="create-biodata-section">
             <h2>
               {modelDetails?.type === ModelTypes.Student.Name
-                ? "Job Preparing Details"
-                : "Professional Information"}
+                ? "Examination Preparation Details"
+                : "Professional Details"}
             </h2>
             {modelDetails?.type === ModelTypes.Student.Name ? (
-              <div className="examination-details">
-                <div className="examination-group">
-                  <input
-                    type="text"
-                    className="exam-input"
-                    placeholder="Examination Preparing"
-                    value={
-                      formData.professionalDetails[0].examPreparing?.name || ""
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        professionalDetails: [
-                          {
-                            ...formData.professionalDetails[0],
-                            examPreparing: {
-                              ...formData.professionalDetails[0].examPreparing,
-                              name: e.target.value,
-                            },
-                          },
-                        ],
-                      })
-                    }
-                    required
-                  />
-                </div>
-
-                <div className="examination-group">
-                  <input
-                    type="text"
-                    className="exam-input"
-                    placeholder="Examination Qualified"
-                    value={
-                      formData.professionalDetails[0].examQualified?.name || ""
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        professionalDetails: [
-                          {
-                            ...formData.professionalDetails[0],
-                            examQualified: {
-                              ...formData.professionalDetails[0].examQualified,
-                              name: e.target.value,
-                            },
-                          },
-                        ],
-                      })
-                    }
-                  />
-                </div>
+              <div className="professional-inputs">
+                {formData.examinaitonDetails.map((field, index) => (
+                  <div className="create-biodata-label-input">
+                    <label className="create-biodata-label">
+                      {field.label}:
+                    </label>
+                    <input
+                      key={index}
+                      type="text"
+                      placeholder={field.placeholder}
+                      value={field.value}
+                      onChange={(e) => {
+                        const newExaminaitonDetails = [
+                          ...formData.examinaitonDetails,
+                        ];
+                        newExaminaitonDetails[index].value = e.target.value;
+                        setFormData({
+                          ...formData,
+                          examinaitonDetails: newExaminaitonDetails,
+                        });
+                      }}
+                      required
+                    />
+                  </div>
+                ))}
               </div>
             ) : (
               <div className="professional-inputs">
@@ -492,7 +458,7 @@ const CreateBiodata = () => {
                       <label className="create-biodata-label">Name:</label>
                       <input
                         type="text"
-                        placeholder="Name"
+                        placeholder={formData.familyDetails[relation].placeholder}
                         value={formData.familyDetails[relation].value.name}
                         onChange={(e) =>
                           setFamilyDetails(
@@ -518,7 +484,7 @@ const CreateBiodata = () => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Occupation"
+                        placeholder={relation === "father" ? "Goverment Service" : "Housewife"}
                         value={
                           formData.familyDetails[relation].value.occupation
                         }
@@ -664,7 +630,7 @@ const CreateBiodata = () => {
             <div className="create-biodata-label-input">
               <label className="create-biodata-label">Address:</label>
               <textarea
-                placeholder="Indore"
+                placeholder="House No. 341, 2 Scheme No 94C, Ring Road, Indore, Madhya Pradesh, India, 452010"
                 value={formData.contactDetails.address}
                 onChange={(e) =>
                   setFormData({

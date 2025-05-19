@@ -39,7 +39,24 @@ CREATE TABLE public.biodata_request (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- DROP TABLE public.biodata_request ;
+CREATE TABLE public.production_request (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    biodata_request_id UUID NOT NULL,
+    request_number int4 NOT NULL,
+    flow_type int2 NOT NULL,
+    profile_url TEXT NULL,
+    biodata_url TEXT NULL,
+    user_details JSONB NOT NULL,
+    model_details JSONB NOT NULL,
+    personal_details JSONB NULL,
+    professional_details JSONB  NULL,
+    examination_details JSONB NULL,
+    education_details JSONB NULL,
+    family_details JSONB NULL,
+    contact_details JSONB NULL,
+    deleted BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
 
 
 CREATE TABLE public.user_feedback (
@@ -50,3 +67,5 @@ CREATE TABLE public.user_feedback (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
+-- DROP TABLE public.biodata_request ;
+-- DROP TABLE public.production_request ;

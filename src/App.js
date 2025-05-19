@@ -12,7 +12,7 @@ import ScrollToTop from "./structure/ScrollToTop/ScrollToTop";
 import ChooseOption from "./components/ChooseOption/ChooseOption";
 import BlogDetail from "./components/BlogDetail/BlogDetail";
 import BiodataDetail from "./components/BiodataDetail/BiodataDetail";
-import AdminLogin from "./components/Admin/AdminLogin/AdminLogin";
+import AdminLogin from "./fds/Admin/AdminLogin/AdminLogin";
 import AdminDashboard from "./components/Admin/AdminDashboard/AdminDashboard";
 import ProductionDashboard from "./components/Admin/ProductionDashboard/ProductionDashboard";
 import BiodataMaster from "./structure/BiodataMaster/BiodataMaster";
@@ -77,15 +77,9 @@ function App() {
                     <Route path="choose-option" element={<ChooseOption />} />
                     <Route path="upload-biodata" element={<UploadBiodata />} />
                     <Route path="create-biodata" element={<CreateBiodata />} />
-                    <Route
-                      path="confirmation"
-                      element={<RequestConfirmation />}
-                    />
-                    <Route
-                      path="feedback/:requestNumber"
-                      element={<Feedback />}
-                    />
-                    <Route path="status" element={<CheckStatus />} />
+                    <Route path="confirmation" element={<RequestConfirmation />} />
+                    <Route path="feedback/:requestNumber" element={<Feedback />} />
+                    <Route path="track-status/:requestNumber" element={<CheckStatus />} />
                   </Routes>
                   <Footer />
                 </>
