@@ -119,6 +119,12 @@ const CreateBiodata = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+     if (currentStep === 0 && !formData.profileImage) {
+        alert("Please upload a profile image before proceeding");
+        return;
+    }
+
     if (currentStep !== steps.length - 1) {
       handleNext();
       return;
@@ -477,7 +483,7 @@ const CreateBiodata = () => {
                       <label className="create-biodata-label">Name:</label>
                       <input
                         type="text"
-                        placeholder="Name"
+                        placeholder={formData.familyDetails[relation].placeholder}
                         value={formData.familyDetails[relation].value.name}
                         onChange={(e) =>
                           setFamilyDetails(
@@ -503,7 +509,7 @@ const CreateBiodata = () => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Occupation"
+                        placeholder={relation === "father" ? "Goverment Service" : "Housewife"}
                         value={
                           formData.familyDetails[relation].value.occupation
                         }
@@ -649,7 +655,7 @@ const CreateBiodata = () => {
             <div className="create-biodata-label-input">
               <label className="create-biodata-label">Address:</label>
               <textarea
-                placeholder="Indore"
+                placeholder="House No. 341, 2 Scheme No 94C, Ring Road, Indore, Madhya Pradesh, India, 452010"
                 value={formData.contactDetails.address}
                 onChange={(e) =>
                   setFormData({

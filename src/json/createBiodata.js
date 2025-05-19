@@ -36,8 +36,8 @@ const createEmptyPerson = () => ({
 });
 
 const FamilyData = {
-    father: { label: 'Father', value: createEmptyPerson(), placeholder: 'Mr. Shubham Kumar' },
-    mother: { label: 'Mother', value: createEmptyPerson(), placeholder: 'Mrs. Riya Devi' },
+    father: { label: 'Father', value: createEmptyPerson(), placeholder: 'Mr. Shiv Prasad Sharma' },
+    mother: { label: 'Mother', value: createEmptyPerson(), placeholder: 'Mrs. Surbhi Sharma' },
     brothers: { label: 'Brother(s)', value: [] },
     sisters: { label: 'Sister(s)', value: [] }
 };
