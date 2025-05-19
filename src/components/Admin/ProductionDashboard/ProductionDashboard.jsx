@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import './ProductionDashboard.css'
-import AdminHeader from '../AdminHeader/AdminHeader'
 import { Storage, Description, Search, Visibility } from '@mui/icons-material'
 
 const ProductionDashboard = () => {
@@ -39,7 +38,7 @@ const ProductionDashboard = () => {
     return (
         <>
             <div className="production-dashboard">
-                <AdminHeader />
+
                 <div className="production-dashboard-content">
                     <div className="production-dashboard-stats">
                         {

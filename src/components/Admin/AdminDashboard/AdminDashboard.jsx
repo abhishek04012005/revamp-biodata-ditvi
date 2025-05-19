@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './AdminDashboard.css';
-import AdminHeader from '../AdminHeader/AdminHeader';
 import {
     Dashboard,
     People,
@@ -101,7 +100,6 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
-            <AdminHeader />
             <div className="dashboard-content">
                 <div className="dashboard-stats">
                     {stats.map((stat, index) => (
