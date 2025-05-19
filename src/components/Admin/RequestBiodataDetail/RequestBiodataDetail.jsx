@@ -100,12 +100,12 @@ const RequestBiodataDetail = () => {
 
       await BiodataRequestStorage.updateBiodataRequestById(requestId, {
         profileUrl,
-        personal_details: formData.personalDetails,
-        professional_details: formData.professionalDetails,
-        examination_details: formData.examinationDetails,
-        education_details: formData.educationDetails,
-        family_details: formData.familyDetails,
-        contact_details: formData.contactDetails,
+        personalDetails: formData.personalDetails,
+        professionalDetails: formData.professionalDetails,
+        examinationDetails: formData.examinationDetails,
+        educationDetails: formData.educationDetails,
+        familyDetails: formData.familyDetails,
+        contactDetails: formData.contactDetails,
       });
 
       setIsEditing(false);
