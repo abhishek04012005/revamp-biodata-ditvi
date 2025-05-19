@@ -1,13 +1,5 @@
 import { Height, Palette, Person, CalendarMonth } from '@mui/icons-material';
 
-const defaultName = {
-    label: "Name",
-    value: "Ayush Kumar"
-};
-
-
-
-
 const ICON_MAPPING = {
     "Date of Birth": <CalendarMonth className="g1111-icon" />,
     "Height": <Height className="g1111-icon" />,
@@ -16,14 +8,15 @@ const ICON_MAPPING = {
 };
 
 const PersonalData = [
-    { label: 'Date of Birth', value: '', placeholder: 'DD/MM/YYYY' },
+    { label: 'Name', value: '', placeholder: 'Neha Sharma' },
+    { label: 'Date of Birth', value: '', placeholder: '24/12/1994' },
     { label: 'Height', value: '', placeholder: '5 ft 2 in' },
     { label: 'Complexion', value: '', placeholder: 'Fair' },
-    { label: 'Caste', value: '', placeholder: 'Brahmin' },
+    { label: 'Caste', value: '', placeholder: 'Brahmin, Hindu' },
 ];
 
 const ProfessionalData = [
-    { label: 'Company', value: '', placeholder: 'Google' },
+    { label: 'Company', value: '', placeholder: 'TCS' },
     { label: 'Position', value: '', placeholder: 'Software Engineer' },
     { label: 'Experience (in years)', value: '', placeholder: '2' },
     { label: 'Salary', value: '', placeholder: '8 LPA' },
@@ -36,6 +29,11 @@ const EducationData = [
     { label: 'Score', value: '', placeholder: '8.5 CGPA' },
 ];
 
+const ExaminationData = [
+    { label: 'Examination Preparing For', value: '', placeholder: 'UPCS' },
+    { label: 'Examination Qualified', value: '', placeholder: `UPSC-${new Date().getFullYear() - 1} (Pre)` }
+];
+
 const createEmptyPerson = () => ({
     name: '',
     married: '',
@@ -43,8 +41,8 @@ const createEmptyPerson = () => ({
 });
 
 const FamilyData = {
-    father: { label: 'Father', value: createEmptyPerson(), placeholder: 'Shubham Kumar' },
-    mother: { label: 'Mother', value: createEmptyPerson(), placeholder: 'Riya Kumari' },
+    father: { label: 'Father', value: createEmptyPerson(), placeholder: 'Mr. Shiv Prasad Sharma' },
+    mother: { label: 'Mother', value: createEmptyPerson(), placeholder: 'Mrs. Surbhi Sharma' },
     brothers: { label: 'Brother(s)', value: [] },
     sisters: { label: 'Sister(s)', value: [] }
 };
@@ -56,7 +54,5 @@ const ContactData = [
 
 
 export {
-
-    PersonalData, EducationData, ProfessionalData, ContactData, FamilyData, createEmptyPerson, defaultName, ICON_MAPPING,
-
+    PersonalData, EducationData, ExaminationData, ProfessionalData, ContactData, FamilyData, createEmptyPerson, ICON_MAPPING,
 };

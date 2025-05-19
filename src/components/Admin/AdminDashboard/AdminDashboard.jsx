@@ -12,11 +12,12 @@ import {
     Delete
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { BiodataRequestsStorage } from '../../../supabase/BiodataRequests';
+import { BiodataRequestStorage } from '../../../supabase/BiodataRequest';
 import formatDate from '../../../utils/DateHelper';
 import { getLatestStatusId, getLatestStatusText, getStatusStyle } from '../../../utils/StatusHelper';
 import { MOVE_BACKWARD, MOVE_FORWARD } from '../../../constants/StatusSteps';
 import { getFlowTypeById } from '../../../constants/FlowType';
+import { ProductionRequestStorage } from '../../../supabase/ProductionRequest';
 
 const AdminDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -27,7 +28,7 @@ const AdminDashboard = () => {
 
     const fetchRequests = async () => {
         try {
-            const response = await BiodataRequestsStorage.getAllBiodataRequest();
+            const response = await BiodataRequestStorage.getAllBiodataRequest();
             if (response) {
                 setRequests(response);
             } else {
@@ -53,21 +54,48 @@ const AdminDashboard = () => {
         setSearchTerm(e.target.value);
     };
 
+    const moveToProduction = async (request) => {
+        try{
+            const response = await ProductionRequestStorage.saveProductionRequest({
+                biodataRequestId: request.id,
+                requestNumber: request.request_number,
+                flowType:request.flow_type,
+                userDetails: request.user_details,
+                modelDetails: request.model_details,
+                profileUrl: request.profile_url,
+                biodataUrl: request.biodata_url,
+                personalDetails: request.personal_details,
+                professionalDetails: request.professional_details,
+                examinationDetails: request.examination_details,
+                educationDetails: request.education_details,
+                familyDetails: request.family_details,
+                contactDetails: request.contact_details,
+            })
+        } catch (error) {
+          console.error('Error getAllBiodataRequest:', error);
+          throw error;
+        }
+    };
+
 
     const handleStatusChange = async (direction, requestId) => {
         const request = requests.find(r => r.id === requestId);
         if (!request) return;
 
         const currentStatusArray = request.status || [];
+        const latestStatusId = getLatestStatusId(currentStatusArray);
+
+        if(latestStatusId === 0) moveToProduction(request)
+
         direction === MOVE_FORWARD
-            ? currentStatusArray.push({ id: getLatestStatusId(currentStatusArray) + 1, created: new Date().toISOString() })
+            ? currentStatusArray.push({ id: latestStatusId + 1, created: new Date().toISOString() })
             : currentStatusArray.length && currentStatusArray.pop();
-        await BiodataRequestsStorage.updateStatusBiodataRequestById(requestId, currentStatusArray);
+        await BiodataRequestStorage.updateStatusBiodataRequestById(requestId, currentStatusArray);
         fetchRequests();
     };
 
     const handleDelete = async (id) => {
-        await BiodataRequestsStorage.deleteBiodataRequestById(id);
+        await BiodataRequestStorage.deleteBiodataRequestById(id);
         fetchRequests();
     };
 

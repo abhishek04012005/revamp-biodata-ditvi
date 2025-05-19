@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './ChooseOption.css';
 import { WhatsApp, Upload, Create, ArrowForward } from '@mui/icons-material';
 import Container from '../../structure/Container/Container';
-import { BiodataRequestsStorage } from '../../supabase/BiodataRequests';
+import { BiodataRequestStorage } from '../../supabase/BiodataRequest';
 
 
 const OptionCard = ({ icon, title, description, onClick, primary }) => (
@@ -24,7 +24,7 @@ const ChooseOption = () => {
 
     const handleWhatsAppClick = async () => {
         try {
-                await BiodataRequestsStorage.saveBiodataRequestFromWhatsapp({
+                await BiodataRequestStorage.saveBiodataRequestFromWhatsapp({
                     requestNumber: requestNumber,
                     userDetails: userDetails,
                     modelDetails: modelDetails

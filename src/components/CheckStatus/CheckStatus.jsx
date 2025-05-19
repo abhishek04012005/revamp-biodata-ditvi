@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import "./CheckStatus.css";
 import {
   CheckCircle,
@@ -14,15 +15,20 @@ import {
   ArrowForward,
 } from "@mui/icons-material";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
+import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
+import { getLatestStatusId } from "../../utils/StatusHelper";
 
 const CheckStatus = () => {
+  const { requestNumber } = useParams();
   const [currentStatus, setCurrentStatus] = useState(1);
   const [timestamps, setTimestamps] = useState({});
   const [selectedStep, setSelectedStep] = useState(null);
+  const [isValidRequest, setIsValidRequest] = useState(true); 
+
 
   const steps = [
     {
-      id: 1,
+      id: 0,
       title: "Request Received",
       icon: <AssignmentTurnedIn />,
       description: "Your biodata request has been received and is being processed.",
@@ -30,15 +36,15 @@ const CheckStatus = () => {
       color: { light: '#E3F2FD', main: '#2196F3', dark: '#1976D2' }
     },
     {
-      id: 2,
-      title: "Sample Share",
+      id: 1,
+      title: "Sample Shared",
       icon: <Description />,
       description: "Sample biodata has been shared for your review.",
       expectedDuration: "24-48 hours",
       color: { light: '#F3E5F5', main: '#9C27B0', dark: '#7B1FA2' }
     },
     {
-      id: 3,
+      id: 2,
       title: "User Approval",
       icon: <ThumbUpAlt />,
       description: "Waiting for your approval on the sample biodata.",
@@ -46,7 +52,7 @@ const CheckStatus = () => {
       color: { light: '#E8F5E9', main: '#4CAF50', dark: '#388E3C' }
     },
     {
-      id: 4,
+      id: 3,
       title: "Payment",
       icon: <Payment />,
       description: "Payment confirmation pending.",
@@ -54,21 +60,46 @@ const CheckStatus = () => {
       color: { light: '#FFF3E0', main: '#FF9800', dark: '#F57C00' }
     },
     {
-      id: 5,
+      id: 4,
       title: "Completed",
       icon: <Done />,
       description: "Your biodata request has been completed successfully.",
       expectedDuration: "2-4 hours",
       color: { light: '#FCE4EC', main: '#E91E63', dark: '#C2185B' }
+    },
+    {
+      id: 4,
+      title: "Feedback",
+      icon: <Done />,
+      description: "Your feedback is important to us. Please share your experience.",
+      expectedDuration: "2-4 hours",
+      color: { light: '#E8F5E9', main: '#4CAF50', dark: '#388E3C' }
     }
   ];
 
   useEffect(() => {
-    setTimestamps(prev => ({
-      ...prev,
-      [currentStatus]: new Date()
-    }));
-  }, [currentStatus]);
+    BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
+      .then((response) => {
+        if (response) {
+          console.log("Request fetched successfully:", response);
+          const statusHistory = response.status;
+          const newTimestamps = {};
+          statusHistory.forEach((status) => {
+            newTimestamps[status.id] = status.created;
+          });
+          setTimestamps(newTimestamps);
+          setCurrentStatus(getLatestStatusId(statusHistory));
+          setIsValidRequest(true);
+        } else {
+          console.error("No request found with the given request number.");
+          setIsValidRequest(false);
+        }
+      })
+      .catch((error) => { 
+        console.error("Error fetching request:", error);
+        setIsValidRequest(false);
+      });
+  }, [requestNumber]);
 
   const formatDate = (date) => {
     return new Date(date).toLocaleString('en-IN', {
@@ -82,13 +113,31 @@ const CheckStatus = () => {
   };
 
   const getProgressPercentage = () => {
-    return ((currentStatus - 1) / (steps.length - 1)) * 100;
+    return ((currentStatus+1) / (steps.length)) * 100;
   };
+
+   if (!isValidRequest) {
+    return (
+      <div className="status-check">
+        <HeaderSection
+          title="Invalid Request"
+          subtitle="We couldn't find your request"
+        />
+        <div className="status-card error-card">
+          <div className="error-message">
+            <h3>Invalid Request Number</h3>
+            <p>The request number {requestNumber} was not found in our system.</p>
+            <p>Please check the number and try again.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="status-check">
       <HeaderSection
-        title="Track Your Order"
+        title="Track Your Request"
         subtitle="Follow your biodata creation progress in real-time"
       />
       
@@ -100,8 +149,16 @@ const CheckStatus = () => {
             <div className="header-left">
               <Timeline className="header-icon" />
               <div>
-                <h2>Order Status</h2>
-                <p className="order-id">Order ID: #BD12345</p>
+                <h2>Request Status</h2>
+                <p className="order-id">Request Number: {requestNumber}</p>
+              </div>
+            </div>
+
+            <div className="total-time">
+              <div>
+                
+                <h2><Schedule className="time-icon" /> Total Estimated Time</h2>
+                <p>72-96 hours from request initiation</p>
               </div>
             </div>
             
@@ -111,7 +168,7 @@ const CheckStatus = () => {
                   className="progress-fill"
                   style={{ 
                     width: `${getProgressPercentage()}%`,
-                    background: steps[currentStatus - 1].color.dark 
+                    background: steps[currentStatus].color.dark 
                   }}
                 />
               </div>
@@ -180,38 +237,6 @@ const CheckStatus = () => {
                 )}
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="status-footer">
-          <div className="total-time">
-            <Schedule className="time-icon" />
-            <div>
-              <h4>Total Estimated Time</h4>
-              <p>72-96 hours from request initiation</p>
-            </div>
-          </div>
-
-          <div className="control-buttons">
-            <button
-              className="control-btn previous"
-              onClick={() => setCurrentStatus(prev => Math.max(1, prev - 1))}
-              disabled={currentStatus === 1}
-              style={{ 
-                background: steps[currentStatus - 1].color.light,
-                color: steps[currentStatus - 1].color.main 
-              }}
-            >
-              Previous Step
-            </button>
-            <button
-              className="control-btn next"
-              onClick={() => setCurrentStatus(prev => Math.min(steps.length, prev + 1))}
-              disabled={currentStatus === steps.length}
-              style={{ background: steps[currentStatus - 1].color.main }}
-            >
-              Next Step
-            </button>
           </div>
         </div>
       </div>
