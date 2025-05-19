@@ -164,4 +164,21 @@ export const BiodataRequestStorage = {
         }
       },
 
+      async getBiodataRequestByRequestNumber(requestNumber) {
+        try {
+          const { data, error } = await supabase
+            .from(biodataRequestTableName)
+            .select('*')
+            .eq('request_number', requestNumber)
+            .single();
+    
+          if (error) throw error;
+    
+          return data;
+        } catch (error) {
+          console.error('Error getBiodataRequestByRequestNumber:', error);
+          throw error;
+        }
+      }
+
 }

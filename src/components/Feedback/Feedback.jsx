@@ -4,6 +4,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import "./Feedback.css";
 import { UserFeedbackStorage } from "../../supabase/UserFeedback";
+import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 
 const Feedback = () => {
   const { requestNumber } = useParams();
@@ -31,7 +32,7 @@ const Feedback = () => {
       .catch((error) => {
         console.error("Error fetching user feedback:", error);
       });
-  },[]);
+  },[requestNumber]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -60,11 +61,6 @@ const Feedback = () => {
       if (response) {
         setComment("Feedback submitted successfully!");
         setShowThankYou(true);
-        // setTimeout(() => {
-        //   setShowThankYou(false);
-        //   setFormData({ rating: 0, comment: "" });
-        //   setComment("");
-        // }, 3000);
       } else {
         setComment("Failed to submit feedback.");
       }
@@ -80,6 +76,7 @@ const Feedback = () => {
 
   return (
     <section className="feedback-section">
+      <HeaderSection title="Feedback" subtitle="Your feedback is very important to us. Please share your feedback."></HeaderSection>
       <div className="animated-circle circle-1"></div>
       <div className="animated-circle circle-2"></div>
       <div className="animated-circle circle-3"></div>

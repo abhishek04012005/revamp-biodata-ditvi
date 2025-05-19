@@ -10,7 +10,7 @@ export const ProductionRequestStorage = {
                 .from(productionRequestTableName)
                 .select(`
                     id,
-                    original_id,
+                    biodata_request_id,
                     request_number,
                     flow_type,
                     user_details,
@@ -41,10 +41,9 @@ export const ProductionRequestStorage = {
             const { data, error } = await supabase
                 .from(productionRequestTableName)
                 .insert({
-                    original_id: productionRequest.originalId,
+                    biodata_request_id: productionRequest.biodataRequestId,
                     request_number: productionRequest.requestNumber,
                     flow_type: productionRequest.flowType,
-                    status: productionRequest.status,
                     profile_url: productionRequest.profileUrl,
                     biodata_url: productionRequest.biodataUrl,
                     user_details: productionRequest.userDetails,

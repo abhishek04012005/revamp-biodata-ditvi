@@ -41,7 +41,7 @@ CREATE TABLE public.biodata_request (
 
 CREATE TABLE public.production_request (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    original_id UUID NOT NULL,
+    biodata_request_id UUID NOT NULL,
     request_number int4 NOT NULL,
     flow_type int2 NOT NULL,
     profile_url TEXT NULL,
@@ -54,7 +54,6 @@ CREATE TABLE public.production_request (
     education_details JSONB NULL,
     family_details JSONB NULL,
     contact_details JSONB NULL,
-    status JSONB NOT NULL,
     deleted BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT now()
 );

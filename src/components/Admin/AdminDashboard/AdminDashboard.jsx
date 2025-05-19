@@ -57,12 +57,11 @@ const AdminDashboard = () => {
     const moveToProduction = async (request) => {
         try{
             const response = await ProductionRequestStorage.saveProductionRequest({
-                originalId: request.id,
+                biodataRequestId: request.id,
                 requestNumber: request.request_number,
                 flowType:request.flow_type,
                 userDetails: request.user_details,
                 modelDetails: request.model_details,
-                status: request.status,
                 profileUrl: request.profile_url,
                 biodataUrl: request.biodata_url,
                 personalDetails: request.personal_details,

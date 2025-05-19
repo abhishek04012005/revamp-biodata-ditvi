@@ -68,7 +68,7 @@ function App() {
                     <Route path="create-biodata" element={<CreateBiodata />} />
                     <Route path="confirmation" element={<RequestConfirmation />} />
                     <Route path="feedback/:requestNumber" element={<Feedback />} />
-                    <Route path="status" element={<CheckStatus />} />
+                    <Route path="track-status/:requestNumber" element={<CheckStatus />} />
                   </Routes>
                   <Footer />
                 </>
