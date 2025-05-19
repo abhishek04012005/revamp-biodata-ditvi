@@ -1,14 +1,14 @@
-import { FlowType } from '../constants/FlowType';
 import { supabase } from './Supabase';
+import { FlowType } from '../constants/FlowType';
 
-const biodataRequestsTableName= 'biodata_request';
+const biodataRequestTableName= 'biodata_request';
 
-export const BiodataRequestsStorage = {
+export const BiodataRequestStorage = {
 
   async getAllBiodataRequest() {
         try {
           const { data, error } = await supabase
-            .from(biodataRequestsTableName)
+            .from(biodataRequestTableName)
             .select(`
                     id,
                     created_at,
@@ -18,7 +18,13 @@ export const BiodataRequestsStorage = {
                     user_details,
                     model_details,
                     profile_url,
-                    biodata_url
+                    biodata_url,
+                    personal_details,
+                    professional_details,
+                    examination_details,
+                    education_details,
+                    family_details,
+                    contact_details
                     `)
               .eq('deleted', false)
               .order('created_at', { ascending: false });
@@ -34,7 +40,7 @@ export const BiodataRequestsStorage = {
      async saveBiodataRequestFromWhatsapp(biodataRequest) {
         try {
           const { data, error } = await supabase
-            .from(biodataRequestsTableName)
+            .from(biodataRequestTableName)
             .insert({
             request_number: biodataRequest.requestNumber,
             flow_type: FlowType.FLOW_WHATSAPP,
@@ -60,7 +66,7 @@ export const BiodataRequestsStorage = {
      async saveBiodataRequestFromUploadBiodata(biodataRequest) {
         try {
           const { data, error } = await supabase
-            .from(biodataRequestsTableName)
+            .from(biodataRequestTableName)
             .insert({
             request_number: biodataRequest.requestNumber,
             status: [{
@@ -88,7 +94,7 @@ export const BiodataRequestsStorage = {
       async saveBiodataRequestFromCreateBiodata(biodataRequest) { 
         try {
           const { data, error } = await supabase
-            .from(biodataRequestsTableName)
+            .from(biodataRequestTableName)
             .insert({
             request_number: biodataRequest.requestNumber,
             status: [{
@@ -121,7 +127,7 @@ export const BiodataRequestsStorage = {
       async updateStatusBiodataRequestById(requestId, status) {
         try {
           const { data, error } = await supabase
-            .from(biodataRequestsTableName)
+            .from(biodataRequestTableName)
             .update({
               status: status,
             })
@@ -141,7 +147,7 @@ export const BiodataRequestsStorage = {
       async deleteBiodataRequestById(requestId) {
         try {
           const { data, error } = await supabase
-            .from(biodataRequestsTableName)
+            .from(biodataRequestTableName)
             .update({
               deleted: true,
             })

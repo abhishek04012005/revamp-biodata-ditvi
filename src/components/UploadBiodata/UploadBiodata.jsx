@@ -10,7 +10,7 @@ import './UploadBiodata.css';
 import Container from '../../structure/Container/Container';
 import HeaderSection from '../../structure/HeaderSection/HeaderSection';
 import { UploadFile } from '../../supabase/UploadFile';
-import { BiodataRequestsStorage } from '../../supabase/BiodataRequests';
+import { BiodataRequestStorage } from '../../supabase/BiodataRequest';
 import StorageBucket from '../../constants/StorageBucket';
 
 const UploadBiodata = () => {
@@ -98,7 +98,7 @@ const UploadBiodata = () => {
         try {
             const profileUrl = await UploadFile(imageFile, `${requestNumber}_profile`, StorageBucket.UPLOAD_BIODATA);
             const biodataUrl = await UploadFile(biodataFile, `${requestNumber}_biodata`, StorageBucket.UPLOAD_BIODATA);
-            await BiodataRequestsStorage.saveBiodataRequestFromUploadBiodata({
+            await BiodataRequestStorage.saveBiodataRequestFromUploadBiodata({
                 requestNumber: requestNumber,
                 userDetails: userDetails,
                 modelDetails: modelDetails,

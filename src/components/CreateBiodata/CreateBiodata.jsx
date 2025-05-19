@@ -14,7 +14,7 @@ import {
 import { Mode } from "@mui/icons-material";
 import ModelTypes from "../../json/ModelTypes";
 import { UploadFile } from '../../supabase/UploadFile';
-import { BiodataRequestsStorage } from "../../supabase/BiodataRequests";
+import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import StorageBucket from "../../constants/StorageBucket";
 
 const CreateBiodata = () => {
@@ -140,7 +140,7 @@ const CreateBiodata = () => {
       setIsLoading(true);
       const profileUrl = await UploadFile(selectedImage, `${requestNumber}_profile`, StorageBucket.CREATE_BIODATA);
       const response =
-        await BiodataRequestsStorage.saveBiodataRequestFromCreateBiodata({
+        await BiodataRequestStorage.saveBiodataRequestFromCreateBiodata({
           requestNumber: requestNumber,
           userDetails: userDetails,
           modelDetails: modelDetails,

@@ -31,7 +31,7 @@ const EducationData = [
 
 const ExaminationData = [
     { label: 'Examination Preparing For', value: '', placeholder: 'UPCS' },
-    { label: 'Examination Qalified', value: '', placeholder: 'UPSC-2024 (Pre)' }
+    { label: 'Examination Qualified', value: '', placeholder: `UPSC-${new Date().getFullYear() - 1} (Pre)` }
 ];
 
 const createEmptyPerson = () => ({
