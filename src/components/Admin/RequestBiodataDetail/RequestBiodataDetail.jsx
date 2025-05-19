@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./RequestBiodataDetail.css";
 import {
+  Edit, Save, Cancel, Add, Delete, 
+  Person, Work, School, People, ContactPhone,
+  CloudUpload, Check, ArrowBack, Phone, LocationOn
+} from "@mui/icons-material";
+import {
   PersonalData,
   ProfessionalData,
   EducationData,
@@ -12,18 +17,17 @@ import {
 import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
 import { UploadFile } from "../../../supabase/UploadFile";
 import StorageBucket from "../../../constants/StorageBucket";
-import ModelTypes from "../../../json/ModelTypes";
 import Loader from "../../../structure/Loader/Loader";
-import { Edit, Save, Cancel } from "@mui/icons-material";
 
 const RequestBiodataDetail = () => {
-  const { requestId } = useParams();
+const { requestId } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
+  const [requestNumber, setRequestNumber] = useState(null);
 
   useEffect(() => {
     fetchRequestData();
@@ -31,13 +35,12 @@ const RequestBiodataDetail = () => {
   const fetchRequestData = async () => {
     try {
       setIsLoading(true);
-      const response =
-        await BiodataRequestStorage.getBiodataRequestByRequestId(
-          requestId
-        );
+      const response = await BiodataRequestStorage.getBiodataRequestByRequestId(
+        requestId
+      );
 
       if (response) {
-        console.log('response:', response);
+        console.log("response:", response);
         const initialFormData = {
           profileImage: response.profile_url,
           userDetails: response.user_details,
@@ -51,8 +54,7 @@ const RequestBiodataDetail = () => {
           contactDetails: response.contact_details || {},
         };
 
-        
-
+        setRequestNumber(response.request_number);
         setFormData(initialFormData);
         setOriginalData(initialFormData);
       }
@@ -83,6 +85,51 @@ const RequestBiodataDetail = () => {
         setIsLoading(false);
       }
     }
+  };
+
+  const handleAddEducation = () => {
+    setFormData((prev) => ({
+      ...prev,
+      educationDetails: [
+        EducationData.map((field) => ({ ...field, value: "" })),
+        ...prev.educationDetails,
+      ],
+    }));
+  };
+
+  const handleRemoveEducation = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      educationDetails: prev.educationDetails.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleAddSibling = (relation) => {
+    setFormData((prev) => ({
+      ...prev,
+      familyDetails: {
+        ...prev.familyDetails,
+        [relation]: {
+          ...prev.familyDetails[relation],
+          value: [createEmptyPerson(), ...prev.familyDetails[relation].value],
+        },
+      },
+    }));
+  };
+
+  const handleRemoveSibling = (relation, index) => {
+    setFormData((prev) => ({
+      ...prev,
+      familyDetails: {
+        ...prev.familyDetails,
+        [relation]: {
+          ...prev.familyDetails[relation],
+          value: prev.familyDetails[relation].value.filter(
+            (_, i) => i !== index
+          ),
+        },
+      },
+    }));
   };
 
   const handleSave = async () => {
@@ -125,426 +172,397 @@ const RequestBiodataDetail = () => {
   if (isLoading) return <Loader />;
   if (!formData) return <div>Request not found</div>;
 
-  // Render functions similar to CreateBiodata component
-  const renderPersonalInfo = () => {
-    return (
-      <section className="detail-section">
-        <div className="section-header">
-          <h2>Personal Information</h2>
-        </div>
-        <div className="section-content">
-          {formData.personalDetails.map((field, index) => (
-            <div key={index} className="detail-field">
-              <label>{field.label}:</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={field.value}
-                  onChange={(e) => {
-                    const newPersonalData = [...formData.personalDetails];
-                    newPersonalData[index].value = e.target.value;
-                    setFormData({
-                      ...formData,
-                      personalDetails: newPersonalData,
-                    });
-                  }}
-                />
-              ) : (
-                <span>{field.value || "Not Provided"}</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  };
 
-  const renderProfessionalInfo = () => {
-    return (
-      <section className="detail-section">
-        <div className="section-header">
-          <h2>Professional Information</h2>
-        </div>
-        <div className="section-content">
-          {formData.professionalDetails.map((field, index) => (
-            <div key={index} className="detail-field">
-              <label>{field.label}:</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={field.value}
-                  onChange={(e) => {
-                    const newData = [...formData.professionalDetails];
-                    newData[index].value = e.target.value;
-                    setFormData({
-                      ...formData,
-                      professionalDetails: newData,
-                    });
-                  }}
-                />
-              ) : (
-                <span>{field.value || "Not Provided"}</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  };
+  const renderSection = (icon, title, children) => (
+    <section className="detail-section info-section">
+      <div className="section-header">
+        <div className="header-icon">{icon}</div>
+        <h2>{title}</h2>
+      </div>
+      <div className="section-content">{children}</div>
+    </section>
+  );
 
-  const renderExaminationInfo = () => {
-    return (
-      <section className="detail-section">
-        <div className="section-header">
-          <h2>Examination Information</h2>
-        </div>
-        <div className="section-content">
-          {formData.examinationDetails.map((field, index) => (
-            <div key={index} className="detail-field">
-              <label>{field.label}:</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={field.value}
-                  onChange={(e) => {
-                    const newData = [...formData.examinationDetails];
-                    newData[index].value = e.target.value;
-                    setFormData({
-                      ...formData,
-                      examinationDetails: newData,
-                    });
-                  }}
-                />
-              ) : (
-                <span>{field.value || "Not Provided"}</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  };
-
-  const renderEducationInfo = () => {
-    return (
-      <section className="detail-section">
-        <div className="section-header">
-          <h2>Education Information</h2>
-        </div>
-        {formData.educationDetails.map((eduGroup, groupIndex) => (
-          <div key={groupIndex} className="education-group">
-            <h3>Education {formData.educationDetails.length - groupIndex}</h3>
-            <div className="section-content">
-              {eduGroup.map((field, index) => (
-                <div key={index} className="detail-field">
-                  <label>{field.label}:</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={field.value}
-                      onChange={(e) => {
-                        const newEducation = [...formData.educationDetails];
-                        newEducation[groupIndex][index].value = e.target.value;
-                        setFormData({
-                          ...formData,
-                          educationDetails: newEducation,
-                        });
-                      }}
-                    />
-                  ) : (
-                    <span>{field.value || "Not Provided"}</span>
-                  )}
-                </div>
-              ))}
-            </div>
+  const renderPersonalInfo = () => (
+    renderSection(
+      <Person />,
+      "Personal Information",
+      <div className="info-grid">
+        {formData.personalDetails.map((field, index) => (
+          <div key={index} className="detail-field animated-field">
+            <label>{field.label}:</label>
+            {isEditing ? (
+              <input
+                type="text"
+                value={field.value}
+                onChange={(e) => {
+                  const newPersonalData = [...formData.personalDetails];
+                  newPersonalData[index].value = e.target.value;
+                  setFormData({
+                    ...formData,
+                    personalDetails: newPersonalData,
+                  });
+                }}
+                placeholder={`Enter ${field.label.toLowerCase()}`}
+              />
+            ) : (
+              <span className="field-value">{field.value || "Not Provided"}</span>
+            )}
           </div>
         ))}
-      </section>
-    );
-  };
+      </div>
+    )
+  );
 
-  const renderFamilyInfo = () => {
-    return (
-      <section className="detail-section">
-        <div className="section-header">
-          <h2>Family Information</h2>
+  const renderProfessionalInfo = () => (
+    renderSection(
+      <Work />,
+      "Professional Information",
+      <div className="info-grid">
+        {formData.professionalDetails.map((field, index) => (
+          <div key={index} className="detail-field animated-field">
+            <label>{field.label}:</label>
+            {isEditing ? (
+              <input
+                type="text"
+                value={field.value}
+                onChange={(e) => {
+                  const newData = [...formData.professionalDetails];
+                  newData[index].value = e.target.value;
+                  setFormData({
+                    ...formData,
+                    professionalDetails: newData,
+                  });
+                }}
+                placeholder={`Enter ${field.label.toLowerCase()}`}
+              />
+            ) : (
+              <span className="field-value">{field.value || "Not Provided"}</span>
+            )}
+          </div>
+        ))}
+      </div>
+    )
+  );
+
+  const renderEducationInfo = () => (
+    renderSection(
+      <School />,
+      "Education Information",
+      <>
+        {isEditing && (
+          <button className="add-btn floating" onClick={handleAddEducation}>
+            <Add /> Add Education
+          </button>
+        )}
+        <div className="education-list">
+          {formData.educationDetails.map((eduGroup, groupIndex) => (
+            <div key={groupIndex} className="education-group animated-card">
+              <div className="group-header">
+                <h3>Education {formData.educationDetails.length - groupIndex}</h3>
+                {isEditing && (
+                  <button
+                    className="remove-btn floating"
+                    onClick={() => handleRemoveEducation(groupIndex)}
+                  >
+                    <Delete />
+                  </button>
+                )}
+              </div>
+              <div className="info-grid">
+                {eduGroup.map((field, index) => (
+                  <div key={index} className="detail-field animated-field">
+                    <label>{field.label}:</label>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={field.value}
+                        onChange={(e) => {
+                          const newEducation = [...formData.educationDetails];
+                          newEducation[groupIndex][index].value = e.target.value;
+                          setFormData({
+                            ...formData,
+                            educationDetails: newEducation,
+                          });
+                        }}
+                        placeholder={`Enter ${field.label.toLowerCase()}`}
+                      />
+                    ) : (
+                      <span className="field-value">
+                        {field.value || "Not Provided"}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
+      </>
+    )
+  );
 
-        {/* Parents Section */}
-        <div className="family-group">
+  const renderFamilyInfo = () => (
+    renderSection(
+      <People />,
+      "Family Information",
+      <>
+        <div className="family-parents animated-card">
           <h3>Parents</h3>
-          <div className="section-content">
+          <div className="parents-grid">
             {["father", "mother"].map((relation) => (
-              <div key={relation} className="family-member">
+              <div key={relation} className="parent-card">
                 <h4>{formData.familyDetails[relation].label}</h4>
-                <div className="detail-field">
-                  <label>Name:</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={formData.familyDetails[relation].value.name}
-                      onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          familyDetails: {
-                            ...formData.familyDetails,
-                            [relation]: {
-                              ...formData.familyDetails[relation],
-                              value: {
-                                ...formData.familyDetails[relation].value,
-                                name: e.target.value,
+                <div className="info-grid">
+                  {["name", "occupation"].map((field) => (
+                    <div key={field} className="detail-field animated-field">
+                      <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={formData.familyDetails[relation].value[field]}
+                          onChange={(e) => {
+                            setFormData({
+                              ...formData,
+                              familyDetails: {
+                                ...formData.familyDetails,
+                                [relation]: {
+                                  ...formData.familyDetails[relation],
+                                  value: {
+                                    ...formData.familyDetails[relation].value,
+                                    [field]: e.target.value,
+                                  },
+                                },
                               },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  ) : (
-                    <span>
-                      {formData.familyDetails[relation].value.name ||
-                        "Not Provided"}
-                    </span>
-                  )}
-                </div>
-                <div className="detail-field">
-                  <label>Occupation:</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={formData.familyDetails[relation].value.occupation}
-                      onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          familyDetails: {
-                            ...formData.familyDetails,
-                            [relation]: {
-                              ...formData.familyDetails[relation],
-                              value: {
-                                ...formData.familyDetails[relation].value,
-                                occupation: e.target.value,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  ) : (
-                    <span>
-                      {formData.familyDetails[relation].value.occupation ||
-                        "Not Provided"}
-                    </span>
-                  )}
+                            });
+                          }}
+                          placeholder={`Enter ${field}`}
+                        />
+                      ) : (
+                        <span className="field-value">
+                          {formData.familyDetails[relation].value[field] || "Not Provided"}
+                        </span>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Siblings Section */}
         {["brothers", "sisters"].map((relation) => (
-          <div key={relation} className="family-group">
-            <h3>{formData.familyDetails[relation].label}</h3>
-            <div className="siblings-list">
+          <div key={relation} className="family-siblings animated-card">
+            <div className="siblings-header">
+              <h3>{formData.familyDetails[relation].label}</h3>
+              {isEditing && (
+                <button className="add-btn floating" onClick={() => handleAddSibling(relation)}>
+                  <Add /> Add {relation === "brothers" ? "Brother" : "Sister"}
+                </button>
+              )}
+            </div>
+            <div className="siblings-grid">
               {formData.familyDetails[relation].value.map((sibling, idx) => (
-                <div key={idx} className="sibling-item">
-                  <div className="detail-field">
-                    <label>Name:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value={sibling.name}
-                        onChange={(e) => {
-                          const newSiblings = [
-                            ...formData.familyDetails[relation].value,
-                          ];
-                          newSiblings[idx].name = e.target.value;
-                          setFormData({
-                            ...formData,
-                            familyDetails: {
-                              ...formData.familyDetails,
-                              [relation]: {
-                                ...formData.familyDetails[relation],
-                                value: newSiblings,
-                              },
-                            },
-                          });
-                        }}
-                      />
-                    ) : (
-                      <span>{sibling.name || "Not Provided"}</span>
-                    )}
-                  </div>
-                  <div className="detail-field">
-                    <label>Occupation:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value={sibling.occupation}
-                        onChange={(e) => {
-                          const newSiblings = [
-                            ...formData.familyDetails[relation].value,
-                          ];
-                          newSiblings[idx].occupation = e.target.value;
-                          setFormData({
-                            ...formData,
-                            familyDetails: {
-                              ...formData.familyDetails,
-                              [relation]: {
-                                ...formData.familyDetails[relation],
-                                value: newSiblings,
-                              },
-                            },
-                          });
-                        }}
-                      />
-                    ) : (
-                      <span>{sibling.occupation || "Not Provided"}</span>
-                    )}
-                  </div>
-                  <div className="detail-field">
-                    <label>Married:</label>
-                    {isEditing ? (
-                      <select
-                        value={sibling.married}
-                        onChange={(e) => {
-                          const newSiblings = [
-                            ...formData.familyDetails[relation].value,
-                          ];
-                          newSiblings[idx].married = e.target.value;
-                          setFormData({
-                            ...formData,
-                            familyDetails: {
-                              ...formData.familyDetails,
-                              [relation]: {
-                                ...formData.familyDetails[relation],
-                                value: newSiblings,
-                              },
-                            },
-                          });
-                        }}
-                      >
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
-                    ) : (
-                      <span>{sibling.married || "Not Provided"}</span>
-                    )}
+                <div key={idx} className="sibling-card">
+                  {isEditing && (
+                    <button
+                      className="remove-btn floating"
+                      onClick={() => handleRemoveSibling(relation, idx)}
+                    >
+                      <Delete />
+                    </button>
+                  )}
+                  <div className="info-grid">
+                    {["name", "occupation", "married"].map((field) => (
+                      <div key={field} className="detail-field animated-field">
+                        <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                        {isEditing ? (
+                          field === "married" ? (
+                            <select
+                              value={sibling[field]}
+                              onChange={(e) => {
+                                const newSiblings = [...formData.familyDetails[relation].value];
+                                newSiblings[idx][field] = e.target.value;
+                                setFormData({
+                                  ...formData,
+                                  familyDetails: {
+                                    ...formData.familyDetails,
+                                    [relation]: {
+                                      ...formData.familyDetails[relation],
+                                      value: newSiblings,
+                                    },
+                                  },
+                                });
+                              }}
+                            >
+                              <option value="">Select</option>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>
+                            </select>
+                          ) : (
+                            <input
+                              type="text"
+                              value={sibling[field]}
+                              onChange={(e) => {
+                                const newSiblings = [...formData.familyDetails[relation].value];
+                                newSiblings[idx][field] = e.target.value;
+                                setFormData({
+                                  ...formData,
+                                  familyDetails: {
+                                    ...formData.familyDetails,
+                                    [relation]: {
+                                      ...formData.familyDetails[relation],
+                                      value: newSiblings,
+                                    },
+                                  },
+                                });
+                              }}
+                              placeholder={`Enter ${field}`}
+                            />
+                          )
+                        ) : (
+                          <span className="field-value">
+                            {sibling[field] || "Not Provided"}
+                          </span>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
             </div>
           </div>
         ))}
-      </section>
-    );
-  };
+      </>
+    )
+  );
 
-  const renderContactInfo = () => {
-    return (
-      <section className="detail-section">
-        <div className="section-header">
-          <h2>Contact Information</h2>
+  const renderContactInfo = () => (
+    renderSection(
+      <ContactPhone />,
+      "Contact Information",
+      <div className="contact-grid">
+        <div className="detail-field animated-field">
+          <label><LocationOn /> Address:</label>
+          {isEditing ? (
+            <textarea
+              value={formData.contactDetails.address || ""}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  contactDetails: {
+                    ...formData.contactDetails,
+                    address: e.target.value,
+                  },
+                });
+              }}
+              placeholder="Enter address"
+            />
+          ) : (
+            <span className="field-value">
+              {formData.contactDetails.address || "Not Provided"}
+            </span>
+          )}
         </div>
-        <div className="section-content">
-          <div className="detail-field">
-            <label>Address:</label>
-            {isEditing ? (
-              <textarea
-                value={formData.contactDetails.address || ""}
-                onChange={(e) => {
-                  setFormData({
-                    ...formData,
-                    contactDetails: {
-                      ...formData.contactDetails,
-                      address: e.target.value,
-                    },
-                  });
-                }}
-              />
-            ) : (
-              <span>{formData.contactDetails.address || "Not Provided"}</span>
-            )}
-          </div>
-          <div className="detail-field">
-            <label>Mobile:</label>
-            {isEditing ? (
-              <input
-                type="tel"
-                value={formData.contactDetails.mobile || ""}
-                onChange={(e) => {
-                  setFormData({
-                    ...formData,
-                    contactDetails: {
-                      ...formData.contactDetails,
-                      mobile: e.target.value,
-                    },
-                  });
-                }}
-              />
-            ) : (
-              <span>{formData.contactDetails.mobile || "Not Provided"}</span>
-            )}
-          </div>
+        <div className="detail-field animated-field">
+          <label><Phone /> Mobile:</label>
+          {isEditing ? (
+            <input
+              type="tel"
+              value={formData.contactDetails.mobile || ""}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  contactDetails: {
+                    ...formData.contactDetails,
+                    mobile: e.target.value,
+                  },
+                });
+              }}
+              placeholder="Enter mobile number"
+            />
+          ) : (
+            <span className="field-value">
+              {formData.contactDetails.mobile || "Not Provided"}
+            </span>
+          )}
         </div>
-      </section>
-    );
-  };
+      </div>
+    )
+  );
 
-  // Add similar render functions for other sections...
+  if (isLoading) return <Loader />;
+  if (!formData) return <div className="not-found">Request not found</div>;
 
   return (
     <div className="request-detail">
       <div className="detail-header">
-        <h1>Biodata Request Details</h1>
+        <div className="header-left">
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            <ArrowBack /> Back
+          </button>
+          <div className="header-info">
+            <h1>Biodata Request Details</h1>
+            <p className="request-id">Request Number: {requestNumber}</p>
+          </div>
+        </div>
         <div className="detail-actions">
           {isEditing ? (
-            <>
+            <div className="edit-actions">
               <button className="action-btn save" onClick={handleSave}>
                 <Save /> Save Changes
+                <span className="btn-highlight"></span>
               </button>
               <button className="action-btn cancel" onClick={handleCancel}>
                 <Cancel /> Cancel
+                <span className="btn-highlight"></span>
               </button>
-            </>
+            </div>
           ) : (
-            <button
-              className="action-btn edit"
-              onClick={() => setIsEditing(true)}
-            >
+            <button className="action-btn edit" onClick={() => setIsEditing(true)}>
               <Edit /> Edit Details
+              <span className="btn-highlight"></span>
             </button>
           )}
         </div>
       </div>
 
       <div className="detail-content">
-        {/* Profile Image Section */}
-        <section className="detail-section">
-          <div className="section-header">
-            <h2>Profile Image</h2>
-          </div>
-          <div className="section-content">
-            <div className="profile-image-container">
-              <img src={formData.profileImage} alt="Profile" />
-              {isEditing && (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="image-input"
-                />
-              )}
+        <div className="content-grid">
+          {renderSection(
+            <Person />,
+            "Profile Image",
+            <div className="profile-section">
+              <div className="profile-image-container">
+                <img src={formData.profileImage} alt="Profile" />
+                {isEditing && (
+                  <div className="image-upload-overlay">
+                    <CloudUpload />
+                    <span>Upload New Image</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="image-input"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </section>
-
-        {renderPersonalInfo()}
-        {renderProfessionalInfo()}
-        {renderExaminationInfo()}
-        {renderEducationInfo()}
-        {renderFamilyInfo()}
-        {renderContactInfo()}
+          )}
+          {renderPersonalInfo()}
+          {renderProfessionalInfo()}
+          {renderEducationInfo()}
+          {renderFamilyInfo()}
+          {renderContactInfo()}
+        </div>
       </div>
+
+      {isLoading && (
+        <div className="loading-overlay">
+          <div className="loader"></div>
+        </div>
+      )}
     </div>
   );
 };
