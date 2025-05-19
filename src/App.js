@@ -12,7 +12,7 @@ import ScrollToTop from "./structure/ScrollToTop/ScrollToTop";
 import ChooseOption from "./components/ChooseOption/ChooseOption";
 import BlogDetail from "./components/BlogDetail/BlogDetail";
 import BiodataDetail from "./components/BiodataDetail/BiodataDetail";
-import AdminLogin from "./fds/Admin/AdminLogin/AdminLogin";
+import AdminLogin from "./components/Admin/AdminLogin/AdminLogin";
 import AdminDashboard from "./components/Admin/AdminDashboard/AdminDashboard";
 import ProductionDashboard from "./components/Admin/ProductionDashboard/ProductionDashboard";
 import BiodataMaster from "./structure/BiodataMaster/BiodataMaster";

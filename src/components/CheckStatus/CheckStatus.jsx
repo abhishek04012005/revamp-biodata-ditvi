@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import "./CheckStatus.css";
+import { Link } from "react-router-dom";
 import {
   CheckCircle,
   RadioButtonUnchecked,
@@ -13,6 +14,10 @@ import {
   Timeline,
   AccessTime,
   ArrowForward,
+  ErrorOutline,
+  SearchOff,
+  Home,
+  ArrowBack,
 } from "@mui/icons-material";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
@@ -23,17 +28,17 @@ const CheckStatus = () => {
   const [currentStatus, setCurrentStatus] = useState(1);
   const [timestamps, setTimestamps] = useState({});
   const [selectedStep, setSelectedStep] = useState(null);
-  const [isValidRequest, setIsValidRequest] = useState(true); 
-
+  const [isValidRequest, setIsValidRequest] = useState(true);
 
   const steps = [
     {
       id: 0,
       title: "Request Received",
       icon: <AssignmentTurnedIn />,
-      description: "Your biodata request has been received and is being processed.",
+      description:
+        "Your biodata request has been received and is being processed.",
       expectedDuration: "1-2 hours",
-      color: { light: '#E3F2FD', main: '#2196F3', dark: '#1976D2' }
+      color: { light: "#E3F2FD", main: "#2196F3", dark: "#1976D2" },
     },
     {
       id: 1,
@@ -41,7 +46,7 @@ const CheckStatus = () => {
       icon: <Description />,
       description: "Sample biodata has been shared for your review.",
       expectedDuration: "24-48 hours",
-      color: { light: '#F3E5F5', main: '#9C27B0', dark: '#7B1FA2' }
+      color: { light: "#F3E5F5", main: "#9C27B0", dark: "#7B1FA2" },
     },
     {
       id: 2,
@@ -49,7 +54,7 @@ const CheckStatus = () => {
       icon: <ThumbUpAlt />,
       description: "Waiting for your approval on the sample biodata.",
       expectedDuration: "24 hours",
-      color: { light: '#E8F5E9', main: '#4CAF50', dark: '#388E3C' }
+      color: { light: "#E8F5E9", main: "#4CAF50", dark: "#388E3C" },
     },
     {
       id: 3,
@@ -57,7 +62,7 @@ const CheckStatus = () => {
       icon: <Payment />,
       description: "Payment confirmation pending.",
       expectedDuration: "Immediate",
-      color: { light: '#FFF3E0', main: '#FF9800', dark: '#F57C00' }
+      color: { light: "#FFF3E0", main: "#FF9800", dark: "#F57C00" },
     },
     {
       id: 4,
@@ -65,16 +70,17 @@ const CheckStatus = () => {
       icon: <Done />,
       description: "Your biodata request has been completed successfully.",
       expectedDuration: "2-4 hours",
-      color: { light: '#FCE4EC', main: '#E91E63', dark: '#C2185B' }
+      color: { light: "#FCE4EC", main: "#E91E63", dark: "#C2185B" },
     },
     {
       id: 4,
       title: "Feedback",
       icon: <Done />,
-      description: "Your feedback is important to us. Please share your experience.",
+      description:
+        "Your feedback is important to us. Please share your experience.",
       expectedDuration: "2-4 hours",
-      color: { light: '#E8F5E9', main: '#4CAF50', dark: '#388E3C' }
-    }
+      color: { light: "#E8F5E9", main: "#4CAF50", dark: "#388E3C" },
+    },
   ];
 
   useEffect(() => {
@@ -95,56 +101,84 @@ const CheckStatus = () => {
           setIsValidRequest(false);
         }
       })
-      .catch((error) => { 
+      .catch((error) => {
         console.error("Error fetching request:", error);
         setIsValidRequest(false);
       });
   }, [requestNumber]);
 
   const formatDate = (date) => {
-    return new Date(date).toLocaleString('en-IN', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
+    return new Date(date).toLocaleString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
     });
   };
 
   const getProgressPercentage = () => {
-    return ((currentStatus+1) / (steps.length)) * 100;
+    return ((currentStatus + 1) / steps.length) * 100;
   };
 
-   if (!isValidRequest) {
+  if (!isValidRequest) {
     return (
       <div className="status-check">
         <HeaderSection
-          title="Invalid Request"
-          subtitle="We couldn't find your request"
+          title="Track Your Request"
+          subtitle="Follow your biodata creation progress in real-time"
         />
-        <div className="status-card error-card">
-          <div className="error-message">
-            <h3>Invalid Request Number</h3>
-            <p>The request number {requestNumber} was not found in our system.</p>
-            <p>Please check the number and try again.</p>
+
+        <div className="status-card">
+          <div className="status-header error-header">
+            <div className="header-content">
+              <div className="header-left">
+                <ErrorOutline className="header-icon" />
+                <div>
+                  <h2>Invalid Request</h2>
+                  <p className="order-id">Request Number: {requestNumber}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="error-content">
+            <div className="error-icon-container">
+              <SearchOff className="error-icon" />
+            </div>
+            <div className="error-details">
+              <h3>Request Not Found</h3>
+              <p>
+                We couldn't find any biodata request with this number in our
+                system.
+              </p>
+              <ul className="error-suggestions">
+                <li>Double check the request number you entered</li>
+                <li>Make sure you received a confirmation email</li>
+                <li>Contact support if you continue having issues</li>
+              </ul>
+            </div>
+            <div className="error-actions">
+              <Link to="/" className="error-action-btn primary">
+                <Home /> Go to Home
+              </Link>
+    
+            </div>
           </div>
         </div>
       </div>
     );
   }
-
   return (
     <div className="status-check">
       <HeaderSection
         title="Track Your Request"
         subtitle="Follow your biodata creation progress in real-time"
       />
-      
+
       <div className="status-card">
-        <div 
-          className="status-header" 
-        >
+        <div className="status-header">
           <div className="header-content">
             <div className="header-left">
               <Timeline className="header-icon" />
@@ -156,19 +190,20 @@ const CheckStatus = () => {
 
             <div className="total-time">
               <div>
-                
-                <h2><Schedule className="time-icon" /> Total Estimated Time</h2>
+                <h2>
+                  <Schedule className="time-icon" /> Total Estimated Time
+                </h2>
                 <p>72-96 hours from request initiation</p>
               </div>
             </div>
-            
+
             <div className="progress-tracker">
               <div className="progress-bar">
-                <div 
+                <div
                   className="progress-fill"
-                  style={{ 
+                  style={{
                     width: `${getProgressPercentage()}%`,
-                    background: steps[currentStatus].color.dark 
+                    background: steps[currentStatus].color.dark,
                   }}
                 />
               </div>
@@ -184,14 +219,18 @@ const CheckStatus = () => {
             {steps.map((step, index) => (
               <div
                 key={step.id}
-                className={`timeline-step ${currentStatus >= step.id ? 'completed' : ''} 
-                  ${currentStatus === step.id ? 'active' : ''}
-                  ${selectedStep === step.id ? 'selected' : ''}`}
-                onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
+                className={`timeline-step ${
+                  currentStatus >= step.id ? "completed" : ""
+                } 
+                  ${currentStatus === step.id ? "active" : ""}
+                  ${selectedStep === step.id ? "selected" : ""}`}
+                onClick={() =>
+                  setSelectedStep(selectedStep === step.id ? null : step.id)
+                }
                 style={{
-                  '--step-color': step.color.main,
-                  '--step-light': step.color.light,
-                  '--step-dark': step.color.dark
+                  "--step-color": step.color.main,
+                  "--step-light": step.color.light,
+                  "--step-dark": step.color.dark,
                 }}
               >
                 <div className="timeline-icon">
@@ -203,11 +242,19 @@ const CheckStatus = () => {
                     <RadioButtonUnchecked />
                   )}
                 </div>
-                
+
                 {index < steps.length - 1 && (
                   <div className="step-connector">
-                    <div className={`connector-line ${currentStatus > step.id ? 'completed' : ''}`} />
-                    <ArrowForward className={`connector-arrow ${currentStatus > step.id ? 'completed' : ''}`} />
+                    <div
+                      className={`connector-line ${
+                        currentStatus > step.id ? "completed" : ""
+                      }`}
+                    />
+                    <ArrowForward
+                      className={`connector-arrow ${
+                        currentStatus > step.id ? "completed" : ""
+                      }`}
+                    />
                   </div>
                 )}
 
