@@ -274,21 +274,6 @@ const CreateBiodata = () => {
           <>
             <div className="create-biodata-section">
               <h2>Personal Information</h2>
-              <div className="create-biodata-label-input">
-                <label className="create-biodata-label">Name:</label>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={formData.name.value}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      name: { value: e.target.value },
-                    })
-                  }
-                  required
-                />
-              </div>
               {formData.personalDetails.map((field, index) => (
                 <>
                   <div className="create-biodata-label-input">
