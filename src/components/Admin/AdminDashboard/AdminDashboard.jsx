@@ -174,10 +174,10 @@ const AdminDashboard = () => {
                                         </td>
                                         <td>
                                             <Link
-                                                to={`/request/${request.id}`}
+                                                to={`/admin/request/${request.id}`}
                                                 className="dashboard-view-btn"
                                             >
-                                                Preview
+                                                View
                                             </Link>
                                         </td>
                                         <td>

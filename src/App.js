@@ -24,6 +24,7 @@ import Feedback from "./components/Feedback/Feedback";
 import CheckStatus from "./components/CheckStatus/CheckStatus";
 import AdminNavbar from "./components/Admin/AdminNavbar/AdminNavbar";
 import AdminFooter from "./components/Admin/AdminFooter/AdminFooter";
+import RequestBiodataDetail from "./components/Admin/RequestBiodataDetail/RequestBiodataDetail";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
                       <Route
                         path="biodata-master"
                         element={<BiodataMaster />}
+                      />
+                      <Route
+                        path="request/:requestId"
+                        element={<RequestBiodataDetail />}
                       />
                     </Routes>
                     <AdminFooter />
@@ -77,9 +82,18 @@ function App() {
                     <Route path="choose-option" element={<ChooseOption />} />
                     <Route path="upload-biodata" element={<UploadBiodata />} />
                     <Route path="create-biodata" element={<CreateBiodata />} />
-                    <Route path="confirmation" element={<RequestConfirmation />} />
-                    <Route path="feedback/:requestNumber" element={<Feedback />} />
-                    <Route path="track-status/:requestNumber" element={<CheckStatus />} />
+                    <Route
+                      path="confirmation"
+                      element={<RequestConfirmation />}
+                    />
+                    <Route
+                      path="feedback/:requestNumber"
+                      element={<Feedback />}
+                    />
+                    <Route
+                      path="track-status/:requestNumber"
+                      element={<CheckStatus />}
+                    />
                   </Routes>
                   <Footer />
                 </>
