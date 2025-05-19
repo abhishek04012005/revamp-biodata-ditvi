@@ -9,13 +9,17 @@ import {
   EducationData,
   createEmptyPerson,
   FamilyData,
+  ExaminationData,
 } from "../../json/createBiodata";
 import { Mode } from "@mui/icons-material";
 import ModelTypes from "../../json/ModelTypes";
+import { UploadFile } from '../../supabase/UploadFile';
 import { BiodataRequestsStorage } from "../../supabase/BiodataRequests";
+import StorageBucket from "../../constants/StorageBucket";
 
 const CreateBiodata = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -34,7 +38,9 @@ const CreateBiodata = () => {
     professionalDetails: ProfessionalData.map(
       ({ label, value, placeholder }) => ({ label, value, placeholder })
     ),
-    examinaitonDetails: {},
+    examinaitonDetails: ExaminationData.map(
+      ({ label, value, placeholder }) => ({ label, value, placeholder })
+    ),
     educationDetails: [
       EducationData.map(({ label, value, placeholder }) => ({
         label,
@@ -132,37 +138,32 @@ const CreateBiodata = () => {
 
     try {
       setIsLoading(true);
+      const profileUrl = await UploadFile(selectedImage, `${requestNumber}_profile`, StorageBucket.CREATE_BIODATA);
       const response =
         await BiodataRequestsStorage.saveBiodataRequestFromCreateBiodata({
           requestNumber: requestNumber,
           userDetails: userDetails,
           modelDetails: modelDetails,
-          profileImage: formData.profileImage,
+          profileUrl: profileUrl,
           personalDetails: formData.personalDetails,
           professionalDetails: formData.professionalDetails,
-          examinationDetails: formData.examPreparing,
+          examinationDetails: formData.examinaitonDetails,
           educationDetails: formData.educationDetails,
           familyDetails: formData.familyDetails,
           contactDetails: formData.contactDetails,
         });
+
+        setIsLoading(false);
+        navigate('/confirmation', { state: { 
+            requestNumber: requestNumber,
+            userDetails: userDetails,
+            modelDetails: modelDetails,
+         } });
       console.log("Biodata saved successfully:", response);
     } catch (error) {
       console.error("Error saving biodata:", error);
       alert("Failed to save biodata");
     }
-
-    if (currentStep !== steps.length - 1) {
-      handleNext();
-      return;
-    }
-
-    // Validate contact data
-    if (!formData.contactDetails?.address || !formData.contactDetails?.mobile) {
-      alert("Please fill in all contact information");
-      return;
-    }
-
-    setIsLoading(true);
   };
 
   const steps = [
@@ -307,66 +308,40 @@ const CreateBiodata = () => {
             </div>
           </>
         );
-      case 2: // Professional Information
+      case 2: // Professional/Examination Information
         return (
           <div className="create-biodata-section">
             <h2>
               {modelDetails?.type === ModelTypes.Student.Name
-                ? "Job Preparing Details"
-                : "Professional Information"}
+                ? "Examination Preparation Details"
+                : "Professional Details"}
             </h2>
             {modelDetails?.type === ModelTypes.Student.Name ? (
-              <div className="examination-details">
-                <div className="examination-group">
-                  <input
-                    type="text"
-                    className="exam-input"
-                    placeholder="Examination Preparing"
-                    value={
-                      formData.professionalDetails[0].examPreparing?.name || ""
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        professionalDetails: [
-                          {
-                            ...formData.professionalDetails[0],
-                            examPreparing: {
-                              ...formData.professionalDetails[0].examPreparing,
-                              name: e.target.value,
-                            },
-                          },
-                        ],
-                      })
-                    }
-                    required
-                  />
-                </div>
-
-                <div className="examination-group">
-                  <input
-                    type="text"
-                    className="exam-input"
-                    placeholder="Examination Qualified"
-                    value={
-                      formData.professionalDetails[0].examQualified?.name || ""
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        professionalDetails: [
-                          {
-                            ...formData.professionalDetails[0],
-                            examQualified: {
-                              ...formData.professionalDetails[0].examQualified,
-                              name: e.target.value,
-                            },
-                          },
-                        ],
-                      })
-                    }
-                  />
-                </div>
+              <div className="professional-inputs">
+                {formData.examinaitonDetails.map((field, index) => (
+                  <div className="create-biodata-label-input">
+                    <label className="create-biodata-label">
+                      {field.label}:
+                    </label>
+                    <input
+                      key={index}
+                      type="text"
+                      placeholder={field.placeholder}
+                      value={field.value}
+                      onChange={(e) => {
+                        const newExaminaitonDetails = [
+                          ...formData.examinaitonDetails,
+                        ];
+                        newExaminaitonDetails[index].value = e.target.value;
+                        setFormData({
+                          ...formData,
+                          examinaitonDetails: newExaminaitonDetails,
+                        });
+                      }}
+                      required
+                    />
+                  </div>
+                ))}
               </div>
             ) : (
               <div className="professional-inputs">

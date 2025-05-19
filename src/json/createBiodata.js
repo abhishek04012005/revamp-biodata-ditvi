@@ -29,6 +29,11 @@ const EducationData = [
     { label: 'Score', value: '', placeholder: '8.5 CGPA' },
 ];
 
+const ExaminationData = [
+    { label: 'Examination Preparing For', value: '', placeholder: 'UPCS' },
+    { label: 'Examination Qalified', value: '', placeholder: 'UPSC-2024 (Pre)' }
+];
+
 const createEmptyPerson = () => ({
     name: '',
     married: '',
@@ -49,7 +54,5 @@ const ContactData = [
 
 
 export {
-
-    PersonalData, EducationData, ProfessionalData, ContactData, FamilyData, createEmptyPerson, ICON_MAPPING,
-
+    PersonalData, EducationData, ExaminationData, ProfessionalData, ContactData, FamilyData, createEmptyPerson, ICON_MAPPING,
 };
