@@ -10,7 +10,6 @@ import {
   Palette,
   Settings,
 } from "@mui/icons-material";
-import AdminHeader from "../../components/Admin/AdminHeader/AdminHeader";
 
 const BiodataMaster = () => {
   // State for dynamic styles
@@ -58,7 +57,6 @@ const BiodataMaster = () => {
   return (
     <>
       <div className="biodata-master">
-        <AdminHeader />
 
         {/* Style Control Panel */}
         <div className="style-controls-toggle">

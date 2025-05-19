@@ -23,6 +23,7 @@ import { AdminProvider } from "./components/Admin/AdminContext/AdminContex";
 import Feedback from "./components/Feedback/Feedback";
 import CheckStatus from "./components/CheckStatus/CheckStatus";
 import AdminNavbar from "./components/Admin/AdminNavbar/AdminNavbar";
+import AdminFooter from "./components/Admin/AdminFooter/AdminFooter";
 
 function App() {
   return (
@@ -41,9 +42,16 @@ function App() {
                     <AdminNavbar />
                     <Routes>
                       <Route path="dashboard" element={<AdminDashboard />} />
-                      <Route path="production" element={<ProductionDashboard />} />
-                      <Route path="biodata-master" element={<BiodataMaster />} />
+                      <Route
+                        path="production"
+                        element={<ProductionDashboard />}
+                      />
+                      <Route
+                        path="biodata-master"
+                        element={<BiodataMaster />}
+                      />
                     </Routes>
+                    <AdminFooter />
                   </>
                 </AdminRoute>
               }
@@ -58,7 +66,10 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Main />} />
                     <Route path="biodata" element={<AllBiodata />} />
-                    <Route path="biodata/:modelNumber" element={<BiodataDetail />} />
+                    <Route
+                      path="biodata/:modelNumber"
+                      element={<BiodataDetail />}
+                    />
                     <Route path="blog" element={<AllBlog />} />
                     <Route path="blog/:slug" element={<BlogDetail />} />
                     <Route path="privacy" element={<PrivacyPolicy />} />
@@ -66,8 +77,14 @@ function App() {
                     <Route path="choose-option" element={<ChooseOption />} />
                     <Route path="upload-biodata" element={<UploadBiodata />} />
                     <Route path="create-biodata" element={<CreateBiodata />} />
-                    <Route path="confirmation" element={<RequestConfirmation />} />
-                    <Route path="feedback/:requestNumber" element={<Feedback />} />
+                    <Route
+                      path="confirmation"
+                      element={<RequestConfirmation />}
+                    />
+                    <Route
+                      path="feedback/:requestNumber"
+                      element={<Feedback />}
+                    />
                     <Route path="status" element={<CheckStatus />} />
                   </Routes>
                   <Footer />

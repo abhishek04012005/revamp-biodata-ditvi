@@ -5,6 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { AdmingLoginStorage } from '../../../supabase/AdminLogin';
 import { useAdmin } from '../AdminContext/AdminContex';
+import HeaderSection from '../../../structure/HeaderSection/HeaderSection';
 
 
 const AdminLogin = () => {
@@ -44,12 +45,14 @@ const AdminLogin = () => {
 
     return (
         <>
+         
             <div className="admin-login">
+               <HeaderSection title={`Admin Login`}/>
                 <div className="admin-login-card">
                     <h2>Admin Login</h2>
                     {error && <div className="error-message">{error}</div>}
                     <form onSubmit={handleSubmit}>
-                    <div className="form-group">
+                    <div className="admin-login-form-group">
                         <label>Username:</label>
                         <input
                             type="text"
@@ -61,7 +64,7 @@ const AdminLogin = () => {
                             required
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="admin-login-form-group">
                         <label>Password:</label>
                         <div style={{ position: 'relative' }}>
                             <input
@@ -79,7 +82,7 @@ const AdminLogin = () => {
                                 style={{
                                     position: 'absolute',
                                     right: '10px',
-                                    top: '50%',
+                                    top: '40%',
                                     transform: 'translateY(-50%)',
                                     background: 'none',
                                     border: 'none',
@@ -95,7 +98,7 @@ const AdminLogin = () => {
                     </div>
                     <button 
                         type="submit" 
-                        className="login-button"
+                        className="admin-login-button"
                         disabled={loading}
                     >
                         {loading ? 'Logging in...' : 'Login'}
