@@ -4,7 +4,7 @@ import { supabase } from './Supabase';
 const productionRequestTableName= 'production_request';
 
 export const ProductionRequestStorage = {
-    async getAllBiodataRequest() {
+    async getAllProductionRequest() {
         try {
             const { data, error } = await supabase
                 .from(productionRequestTableName)
@@ -23,9 +23,9 @@ export const ProductionRequestStorage = {
                     family_details,
                     contact_details,
                     created_at
-                `);
-                // .eq('deleted', false)
-                // .order('created_at', { ascending: false });
+                `)
+                .eq('deleted', false)
+                .order('created_at', { ascending: false });
 
             if (error) throw error;
 
@@ -123,6 +123,24 @@ export const ProductionRequestStorage = {
             console.error('Error updateProductionRequestById:', error);
             throw error;
         }
-    }
+    },
+
+    async deleteProductionRequestByRequestNumber(requestNumber) {
+        try {
+            const { data, error } = await supabase
+                .from(productionRequestTableName)
+                .update({
+                    deleted: true,
+                })
+                .eq('request_number', requestNumber)
+
+            if (error) throw error;
+
+            return data;
+        } catch (error) {
+            console.error('Error deleteProductionRequestById:', error);
+            throw error;
+        }
+    },
 
 }             

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import './ProductionDashboard.css'
-import { Storage, Description, Search, Visibility } from '@mui/icons-material'
+import { Storage, Description, Search, Visibility, Delete } from '@mui/icons-material'
 import { ProductionRequestStorage } from '../../../supabase/ProductionRequest';
 import { getFlowTypeById } from '../../../constants/FlowType';
 import formatDate from '../../../utils/DateHelper';
@@ -17,7 +17,7 @@ const ProductionDashboard = () => {
 
     const fetchRequests = async () => {
         try {
-            const response = await ProductionRequestStorage.getAllBiodataRequest();
+            const response = await ProductionRequestStorage.getAllProductionRequest();
             if (response) {
                 setRequests(response);
             } else {
@@ -31,6 +31,11 @@ const ProductionDashboard = () => {
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
+    };
+
+    const handleDelete = async (requestNumber) => {
+        await ProductionRequestStorage.deleteProductionRequestByRequestNumber(requestNumber);
+        fetchRequests();
     };
 
     const productionStats = [
@@ -107,6 +112,16 @@ const ProductionDashboard = () => {
                                                     <Visibility />
                                                     Preview
                                                 </Link>
+                                            </td>
+                                            <td>
+                                            
+                                                <button
+                                                    className="dashboard-delete-btn"
+                                                    onClick={() => handleDelete(request.request_number)}
+                                                >
+                                                    <Delete />
+                                                </button>
+
                                             </td>
                                         </tr>
 
