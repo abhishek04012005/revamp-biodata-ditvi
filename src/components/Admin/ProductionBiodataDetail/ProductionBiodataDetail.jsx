@@ -32,6 +32,7 @@ import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
 import { UploadFile } from "../../../supabase/UploadFile";
 import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
+import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
 
 const ProductionBiodataDetail = () => {
   const { requestId } = useParams();
@@ -42,7 +43,7 @@ const ProductionBiodataDetail = () => {
   const [formData, setFormData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
-  const [flowType, setFlowType] = useState(null);
+
 
   useEffect(() => {
     fetchRequestData();
@@ -50,20 +51,18 @@ const ProductionBiodataDetail = () => {
   const fetchRequestData = async () => {
     try {
       setIsLoading(true);
-      const response = await BiodataRequestStorage.getBiodataRequestByRequestId(
+      const response = await ProductionRequestStorage.getProductionRequestById(
         requestId
       );
 
       if (response) {
-        console.log("response:", response);
         const initialFormData = {
           profileImage: response.profile_url,
           biodataUrl: response.biodata_url,
           userDetails: response.user_details,
           modelDetails: response.model_details,
           personalDetails: response.personal_details || PersonalData,
-          professionalDetails:
-            response.professional_details || ProfessionalData,
+          professionalDetails:response.professional_details || ProfessionalData,
           examinationDetails: response.examination_details || ExaminationData,
           educationDetails: response.education_details || [EducationData],
           familyDetails: response.family_details || FamilyData,
@@ -73,7 +72,6 @@ const ProductionBiodataDetail = () => {
         setRequestNumber(response.request_number);
         setFormData(initialFormData);
         setOriginalData(initialFormData);
-        setFlowType(response.flow_type);
       }
     } catch (error) {
       console.error("Error fetching request:", error);
@@ -157,12 +155,12 @@ const ProductionBiodataDetail = () => {
       if (selectedImage) {
         profileUrl = await UploadFile(
           selectedImage,
-          `${requestId}_profile`,
+          `${requestNumber}_profile`,
           StorageBucket.CREATE_BIODATA
         );
       }
 
-      await BiodataRequestStorage.updateBiodataRequestById(requestId, {
+      await ProductionRequestStorage.updateProductionRequestById(requestId, {
         profileUrl,
         personalDetails: formData.personalDetails,
         professionalDetails: formData.professionalDetails,
@@ -582,8 +580,7 @@ const ProductionBiodataDetail = () => {
           </div>
         </div>
         <div className="detail-actions">
-          {flowType !== 3 &&
-            (isEditing ? (
+          {isEditing ? (
               <div className="edit-actions">
                 <button className="action-btn save" onClick={handleSave}>
                   <Save /> Save
@@ -602,7 +599,7 @@ const ProductionBiodataDetail = () => {
                 <Edit /> Edit Details
                 <span className="btn-highlight"></span>
               </button>
-            ))}
+            )}
         </div>
       </div>
 

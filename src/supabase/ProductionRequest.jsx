@@ -4,7 +4,7 @@ import { supabase } from './Supabase';
 const productionRequestTableName= 'production_request';
 
 export const ProductionRequestStorage = {
-    async getAllProductionRequest() {
+    async getAllBiodataRequest() {
         try {
             const { data, error } = await supabase
                 .from(productionRequestTableName)
@@ -22,16 +22,16 @@ export const ProductionRequestStorage = {
                     examination_details,
                     family_details,
                     contact_details,
-                    created_at,
-                `)
-                .eq('deleted', false)
-                .order('created_at', { ascending: false });
+                    created_at
+                `);
+                // .eq('deleted', false)
+                // .order('created_at', { ascending: false });
 
             if (error) throw error;
 
             return data;
         } catch (error) {
-            console.error('Error getAllProductionRequest:', error);
+            console.error('Error getAllBiodataRequest:', error);
             throw error;
         }
     },
@@ -63,6 +63,64 @@ export const ProductionRequestStorage = {
             return data;
         } catch (error) {
             console.error('Error saveProductionRequest:', error);
+            throw error;
+        }
+    },
+
+    async getProductionRequestById(id) {   
+        try {
+            const { data, error } = await supabase
+                .from(productionRequestTableName)
+                .select(`
+                    id,
+                    biodata_request_id,
+                    request_number,
+                    flow_type,
+                    user_details,
+                    model_details,
+                    profile_url,
+                    biodata_url,
+                    personal_details,
+                    professional_details,
+                    examination_details,
+                    family_details,
+                    contact_details,
+                    created_at
+                `)
+                .eq('id', id)
+                .single();
+
+            if (error) throw error;
+
+            return data;
+        } catch (error) {
+            console.error('Error getProductionRequestById:', error);
+            throw error;
+        }
+    },
+
+    async updateProductionRequestById(id, productionRequest) {
+        try {
+            const { data, error } = await supabase
+                .from(productionRequestTableName)
+                .update({
+                    profile_url: productionRequest.profileUrl,
+                    personal_details: productionRequest.personalDetails,
+                    professional_details: productionRequest.professionalDetails,
+                    examination_details: productionRequest.examinationDetails,
+                    education_details: productionRequest.educationDetails,
+                    family_details: productionRequest.familyDetails,
+                    contact_details: productionRequest.contactDetails    
+                })
+                .eq('id', id)
+                .select('*')
+                .single();
+
+            if (error) throw error;
+
+            return data;
+        } catch (error) {
+            console.error('Error updateProductionRequestById:', error);
             throw error;
         }
     }

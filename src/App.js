@@ -49,6 +49,10 @@ function App() {
                         element={<ProductionDashboard />}
                       />
                       <Route
+                        path="production/:requestId"
+                        element={<ProductionBiodataDetail />}
+                      />
+                      <Route
                         path="biodata-master"
                         element={<BiodataMaster />}
                       />

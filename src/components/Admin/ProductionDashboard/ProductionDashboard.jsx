@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import './ProductionDashboard.css'
 import { Storage, Description, Search, Visibility } from '@mui/icons-material'
+import { ProductionRequestStorage } from '../../../supabase/ProductionRequest';
+import { getFlowTypeById } from '../../../constants/FlowType';
+import formatDate from '../../../utils/DateHelper';
 
 const ProductionDashboard = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
+    const [requests, setRequests] = useState([]);
+
+    useEffect(() => {
+            fetchRequests();
+    }, []);
+
+    const fetchRequests = async () => {
+        try {
+            const response = await ProductionRequestStorage.getAllBiodataRequest();
+            if (response) {
+                setRequests(response);
+            } else {
+                console.error('No requests found');
+            }
+        }
+        catch (error) {
+            console.error('Error fetching requests:', error);
+        }
+    }
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -16,24 +38,6 @@ const ProductionDashboard = () => {
         { icon: <Description />, title: "Completed", value: 66 },
         { icon: <Description />, title: "Pending", value: 14 }
     ]
-
-    const dummyData = [
-        {
-            id: '01',
-            name: 'Tony Stark',
-            mobile: '9264248504',
-            date: '07-02-1999',
-            status: 'Completed'
-        },
-        {
-            id: '02',
-            name: 'Thor',
-            mobile: '9264248504',
-            date: '07-02-1999',
-            status: 'Completed'
-        }
-
-    ];
 
     return (
         <>
@@ -72,23 +76,26 @@ const ProductionDashboard = () => {
                             <table className="production-dashboard-table">
                                 <thead>
                                     <tr>
-                                        <th>Profile</th>
-                                        <th>Name</th>
-                                        <th>Request No.</th>
-                                        <th>Created Date</th>
-                                        <th>Actions</th>
+                                    <th>Request No.</th>
+                                    <th>Flow Type</th>
+                                    <th>Name</th>
+                                    <th>Mobile Number</th>
+                                    <th>Created Date</th>
+                                    <th>Preview</th>
+                                    <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dummyData.map((request) => (
+                                    {requests.map((request) => (
                                         <tr key={request.id}>
-                                            <td>{request.name}</td>
-                                            <td>{request.mobile}</td>
-                                            <td>{request.id}</td>
-                                            <td>{request.date}</td>
+                                            <td>{request.request_number}</td>
+                                            <td>{getFlowTypeById(request.flow_type)}</td>
+                                            <td>{request.user_details?.name}</td>
+                                            <td>{request.user_details?.mobileNumber}</td>
+                                            <td>{formatDate(request.created_at)}</td>
                                             <td className="production-dashboard-action-buttons">
                                                 <Link
-                                                    to={`/production/request`}
+                                                    to={`/admin/production/${request.id}`}
                                                     className="production-dashboard-action-btn details-btn"
                                                 >
                                                     Show Details
