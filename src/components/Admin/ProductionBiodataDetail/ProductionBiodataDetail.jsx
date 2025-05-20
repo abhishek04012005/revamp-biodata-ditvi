@@ -156,7 +156,7 @@ const ProductionBiodataDetail = () => {
         profileUrl = await UploadFile(
           selectedImage,
           `${requestNumber}_profile_${new Date().getTime()}`,
-          StorageBucket.CREATE_BIODATA
+          StorageBucket.PRODUCTION_BIODATA
         );
       }
 
