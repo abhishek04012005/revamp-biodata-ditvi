@@ -106,7 +106,7 @@ const ProductionDashboard = () => {
                                                     Show Details
                                                 </Link>
                                                 <Link
-                                                    to={`/admin/production/preview`}
+                                                    to={`/admin/production/preview/${request.id}`}
                                                     className="production-dashboard-action-btn preview-btn"
                                                 >
                                                     <Visibility />

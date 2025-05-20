@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./BiodataMaster.css";
 import BackgroundBiodata1111 from "../../assets/background/1111.svg";
+import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
 import {
   Work,
   School,
@@ -12,7 +14,54 @@ import {
 } from "@mui/icons-material";
 
 const BiodataMaster = () => {
-  // State for dynamic styles
+
+  const { requestId } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [formData, setFormData] = useState(null);
+  const [originalData, setOriginalData] = useState(null);
+  const [requestNumber, setRequestNumber] = useState(null);
+
+  console.log('Request ID:', requestId);
+
+  useEffect(() => {
+     fetchRequestData();
+   }, [requestId]);
+
+    const fetchRequestData = async () => {
+    try {
+      setIsLoading(true);
+      const response = await ProductionRequestStorage.getProductionRequestById(
+        requestId
+      );
+
+      if (response) {
+        const initialFormData = {
+          profileImage: response.profile_url,
+          biodataUrl: response.biodata_url,
+          userDetails: response.user_details,
+          modelDetails: response.model_details,
+          personalDetails: response.personal_details,
+          professionalDetails:response.professional_details,
+          examinationDetails: response.examination_details,
+          educationDetails: response.education_details,
+          familyDetails: response.family_details,
+          contactDetails: response.contact_details,
+        };
+
+        setRequestNumber(response.request_number);
+        setFormData(initialFormData);
+        setOriginalData(initialFormData);
+      }
+    } catch (error) {
+      console.error("Error fetching request:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   const [styles, setStyles] = useState({
     photoFrame: {
       borderColor: "#FF8C42",
@@ -57,7 +106,6 @@ const BiodataMaster = () => {
   return (
     <>
       <div className="biodata-master">
-
         {/* Style Control Panel */}
         <div className="style-controls-toggle">
           <button
