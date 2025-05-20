@@ -25,6 +25,7 @@ import CheckStatus from "./components/CheckStatus/CheckStatus";
 import AdminNavbar from "./components/Admin/AdminNavbar/AdminNavbar";
 import AdminFooter from "./components/Admin/AdminFooter/AdminFooter";
 import RequestBiodataDetail from "./components/Admin/RequestBiodataDetail/RequestBiodataDetail";
+import ProductionBiodataDetail from "./components/Admin/ProductionBiodataDetail/ProductionBiodataDetail";
 
 function App() {
   return (
