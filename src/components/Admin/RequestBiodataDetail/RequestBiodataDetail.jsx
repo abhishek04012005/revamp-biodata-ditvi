@@ -4,7 +4,9 @@ import "./RequestBiodataDetail.css";
 import {
   Edit, Save, Cancel, Add, Delete, 
   Person, Work, School, People, ContactPhone,
-  CloudUpload, Check, ArrowBack, Phone, LocationOn
+  CloudUpload, Check, ArrowBack, Phone, LocationOn,
+  Download,
+  InfoOutlined,
 } from "@mui/icons-material";
 import {
   PersonalData,
@@ -28,6 +30,7 @@ const { requestId } = useParams();
   const [formData, setFormData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
+  const [flowType, setFlowType] = useState(null);
 
   useEffect(() => {
     fetchRequestData();
@@ -43,6 +46,7 @@ const { requestId } = useParams();
         console.log("response:", response);
         const initialFormData = {
           profileImage: response.profile_url,
+          biodataUrl: response.biodata_url,
           userDetails: response.user_details,
           modelDetails: response.model_details,
           personalDetails: response.personal_details || PersonalData,
@@ -57,6 +61,8 @@ const { requestId } = useParams();
         setRequestNumber(response.request_number);
         setFormData(initialFormData);
         setOriginalData(initialFormData);
+        setFlowType(response.flow_type);
+
       }
     } catch (error) {
       console.error("Error fetching request:", error);
@@ -213,6 +219,33 @@ const { requestId } = useParams();
       </div>
     )
   );
+
+  const renderBiodataDownload = () => (
+  renderSection(
+    <CloudUpload />,
+    "Biodata Document",
+    <div className="biodata-download-section">
+      {formData.biodataUrl ? (
+        <div className="biodata-download-container">
+          <a 
+            href={formData.biodataUrl} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="download-button"
+          >
+            <Download /> Download Biodata
+          </a>
+          <span className="download-info"> Click to view or download the biodata document</span>
+        </div>
+      ) : (
+        <div className="no-biodata-message">
+          <InfoOutlined />
+          <span>Biodata document not yet generated</span>
+        </div>
+      )}
+    </div>
+  )
+);
 
   const renderProfessionalInfo = () => (
     renderSection(
@@ -507,7 +540,7 @@ const { requestId } = useParams();
           </div>
         </div>
         <div className="detail-actions">
-          {isEditing ? (
+          {flowType !==3 && (isEditing ? (
             <div className="edit-actions">
               <button className="action-btn save" onClick={handleSave}>
                 <Save /> Save Changes
@@ -523,7 +556,7 @@ const { requestId } = useParams();
               <Edit /> Edit Details
               <span className="btn-highlight"></span>
             </button>
-          )}
+          ))}
         </div>
       </div>
 
@@ -550,6 +583,7 @@ const { requestId } = useParams();
               </div>
             </div>
           )}
+          {formData.biodataUrl && renderBiodataDownload()}
           {renderPersonalInfo()}
           {renderProfessionalInfo()}
           {renderEducationInfo()}
