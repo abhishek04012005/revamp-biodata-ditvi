@@ -20,6 +20,7 @@
   margin: 0 auto;
   background: var(--light);
   min-height: calc(100vh - 64px);
+  margin-top: 4rem;
 }
 
 /* Header Styles */
@@ -125,11 +126,14 @@
 .action-btn.save {
   background: var(--success);
   color: var(--white);
+  width: 100%;
 }
 
 .action-btn.cancel {
   background: var(--danger);
   color: var(--white);
+  margin-top: 2rem;
+  width: 100%;
 }
 
 /* Section Styles */
