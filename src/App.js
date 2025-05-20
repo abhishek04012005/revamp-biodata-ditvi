@@ -18,7 +18,7 @@ import ProductionDashboard from "./components/Admin/ProductionDashboard/Producti
 import BiodataMaster from "./structure/BiodataMaster/BiodataMaster";
 import UploadBiodata from "./components/UploadBiodata/UploadBiodata";
 import CreateBiodata from "./components/CreateBiodata/CreateBiodata";
-import RequestConfirmation from "./components/Admin/RequestConfirmation/RequestConfirmation";
+import RequestConfirmation from "./components/RequestConfirmation/RequestConfirmation";
 import { AdminProvider } from "./components/Admin/AdminContext/AdminContex";
 import Feedback from "./components/Feedback/Feedback";
 import CheckStatus from "./components/CheckStatus/CheckStatus";

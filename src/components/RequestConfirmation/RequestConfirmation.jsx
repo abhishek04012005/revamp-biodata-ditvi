@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Check, WhatsApp, TrackChanges, Style, Money, Mobile, Language, Category, Badge, ConfirmationNumber } from '@mui/icons-material';
 import './RequestConfirmation.css';
-import Container from '../../../structure/Container/Container';
-import ModelTypes from '../../../json/ModelTypes';
+import Container from '../../structure/Container/Container';
+import ModelTypes from '../../json/ModelTypes';
 
 const RequestConfirmation = () => {
     const navigate = useNavigate();
