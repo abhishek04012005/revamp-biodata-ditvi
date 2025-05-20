@@ -474,7 +474,7 @@ const CreateBiodata = () => {
                     <input
                       style={{ display: "none" }}
                       type="text"
-                      value="-"
+                      value="Yes"
                       disabled
                       className="married-status-disabled"
                     />

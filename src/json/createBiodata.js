@@ -36,7 +36,7 @@ const ExaminationData = [
 
 const createEmptyPerson = () => ({
     name: '',
-    married: '',
+    married: 'No',
     occupation: ''
 });
 

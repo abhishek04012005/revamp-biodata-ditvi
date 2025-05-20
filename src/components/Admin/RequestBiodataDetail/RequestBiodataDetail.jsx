@@ -2,9 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./RequestBiodataDetail.css";
 import {
-  Edit, Save, Cancel, Add, Delete, 
-  Person, Work, School, People, ContactPhone,
-  CloudUpload, Check, ArrowBack, Phone, LocationOn,
+  Edit,
+  Save,
+  Cancel,
+  Add,
+  Delete,
+  Person,
+  Work,
+  School,
+  People,
+  ContactPhone,
+  CloudUpload,
+  Check,
+  ArrowBack,
+  Phone,
+  LocationOn,
   Download,
   InfoOutlined,
 } from "@mui/icons-material";
@@ -22,7 +34,7 @@ import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
 
 const RequestBiodataDetail = () => {
-const { requestId } = useParams();
+  const { requestId } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -62,7 +74,6 @@ const { requestId } = useParams();
         setFormData(initialFormData);
         setOriginalData(initialFormData);
         setFlowType(response.flow_type);
-
       }
     } catch (error) {
       console.error("Error fetching request:", error);
@@ -178,7 +189,6 @@ const { requestId } = useParams();
   if (isLoading) return <Loader />;
   if (!formData) return <div>Request not found</div>;
 
-
   const renderSection = (icon, title, children) => (
     <section className="detail-section info-section">
       <div className="section-header">
@@ -189,7 +199,7 @@ const { requestId } = useParams();
     </section>
   );
 
-  const renderPersonalInfo = () => (
+  const renderPersonalInfo = () =>
     renderSection(
       <Person />,
       "Personal Information",
@@ -199,6 +209,7 @@ const { requestId } = useParams();
             <label>{field.label}:</label>
             {isEditing ? (
               <input
+              className="input-field-edit"
                 type="text"
                 value={field.value}
                 onChange={(e) => {
@@ -212,42 +223,45 @@ const { requestId } = useParams();
                 placeholder={`Enter ${field.label.toLowerCase()}`}
               />
             ) : (
-              <span className="field-value">{field.value || "Not Provided"}</span>
+              <span className="field-value">
+                {field.value || "Not Provided"}
+              </span>
             )}
           </div>
         ))}
       </div>
-    )
-  );
+    );
 
-  const renderBiodataDownload = () => (
-  renderSection(
-    <CloudUpload />,
-    "Biodata Document",
-    <div className="biodata-download-section">
-      {formData.biodataUrl ? (
-        <div className="biodata-download-container">
-          <a 
-            href={formData.biodataUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="download-button"
-          >
-            <Download /> Download Biodata
-          </a>
-          <span className="download-info"> Click to view or download the biodata document</span>
-        </div>
-      ) : (
-        <div className="no-biodata-message">
-          <InfoOutlined />
-          <span>Biodata document not yet generated</span>
-        </div>
-      )}
-    </div>
-  )
-);
+  const renderBiodataDownload = () =>
+    renderSection(
+      <CloudUpload />,
+      "Biodata Document",
+      <div className="biodata-download-section">
+        {formData.biodataUrl ? (
+          <div className="biodata-download-container">
+            <a
+              href={formData.biodataUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="download-button"
+            >
+              <Download /> Download Biodata
+            </a>
+            <span className="download-info">
+              {" "}
+              Click to view or download the biodata document
+            </span>
+          </div>
+        ) : (
+          <div className="no-biodata-message">
+            <InfoOutlined />
+            <span>Biodata document not yet generated</span>
+          </div>
+        )}
+      </div>
+    );
 
-  const renderProfessionalInfo = () => (
+  const renderProfessionalInfo = () =>
     renderSection(
       <Work />,
       "Professional Information",
@@ -270,15 +284,16 @@ const { requestId } = useParams();
                 placeholder={`Enter ${field.label.toLowerCase()}`}
               />
             ) : (
-              <span className="field-value">{field.value || "Not Provided"}</span>
+              <span className="field-value">
+                {field.value || "Not Provided"}
+              </span>
             )}
           </div>
         ))}
       </div>
-    )
-  );
+    );
 
-  const renderEducationInfo = () => (
+  const renderEducationInfo = () =>
     renderSection(
       <School />,
       "Education Information",
@@ -292,7 +307,9 @@ const { requestId } = useParams();
           {formData.educationDetails.map((eduGroup, groupIndex) => (
             <div key={groupIndex} className="education-group animated-card">
               <div className="group-header">
-                <h3>Education {formData.educationDetails.length - groupIndex}</h3>
+                <h3>
+                  Education {formData.educationDetails.length - groupIndex}
+                </h3>
                 {isEditing && (
                   <button
                     className="remove-btn floating"
@@ -312,7 +329,8 @@ const { requestId } = useParams();
                         value={field.value}
                         onChange={(e) => {
                           const newEducation = [...formData.educationDetails];
-                          newEducation[groupIndex][index].value = e.target.value;
+                          newEducation[groupIndex][index].value =
+                            e.target.value;
                           setFormData({
                             ...formData,
                             educationDetails: newEducation,
@@ -332,10 +350,9 @@ const { requestId } = useParams();
           ))}
         </div>
       </>
-    )
-  );
+    );
 
-  const renderFamilyInfo = () => (
+  const renderFamilyInfo = () =>
     renderSection(
       <People />,
       "Family Information",
@@ -349,7 +366,9 @@ const { requestId } = useParams();
                 <div className="info-grid">
                   {["name", "occupation"].map((field) => (
                     <div key={field} className="detail-field animated-field">
-                      <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                      <label>
+                        {field.charAt(0).toUpperCase() + field.slice(1)}:
+                      </label>
                       {isEditing ? (
                         <input
                           type="text"
@@ -373,7 +392,8 @@ const { requestId } = useParams();
                         />
                       ) : (
                         <span className="field-value">
-                          {formData.familyDetails[relation].value[field] || "Not Provided"}
+                          {formData.familyDetails[relation].value[field] ||
+                            "Not Provided"}
                         </span>
                       )}
                     </div>
@@ -389,7 +409,10 @@ const { requestId } = useParams();
             <div className="siblings-header">
               <h3>{formData.familyDetails[relation].label}</h3>
               {isEditing && (
-                <button className="add-btn floating" onClick={() => handleAddSibling(relation)}>
+                <button
+                  className="add-btn floating"
+                  onClick={() => handleAddSibling(relation)}
+                >
                   <Add /> Add {relation === "brothers" ? "Brother" : "Sister"}
                 </button>
               )}
@@ -408,36 +431,53 @@ const { requestId } = useParams();
                   <div className="info-grid">
                     {["name", "occupation", "married"].map((field) => (
                       <div key={field} className="detail-field animated-field">
-                        <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                        <label>
+                          {field.charAt(0).toUpperCase() + field.slice(1)}:
+                        </label>
                         {isEditing ? (
                           field === "married" ? (
-                            <select
-                              value={sibling[field]}
-                              onChange={(e) => {
-                                const newSiblings = [...formData.familyDetails[relation].value];
-                                newSiblings[idx][field] = e.target.value;
-                                setFormData({
-                                  ...formData,
-                                  familyDetails: {
-                                    ...formData.familyDetails,
-                                    [relation]: {
-                                      ...formData.familyDetails[relation],
-                                      value: newSiblings,
-                                    },
-                                  },
-                                });
-                              }}
-                            >
-                              <option value="">Select</option>
-                              <option value="Yes">Yes</option>
-                              <option value="No">No</option>
-                            </select>
+                            <div className="radio-group">
+                              {["Yes", "No"].map((option) => (
+                                <label key={option} className="radio-option">
+                                  <input
+                                    type="radio"
+                                    name={`married-${relation}-${idx}`}
+                                    value={option}
+                                    checked={
+                                      sibling[field]
+                                        ? sibling[field] === option
+                                        : option === "No"
+                                    }
+                                    onChange={(e) => {
+                                      const newSiblings = [
+                                        ...formData.familyDetails[relation]
+                                          .value,
+                                      ];
+                                      newSiblings[idx][field] = e.target.value;
+                                      setFormData({
+                                        ...formData,
+                                        familyDetails: {
+                                          ...formData.familyDetails,
+                                          [relation]: {
+                                            ...formData.familyDetails[relation],
+                                            value: newSiblings,
+                                          },
+                                        },
+                                      });
+                                    }}
+                                  />
+                                  <span className="radio-label">{option}</span>
+                                </label>
+                              ))}
+                            </div>
                           ) : (
                             <input
                               type="text"
                               value={sibling[field]}
                               onChange={(e) => {
-                                const newSiblings = [...formData.familyDetails[relation].value];
+                                const newSiblings = [
+                                  ...formData.familyDetails[relation].value,
+                                ];
                                 newSiblings[idx][field] = e.target.value;
                                 setFormData({
                                   ...formData,
@@ -467,16 +507,17 @@ const { requestId } = useParams();
           </div>
         ))}
       </>
-    )
-  );
+    );
 
-  const renderContactInfo = () => (
+  const renderContactInfo = () =>
     renderSection(
       <ContactPhone />,
       "Contact Information",
       <div className="contact-grid">
         <div className="detail-field animated-field">
-          <label><LocationOn /> Address:</label>
+          <label>
+            <LocationOn /> Address:
+          </label>
           {isEditing ? (
             <textarea
               value={formData.contactDetails.address || ""}
@@ -498,7 +539,9 @@ const { requestId } = useParams();
           )}
         </div>
         <div className="detail-field animated-field">
-          <label><Phone /> Mobile:</label>
+          <label>
+            <Phone /> Mobile:
+          </label>
           {isEditing ? (
             <input
               type="tel"
@@ -521,8 +564,7 @@ const { requestId } = useParams();
           )}
         </div>
       </div>
-    )
-  );
+    );
 
   if (isLoading) return <Loader />;
   if (!formData) return <div className="not-found">Request not found</div>;
@@ -540,23 +582,27 @@ const { requestId } = useParams();
           </div>
         </div>
         <div className="detail-actions">
-          {flowType !==3 && (isEditing ? (
-            <div className="edit-actions">
-              <button className="action-btn save" onClick={handleSave}>
-                <Save /> Save Changes
+          {flowType !== 3 &&
+            (isEditing ? (
+              <div className="edit-actions">
+                <button className="action-btn save" onClick={handleSave}>
+                  <Save /> Save
+                  <span className="btn-highlight"></span>
+                </button>
+                <button className="action-btn cancel" onClick={handleCancel}>
+                  <Cancel /> Cancel
+                  <span className="btn-highlight"></span>
+                </button>
+              </div>
+            ) : (
+              <button
+                className="action-btn edit"
+                onClick={() => setIsEditing(true)}
+              >
+                <Edit /> Edit Details
                 <span className="btn-highlight"></span>
               </button>
-              <button className="action-btn cancel" onClick={handleCancel}>
-                <Cancel /> Cancel
-                <span className="btn-highlight"></span>
-              </button>
-            </div>
-          ) : (
-            <button className="action-btn edit" onClick={() => setIsEditing(true)}>
-              <Edit /> Edit Details
-              <span className="btn-highlight"></span>
-            </button>
-          ))}
+            ))}
         </div>
       </div>
 

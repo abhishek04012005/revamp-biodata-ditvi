@@ -132,7 +132,6 @@
 .action-btn.cancel {
   background: var(--danger);
   color: var(--white);
-  margin-top: 2rem;
   width: 100%;
 }
 
@@ -182,15 +181,17 @@
 }
 
 .info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+    display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Changed to always show 2 columns */
+  gap: 2rem;
+  padding: 1rem;
 }
 
 /* Form Fields */
 .detail-field {
   position: relative;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .detail-field label {
@@ -198,12 +199,13 @@
   color: var(--dark);
   font-weight: 500;
   margin-bottom: 0.5rem;
+  text-align: left;
 }
 
 .detail-field input,
 .detail-field select,
 .detail-field textarea {
-  width: 100%;
+   width: 100%; /* Use full width of parent */
   padding: 0.75rem;
   border: 2px solid #E0E0E0;
   border-radius: 8px;
@@ -398,3 +400,76 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.radio-option:hover {
+  background-color: var(--light);
+}
+
+.radio-option input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.radio-option input[type="radio"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.radio-label {
+  color: var(--dark);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Style for the "Not Selected" option */
+.radio-option:first-child .radio-label {
+  color: var(--dark);
+  opacity: 0.7;
+}
+
+.radio-option:first-child input[type="radio"] {
+  border-color: var(--dark);
+  opacity: 0.5;
+}
+
+.radio-option:first-child input[type="radio"]:checked {
+  background-color: var(--dark);
+  border-color: var(--dark);
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  flex-direction: row-reverse;
+}
+
