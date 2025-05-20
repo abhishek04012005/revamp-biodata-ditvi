@@ -64,10 +64,12 @@ const ProductionBiodataDetail = () => {
           personalDetails: response.personal_details || PersonalData,
           professionalDetails:response.professional_details || ProfessionalData,
           examinationDetails: response.examination_details || ExaminationData,
-          educationDetails: response.education_details || [EducationData],
+          educationDetails: response.education_details,
           familyDetails: response.family_details || FamilyData,
           contactDetails: response.contact_details || {},
         };
+
+        console.log("Education Details:", initialFormData.educationDetails);
 
         setRequestNumber(response.request_number);
         setFormData(initialFormData);
@@ -159,6 +161,8 @@ const ProductionBiodataDetail = () => {
           StorageBucket.PRODUCTION_BIODATA
         );
       }
+
+      console.log('Data', formData);
 
       await ProductionRequestStorage.updateProductionRequestById(requestId, {
         profileUrl,
@@ -293,62 +297,59 @@ const ProductionBiodataDetail = () => {
 
   const renderEducationInfo = () =>
     renderSection(
-      <School />,
-      "Education Information",
-      <>
-        {isEditing && (
-          <button className="add-btn floating" onClick={handleAddEducation}>
-            <Add /> Add Education
-          </button>
-        )}
-        <div className="education-list">
-          {formData.educationDetails.map((eduGroup, groupIndex) => (
-            <div key={groupIndex} className="education-group animated-card">
-              <div className="group-header">
-                <h3>
-                  Education {formData.educationDetails.length - groupIndex}
-                </h3>
-                {isEditing && (
-                  <button
-                    className="remove-btn floating"
-                    onClick={() => handleRemoveEducation(groupIndex)}
-                  >
-                    <Delete />
-                  </button>
-                )}
-              </div>
-              <div className="info-grid">
-                {eduGroup.map((field, index) => (
-                  <div key={index} className="detail-field animated-field">
-                    <label>{field.label}:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value={field.value}
-                        onChange={(e) => {
-                          const newEducation = [...formData.educationDetails];
-                          newEducation[groupIndex][index].value =
-                            e.target.value;
-                          setFormData({
-                            ...formData,
-                            educationDetails: newEducation,
-                          });
-                        }}
-                        placeholder={`Enter ${field.label.toLowerCase()}`}
-                      />
-                    ) : (
-                      <span className="field-value">
-                        {field.value || "Not Provided"}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
+     <School />,
+    "Education Information",
+    <>
+      {isEditing && (
+        <button className="add-btn floating" onClick={handleAddEducation}>
+          <Add /> Add Education
+        </button>
+      )}
+      <div className="education-list">
+        {Array.isArray(formData.educationDetails) && formData.educationDetails.map((eduGroup, groupIndex) => (
+          <div key={groupIndex} className="education-group animated-card">
+            <div className="group-header">
+              <h3>Education {formData.educationDetails.length - groupIndex}</h3>
+              {isEditing && (
+                <button
+                  className="remove-btn floating"
+                  onClick={() => handleRemoveEducation(groupIndex)}
+                >
+                  <Delete />
+                </button>
+              )}
             </div>
-          ))}
-        </div>
-      </>
-    );
+            <div className="info-grid">
+              {Array.isArray(eduGroup) && eduGroup.map((field, index) => (
+                <div key={index} className="detail-field animated-field">
+                  <label>{field.label}:</label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={field.value || ''}
+                      onChange={(e) => {
+                        const newEducation = [...formData.educationDetails];
+                        newEducation[groupIndex][index].value = e.target.value;
+                        setFormData({
+                          ...formData,
+                          educationDetails: newEducation,
+                        });
+                      }}
+                      placeholder={`Enter ${field.label.toLowerCase()}`}
+                    />
+                  ) : (
+                    <span className="field-value">
+                      {field.value || "Not Provided"}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
 
   const renderFamilyInfo = () =>
     renderSection(

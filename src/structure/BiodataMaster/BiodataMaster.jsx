@@ -14,7 +14,6 @@ import {
 } from "@mui/icons-material";
 
 const BiodataMaster = () => {
-
   const { requestId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -23,13 +22,13 @@ const BiodataMaster = () => {
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
 
-  console.log('Request ID:', requestId);
+  console.log("Request ID:", requestId);
 
   useEffect(() => {
-     fetchRequestData();
-   }, [requestId]);
+    fetchRequestData();
+  }, [requestId]);
 
-    const fetchRequestData = async () => {
+  const fetchRequestData = async () => {
     try {
       setIsLoading(true);
       const response = await ProductionRequestStorage.getProductionRequestById(
@@ -43,12 +42,14 @@ const BiodataMaster = () => {
           userDetails: response.user_details,
           modelDetails: response.model_details,
           personalDetails: response.personal_details,
-          professionalDetails:response.professional_details,
+          professionalDetails: response.professional_details,
           examinationDetails: response.examination_details,
           educationDetails: response.education_details,
           familyDetails: response.family_details,
           contactDetails: response.contact_details,
         };
+
+        console.log("Education Details:", initialFormData.educationDetails);
 
         setRequestNumber(response.request_number);
         setFormData(initialFormData);
@@ -60,7 +61,6 @@ const BiodataMaster = () => {
       setIsLoading(false);
     }
   };
-
 
   const [styles, setStyles] = useState({
     photoFrame: {
@@ -399,39 +399,38 @@ const BiodataMaster = () => {
               <div className="biodata-master-personal-section">
                 <div className="biodata-master-photo-section">
                   <div className="biodata-master-photo-frame">
-                    <img src="" alt="Profile" />
+                    <img src={formData?.profileImage} alt="Profile" />
                   </div>
                   <div className="biodata-master-name-text">
-                    <h3>Stark</h3>
+                    <h3>
+                      {
+                        formData?.personalDetails?.find(
+                          (field) => field.label === "Name"
+                        )?.value
+                      }
+                    </h3>
                   </div>
                 </div>
-                {/* Personal Information  */}
                 <div className="biodata-master-personal-info">
                   <table className="biodata-master-bio-table personal-table">
                     <tbody>
-                      <tr>
-                        <td className="biodata-master-personal-icon-alignment">
-                          Religion
-                        </td>
-                        <td>Hindu</td>
-                      </tr>
-                      <tr>
-                        <td className="biodata-master-personal-icon-alignment">
-                          Religion
-                        </td>
-                        <td>Hindu</td>
-                      </tr>
-                      <tr>
-                        <td className="biodata-master-personal-icon-alignment">
-                          Religion
-                        </td>
-                        <td>Hindu</td>
-                      </tr>
+                      {formData?.personalDetails?.map(
+                        (field, index) =>
+                          field.label !== "Name" && (
+                            <tr key={index}>
+                              <td className="biodata-master-personal-icon-alignment">
+                                {field.label}
+                              </td>
+                              <td>{field.value || "Not Provided"}</td>
+                            </tr>
+                          )
+                      )}
                     </tbody>
                   </table>
                 </div>
               </div>
-              {/* Professional Section  */}
+
+              {/* Professional Section */}
               <div className="biodata-master-section professional-table">
                 <div className="biodata-master-section-title">
                   <span className="biodata-master-flex-section">
@@ -448,15 +447,15 @@ const BiodataMaster = () => {
                       <th>Salary</th>
                     </tr>
                     <tr>
-                      <td>Google</td>
-                      <td>Manager</td>
-                      <td>3+</td>
-                      <td>12 LPA</td>
+                      {formData?.professionalDetails?.map((field, index) => (
+                        <td key={index}>{field.value || "Not Provided"}</td>
+                      ))}
                     </tr>
                   </tbody>
                 </table>
               </div>
-              {/* Education Details  */}
+
+              {/* Education Details */}
               <div className="biodata-master-section education-section">
                 <div className="biodata-master-section-title">
                   <span className="biodata-master-flex-section">
@@ -472,19 +471,20 @@ const BiodataMaster = () => {
                       <th>Year</th>
                       <th>Score</th>
                     </tr>
-
-                    <tr>
-                      <td>B.Sc</td>
-                      <td>Patna University</td>
-                      <td>2018</td>
-                      <td>89%</td>
-                    </tr>
+                    {formData?.educationDetails?.map((education, index) => (
+                      <tr key={index}>
+                        {education.map((field, fieldIndex) => (
+                          <td key={fieldIndex}>
+                            {field.value || "Not Provided"}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
 
-              {/* Family Section  */}
-
+              {/* Family Section */}
               <div className="biodata-master-section family-section">
                 <div className="biodata-master-section-title">
                   <span className="biodata-master-flex-section">
@@ -500,26 +500,32 @@ const BiodataMaster = () => {
                       <th>Occupation</th>
                       <th>Married</th>
                     </tr>
-
-                    <tr>
-                      <td>Brother</td>
-                      <td>ANkit</td>
-                      <td>College</td>
-                      <td>No</td>
-                    </tr>
-                    <tr>
-                      <td>Brother</td>
-                      <td>ANkit</td>
-                      <td>College</td>
-                      <td>No</td>
-                    </tr>
+                    {formData?.familyDetails?.brothers?.value.map(
+                      (brother, index) => (
+                        <tr key={`brother-${index}`}>
+                          <td>Brother</td>
+                          <td>{brother.name || "Not Provided"}</td>
+                          <td>{brother.occupation || "Not Provided"}</td>
+                          <td>{brother.married || "No"}</td>
+                        </tr>
+                      )
+                    )}
+                    {formData?.familyDetails?.sisters?.value.map(
+                      (sister, index) => (
+                        <tr key={`sister-${index}`}>
+                          <td>Sister</td>
+                          <td>{sister.name || "Not Provided"}</td>
+                          <td>{sister.occupation || "Not Provided"}</td>
+                          <td>{sister.married || "No"}</td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
                 </table>
               </div>
 
               {/* Contact Section */}
-
-              <div className="biodata-master-section contact-sectio">
+              <div className="biodata-master-section contact-section">
                 <div className="biodata-master-section-title">
                   <span className="biodata-master-flex-section">
                     <ContactPhone className="biodata-master-section-icon" />
@@ -532,13 +538,13 @@ const BiodataMaster = () => {
                       <th>Address</th>
                       <th>Mobile No.</th>
                     </tr>
-
                     <tr>
                       <td>
-                        Near B.D. College, Yarpur Yogiya Tola, Mithapur,
-                        Patna-800001
+                        {formData?.contactDetails?.address || "Not Provided"}
                       </td>
-                      <td>+919264248504</td>
+                      <td>
+                        {formData?.contactDetails?.mobile || "Not Provided"}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

@@ -20,6 +20,7 @@ export const ProductionRequestStorage = {
                     personal_details,
                     professional_details,
                     examination_details,
+                    education_details,
                     family_details,
                     contact_details,
                     created_at
@@ -101,6 +102,7 @@ export const ProductionRequestStorage = {
 
     async updateProductionRequestById(id, productionRequest) {
         try {
+            console.log('updateProductionRequestById', id, productionRequest.educationDetails);
             const { data, error } = await supabase
                 .from(productionRequestTableName)
                 .update({
