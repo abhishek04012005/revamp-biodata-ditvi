@@ -1,6 +1,6 @@
-import { supabase } from './Supabase';
+    import { supabase } from './Supabase';
 
-export const AdmingLoginStorage = {
+    export const AdmingLoginStorage = {
     async adminLogin(credential) {
         try {
         const { data, error } = await supabase

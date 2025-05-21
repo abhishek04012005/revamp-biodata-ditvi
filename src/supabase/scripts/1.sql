@@ -67,5 +67,20 @@ CREATE TABLE public.user_feedback (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
+CREATE TABLE public.contact_us (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    number SERIAL NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    mobile TEXT NOT NULL,
+    message TEXT NOT NULL,
+    deleted BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Set the sequence starting value for request_number
+ALTER SEQUENCE contact_us_number_seq RESTART WITH 111;
+
+
 -- DROP TABLE public.biodata_request ;
 -- DROP TABLE public.production_request ;

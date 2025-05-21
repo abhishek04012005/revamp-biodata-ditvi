@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAdmin } from "../AdminContext/AdminContex";
 
 import {
+  ContactPage,
   Dashboard,
   Description,
   Person2,
@@ -13,6 +14,12 @@ import {
 import Logo from "../../../assets/logo.png";
 
 const adminNavLinks = [
+  {
+    id: "contact",
+    label: "Contact Us",
+    path: "/admin/contact",
+    icon: <ContactPage />,
+  },
   {
     id: "dashboard",
     label: "Dashboard",

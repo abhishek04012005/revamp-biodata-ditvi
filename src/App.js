@@ -26,6 +26,7 @@ import AdminNavbar from "./components/Admin/AdminNavbar/AdminNavbar";
 import AdminFooter from "./components/Admin/AdminFooter/AdminFooter";
 import RequestBiodataDetail from "./components/Admin/RequestBiodataDetail/RequestBiodataDetail";
 import ProductionBiodataDetail from "./components/Admin/ProductionBiodataDetail/ProductionBiodataDetail";
+import ContactUsDashboard from "./components/Admin/ContactUsDashboard/ContactUsDashboard";
 
 function App() {
   return (
@@ -47,6 +48,10 @@ function App() {
                       <Route
                         path="production"
                         element={<ProductionDashboard />}
+                      />
+                      <Route
+                        path="contact"
+                        element={<ContactUsDashboard />}
                       />
                       <Route
                         path="production/:requestId"

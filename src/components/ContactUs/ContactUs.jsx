@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import { Box, TextField, Button, CircularProgress } from '@mui/material';
 import { Email, Phone, Person, Message } from '@mui/icons-material';
 import ContactUsImg from '../../assets/contactus.svg'
+import { ContactUsStorage } from '../../supabase/ContactUs';
 
 
 const ContactUs = () => {
@@ -24,20 +25,17 @@ const ContactUs = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const scriptURL = "https://script.google.com/macros/s/AKfycbwfqJJvoQpJhHIZ7GxWW_0aPHtkM7Rpg6EYWaPi_Ojwa1d-hYS7kgDr9n8QFkLEgntQog/exec";
-
-        const formDataToSend = new URLSearchParams();
-        Object.keys(formData).forEach((key) => {
-            formDataToSend.append(key, formData[key]);
-        });
 
         try {
-            const response = await fetch(scriptURL, {
-                method: "POST",
-                body: formDataToSend,
+            
+            const response = await ContactUsStorage.saveContactUs({
+                name: formData.name,
+                email: formData.email,
+                mobile: formData.number,
+                message: formData.message,
             });
 
-            if (response.ok) {
+            if (response) {
                 alert("Thank You! We'll get back to you soon.");
                 setFormData({ name: '', email: '', message: '', number: '' });
             } else {
