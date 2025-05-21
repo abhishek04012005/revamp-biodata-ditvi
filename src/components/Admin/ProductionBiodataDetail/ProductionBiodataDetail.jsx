@@ -13,7 +13,6 @@ import {
   People,
   ContactPhone,
   CloudUpload,
-  Check,
   ArrowBack,
   Phone,
   LocationOn,
@@ -28,7 +27,6 @@ import {
   FamilyData,
   ExaminationData,
 } from "../../../json/createBiodata";
-import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
 import { UploadFile } from "../../../supabase/UploadFile";
 import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
@@ -46,9 +44,10 @@ const ProductionBiodataDetail = () => {
 
 
   useEffect(() => {
-    fetchRequestData();
+    fetchRequestData(requestId);
   }, [requestId]);
-  const fetchRequestData = async () => {
+  
+  const fetchRequestData = async (requestId) => {
     try {
       setIsLoading(true);
       const response = await ProductionRequestStorage.getProductionRequestById(
@@ -64,7 +63,7 @@ const ProductionBiodataDetail = () => {
           personalDetails: response.personal_details || PersonalData,
           professionalDetails:response.professional_details || ProfessionalData,
           examinationDetails: response.examination_details || ExaminationData,
-          educationDetails: response.education_details,
+          educationDetails: response.education_details || [EducationData],
           familyDetails: response.family_details || FamilyData,
           contactDetails: response.contact_details || {},
         };

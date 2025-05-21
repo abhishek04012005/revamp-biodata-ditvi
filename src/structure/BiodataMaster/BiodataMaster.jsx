@@ -22,7 +22,6 @@ const BiodataMaster = () => {
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
 
-  console.log("Request ID:", requestId);
 
   useEffect(() => {
     fetchRequestData();
@@ -48,8 +47,6 @@ const BiodataMaster = () => {
           familyDetails: response.family_details,
           contactDetails: response.contact_details,
         };
-
-        console.log("Education Details:", initialFormData.educationDetails);
 
         setRequestNumber(response.request_number);
         setFormData(initialFormData);
@@ -500,6 +497,20 @@ const BiodataMaster = () => {
                       <th>Occupation</th>
                       <th>Married</th>
                     </tr>
+                     {/* Father's Details */}
+                      <tr>
+                        <td>Father</td>
+                        <td>{formData?.familyDetails?.father?.value?.name || "Not Provided"}</td>
+                        <td>{formData?.familyDetails?.father?.value?.occupation || "Not Provided"}</td>
+                        <td>-</td>
+                      </tr>
+                      {/* Mother's Details */}
+                      <tr>
+                        <td>Mother</td>
+                        <td>{formData?.familyDetails?.mother?.value?.name || "Not Provided"}</td>
+                        <td>{formData?.familyDetails?.mother?.value?.occupation || "Not Provided"}</td>
+                        <td>-</td>
+                      </tr>
                     {formData?.familyDetails?.brothers?.value.map(
                       (brother, index) => (
                         <tr key={`brother-${index}`}>

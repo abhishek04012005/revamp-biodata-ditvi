@@ -84,6 +84,7 @@ export const ProductionRequestStorage = {
                     personal_details,
                     professional_details,
                     examination_details,
+                    education_details,
                     family_details,
                     contact_details,
                     created_at
