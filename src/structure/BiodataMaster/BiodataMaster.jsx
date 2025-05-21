@@ -427,8 +427,32 @@ const BiodataMaster = () => {
                 </div>
               </div>
 
-              {/* Professional Section */}
-              <div className="biodata-master-section professional-table">
+              {/* Professional/Examination Section */}
+            {formData?.modelDetails?.type === 'Student' ? (
+              <div className="biodata-master-section examination-table">
+                <div className="biodata-master-section-title">
+                  <span className="biodata-master-flex-section">
+                    <Work className="biodata-master-section-icon" />
+                    <h3>Examination Preparation Details</h3>
+                  </span>
+                </div>
+                <table className="biodata-master-bio-table">
+                  <tbody>
+                    <tr>
+                      {formData?.examinationDetails?.map((field, index) => (
+                        <th key={index}>{field.label}</th>
+                      ))}
+                    </tr>
+                    <tr>
+                      {formData?.examinationDetails?.map((field, index) => (
+                        <td key={index}>{field.value || "Not Provided"}</td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+	          <div className= "biodata-master-section professional-table">
                 <div className="biodata-master-section-title">
                   <span className="biodata-master-flex-section">
                     <Work className="biodata-master-section-icon" />
@@ -438,10 +462,9 @@ const BiodataMaster = () => {
                 <table className="biodata-master-bio-table">
                   <tbody>
                     <tr>
-                      <th>Company Name</th>
-                      <th>Position</th>
-                      <th>Years of Experience</th>
-                      <th>Salary</th>
+                      {formData?.professionalDetails?.map((field, index) => (
+                        <th key={index}>{field.label}</th>
+                      ))}
                     </tr>
                     <tr>
                       {formData?.professionalDetails?.map((field, index) => (
@@ -451,6 +474,8 @@ const BiodataMaster = () => {
                   </tbody>
                 </table>
               </div>
+
+)}
 
               {/* Education Details */}
               <div className="biodata-master-section education-section">
@@ -463,10 +488,9 @@ const BiodataMaster = () => {
                 <table className="biodata-master-bio-table">
                   <tbody>
                     <tr>
-                      <th>Degree</th>
-                      <th>Institution</th>
-                      <th>Year</th>
-                      <th>Score</th>
+                      {formData?.educationDetails?.[0]?.map((field, index) => (
+                        <th key={index}>{field.label}</th>
+                      ))}
                     </tr>
                     {formData?.educationDetails?.map((education, index) => (
                       <tr key={index}>
