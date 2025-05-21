@@ -31,6 +31,7 @@ import { UploadFile } from "../../../supabase/UploadFile";
 import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
+import ModelTypes from "../../../json/ModelTypes";
 
 const ProductionBiodataDetail = () => {
   const { requestId } = useParams();
@@ -161,8 +162,6 @@ const ProductionBiodataDetail = () => {
         );
       }
 
-      console.log('Data', formData);
-
       await ProductionRequestStorage.updateProductionRequestById(requestId, {
         profileUrl,
         personalDetails: formData.personalDetails,
@@ -280,6 +279,38 @@ const ProductionBiodataDetail = () => {
                   setFormData({
                     ...formData,
                     professionalDetails: newData,
+                  });
+                }}
+                placeholder={`Enter ${field.label.toLowerCase()}`}
+              />
+            ) : (
+              <span className="field-value">
+                {field.value || "Not Provided"}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+
+  const renderExaminationInfo = () =>
+    renderSection(
+      <School />,
+      "Examination Information",
+      <div className="info-grid">
+        {formData.examinationDetails.map((field, index) => (
+          <div key={index} className="detail-field animated-field">
+            <label>{field.label}:</label>
+            {isEditing ? (
+              <input
+                type="text"
+                value={field.value}
+                onChange={(e) => {
+                  const newData = [...formData.examinationDetails];
+                  newData[index].value = e.target.value;
+                  setFormData({
+                    ...formData,
+                    examinationDetails: newData,
                   });
                 }}
                 placeholder={`Enter ${field.label.toLowerCase()}`}
@@ -628,7 +659,10 @@ const ProductionBiodataDetail = () => {
           )}
           {formData.biodataUrl && renderBiodataDownload()}
           {renderPersonalInfo()}
-          {renderProfessionalInfo()}
+          {formData.modelDetails?.type === ModelTypes.Student.Name
+            ? renderExaminationInfo()
+            : renderProfessionalInfo()
+          }
           {renderEducationInfo()}
           {renderFamilyInfo()}
           {renderContactInfo()}
