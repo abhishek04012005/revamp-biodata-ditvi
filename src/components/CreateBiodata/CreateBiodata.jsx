@@ -696,18 +696,34 @@ const CreateBiodata = () => {
                   ))}
                 </div>
               </section>
-              {/* Professional Information */}
-              <section className="preview-group">
-                <h3>Professional Information</h3>
-                <div className="preview-details">
-                  {formData.professionalDetails.map((field, index) => (
-                    <p key={index}>
-                      <strong>{field.label}:</strong>{" "}
-                      {field.value || "Not Provided"}
-                    </p>
-                  ))}
-                </div>
-              </section>
+
+              {/* Professional/Examination Information */}
+                <section className="preview-group">
+                  <h3>
+                    {modelDetails?.type === ModelTypes.Student.Name
+                      ? "Examination Preparation Details"
+                      : "Professional Details"}
+                  </h3>
+                  <div className="preview-details">
+                    {modelDetails?.type === ModelTypes.Student.Name ? (
+                      // Examination Details
+                      formData.examinaitonDetails.map((field, index) => (
+                        <p key={index}>
+                          <strong>{field.label}:</strong>{" "}
+                          {field.value || "Not Provided"}
+                        </p>
+                      ))
+                    ) : (
+                      // Professional Details
+                      formData.professionalDetails.map((field, index) => (
+                        <p key={index}>
+                          <strong>{field.label}:</strong>{" "}
+                          {field.value || "Not Provided"}
+                        </p>
+                      ))
+                    )}
+                  </div>
+                </section>
 
               {/* Education Information */}
               <section className="preview-group">

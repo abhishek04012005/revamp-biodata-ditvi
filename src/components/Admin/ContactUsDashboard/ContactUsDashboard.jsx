@@ -84,6 +84,10 @@ const ContactUsDashboard = () => {
             </div>
             <div className="modal-content">
               <div className="detail-row">
+                <span className="detail-label">Number:</span>
+                <span className="detail-value">{selectedContact.number}</span>
+              </div>
+              <div className="detail-row">
                 <span className="detail-label">Name:</span>
                 <span className="detail-value">{selectedContact.name}</span>
               </div>
@@ -140,6 +144,9 @@ const ContactUsDashboard = () => {
             <thead>
               <tr>
                 <th onClick={() => handleSort("name")}>
+                  Number <FilterList />
+                </th>
+                <th onClick={() => handleSort("name")}>
                   Name <FilterList />
                 </th>
                 <th onClick={() => handleSort("email")}>
@@ -158,6 +165,7 @@ const ContactUsDashboard = () => {
             <tbody>
               {filteredContacts.map((contact) => (
                 <tr key={contact.id} className="contact-row">
+                  <td>{contact.number}</td>
                   <td>{contact.name}</td>
                   <td>{contact.email}</td>
                   <td>{contact.mobile}</td>

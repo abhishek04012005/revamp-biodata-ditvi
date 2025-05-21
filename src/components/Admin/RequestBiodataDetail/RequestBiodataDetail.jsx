@@ -45,9 +45,9 @@ const RequestBiodataDetail = () => {
   const [flowType, setFlowType] = useState(null);
 
   useEffect(() => {
-    fetchRequestData();
+    fetchRequestData(requestId);
   }, [requestId]);
-  const fetchRequestData = async () => {
+  const fetchRequestData = async (requestId) => {
     try {
       setIsLoading(true);
       const response = await BiodataRequestStorage.getBiodataRequestByRequestId(
@@ -55,7 +55,6 @@ const RequestBiodataDetail = () => {
       );
 
       if (response) {
-        console.log("response:", response);
         const initialFormData = {
           profileImage: response.profile_url,
           biodataUrl: response.biodata_url,
@@ -157,7 +156,7 @@ const RequestBiodataDetail = () => {
       if (selectedImage) {
         profileUrl = await UploadFile(
           selectedImage,
-          `${requestNumber}_profile${new Date().getTime()}`,
+          `${requestNumber}_profile_${new Date().getTime()}`,
           StorageBucket.CREATE_BIODATA
         );
       }
