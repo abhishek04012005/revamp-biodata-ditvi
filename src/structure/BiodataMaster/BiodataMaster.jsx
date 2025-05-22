@@ -4,6 +4,7 @@ import "./BiodataMaster.css";
 import BackgroundBiodata1111 from "../../assets/background/1111.svg";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
 import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
+import WatermarkLogo from "../../assets/watermark/logo.png";
 
 import {
   Work,
@@ -196,7 +197,7 @@ const BiodataMaster = () => {
                   withWatermark
                     ? `
                     <div class="img-watermark">
-                        
+                          <img src="${WatermarkLogo}" alt="watermark" style="width: 100%; height: 100%; object-fit: contain;"/>
                     </div>
                 `
                     : ""
@@ -209,7 +210,9 @@ const BiodataMaster = () => {
     // Replace page content with biodata content and print styles
     document.body.innerHTML = printStyles + printContent;
 
-    document.title = `Biodata - ${requestNumber} ${withWatermark ? "Watermarked" : "Original"}`;
+    document.title = `Biodata - ${requestNumber} ${
+      withWatermark ? "Watermarked" : "Original"
+    }`;
 
     // Print after a small delay to ensure styles are applied
     setTimeout(() => {
@@ -225,139 +228,7 @@ const BiodataMaster = () => {
     <>
       <div className="biodata-master">
         <div className="biodata-master-container">
-          <div className="style-controls-sidebar">
-            <div className="control-section">
-              <h4>Font Sizes</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Table Headers
-                    <div className="size-control">
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              headerFontSize: `${
-                                parseInt(prev.table.headerFontSize) - 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="size-value">
-                        {styles.table.headerFontSize}
-                      </span>
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              headerFontSize: `${
-                                parseInt(prev.table.headerFontSize) + 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  </label>
-                </div>
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Table Data
-                    <div className="size-control">
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              dataFontSize: `${
-                                parseInt(prev.table.dataFontSize) - 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="size-value">
-                        {styles.table.dataFontSize}
-                      </span>
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              dataFontSize: `${
-                                parseInt(prev.table.dataFontSize) + 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div className="control-section">
-              <h4>Row Spacing</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Gap
-                    <div className="size-control">
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              rowGap: `${parseInt(prev.table.rowGap) - 1}px`,
-                            },
-                          }))
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="size-value">{styles.table.rowGap}</span>
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              rowGap: `${parseInt(prev.table.rowGap) + 1}px`,
-                            },
-                          }))
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="style-controls-sidebar"></div>
           <div className="biodata-master-biodata-page">
             {/* Apply dynamic styles to elements */}
             <style>
@@ -688,144 +559,166 @@ const BiodataMaster = () => {
 
           <div className="style-controls-sidebar">
             <div className="control-section">
-              <h4>Font Sizes</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Table Headers
-                    <div className="size-control">
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              headerFontSize: `${
-                                parseInt(prev.table.headerFontSize) - 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="size-value">
-                        {styles.table.headerFontSize}
-                      </span>
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              headerFontSize: `${
-                                parseInt(prev.table.headerFontSize) + 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  </label>
-                </div>
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Table Data
-                    <div className="size-control">
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              dataFontSize: `${
-                                parseInt(prev.table.dataFontSize) - 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="size-value">
-                        {styles.table.dataFontSize}
-                      </span>
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              dataFontSize: `${
-                                parseInt(prev.table.dataFontSize) + 1
-                              }px`,
-                            },
-                          }))
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  </label>
+              <div className="control-section print-controls">
+                <h4 className="control-title">
+                  <span className="control-icon">🖨️</span> Print Options
+                </h4>
+                <div className="print-buttons">
+                  <button
+                    className="print-btn watermark"
+                    onClick={() => handlePrint(true)}
+                  >
+                    <span className="print-icon">📄</span>
+                    <span className="print-text">
+                      <span className="print-label">Watermark</span>
+          
+                    </span>
+                  </button>
+                  <button
+                    className="print-btn original"
+                    onClick={() => handlePrint(false)}
+                  >
+                    <span className="print-icon">📃</span>
+                    <span className="print-text">
+                      <span className="print-label">Original</span>
+                      
+                    </span>
+                  </button>
                 </div>
               </div>
-            </div>
-
-            <div className="control-section">
-              <h4>Row Spacing</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Gap
-                    <div className="size-control">
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              rowGap: `${parseInt(prev.table.rowGap) - 1}px`,
-                            },
-                          }))
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="size-value">{styles.table.rowGap}</span>
-                      <button
-                        className="size-btn"
-                        onClick={() =>
-                          setStyles((prev) => ({
-                            ...prev,
-                            table: {
-                              ...prev.table,
-                              rowGap: `${parseInt(prev.table.rowGap) + 1}px`,
-                            },
-                          }))
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  </label>
+              <div className="control-section">
+                <h4>Font Sizes</h4>
+                <div className="control-group">
+                  <div className="control-item">
+                    <label>
+                      <FormatSize /> Table Headers
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                headerFontSize: `${
+                                  parseInt(prev.table.headerFontSize) - 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.table.headerFontSize}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                headerFontSize: `${
+                                  parseInt(prev.table.headerFontSize) + 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+                  <div className="control-item">
+                    <label>
+                      <FormatSize /> Table Data
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                dataFontSize: `${
+                                  parseInt(prev.table.dataFontSize) - 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.table.dataFontSize}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                dataFontSize: `${
+                                  parseInt(prev.table.dataFontSize) + 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div className="control-section">
-            <h4>Actions</h4>
-            <div className="control-group">
-              <button className="print-btn" onClick={handlePrint}>
-                Print Biodata
-              </button>
+              <div className="control-section">
+                <h4>Row Spacing</h4>
+                <div className="control-group">
+                  <div className="control-item">
+                    <label>
+                      <FormatSize /> Gap
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                rowGap: `${parseInt(prev.table.rowGap) - 1}px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.table.rowGap}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                rowGap: `${parseInt(prev.table.rowGap) + 1}px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
