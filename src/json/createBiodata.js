@@ -9,7 +9,7 @@ const ICON_MAPPING = {
 
 const PersonalData = [
     { label: 'Name', value: '', placeholder: 'Neha Sharma' },
-    { label: 'Date of Birth', value: '', placeholder: '24/12/1994' },
+    { label: 'Date of Birth', value: '', placeholder: '24th Dec 1994, 10:10 AM' },
     { label: 'Height', value: '', placeholder: '5 ft 2 in' },
     { label: 'Complexion', value: '', placeholder: 'Fair' },
     { label: 'Caste', value: '', placeholder: 'Brahmin, Hindu' },

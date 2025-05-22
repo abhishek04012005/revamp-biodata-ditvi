@@ -11,8 +11,19 @@ import {
   FamilyData,
   ExaminationData,
 } from "../../json/createBiodata";
-import { Mode } from "@mui/icons-material";
+
+import {
+  PersonalDataHindi,
+  ProfessionalDataHindi,
+  EducationDataHindi,
+  FamilyDataHindi,
+  ExaminationDataHindi,
+  createEmptyPersonHindi,
+} from "../../json/CreateBiodataHindi";
+
+
 import ModelTypes from "../../json/ModelTypes";
+import Languages from "../../json/Languages";
 import { UploadFile } from '../../supabase/UploadFile';
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import StorageBucket from "../../constants/StorageBucket";
@@ -25,36 +36,105 @@ const CreateBiodata = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { requestNumber, userDetails, modelDetails } = location.state || {};
 
+  const getDataByLanguage = () => {
+    console.log("modelDetails", modelDetails);
+    console.log("PersonalDataHindi", PersonalDataHindi);
+    if (modelDetails?.language === Languages.Hindi.Name) {
+      return {
+        personal: PersonalDataHindi,
+        professional: ProfessionalDataHindi,
+        education: EducationDataHindi,
+        family: FamilyDataHindi,
+        examination: ExaminationDataHindi,
+        steps: [
+          "प्रोफाइल छवि",
+          "व्यक्तिगत जानकारी",
+          "व्यावसायिक जानकारी",
+          "शैक्षिक जानकारी",
+          "पारिवारिक जानकारी",
+          "संपर्क जानकारी",
+          "पूर्वावलोकन",
+        ],
+        placeholders: {
+          address: "मकान नंबर 341, स्कीम नंबर 94सी, रिंग रोड, इंदौर, मध्य प्रदेश",
+          mobile: "9263767441",
+          addEducation: "शिक्षा जोड़ें",
+          remaining: "शेष",
+          addBrother: "भाई जोड़ें",
+          addSister: "बहन जोड़ें",
+          occupation: "व्यवसाय",
+          married: "विवाहित",
+          notProvided: "उपलब्ध नहीं",
+          yes: "हाँ",
+          no: "नहीं",
+        }
+      };
+    }
+    return {
+      personal: PersonalData,
+      professional: ProfessionalData,
+      education: EducationData,
+      family: FamilyData,
+      examination: ExaminationData,
+      steps: [
+        "Profile Image",
+        "Personal",
+        "Professional",
+        "Education",
+        "Family",
+        "Contact",
+        "Preview",
+      ],
+      placeholders: {
+        address: "House No. 341, 2 Scheme No 94C, Ring Road, Indore",
+        mobile: "9263767441",
+        addEducation: "Add Education",
+        remaining: "remaining",
+        addBrother: "Add Brother",
+        addSister: "Add Sister",
+        occupation: "Occupation",
+        married: "Married",
+        notProvided: "Not Provided",
+        yes: "Yes",
+        no: "No",
+      }
+    };
+  };
+
+  const langData = getDataByLanguage();
+
+  console.log("langData", langData);
+
   const [formData, setFormData] = useState({
     profileImage: null,
     name: "",
     userDetails: userDetails,
     modelDetails: modelDetails,
-    personalDetails: PersonalData.map(({ label, value, placeholder }) => ({
+    personalDetails: langData.personal.map(({ label, value, placeholder }) => ({
       label,
       value,
       placeholder,
     })),
-    professionalDetails: ProfessionalData.map(
+    professionalDetails: langData.professional.map(
       ({ label, value, placeholder }) => ({ label, value, placeholder })
     ),
-    examinaitonDetails: ExaminationData.map(
+    examinaitonDetails: langData.examination.map(
       ({ label, value, placeholder }) => ({ label, value, placeholder })
     ),
     educationDetails: [
-      EducationData.map(({ label, value, placeholder }) => ({
+      langData.education.map(({ label, value, placeholder }) => ({
         label,
         value,
         placeholder,
       })),
     ],
-    familyDetails: FamilyData,
+    familyDetails: langData.family,
     contactDetails: {},
   });
 
   const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB in bytes
   const handleNext = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    setCurrentStep((prev) => Math.min(prev + 1, langData.steps.length - 1));
   };
   const handlePrevious = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
@@ -131,7 +211,7 @@ const CreateBiodata = () => {
         return;
     }
 
-    if (currentStep !== steps.length - 1) {
+    if (currentStep !== langData.steps.length - 1) {
       handleNext();
       return;
     }
@@ -166,15 +246,7 @@ const CreateBiodata = () => {
     }
   };
 
-  const steps = [
-    "Profile Image",
-    "Personal",
-    "Professional",
-    "Education",
-    "Family",
-    "Contact",
-    "Preview",
-  ];
+
 
   const setFamilyDetails = (relation, index, key, value) => {
     setFormData((prev) => ({
@@ -202,7 +274,8 @@ const CreateBiodata = () => {
           ...prev.familyDetails,
           [relation]: {
             ...prev.familyDetails[relation],
-            value: [createEmptyPerson(), ...prev.familyDetails[relation].value],
+            value: [modelDetails?.language === Languages.Hindi.Name ? 
+              createEmptyPersonHindi() : createEmptyPerson(), ...prev.familyDetails[relation].value],
           },
         },
       }));
@@ -276,11 +349,11 @@ const CreateBiodata = () => {
             </div>
           </div>
         );
-      case 1: //Personal Information
+      case 1: //Personal Details
         return (
           <>
             <div className="create-biodata-section">
-              <h2>Personal Information</h2>
+              <h2>Personal Details</h2>
               {formData.personalDetails.map((field, index) => (
                 <>
                   <div className="create-biodata-label-input">
@@ -308,7 +381,7 @@ const CreateBiodata = () => {
             </div>
           </>
         );
-      case 2: // Professional/Examination Information
+      case 2: // Professional/Examination Details
         return (
           <div className="create-biodata-section">
             <h2>
@@ -373,11 +446,11 @@ const CreateBiodata = () => {
             )}
           </div>
         );
-      case 3: //Education Information
+      case 3: //Education Details
         return (
           <>
             <div className="create-biodata-section">
-              <h2>Education Information</h2>
+              <h2>Education Details</h2>
               {formData.educationDetails.length < 5 && (
                 <button
                   type="button"
@@ -443,11 +516,11 @@ const CreateBiodata = () => {
             </div>
           </>
         );
-      case 4: //Family Information
+      case 4: //Family Details
         return (
           <>
             <div className="create-biodata-section">
-              <h2>Family Information</h2>
+              <h2>Family Details</h2>
 
               {/* Parents Section */}
               {["father", "mother"].map((relation) => (
@@ -623,10 +696,10 @@ const CreateBiodata = () => {
             </div>
           </>
         );
-      case 5: //Contact Information
+      case 5: //Contact Details
         return (
           <div className="create-biodata-section">
-            <h2>Contact Information</h2>
+            <h2>Contact Details</h2>
             <div className="create-biodata-label-input">
               <label className="create-biodata-label">Address:</label>
               <textarea
@@ -683,9 +756,9 @@ const CreateBiodata = () => {
                   </div>
                 </section>
               )}
-              {/* Personal Information */}
+              {/* Personal Details */}
               <section className="preview-group">
-                <h3>Personal Information</h3>
+                <h3>Personal Details</h3>
                 <div className="preview-details">
                   {/* Personal Data */}
                   {formData.personalDetails?.map((field, index) => (
@@ -697,7 +770,7 @@ const CreateBiodata = () => {
                 </div>
               </section>
 
-              {/* Professional/Examination Information */}
+              {/* Professional/Examination Details */}
                 <section className="preview-group">
                   <h3>
                     {modelDetails?.type === ModelTypes.Student.Name
@@ -725,9 +798,9 @@ const CreateBiodata = () => {
                   </div>
                 </section>
 
-              {/* Education Information */}
+              {/* Education Details */}
               <section className="preview-group">
-                <h3>Education Information</h3>
+                <h3>Education Details</h3>
                 <div className="preview-details">
                   {formData.educationDetails.map((eduGroup, index) => (
                     <div key={index} className="education-item">
@@ -745,9 +818,9 @@ const CreateBiodata = () => {
                 </div>
               </section>
 
-              {/* Family Information */}
+              {/* Family Details */}
               <section className="preview-group">
-                <h3>Family Information</h3>
+                <h3>Family Details</h3>
                 <div className="preview-details">
                   {/* Parents Section */}
                   {["father", "mother"].map((relation) => (
@@ -793,9 +866,9 @@ const CreateBiodata = () => {
                 </div>
               </section>
 
-              {/* Contact Information */}
+              {/* Contact Details */}
               <section className="preview-group">
-                <h3>Contact Information</h3>
+                <h3>Contact Details</h3>
                 <div className="preview-details">
                   <p>
                     <strong>Address:</strong>{" "}
@@ -817,7 +890,7 @@ const CreateBiodata = () => {
     <>
       <div className="create-biodata-stepper">
         <div className="create-biodata-stepper-header">
-          {steps.map((step, index) => (
+          {langData.steps.map((step, index) => (
             <div
               key={index}
               className={`create-biodata-step ${
@@ -853,7 +926,7 @@ const CreateBiodata = () => {
               className="create-biodata-nav-button next"
               // disabled={isLoading}
             >
-              {currentStep === steps.length - 1
+              {currentStep === langData.steps.length - 1
                 ? isLoading
                   ? "Saving..."
                   : "Save and Preview"
