@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./BiodataMaster.css";
 import BackgroundBiodata1111 from "../../assets/background/1111.svg";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
+import { BIODATA_THEME_1111 } from '../../json/biodataMaster';
+
 import {
   Work,
   School,
@@ -344,39 +346,39 @@ const BiodataMaster = () => {
         <div className="biodata-master-biodata-page">
           {/* Apply dynamic styles to elements */}
           <style>
-            {`
-              .biodata-master .biodata-master-photo-frame {
-      border-color: ${styles.photoFrame.borderColor} !important;
+   {`
+    .biodata-master .biodata-master-photo-frame {
+      border-color: ${BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR} !important;
     }
     .biodata-master h3 {
-      font-size: ${styles.headings.fontSize} !important;
-      color: ${styles.headings.color} !important;
+      font-size: ${BIODATA_THEME_1111.HEADINGS.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
     }
     .biodata-master th {
-      font-size: ${styles.tableHeaders.fontSize} !important;
-      color: ${styles.tableHeaders.color} !important;
-      background-color: ${styles.table.headerColor} !important;
+      font-size: ${BIODATA_THEME_1111.TABLE.HEADER.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
     }
     .biodata-master td {
-      font-size: ${styles.tableData.fontSize} !important;
-      color: ${styles.tableData.color} !important;
+      font-size: ${BIODATA_THEME_1111.TABLE.DATA.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
     }
     .biodata-master .biodata-master-section-icon {
-      font-size: ${styles.icons.fontSize} !important;
-      color: ${styles.icons.color} !important;
+      font-size: ${BIODATA_THEME_1111.ICONS.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table {
-      --row-gap: ${styles.table.rowGap};
+      --row-gap: ${BIODATA_THEME_1111.TABLE.ROW_GAP};
     }
     .biodata-master .biodata-master-bio-table tbody tr {
-      background-color: ${styles.table.rowColor} !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
-      background-color: ${styles.table.rowColor}80 !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table thead tr,
     .biodata-master .biodata-master-bio-table tbody tr:first-child {
-      background-color: ${styles.table.headerColor} !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
     }
   `}
           </style>
@@ -515,7 +517,7 @@ const BiodataMaster = () => {
                       (brother, index) => (
                         <tr key={`brother-${index}`}>
                           <td>Brother</td>
-                          <td>{brother.name || "Not Provided"}</td>
+                          <td>{brother.name || "Not Provided"} </td>
                           <td>{brother.occupation || "Not Provided"}</td>
                           <td>{brother.married || "No"}</td>
                         </tr>
@@ -536,7 +538,7 @@ const BiodataMaster = () => {
               </div>
 
               {/* Contact Section */}
-              <div className="biodata-master-section contact-section">
+              <div className="biodata-master-section contact-details">
                 <div className="biodata-master-section-title">
                   <span className="biodata-master-flex-section">
                     <ContactPhone className="biodata-master-section-icon" />
