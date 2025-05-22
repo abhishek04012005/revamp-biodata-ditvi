@@ -61,29 +61,38 @@ const BiodataMaster = () => {
   };
 
   const [styles, setStyles] = useState({
-    photoFrame: {
-      borderColor: "#FF8C42",
-    },
+    // photoFrame: {
+    //   borderColor: "#FF8C42",
+    // },
+    // headings: {
+    //   fontSize: "1.5rem",
+    //   color: "#2c3e50",
+    // },
+    // tableHeaders: {
+    //   fontSize: "1rem",
+    //   color: "#34495e",
+    // },
+    // tableData: {
+    //   fontSize: "0.9rem",
+    //   color: "#2d3436",
+    // },
+    // icons: {
+    //   fontSize: "24px",
+    //   color: "#FF8C42",
+    // },
+    // table: {
+    //   rowGap: "8px",
+    //   rowColor: "#f8f9fa",
+    //   headerColor: "#e9ecef",
+    // },
+
     headings: {
       fontSize: "1.5rem",
-      color: "#2c3e50",
-    },
-    tableHeaders: {
-      fontSize: "1rem",
-      color: "#34495e",
-    },
-    tableData: {
-      fontSize: "0.9rem",
-      color: "#2d3436",
-    },
-    icons: {
-      fontSize: "24px",
-      color: "#FF8C42",
     },
     table: {
+      headerFontSize: "1rem",
+      dataFontSize: "0.9rem",
       rowGap: "8px",
-      rowColor: "#f8f9fa",
-      headerColor: "#e9ecef",
     },
   });
 
@@ -115,7 +124,7 @@ const BiodataMaster = () => {
           </button>
         </div>
 
-        {showControls && (
+        {/* {showControls && (
           <div className="style-controls-panel">
             <div className="control-section">
               <h4>Photo Frame</h4>
@@ -340,6 +349,82 @@ const BiodataMaster = () => {
               </div>
             </div>
           </div>
+        )} */}
+
+        {showControls && (
+          <div className="style-controls-panel">
+            <div className="control-section">
+              <h4>Font Sizes</h4>
+              <div className="control-group">
+                <div className="control-item">
+                  <label>
+                    <FormatSize /> Table Headers
+                    <input
+                      type="range"
+                      min="12"
+                      max="24"
+                      value={parseInt(styles.table.headerFontSize)}
+                      onChange={(e) =>
+                        setStyles((prev) => ({
+                          ...prev,
+                          table: {
+                            ...prev.table,
+                            headerFontSize: `${e.target.value}px`,
+                          },
+                        }))
+                      }
+                    />
+                  </label>
+                </div>
+                <div className="control-item">
+                  <label>
+                    <FormatSize /> Table Data
+                    <input
+                      type="range"
+                      min="12"
+                      max="24"
+                      value={parseInt(styles.table.dataFontSize)}
+                      onChange={(e) =>
+                        setStyles((prev) => ({
+                          ...prev,
+                          table: {
+                            ...prev.table,
+                            dataFontSize: `${e.target.value}px`,
+                          },
+                        }))
+                      }
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="control-section">
+              <h4>Row Spacing</h4>
+              <div className="control-group">
+                <div className="control-item">
+                  <label>
+                    <FormatSize /> Gap
+                    <input
+                      type="range"
+                      min="0"
+                      max="24"
+                      value={parseInt(styles.table.rowGap)}
+                      onChange={(e) =>
+                        setStyles((prev) => ({
+                          ...prev,
+                          table: {
+                            ...prev.table,
+                            rowGap: `${e.target.value}px`,
+                          },
+                        }))
+                      }
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
         <div className="biodata-master-biodata-page">
@@ -354,12 +439,12 @@ const BiodataMaster = () => {
       color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
     }
     .biodata-master th {
-      font-size: ${BIODATA_THEME_1111.TABLE.HEADER.FONT_SIZE} !important;
+      font-size: ${styles.table.headerFontSize} !important;
       color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
       background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
     }
     .biodata-master td {
-      font-size: ${BIODATA_THEME_1111.TABLE.DATA.FONT_SIZE} !important;
+      font-size: ${styles.table.dataFontSize} !important;
       color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
     }
     .biodata-master .biodata-master-section-icon {
@@ -367,7 +452,7 @@ const BiodataMaster = () => {
       color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table {
-      --row-gap: ${BIODATA_THEME_1111.TABLE.ROW_GAP};
+      --row-gap: ${styles.table.rowGap};
     }
     .biodata-master .biodata-master-bio-table tbody tr {
       background-color: ${BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR} !important;
@@ -378,6 +463,11 @@ const BiodataMaster = () => {
     .biodata-master .biodata-master-bio-table thead tr,
     .biodata-master .biodata-master-bio-table tbody tr:first-child {
       background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
+    }
+      .biodata-master-bio-table td,
+    .biodata-master-bio-table th {
+      padding: 12px;
+      border-bottom: ${styles.table.rowGap} solid transparent;
     }
   `}
           </style>
