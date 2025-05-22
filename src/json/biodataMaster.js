@@ -10,7 +10,7 @@ export const BIODATA_THEME_1111 = {
     HEADER: {
       FONT_SIZE: "0.9rem",
       COLOR: "#34495e",
-      BACKGROUND_COLOR: "#e9ecef"
+      BACKGROUND_COLOR: "#90191e"
     },
     DATA: {
       FONT_SIZE: "0.8rem",
@@ -18,7 +18,7 @@ export const BIODATA_THEME_1111 = {
       BACKGROUND_COLOR: "#f8f9fa",
       ALTERNATE_BACKGROUND_COLOR: "#f8f9fa80"
     },
-    ROW_GAP: "5px"
+    ROW_GAP: "3px"
   },
   ICONS: {
     FONT_SIZE: "24px",

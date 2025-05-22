@@ -319,3 +319,194 @@
   object-fit: cover;
 }
 
+
+.biodata-master-container {
+  display: flex;
+  gap: 20px;
+  position: relative;
+  height: 100%;
+}
+
+.biodata-master-biodata-page {
+  flex: 1;
+  overflow: auto;
+}
+
+.style-controls-sidebar {
+  width: 280px;
+  background: white;
+  padding: 20px;
+  border-left: 1px solid #eee;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  right: 0;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+}
+
+.control-section {
+  margin-bottom: 24px;
+}
+
+.control-section h4 {
+  color: #333;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.control-item {
+  margin-bottom: 12px;
+}
+
+.control-item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+.control-item input[type="range"] {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.size-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.size-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.size-btn:hover {
+  background: #f0f0f0;
+}
+
+.size-value {
+  min-width: 45px;
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}
+
+.control-item label {
+  display: flex;
+  flex-direction: column;
+}
+
+.print-controls {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.control-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.control-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.print-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.print-btn {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.print-btn.watermark {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.print-btn.original {
+  background-color: #2196F3;
+  color: white;
+}
+
+.print-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.print-icon {
+  font-size: 1.5rem;
+  margin-right: 12px;
+}
+
+.print-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.print-label {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.print-desc {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+/* Active state */
+.print-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+
+
+/* Print styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .biodata-master-a4-container,
+  .biodata-master-a4-container * {
+    visibility: visible;
+  }
+  .biodata-master-a4-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .style-controls-sidebar {
+    display: none;
+  }
+}
+
+

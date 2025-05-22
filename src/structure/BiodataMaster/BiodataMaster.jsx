@@ -4,6 +4,7 @@ import "./BiodataMaster.css";
 import BackgroundBiodata1111 from "../../assets/background/1111.svg";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
 import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
+import WatermarkLogo from "../../assets/watermark/logo.png";
 
 import {
   Work,
@@ -61,291 +62,177 @@ const BiodataMaster = () => {
   };
 
   const [styles, setStyles] = useState({
-    photoFrame: {
-      borderColor: "#FF8C42",
-    },
     headings: {
       fontSize: "1.5rem",
-      color: "#2c3e50",
-    },
-    tableHeaders: {
-      fontSize: "1rem",
-      color: "#34495e",
-    },
-    tableData: {
-      fontSize: "0.9rem",
-      color: "#2d3436",
-    },
-    icons: {
-      fontSize: "24px",
-      color: "#FF8C42",
     },
     table: {
+      headerFontSize: "1rem",
+      dataFontSize: "0.9rem",
       rowGap: "8px",
-      rowColor: "#f8f9fa",
-      headerColor: "#e9ecef",
     },
   });
 
-  // Style control panel toggle
-  const [showControls, setShowControls] = useState(false);
+  const handlePrint = (withWatermark = false) => {
+    // Store current page styles
+    const originalContent = document.body.innerHTML;
 
-  // Handle style changes
-  const handleStyleChange = (element, property, value) => {
-    setStyles((prevStyles) => ({
-      ...prevStyles,
-      [element]: {
-        ...prevStyles[element],
-        [property]: value,
-      },
-    }));
+    // Get only the biodata container content
+    const biodataContent = document.querySelector(
+      ".biodata-master-a4-container"
+    ).innerHTML;
+
+    // Create print-specific styles with theme colors
+    const printStyles = `
+    
+         <script>
+          document.title = "Biodata";
+        </script>
+        <style>
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            .biodata-master-a4-container {
+                width: 210mm;
+                min-height: 297mm;
+                margin: 0;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                padding: 0;
+                background-image: url("${BackgroundBiodata1111}");
+            }
+
+            /* Theme-specific styles */
+            .biodata-master .biodata-master-photo-frame {
+                border-color: ${
+                  BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR
+                } !important;
+            }
+            .biodata-master h3 {
+                font-size: ${BIODATA_THEME_1111.HEADINGS.FONT_SIZE} !important;
+                color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
+            }
+            .biodata-master th {
+                font-size: ${styles.table.headerFontSize} !important;
+                color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
+                background-color: ${
+                  BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR
+                } !important;
+            }
+            .biodata-master td {
+                font-size: ${styles.table.dataFontSize} !important;
+                color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
+            }
+            .biodata-master .biodata-master-section-icon {
+                color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
+            }
+            .biodata-master .biodata-master-bio-table tbody tr {
+                background-color: ${
+                  BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR
+                } !important;
+            }
+            .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
+                background-color: ${
+                  BIODATA_THEME_1111.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
+                } !important;
+            }
+            .biodata-master .biodata-master-bio-table thead tr,
+            .biodata-master .biodata-master-bio-table tbody tr:first-child {
+                background-color: ${
+                  BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR
+                } !important;
+            }
+            .biodata-master-bio-table td,
+            .biodata-master-bio-table th {
+                padding: ${styles.table.rowGap};
+                border-bottom: ${styles.table.rowGap} solid transparent;
+            }
+
+            .img-watermark {
+                display: ${
+                  withWatermark ? "block !important" : "none !important"
+                };
+            }
+
+            .img-watermark img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                opacity: 0.3;
+                transform: rotate(-45deg);
+            }
+
+            @media print {
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                    color-adjust: exact !important;
+                }
+                .img-watermark {
+                    display: ${
+                      withWatermark ? "block !important" : "none !important"
+                    };
+                }
+            }
+        </style>
+    `;
+
+    // Create a new container with watermark
+    const printContent = `
+        <div class="biodata-master">
+            <div class="biodata-master-a4-container">
+                
+                ${
+                  withWatermark
+                    ? `
+                    <div class="img-watermark">
+                          <img src="${WatermarkLogo}" alt="watermark" style="width: 100%; height: 100%; object-fit: contain;"/>
+                    </div>
+                `
+                    : ""
+                }
+                ${biodataContent}
+            </div>
+        </div>
+    `;
+
+    // Replace page content with biodata content and print styles
+    document.body.innerHTML = printStyles + printContent;
+
+    document.title = `Biodata - ${requestNumber} ${
+      withWatermark ? "Watermarked" : "Original"
+    }`;
+
+    // Print after a small delay to ensure styles are applied
+    setTimeout(() => {
+      window.print();
+      // Restore original content
+      document.body.innerHTML = originalContent;
+      // Reattach event listeners and reload page
+      window.location.reload();
+    }, 500);
   };
 
   return (
     <>
       <div className="biodata-master">
-        {/* Style Control Panel */}
-        <div className="style-controls-toggle">
-          <button
-            className="toggle-button"
-            onClick={() => setShowControls(!showControls)}
-          >
-            <Settings />
-            Style Controls
-          </button>
-        </div>
-
-        {showControls && (
-          <div className="style-controls-panel">
-            <div className="control-section">
-              <h4>Photo Frame</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <Palette /> Border Color
-                    <input
-                      type="color"
-                      value={styles.photoFrame.borderColor}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "photoFrame",
-                          "borderColor",
-                          e.target.value
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="control-section">
-              <h4>Heading Styles (h3)</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Font Size
-                    <input
-                      type="range"
-                      min="14"
-                      max="32"
-                      value={parseInt(styles.headings.fontSize)}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "headings",
-                          "fontSize",
-                          `${e.target.value}px`
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-                <div className="control-item">
-                  <label>
-                    <Palette /> Color
-                    <input
-                      type="color"
-                      value={styles.headings.color}
-                      onChange={(e) =>
-                        handleStyleChange("headings", "color", e.target.value)
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="control-section">
-              <h4>Table Headers (th)</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Font Size
-                    <input
-                      type="range"
-                      min="12"
-                      max="24"
-                      value={parseInt(styles.tableHeaders.fontSize)}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "tableHeaders",
-                          "fontSize",
-                          `${e.target.value}px`
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-                <div className="control-item">
-                  <label>
-                    <Palette /> Color
-                    <input
-                      type="color"
-                      value={styles.tableHeaders.color}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "tableHeaders",
-                          "color",
-                          e.target.value
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="control-section">
-              <h4>Table Data (td)</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Font Size
-                    <input
-                      type="range"
-                      min="12"
-                      max="24"
-                      value={parseInt(styles.tableData.fontSize)}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "tableData",
-                          "fontSize",
-                          `${e.target.value}px`
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-                <div className="control-item">
-                  <label>
-                    <Palette /> Color
-                    <input
-                      type="color"
-                      value={styles.tableData.color}
-                      onChange={(e) =>
-                        handleStyleChange("tableData", "color", e.target.value)
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="control-section">
-              <h4>Icons</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Icon Size
-                    <input
-                      type="range"
-                      min="16"
-                      max="40"
-                      value={parseInt(styles.icons.fontSize)}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "icons",
-                          "fontSize",
-                          `${e.target.value}px`
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-                <div className="control-item">
-                  <label>
-                    <Palette /> Icon Color
-                    <input
-                      type="color"
-                      value={styles.icons.color}
-                      onChange={(e) =>
-                        handleStyleChange("icons", "color", e.target.value)
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="control-section">
-              <h4>Table Styling</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <FormatSize /> Row Spacing
-                    <input
-                      type="range"
-                      min="0"
-                      max="24"
-                      value={parseInt(styles.table.rowGap)}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "table",
-                          "rowGap",
-                          `${e.target.value}px`
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-                <div className="control-item">
-                  <label>
-                    <Palette /> Row Background
-                    <input
-                      type="color"
-                      value={styles.table.rowColor}
-                      onChange={(e) =>
-                        handleStyleChange("table", "rowColor", e.target.value)
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div className="control-section">
-              <h4>Table Header Background</h4>
-              <div className="control-group">
-                <div className="control-item">
-                  <label>
-                    <Palette /> Header Background
-                    <input
-                      type="color"
-                      value={styles.table.headerColor}
-                      onChange={(e) =>
-                        handleStyleChange(
-                          "table",
-                          "headerColor",
-                          e.target.value
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="biodata-master-biodata-page">
-          {/* Apply dynamic styles to elements */}
-          <style>
-            {`
+        <div className="biodata-master-container">
+          <div className="style-controls-sidebar"></div>
+          <div className="biodata-master-biodata-page">
+            {/* Apply dynamic styles to elements */}
+            <style>
+              {`
     .biodata-master .biodata-master-photo-frame {
       border-color: ${BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR} !important;
     }
@@ -354,12 +241,12 @@ const BiodataMaster = () => {
       color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
     }
     .biodata-master th {
-      font-size: ${BIODATA_THEME_1111.TABLE.HEADER.FONT_SIZE} !important;
+      font-size: ${styles.table.headerFontSize} !important;
       color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
       background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
     }
     .biodata-master td {
-      font-size: ${BIODATA_THEME_1111.TABLE.DATA.FONT_SIZE} !important;
+      font-size: ${styles.table.dataFontSize} !important;
       color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
     }
     .biodata-master .biodata-master-section-icon {
@@ -367,7 +254,7 @@ const BiodataMaster = () => {
       color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table {
-      --row-gap: ${BIODATA_THEME_1111.TABLE.ROW_GAP};
+      --row-gap: ${styles.table.rowGap};
     }
     .biodata-master .biodata-master-bio-table tbody tr {
       background-color: ${BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR} !important;
@@ -379,54 +266,59 @@ const BiodataMaster = () => {
     .biodata-master .biodata-master-bio-table tbody tr:first-child {
       background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
     }
+      .biodata-master-bio-table td,
+    .biodata-master-bio-table th {
+      padding: 12px;
+      border-bottom: ${styles.table.rowGap} solid transparent;
+    }
   `}
-          </style>
+            </style>
 
-          {/* Existing biodata content */}
-          <div
-            className="biodata-master-a4-container"
-            style={{
-              backgroundImage: `url(${BackgroundBiodata1111})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <div className="biodata-master-biodata-content">
-              {/* Personal Section */}
-              <div className="biodata-master-personal-section">
-                <div className="biodata-master-photo-section">
-                  <div className="biodata-master-photo-frame">
-                    <img src={formData?.profileImage} alt="Profile" />
+            {/* Existing biodata content */}
+            <div
+              className="biodata-master-a4-container"
+              style={{
+                backgroundImage: `url(${BackgroundBiodata1111})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            >
+              <div className="biodata-master-biodata-content">
+                {/* Personal Section */}
+                <div className="biodata-master-personal-section">
+                  <div className="biodata-master-photo-section">
+                    <div className="biodata-master-photo-frame">
+                      <img src={formData?.profileImage} alt="Profile" />
+                    </div>
+                    <div className="biodata-master-name-text">
+                      <h3>
+                        {
+                          formData?.personalDetails?.find(
+                            (field) => field.label === "Name"
+                          )?.value
+                        }
+                      </h3>
+                    </div>
                   </div>
-                  <div className="biodata-master-name-text">
-                    <h3>
-                      {
-                        formData?.personalDetails?.find(
-                          (field) => field.label === "Name"
-                        )?.value
-                      }
-                    </h3>
+                  <div className="biodata-master-personal-info">
+                    <table className="biodata-master-bio-table personal-table">
+                      <tbody>
+                        {formData?.personalDetails?.map(
+                          (field, index) =>
+                            field.label !== "Name" && (
+                              <tr key={index}>
+                                <td className="biodata-master-personal-icon-alignment">
+                                  {field.label}
+                                </td>
+                                <td>{field.value || "Not Provided"}</td>
+                              </tr>
+                            )
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-                <div className="biodata-master-personal-info">
-                  <table className="biodata-master-bio-table personal-table">
-                    <tbody>
-                      {formData?.personalDetails?.map(
-                        (field, index) =>
-                          field.label !== "Name" && (
-                            <tr key={index}>
-                              <td className="biodata-master-personal-icon-alignment">
-                                {field.label}
-                              </td>
-                              <td>{field.value || "Not Provided"}</td>
-                            </tr>
-                          )
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
 
               {/* Professional/Examination Section */}
             {formData?.modelDetails?.type === 'Student' ? (
@@ -506,178 +398,350 @@ const BiodataMaster = () => {
                 </table>
               </div>
 
-              {/* Family Section */}
-              <div className="biodata-master-section family-section">
-                <div className="biodata-master-section-title">
-                  <span className="biodata-master-flex-section">
-                    <People className="biodata-master-section-icon" />
-                    <h3>Family Details</h3>
-                  </span>
+                {/* Family Section */}
+                <div className="biodata-master-section family-section">
+                  <div className="biodata-master-section-title">
+                    <span className="biodata-master-flex-section">
+                      <People className="biodata-master-section-icon" />
+                      <h3>Family Details</h3>
+                    </span>
+                  </div>
+                  <table className="biodata-master-bio-table">
+                    <tbody>
+                      <tr>
+                        <th>Relation</th>
+                        <th>Name</th>
+                        <th>Occupation</th>
+                        <th>Married</th>
+                      </tr>
+                      {/* Father's Details */}
+                      <tr>
+                        <td>Father</td>
+                        <td>
+                          {formData?.familyDetails?.father?.value?.name ||
+                            "Not Provided"}
+                        </td>
+                        <td>
+                          {formData?.familyDetails?.father?.value?.occupation ||
+                            "Not Provided"}
+                        </td>
+                        <td>-</td>
+                      </tr>
+                      {/* Mother's Details */}
+                      <tr>
+                        <td>Mother</td>
+                        <td>
+                          {formData?.familyDetails?.mother?.value?.name ||
+                            "Not Provided"}
+                        </td>
+                        <td>
+                          {formData?.familyDetails?.mother?.value?.occupation ||
+                            "Not Provided"}
+                        </td>
+                        <td>-</td>
+                      </tr>
+                      {/* Brothers Details in one row */}
+                      {formData?.familyDetails?.brothers?.value?.length > 0 && (
+                        <tr>
+                          <td>Brothers</td>
+                          <td>
+                            {formData.familyDetails.brothers.value.map(
+                              (brother, index) => (
+                                <div
+                                  key={`brother-${index}`}
+                                  className="sibling-info"
+                                >
+                                  {brother.name || "Not Provided"}
+                                  {index <
+                                    formData.familyDetails.brothers.value
+                                      .length -
+                                      1 && ", "}
+                                </div>
+                              )
+                            )}
+                          </td>
+                          <td>
+                            {formData.familyDetails.brothers.value.map(
+                              (brother, index) => (
+                                <div
+                                  key={`brother-occ-${index}`}
+                                  className="sibling-info"
+                                >
+                                  {brother.occupation || "Not Provided"}
+                                  {index <
+                                    formData.familyDetails.brothers.value
+                                      .length -
+                                      1 && ", "}
+                                </div>
+                              )
+                            )}
+                          </td>
+                          <td>
+                            {formData.familyDetails.brothers.value.map(
+                              (brother, index) => (
+                                <div
+                                  key={`brother-married-${index}`}
+                                  className="sibling-info"
+                                >
+                                  {brother.married || "No"}
+                                  {index <
+                                    formData.familyDetails.brothers.value
+                                      .length -
+                                      1 && ", "}
+                                </div>
+                              )
+                            )}
+                          </td>
+                        </tr>
+                      )}
+                      {/* Sisters Details in one row */}
+                      {formData?.familyDetails?.sisters?.value?.length > 0 && (
+                        <tr>
+                          <td>Sisters</td>
+                          <td>
+                            {formData.familyDetails.sisters.value.map(
+                              (sister, index) => (
+                                <div
+                                  key={`sister-${index}`}
+                                  className="sibling-info"
+                                >
+                                  {sister.name || "Not Provided"}
+                                  {index <
+                                    formData.familyDetails.sisters.value
+                                      .length -
+                                      1 && ", "}
+                                </div>
+                              )
+                            )}
+                          </td>
+                          <td>
+                            {formData.familyDetails.sisters.value.map(
+                              (sister, index) => (
+                                <div
+                                  key={`sister-occ-${index}`}
+                                  className="sibling-info"
+                                >
+                                  {sister.occupation || "Not Provided"}
+                                  {index <
+                                    formData.familyDetails.sisters.value
+                                      .length -
+                                      1 && ", "}
+                                </div>
+                              )
+                            )}
+                          </td>
+                          <td>
+                            {formData.familyDetails.sisters.value.map(
+                              (sister, index) => (
+                                <div
+                                  key={`sister-married-${index}`}
+                                  className="sibling-info"
+                                >
+                                  {sister.married || "No"}
+                                  {index <
+                                    formData.familyDetails.sisters.value
+                                      .length -
+                                      1 && ", "}
+                                </div>
+                              )
+                            )}
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
-                <table className="biodata-master-bio-table">
-                  <tbody>
-                    <tr>
-                      <th>Relation</th>
-                      <th>Name</th>
-                      <th>Occupation</th>
-                      <th>Married</th>
-                    </tr>
-                    {/* Father's Details */}
-                    <tr>
-                      <td>Father</td>
-                      <td>
-                        {formData?.familyDetails?.father?.value?.name ||
-                          "Not Provided"}
-                      </td>
-                      <td>
-                        {formData?.familyDetails?.father?.value?.occupation ||
-                          "Not Provided"}
-                      </td>
-                      <td>-</td>
-                    </tr>
-                    {/* Mother's Details */}
-                    <tr>
-                      <td>Mother</td>
-                      <td>
-                        {formData?.familyDetails?.mother?.value?.name ||
-                          "Not Provided"}
-                      </td>
-                      <td>
-                        {formData?.familyDetails?.mother?.value?.occupation ||
-                          "Not Provided"}
-                      </td>
-                      <td>-</td>
-                    </tr>
-                    {/* Brothers Details in one row */}
-                    {formData?.familyDetails?.brothers?.value?.length > 0 && (
+
+                {/* Contact Section */}
+                <div className="biodata-master-section contact-details">
+                  <div className="biodata-master-section-title">
+                    <span className="biodata-master-flex-section">
+                      <ContactPhone className="biodata-master-section-icon" />
+                      <h3>Contact Details</h3>
+                    </span>
+                  </div>
+                  <table className="biodata-master-bio-table">
+                    <tbody>
                       <tr>
-                        <td>Brothers</td>
+                        <th>Address</th>
+                        <th>Mobile No.</th>
+                      </tr>
+                      <tr>
                         <td>
-                          {formData.familyDetails.brothers.value.map(
-                            (brother, index) => (
-                              <div
-                                key={`brother-${index}`}
-                                className="sibling-info"
-                              >
-                                {brother.name || "Not Provided"}
-                                {index <
-                                  formData.familyDetails.brothers.value.length -
-                                    1 && ", "}
-                              </div>
-                            )
-                          )}
+                          {formData?.contactDetails?.address || "Not Provided"}
                         </td>
                         <td>
-                          {formData.familyDetails.brothers.value.map(
-                            (brother, index) => (
-                              <div
-                                key={`brother-occ-${index}`}
-                                className="sibling-info"
-                              >
-                                {brother.occupation || "Not Provided"}
-                                {index <
-                                  formData.familyDetails.brothers.value.length -
-                                    1 && ", "}
-                              </div>
-                            )
-                          )}
-                        </td>
-                        <td>
-                          {formData.familyDetails.brothers.value.map(
-                            (brother, index) => (
-                              <div
-                                key={`brother-married-${index}`}
-                                className="sibling-info"
-                              >
-                                {brother.married || "No"}
-                                {index <
-                                  formData.familyDetails.brothers.value.length -
-                                    1 && ", "}
-                              </div>
-                            )
-                          )}
+                          {formData?.contactDetails?.mobile || "Not Provided"}
                         </td>
                       </tr>
-                    )}
-                    {/* Sisters Details in one row */}
-                    {formData?.familyDetails?.sisters?.value?.length > 0 && (
-                      <tr>
-                        <td>Sisters</td>
-                        <td>
-                          {formData.familyDetails.sisters.value.map(
-                            (sister, index) => (
-                              <div
-                                key={`sister-${index}`}
-                                className="sibling-info"
-                              >
-                                {sister.name || "Not Provided"}
-                                {index <
-                                  formData.familyDetails.sisters.value.length -
-                                    1 && ", "}
-                              </div>
-                            )
-                          )}
-                        </td>
-                        <td>
-                          {formData.familyDetails.sisters.value.map(
-                            (sister, index) => (
-                              <div
-                                key={`sister-occ-${index}`}
-                                className="sibling-info"
-                              >
-                                {sister.occupation || "Not Provided"}
-                                {index <
-                                  formData.familyDetails.sisters.value.length -
-                                    1 && ", "}
-                              </div>
-                            )
-                          )}
-                        </td>
-                        <td>
-                          {formData.familyDetails.sisters.value.map(
-                            (sister, index) => (
-                              <div
-                                key={`sister-married-${index}`}
-                                className="sibling-info"
-                              >
-                                {sister.married || "No"}
-                                {index <
-                                  formData.familyDetails.sisters.value.length -
-                                    1 && ", "}
-                              </div>
-                            )
-                          )}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="style-controls-sidebar">
+            <div className="control-section">
+              <div className="control-section print-controls">
+                <h4 className="control-title">
+                  <span className="control-icon">🖨️</span> Print Options
+                </h4>
+                <div className="print-buttons">
+                  <button
+                    className="print-btn watermark"
+                    onClick={() => handlePrint(true)}
+                  >
+                    <span className="print-icon">📄</span>
+                    <span className="print-text">
+                      <span className="print-label">Watermark</span>
+          
+                    </span>
+                  </button>
+                  <button
+                    className="print-btn original"
+                    onClick={() => handlePrint(false)}
+                  >
+                    <span className="print-icon">📃</span>
+                    <span className="print-text">
+                      <span className="print-label">Original</span>
+                      
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div className="control-section">
+                <h4>Font Sizes</h4>
+                <div className="control-group">
+                  <div className="control-item">
+                    <label>
+                      <FormatSize /> Table Headers
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                headerFontSize: `${
+                                  parseInt(prev.table.headerFontSize) - 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.table.headerFontSize}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                headerFontSize: `${
+                                  parseInt(prev.table.headerFontSize) + 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+                  <div className="control-item">
+                    <label>
+                      <FormatSize /> Table Data
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                dataFontSize: `${
+                                  parseInt(prev.table.dataFontSize) - 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.table.dataFontSize}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                dataFontSize: `${
+                                  parseInt(prev.table.dataFontSize) + 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+                </div>
               </div>
 
-              {/* Contact Section */}
-              <div className="biodata-master-section contact-details">
-                <div className="biodata-master-section-title">
-                  <span className="biodata-master-flex-section">
-                    <ContactPhone className="biodata-master-section-icon" />
-                    <h3>Contact Details</h3>
-                  </span>
+              <div className="control-section">
+                <h4>Row Spacing</h4>
+                <div className="control-group">
+                  <div className="control-item">
+                    <label>
+                      <FormatSize /> Gap
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                rowGap: `${parseInt(prev.table.rowGap) - 1}px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.table.rowGap}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              table: {
+                                ...prev.table,
+                                rowGap: `${parseInt(prev.table.rowGap) + 1}px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
                 </div>
-                <table className="biodata-master-bio-table">
-                  <tbody>
-                    <tr>
-                      <th>Address</th>
-                      <th>Mobile No.</th>
-                    </tr>
-                    <tr>
-                      <td>
-                        {formData?.contactDetails?.address || "Not Provided"}
-                      </td>
-                      <td>
-                        {formData?.contactDetails?.mobile || "Not Provided"}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
