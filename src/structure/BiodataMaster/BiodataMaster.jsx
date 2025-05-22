@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./BiodataMaster.css";
 import BackgroundBiodata1111 from "../../assets/background/1111.svg";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
+import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
+
 import {
   Work,
   School,
@@ -21,7 +23,6 @@ const BiodataMaster = () => {
   const [formData, setFormData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
-
 
   useEffect(() => {
     fetchRequestData();
@@ -345,38 +346,38 @@ const BiodataMaster = () => {
           {/* Apply dynamic styles to elements */}
           <style>
             {`
-              .biodata-master .biodata-master-photo-frame {
-      border-color: ${styles.photoFrame.borderColor} !important;
+    .biodata-master .biodata-master-photo-frame {
+      border-color: ${BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR} !important;
     }
     .biodata-master h3 {
-      font-size: ${styles.headings.fontSize} !important;
-      color: ${styles.headings.color} !important;
+      font-size: ${BIODATA_THEME_1111.HEADINGS.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
     }
     .biodata-master th {
-      font-size: ${styles.tableHeaders.fontSize} !important;
-      color: ${styles.tableHeaders.color} !important;
-      background-color: ${styles.table.headerColor} !important;
+      font-size: ${BIODATA_THEME_1111.TABLE.HEADER.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
     }
     .biodata-master td {
-      font-size: ${styles.tableData.fontSize} !important;
-      color: ${styles.tableData.color} !important;
+      font-size: ${BIODATA_THEME_1111.TABLE.DATA.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
     }
     .biodata-master .biodata-master-section-icon {
-      font-size: ${styles.icons.fontSize} !important;
-      color: ${styles.icons.color} !important;
+      font-size: ${BIODATA_THEME_1111.ICONS.FONT_SIZE} !important;
+      color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table {
-      --row-gap: ${styles.table.rowGap};
+      --row-gap: ${BIODATA_THEME_1111.TABLE.ROW_GAP};
     }
     .biodata-master .biodata-master-bio-table tbody tr {
-      background-color: ${styles.table.rowColor} !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
-      background-color: ${styles.table.rowColor}80 !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table thead tr,
     .biodata-master .biodata-master-bio-table tbody tr:first-child {
-      background-color: ${styles.table.headerColor} !important;
+      background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
     }
   `}
           </style>
@@ -521,46 +522,140 @@ const BiodataMaster = () => {
                       <th>Occupation</th>
                       <th>Married</th>
                     </tr>
-                     {/* Father's Details */}
+                    {/* Father's Details */}
+                    <tr>
+                      <td>Father</td>
+                      <td>
+                        {formData?.familyDetails?.father?.value?.name ||
+                          "Not Provided"}
+                      </td>
+                      <td>
+                        {formData?.familyDetails?.father?.value?.occupation ||
+                          "Not Provided"}
+                      </td>
+                      <td>-</td>
+                    </tr>
+                    {/* Mother's Details */}
+                    <tr>
+                      <td>Mother</td>
+                      <td>
+                        {formData?.familyDetails?.mother?.value?.name ||
+                          "Not Provided"}
+                      </td>
+                      <td>
+                        {formData?.familyDetails?.mother?.value?.occupation ||
+                          "Not Provided"}
+                      </td>
+                      <td>-</td>
+                    </tr>
+                    {/* Brothers Details in one row */}
+                    {formData?.familyDetails?.brothers?.value?.length > 0 && (
                       <tr>
-                        <td>Father</td>
-                        <td>{formData?.familyDetails?.father?.value?.name || "Not Provided"}</td>
-                        <td>{formData?.familyDetails?.father?.value?.occupation || "Not Provided"}</td>
-                        <td>-</td>
+                        <td>Brothers</td>
+                        <td>
+                          {formData.familyDetails.brothers.value.map(
+                            (brother, index) => (
+                              <div
+                                key={`brother-${index}`}
+                                className="sibling-info"
+                              >
+                                {brother.name || "Not Provided"}
+                                {index <
+                                  formData.familyDetails.brothers.value.length -
+                                    1 && ", "}
+                              </div>
+                            )
+                          )}
+                        </td>
+                        <td>
+                          {formData.familyDetails.brothers.value.map(
+                            (brother, index) => (
+                              <div
+                                key={`brother-occ-${index}`}
+                                className="sibling-info"
+                              >
+                                {brother.occupation || "Not Provided"}
+                                {index <
+                                  formData.familyDetails.brothers.value.length -
+                                    1 && ", "}
+                              </div>
+                            )
+                          )}
+                        </td>
+                        <td>
+                          {formData.familyDetails.brothers.value.map(
+                            (brother, index) => (
+                              <div
+                                key={`brother-married-${index}`}
+                                className="sibling-info"
+                              >
+                                {brother.married || "No"}
+                                {index <
+                                  formData.familyDetails.brothers.value.length -
+                                    1 && ", "}
+                              </div>
+                            )
+                          )}
+                        </td>
                       </tr>
-                      {/* Mother's Details */}
-                      <tr>
-                        <td>Mother</td>
-                        <td>{formData?.familyDetails?.mother?.value?.name || "Not Provided"}</td>
-                        <td>{formData?.familyDetails?.mother?.value?.occupation || "Not Provided"}</td>
-                        <td>-</td>
-                      </tr>
-                    {formData?.familyDetails?.brothers?.value.map(
-                      (brother, index) => (
-                        <tr key={`brother-${index}`}>
-                          <td>Brother</td>
-                          <td>{brother.name || "Not Provided"}</td>
-                          <td>{brother.occupation || "Not Provided"}</td>
-                          <td>{brother.married || "No"}</td>
-                        </tr>
-                      )
                     )}
-                    {formData?.familyDetails?.sisters?.value.map(
-                      (sister, index) => (
-                        <tr key={`sister-${index}`}>
-                          <td>Sister</td>
-                          <td>{sister.name || "Not Provided"}</td>
-                          <td>{sister.occupation || "Not Provided"}</td>
-                          <td>{sister.married || "No"}</td>
-                        </tr>
-                      )
+                    {/* Sisters Details in one row */}
+                    {formData?.familyDetails?.sisters?.value?.length > 0 && (
+                      <tr>
+                        <td>Sisters</td>
+                        <td>
+                          {formData.familyDetails.sisters.value.map(
+                            (sister, index) => (
+                              <div
+                                key={`sister-${index}`}
+                                className="sibling-info"
+                              >
+                                {sister.name || "Not Provided"}
+                                {index <
+                                  formData.familyDetails.sisters.value.length -
+                                    1 && ", "}
+                              </div>
+                            )
+                          )}
+                        </td>
+                        <td>
+                          {formData.familyDetails.sisters.value.map(
+                            (sister, index) => (
+                              <div
+                                key={`sister-occ-${index}`}
+                                className="sibling-info"
+                              >
+                                {sister.occupation || "Not Provided"}
+                                {index <
+                                  formData.familyDetails.sisters.value.length -
+                                    1 && ", "}
+                              </div>
+                            )
+                          )}
+                        </td>
+                        <td>
+                          {formData.familyDetails.sisters.value.map(
+                            (sister, index) => (
+                              <div
+                                key={`sister-married-${index}`}
+                                className="sibling-info"
+                              >
+                                {sister.married || "No"}
+                                {index <
+                                  formData.familyDetails.sisters.value.length -
+                                    1 && ", "}
+                              </div>
+                            )
+                          )}
+                        </td>
+                      </tr>
                     )}
                   </tbody>
                 </table>
               </div>
 
               {/* Contact Section */}
-              <div className="biodata-master-section contact-section">
+              <div className="biodata-master-section contact-details">
                 <div className="biodata-master-section-title">
                   <span className="biodata-master-flex-section">
                     <ContactPhone className="biodata-master-section-icon" />
