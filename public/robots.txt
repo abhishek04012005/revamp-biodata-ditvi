@@ -12,3 +12,60 @@ npm install react-scroll
 npm install gh-pages
 npm install @supabase/supabase-js
 npm install slick-carousel
+
+
+
+
+
+ <div className="biodata-master-section family-section">
+                <div className="biodata-master-section-title">
+                  <span className="biodata-master-flex-section">
+                    <People className="biodata-master-section-icon" />
+                    <h3>Family Details</h3>
+                  </span>
+                </div>
+                <table className="biodata-master-bio-table">
+                  <tbody>
+                    <tr>
+                      <th>Relation</th>
+                      <th>Name</th>
+                      <th>Occupation</th>
+                      <th>Married</th>
+                    </tr>
+                     {/* Father's Details */}
+                      <tr>
+                        <td>Father</td>
+                        <td>{formData?.familyDetails?.father?.value?.name || "Not Provided"}</td>
+                        <td>{formData?.familyDetails?.father?.value?.occupation || "Not Provided"}</td>
+                        <td>-</td>
+                      </tr>
+                      {/* Mother's Details */}
+                      <tr>
+                        <td>Mother</td>
+                        <td>{formData?.familyDetails?.mother?.value?.name || "Not Provided"}</td>
+                        <td>{formData?.familyDetails?.mother?.value?.occupation || "Not Provided"}</td>
+                        <td>-</td>
+                      </tr>
+                    {formData?.familyDetails?.brothers?.value.map(
+                      (brother, index) => (
+                        <tr key={`brother-${index}`}>
+                          <td>Brother</td>
+                          <td>{brother.name || "Not Provided"} </td>
+                          <td>{brother.occupation || "Not Provided"}</td>
+                          <td>{brother.married || "No"}</td>
+                        </tr>
+                      )
+                    )}
+                    {formData?.familyDetails?.sisters?.value.map(
+                      (sister, index) => (
+                        <tr key={`sister-${index}`}>
+                          <td>Sister</td>
+                          <td>{sister.name || "Not Provided"}</td>
+                          <td>{sister.occupation || "Not Provided"}</td>
+                          <td>{sister.married || "No"}</td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
