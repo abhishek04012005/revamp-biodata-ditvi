@@ -58,11 +58,15 @@ const CreateBiodata = () => {
         placeholders: {
           address: "मकान नंबर 341, स्कीम नंबर 94सी, रिंग रोड, इंदौर, मध्य प्रदेश",
           mobile: "9263767441",
+          addressLabel: "पता",
+          mobileLabel: "मोबाइल नंबर",
           addEducation: "शिक्षा जोड़ें",
           remaining: "शेष",
           addBrother: "भाई जोड़ें",
           addSister: "बहन जोड़ें",
           occupation: "व्यवसाय",
+          name: "नाम",
+          maritalStatus: "वैवाहिक स्थिति",
           married: "विवाहित",
           notProvided: "उपलब्ध नहीं",
           yes: "हाँ",
@@ -88,11 +92,14 @@ const CreateBiodata = () => {
       placeholders: {
         address: "House No. 341, 2 Scheme No 94C, Ring Road, Indore",
         mobile: "9263767441",
+        addressLabel: "Address",
+        mobileLabel: "Mobile No",
         addEducation: "Add Education",
         remaining: "remaining",
         addBrother: "Add Brother",
         addSister: "Add Sister",
         occupation: "Occupation",
+        name: "Name",
         married: "Married",
         notProvided: "Not Provided",
         yes: "Yes",
@@ -528,7 +535,7 @@ const CreateBiodata = () => {
                   <h3>{formData.familyDetails[relation].label}</h3>
                   <div className="create-biodata-family-inputs">
                     <div className="create-biodata-label-input">
-                      <label className="create-biodata-label">Name:</label>
+                      <label className="create-biodata-label">{langData.placeholders.name}:</label>
                       <input
                         type="text"
                         placeholder={formData.familyDetails[relation].placeholder}
@@ -553,7 +560,7 @@ const CreateBiodata = () => {
                     />
                     <div className="create-biodata-label-input">
                       <label className="create-biodata-label">
-                        Occupation:
+                        {langData.placeholders.occupation}:
                       </label>
                       <input
                         type="text"
@@ -598,7 +605,7 @@ const CreateBiodata = () => {
                           <div className="create-biodata-sibling-inputs">
                             <div className="create-biodata-label-input">
                               <label className="create-biodata-label">
-                                Name:
+                                {langData.placeholders.name}:
                               </label>
                               <input
                                 type="text"
@@ -621,7 +628,7 @@ const CreateBiodata = () => {
                             </div>
                             <div className="create-biodata-label-input">
                               <label className="create-biodata-label">
-                                Occupation:
+                                {langData.placeholders.occupation}:
                               </label>
                               <input
                                 type="text"
@@ -639,7 +646,7 @@ const CreateBiodata = () => {
                             </div>
                             <div className="create-biodata-sibling-radio-group">
                               <label className="create-biodata-label">
-                                Married:
+                                {langData.placeholders.married}:
                               </label>
                               <label className="sibling-radio-option">
                                 <input
@@ -701,9 +708,9 @@ const CreateBiodata = () => {
           <div className="create-biodata-section">
             <h2>Contact Details</h2>
             <div className="create-biodata-label-input">
-              <label className="create-biodata-label">Address:</label>
+              <label className="create-biodata-label">{langData.placeholders.addressLabel}:</label>
               <textarea
-                placeholder="House No. 341, 2 Scheme No 94C, Ring Road, Indore, Madhya Pradesh, India, 452010"
+                placeholder={langData.placeholders.address}
                 value={formData.contactDetails.address}
                 onChange={(e) =>
                   setFormData({
@@ -718,7 +725,7 @@ const CreateBiodata = () => {
               />
             </div>
             <div className="create-biodata-label-input">
-              <label className="create-biodata-label">Number:</label>
+              <label className="create-biodata-label">{langData.placeholders.mobileLabel}:</label>
               <input
                 type="text"
                 placeholder="9263767441"
@@ -826,13 +833,14 @@ const CreateBiodata = () => {
                   {["father", "mother"].map((relation) => (
                     <div key={relation} className="family-item">
                       <h4>{formData.familyDetails?.[relation]?.label}</h4>
+                      {console.log("formData.familyDetails", formData.familyDetails)}
                       <p>
-                        <strong>Name:</strong>{" "}
+                        <strong>{langData.placeholders.name}:</strong>{" "}
                         {formData.familyDetails?.[relation]?.value?.name ||
                           "Not Provided"}
                       </p>
                       <p>
-                        <strong>Occupation:</strong>{" "}
+                        <strong>{langData.placeholders.occupation}:</strong>{" "}
                         {formData.familyDetails?.[relation]?.value
                           ?.occupation || "Not Provided"}
                       </p>
@@ -847,15 +855,15 @@ const CreateBiodata = () => {
                         (sibling, idx) => (
                           <div key={idx} className="sibling-item">
                             <p>
-                              <strong>Name:</strong>{" "}
+                              <strong>{langData.placeholders.name}:</strong>{" "}
                               {sibling?.name || "Not Provided"}
                             </p>
                             <p>
-                              <strong>Occupation:</strong>{" "}
+                              <strong>{langData.placeholders.occupation}:</strong>{" "}
                               {sibling?.occupation || "Not Provided"}
                             </p>
                             <p>
-                              <strong>Married:</strong>{" "}
+                              <strong>{langData.placeholders.married}:</strong>{" "}
                               {sibling?.married || "Not Provided"}
                             </p>
                           </div>
@@ -871,11 +879,11 @@ const CreateBiodata = () => {
                 <h3>Contact Details</h3>
                 <div className="preview-details">
                   <p>
-                    <strong>Address:</strong>{" "}
+                    <strong>{langData.placeholders.addressLabel}:</strong>{" "}
                     {formData.contactDetails?.address || "Not Provided"}
                   </p>
                   <p>
-                    <strong>Mobile:</strong>{" "}
+                    <strong>{langData.placeholders.mobileLabel}:</strong>{" "}
                     {formData.contactDetails?.mobile || "Not Provided"}
                   </p>
                 </div>
