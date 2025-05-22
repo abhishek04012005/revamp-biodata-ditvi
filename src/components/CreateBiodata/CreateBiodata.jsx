@@ -192,7 +192,7 @@ const CreateBiodata = () => {
       setFormData((prev) => ({
         ...prev,
         educationDetails: [
-          EducationData.map(({ label }) => ({ label, value: "" })),
+          langData.education.map(({ label }) => ({ label, value: "" })),
           ...prev.educationDetails,
         ],
       }));
