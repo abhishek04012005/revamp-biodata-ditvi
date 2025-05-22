@@ -320,59 +320,83 @@ const BiodataMaster = () => {
                   </div>
                 </div>
 
-                {/* Professional Section */}
-                <div className="biodata-master-section professional-table">
-                  <div className="biodata-master-section-title">
-                    <span className="biodata-master-flex-section">
-                      <Work className="biodata-master-section-icon" />
-                      <h3>Professional Details</h3>
-                    </span>
-                  </div>
-                  <table className="biodata-master-bio-table">
-                    <tbody>
-                      <tr>
-                        <th>Company Name</th>
-                        <th>Position</th>
-                        <th>Years of Experience</th>
-                        <th>Salary</th>
-                      </tr>
-                      <tr>
-                        {formData?.professionalDetails?.map((field, index) => (
-                          <td key={index}>{field.value || "Not Provided"}</td>
+              {/* Professional/Examination Section */}
+            {formData?.modelDetails?.type === 'Student' ? (
+              <div className="biodata-master-section examination-table">
+                <div className="biodata-master-section-title">
+                  <span className="biodata-master-flex-section">
+                    <Work className="biodata-master-section-icon" />
+                    <h3>Examination Preparation Details</h3>
+                  </span>
+                </div>
+                <table className="biodata-master-bio-table">
+                  <tbody>
+                    <tr>
+                      {formData?.examinationDetails?.map((field, index) => (
+                        <th key={index}>{field.label}</th>
+                      ))}
+                    </tr>
+                    <tr>
+                      {formData?.examinationDetails?.map((field, index) => (
+                        <td key={index}>{field.value || "Not Provided"}</td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+	          <div className= "biodata-master-section professional-table">
+                <div className="biodata-master-section-title">
+                  <span className="biodata-master-flex-section">
+                    <Work className="biodata-master-section-icon" />
+                    <h3>Professional Details</h3>
+                  </span>
+                </div>
+                <table className="biodata-master-bio-table">
+                  <tbody>
+                    <tr>
+                      {formData?.professionalDetails?.map((field, index) => (
+                        <th key={index}>{field.label}</th>
+                      ))}
+                    </tr>
+                    <tr>
+                      {formData?.professionalDetails?.map((field, index) => (
+                        <td key={index}>{field.value || "Not Provided"}</td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+)}
+
+              {/* Education Details */}
+              <div className="biodata-master-section education-section">
+                <div className="biodata-master-section-title">
+                  <span className="biodata-master-flex-section">
+                    <School className="biodata-master-section-icon" />
+                    <h3>Education Details</h3>
+                  </span>
+                </div>
+                <table className="biodata-master-bio-table">
+                  <tbody>
+                    <tr>
+                      {formData?.educationDetails?.[0]?.map((field, index) => (
+                        <th key={index}>{field.label}</th>
+                      ))}
+                    </tr>
+                    {formData?.educationDetails?.map((education, index) => (
+                      <tr key={index}>
+                        {education.map((field, fieldIndex) => (
+                          <td key={fieldIndex}>
+                            {field.value || "Not Provided"}
+                          </td>
                         ))}
                       </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Education Details */}
-                <div className="biodata-master-section education-section">
-                  <div className="biodata-master-section-title">
-                    <span className="biodata-master-flex-section">
-                      <School className="biodata-master-section-icon" />
-                      <h3>Education Details</h3>
-                    </span>
-                  </div>
-                  <table className="biodata-master-bio-table">
-                    <tbody>
-                      <tr>
-                        <th>Degree</th>
-                        <th>Institution</th>
-                        <th>Year</th>
-                        <th>Score</th>
-                      </tr>
-                      {formData?.educationDetails?.map((education, index) => (
-                        <tr key={index}>
-                          {education.map((field, fieldIndex) => (
-                            <td key={fieldIndex}>
-                              {field.value || "Not Provided"}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
                 {/* Family Section */}
                 <div className="biodata-master-section family-section">

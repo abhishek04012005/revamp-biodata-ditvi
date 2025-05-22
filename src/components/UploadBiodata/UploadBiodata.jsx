@@ -96,7 +96,7 @@ const UploadBiodata = () => {
         }
 
         try {
-            const profileUrl = await UploadFile(imageFile, `${requestNumber}_profile`, StorageBucket.UPLOAD_BIODATA);
+            const profileUrl = await UploadFile(imageFile, `${requestNumber}_profile_${new Date().getTime()}`, StorageBucket.UPLOAD_BIODATA);
             const biodataUrl = await UploadFile(biodataFile, `${requestNumber}_biodata`, StorageBucket.UPLOAD_BIODATA);
             await BiodataRequestStorage.saveBiodataRequestFromUploadBiodata({
                 requestNumber: requestNumber,

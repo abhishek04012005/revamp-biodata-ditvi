@@ -32,6 +32,7 @@ import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
 import { UploadFile } from "../../../supabase/UploadFile";
 import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
+import ModelTypes from "../../../json/ModelTypes";
 
 const RequestBiodataDetail = () => {
   const { requestId } = useParams();
@@ -45,9 +46,9 @@ const RequestBiodataDetail = () => {
   const [flowType, setFlowType] = useState(null);
 
   useEffect(() => {
-    fetchRequestData();
+    fetchRequestData(requestId);
   }, [requestId]);
-  const fetchRequestData = async () => {
+  const fetchRequestData = async (requestId) => {
     try {
       setIsLoading(true);
       const response = await BiodataRequestStorage.getBiodataRequestByRequestId(
@@ -55,7 +56,6 @@ const RequestBiodataDetail = () => {
       );
 
       if (response) {
-        console.log("response:", response);
         const initialFormData = {
           profileImage: response.profile_url,
           biodataUrl: response.biodata_url,
@@ -157,7 +157,7 @@ const RequestBiodataDetail = () => {
       if (selectedImage) {
         profileUrl = await UploadFile(
           selectedImage,
-          `${requestNumber}_profile${new Date().getTime()}`,
+          `${requestNumber}_profile_${new Date().getTime()}`,
           StorageBucket.CREATE_BIODATA
         );
       }
@@ -292,6 +292,38 @@ const RequestBiodataDetail = () => {
         ))}
       </div>
     );
+
+  const renderExaminationInfo = () =>
+  renderSection(
+    <School />,
+    "Examination Information",
+    <div className="info-grid">
+      {formData.examinationDetails.map((field, index) => (
+        <div key={index} className="detail-field animated-field">
+          <label>{field.label}:</label>
+          {isEditing ? (
+            <input
+              type="text"
+              value={field.value}
+              onChange={(e) => {
+                const newData = [...formData.examinationDetails];
+                newData[index].value = e.target.value;
+                setFormData({
+                  ...formData,
+                  examinationDetails: newData,
+                });
+              }}
+              placeholder={`Enter ${field.label.toLowerCase()}`}
+            />
+          ) : (
+            <span className="field-value">
+              {field.value || "Not Provided"}
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
 
   const renderEducationInfo = () =>
     renderSection(
@@ -631,7 +663,10 @@ const RequestBiodataDetail = () => {
           )}
           {formData.biodataUrl && renderBiodataDownload()}
           {renderPersonalInfo()}
-          {renderProfessionalInfo()}
+          {formData.modelDetails?.type === ModelTypes.Student.Name 
+            ? renderExaminationInfo()
+            : renderProfessionalInfo()
+          }
           {renderEducationInfo()}
           {renderFamilyInfo()}
           {renderContactInfo()}
