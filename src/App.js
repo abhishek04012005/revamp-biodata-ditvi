@@ -27,6 +27,9 @@ import AdminFooter from "./components/Admin/AdminFooter/AdminFooter";
 import RequestBiodataDetail from "./components/Admin/RequestBiodataDetail/RequestBiodataDetail";
 import ProductionBiodataDetail from "./components/Admin/ProductionBiodataDetail/ProductionBiodataDetail";
 import ContactUsDashboard from "./components/Admin/ContactUsDashboard/ContactUsDashboard";
+import WhyUs from "./components/WhyUs/WhyUs";
+import WeWork from "./components/WeWork/WeWork";
+import ContactUs from "./components/ContactUs/ContactUs";
 
 function App() {
   return (
@@ -49,10 +52,7 @@ function App() {
                         path="production"
                         element={<ProductionDashboard />}
                       />
-                      <Route
-                        path="contact"
-                        element={<ContactUsDashboard />}
-                      />
+                      <Route path="contact" element={<ContactUsDashboard />} />
                       <Route
                         path="production/:requestId"
                         element={<ProductionBiodataDetail />}
@@ -85,6 +85,10 @@ function App() {
                       path="biodata/:modelNumber"
                       element={<BiodataDetail />}
                     />
+
+                    <Route path="contact" element={<ContactUs />} />
+                    <Route path="how-we-work" element={<WeWork />} />
+                    <Route path="whyus" element={<WhyUs />} />
                     <Route path="blog" element={<AllBlog />} />
                     <Route path="blog/:slug" element={<BlogDetail />} />
                     <Route path="privacy" element={<PrivacyPolicy />} />
