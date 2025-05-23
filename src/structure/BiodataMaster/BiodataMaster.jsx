@@ -62,12 +62,15 @@ const BiodataMaster = () => {
   };
 
   const [styles, setStyles] = useState({
+    name: {
+      fontSize: "20px",
+    },
     headings: {
-      fontSize: "1.5rem",
+      fontSize: "16px",
     },
     table: {
-      headerFontSize: "1rem",
-      dataFontSize: "0.9rem",
+      headerFontSize: "14px",
+      dataFontSize: "12px",
       rowGap: "8px",
     },
   });
@@ -233,11 +236,20 @@ const BiodataMaster = () => {
             {/* Apply dynamic styles to elements */}
             <style>
               {`
-    .biodata-master .biodata-master-photo-frame {
-      border-color: ${BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR} !important;
-    }
+
+.biodata-master .biodata-master-photo-frame {
+  border-color: ${BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR} !important;
+  }
+  .biodata-master-name-text h3 {
+      font-size: ${styles.name.fontSize} !important;
+              }
+
+              .biodata-master-flex-section h3 {
+              font-size: ${styles.headings.fontSize} !important;
+              }
+
     .biodata-master h3 {
-      font-size: ${BIODATA_THEME_1111.HEADINGS.FONT_SIZE} !important;
+  
       color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
     }
     .biodata-master th {
@@ -320,83 +332,90 @@ const BiodataMaster = () => {
                   </div>
                 </div>
 
-              {/* Professional/Examination Section */}
-            {formData?.modelDetails?.type === 'Student' ? (
-              <div className="biodata-master-section examination-table">
-                <div className="biodata-master-section-title">
-                  <span className="biodata-master-flex-section">
-                    <Work className="biodata-master-section-icon" />
-                    <h3>Examination Preparation Details</h3>
-                  </span>
-                </div>
-                <table className="biodata-master-bio-table">
-                  <tbody>
-                    <tr>
-                      {formData?.examinationDetails?.map((field, index) => (
-                        <th key={index}>{field.label}</th>
-                      ))}
-                    </tr>
-                    <tr>
-                      {formData?.examinationDetails?.map((field, index) => (
-                        <td key={index}>{field.value || "Not Provided"}</td>
-                      ))}
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-	          <div className= "biodata-master-section professional-table">
-                <div className="biodata-master-section-title">
-                  <span className="biodata-master-flex-section">
-                    <Work className="biodata-master-section-icon" />
-                    <h3>Professional Details</h3>
-                  </span>
-                </div>
-                <table className="biodata-master-bio-table">
-                  <tbody>
-                    <tr>
-                      {formData?.professionalDetails?.map((field, index) => (
-                        <th key={index}>{field.label}</th>
-                      ))}
-                    </tr>
-                    <tr>
-                      {formData?.professionalDetails?.map((field, index) => (
-                        <td key={index}>{field.value || "Not Provided"}</td>
-                      ))}
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                {/* Professional/Examination Section */}
+                {formData?.modelDetails?.type === "Student" ? (
+                  <div className="biodata-master-section examination-table">
+                    <div className="biodata-master-section-title">
+                      <span className="biodata-master-flex-section">
+                        <Work className="biodata-master-section-icon" />
+                        <h3>Examination Preparation Details</h3>
+                      </span>
+                    </div>
+                    <table className="biodata-master-bio-table">
+                      <tbody>
+                        <tr>
+                          {formData?.examinationDetails?.map((field, index) => (
+                            <th key={index}>{field.label}</th>
+                          ))}
+                        </tr>
+                        <tr>
+                          {formData?.examinationDetails?.map((field, index) => (
+                            <td key={index}>{field.value || "Not Provided"}</td>
+                          ))}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="biodata-master-section professional-table">
+                    <div className="biodata-master-section-title">
+                      <span className="biodata-master-flex-section">
+                        <Work className="biodata-master-section-icon" />
+                        <h3>Professional Details</h3>
+                      </span>
+                    </div>
+                    <table className="biodata-master-bio-table">
+                      <tbody>
+                        <tr>
+                          {formData?.professionalDetails?.map(
+                            (field, index) => (
+                              <th key={index}>{field.label}</th>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          {formData?.professionalDetails?.map(
+                            (field, index) => (
+                              <td key={index}>
+                                {field.value || "Not Provided"}
+                              </td>
+                            )
+                          )}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                )}
 
-)}
-
-              {/* Education Details */}
-              <div className="biodata-master-section education-section">
-                <div className="biodata-master-section-title">
-                  <span className="biodata-master-flex-section">
-                    <School className="biodata-master-section-icon" />
-                    <h3>Education Details</h3>
-                  </span>
-                </div>
-                <table className="biodata-master-bio-table">
-                  <tbody>
-                    <tr>
-                      {formData?.educationDetails?.[0]?.map((field, index) => (
-                        <th key={index}>{field.label}</th>
-                      ))}
-                    </tr>
-                    {formData?.educationDetails?.map((education, index) => (
-                      <tr key={index}>
-                        {education.map((field, fieldIndex) => (
-                          <td key={fieldIndex}>
-                            {field.value || "Not Provided"}
-                          </td>
-                        ))}
+                {/* Education Details */}
+                <div className="biodata-master-section education-section">
+                  <div className="biodata-master-section-title">
+                    <span className="biodata-master-flex-section">
+                      <School className="biodata-master-section-icon" />
+                      <h3>Education Details</h3>
+                    </span>
+                  </div>
+                  <table className="biodata-master-bio-table">
+                    <tbody>
+                      <tr>
+                        {formData?.educationDetails?.[0]?.map(
+                          (field, index) => (
+                            <th key={index}>{field.label}</th>
+                          )
+                        )}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                      {formData?.educationDetails?.map((education, index) => (
+                        <tr key={index}>
+                          {education.map((field, fieldIndex) => (
+                            <td key={fieldIndex}>
+                              {field.value || "Not Provided"}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
                 {/* Family Section */}
                 <div className="biodata-master-section family-section">
@@ -595,7 +614,6 @@ const BiodataMaster = () => {
                     <span className="print-icon">📄</span>
                     <span className="print-text">
                       <span className="print-label">Watermark</span>
-          
                     </span>
                   </button>
                   <button
@@ -605,17 +623,117 @@ const BiodataMaster = () => {
                     <span className="print-icon">📃</span>
                     <span className="print-text">
                       <span className="print-label">Original</span>
-                      
                     </span>
                   </button>
                 </div>
               </div>
+
               <div className="control-section">
-                <h4>Font Sizes</h4>
+                <h4>Name Font</h4>
                 <div className="control-group">
                   <div className="control-item">
                     <label>
-                      <FormatSize /> Table Headers
+                      <div className="text-icon">
+                        <FormatSize /> Name
+                      </div>
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              name: {
+                                ...prev.name,
+                                fontSize: `${
+                                  parseInt(prev.name.fontSize) - 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.name.fontSize}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              name: {
+                                ...prev.name,
+                                fontSize: `${
+                                  parseInt(prev.name.fontSize) + 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+
+           
+                </div>
+              </div>
+
+              <div className="control-section">
+                <h4>Table Font</h4>
+                <div className="control-group">
+
+                  <div className="control-item">
+                    <label>
+                      <div className="text-icon">
+                        <FormatSize /> Table Heading
+                      </div>
+                      <div className="size-control">
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              headings: {
+                                ...prev.headings,
+                                fontSize: `${
+                                  parseInt(prev.headings.fontSize) - 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="size-value">
+                          {styles.headings.fontSize}
+                        </span>
+                        <button
+                          className="size-btn"
+                          onClick={() =>
+                            setStyles((prev) => ({
+                              ...prev,
+                              headings: {
+                                ...prev.headings,
+                                fontSize: `${
+                                  parseInt(prev.headings.fontSize) + 1
+                                }px`,
+                              },
+                            }))
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+
+                  <div className="control-item">
+                    <label>
+                      <div className="text-icon">
+                        <FormatSize /> Table Headers
+                      </div>
                       <div className="size-control">
                         <button
                           className="size-btn"
@@ -657,7 +775,9 @@ const BiodataMaster = () => {
                   </div>
                   <div className="control-item">
                     <label>
-                      <FormatSize /> Table Data
+                      <div className="text-icon">
+                        <FormatSize /> Table Data
+                      </div>
                       <div className="size-control">
                         <button
                           className="size-btn"
@@ -705,7 +825,9 @@ const BiodataMaster = () => {
                 <div className="control-group">
                   <div className="control-item">
                     <label>
-                      <FormatSize /> Gap
+                      <div className="text-icon">
+                        <FormatSize /> Gap
+                      </div>
                       <div className="size-control">
                         <button
                           className="size-btn"
