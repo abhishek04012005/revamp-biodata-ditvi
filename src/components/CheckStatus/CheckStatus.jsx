@@ -17,7 +17,6 @@ import {
   ErrorOutline,
   SearchOff,
   Home,
-  ArrowBack,
 } from "@mui/icons-material";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";

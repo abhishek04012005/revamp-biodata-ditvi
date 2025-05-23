@@ -17,127 +17,17 @@ npm install slick-carousel
 
 
 
-   const handlePrint = (withWatermark = false) => {
-    // Store current page styles
-    const originalContent = document.body.innerHTML;
-
-    // Get only the biodata container content
-    const biodataContent = document.querySelector('.biodata-master-a4-container').innerHTML;
-
-    // Create print-specific styles with theme colors
-    const printStyles = `
-        <style>
-            @page {
-                size: A4;
-                margin: 0;
-            }
-            body {
-                margin: 0;
-                padding: 0;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-            .biodata-master-a4-container {
-                width: 210mm;
-                min-height: 297mm;
-                margin: 0;
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                padding: 0;
-                background-image: url("${BackgroundBiodata1111}");
-            }
-
-            /* Theme-specific styles */
-            .biodata-master .biodata-master-photo-frame {
-                border-color: ${BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR} !important;
-            }
-            .biodata-master h3 {
-                font-size: ${BIODATA_THEME_1111.HEADINGS.FONT_SIZE} !important;
-                color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
-            }
-            .biodata-master th {
-                font-size: ${styles.table.headerFontSize} !important;
-                color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
-                background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
-            }
-            .biodata-master td {
-                font-size: ${styles.table.dataFontSize} !important;
-                color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
-            }
-            .biodata-master .biodata-master-section-icon {
-                color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
-            }
-            .biodata-master .biodata-master-bio-table tbody tr {
-                background-color: ${BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR} !important;
-            }
-            .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
-                background-color: ${BIODATA_THEME_1111.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
-            }
-            .biodata-master .biodata-master-bio-table thead tr,
-            .biodata-master .biodata-master-bio-table tbody tr:first-child {
-                background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
-            }
-            .biodata-master-bio-table td,
-            .biodata-master-bio-table th {
-                padding: ${styles.table.rowGap};
-                border-bottom: ${styles.table.rowGap} solid transparent;
-            }
-
-            .img-watermark {
-                display: ${withWatermark ? 'block !important' : 'none !important'};
-            }
-
-            .img-watermark img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                opacity: 0.3;
-                transform: rotate(-45deg);
-            }
-
-            @media print {
-                * {
-                    -webkit-print-color-adjust: exact !important;
-                    print-color-adjust: exact !important;
-                    color-adjust: exact !important;
-                }
-                .img-watermark {
-                    display: ${withWatermark ? 'block !important' : 'none !important'};
-                }
-            }
-        </style>
-    `;
-
-    // Create a new container with watermark
-    const printContent = `
-        <div class="biodata-master">
-            <div class="biodata-master-a4-container">
-                ${withWatermark ? `
-                    <div class="img-watermark">
-                        
-                    </div>
-                ` : ''}
-                ${biodataContent}
-            </div>
-        </div>
-    `;
-
-    // Replace page content with biodata content and print styles
-    document.body.innerHTML = printStyles + printContent;
-
-    // Print after a small delay to ensure styles are applied
-    setTimeout(() => {
-        window.print();
-        // Restore original content
-        document.body.innerHTML = originalContent;
-        // Reattach event listeners and reload page
-        window.location.reload();
-    }, 500);
-}
-
-Add title as BiodataPrint without changing any code
+Drop down to biodata change theme
+Update list image of biodata section
+Message section on BiodataMaster
+Font and row size save to db
+Payment Gateway Integration
+Track Status for mobile view
+Write Standard message for whatsapp
+Text verification and improvement
+Store All Key In Env File
+Title Helmet
+SEO optimization and google analytics
+Homepage navmenu to fixed || Done
+Hindi Implementation MasterBiodata
+Testing :)
