@@ -1,6 +1,7 @@
 .contact-us {
     position: relative;
     overflow: hidden;
+    margin-top: 6rem;
 }
 
 .contact-section {
@@ -193,4 +194,121 @@
     .contact-image-card {
         margin-top: 2rem;
     }
+}
+
+.notification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+.notification-popup {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transform-origin: center;
+  animation: scaleIn 0.3s ease;
+}
+
+.notification-popup.success {
+  border-top: 4px solid #4CAF50;
+}
+
+.notification-popup.error {
+  border-top: 4px solid #dc3545;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.notification-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.notification-icon.success {
+  background: #4CAF50;
+  color: white;
+}
+
+.notification-icon.error {
+  background: #dc3545;
+  color: white;
+}
+
+.notification-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.notification-content p {
+  margin: 0;
+  color: #4a5568;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.notification-close-btn {
+  margin-top: 8px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  background: #2c3e50;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notification-close-btn:hover {
+  background: #1a202c;
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .notification-popup {
+    width: 90%;
+    margin: 20px;
+  }
 }
