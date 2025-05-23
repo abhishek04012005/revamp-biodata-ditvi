@@ -86,7 +86,6 @@ const CheckStatus = () => {
     BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
       .then((response) => {
         if (response) {
-          console.log("Request fetched successfully:", response);
           const statusHistory = response.status;
           const newTimestamps = {};
           statusHistory.forEach((status) => {
