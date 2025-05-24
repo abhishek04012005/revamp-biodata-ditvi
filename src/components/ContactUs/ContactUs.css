@@ -213,81 +213,142 @@
 
 .notification-popup {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 24px;
   width: 400px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
   transform-origin: center;
-  animation: scaleIn 0.3s ease;
-}
-
-.notification-popup.success {
-  border-top: 4px solid #4CAF50;
-}
-
-.notification-popup.error {
-  border-top: 4px solid #dc3545;
+  animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 135, 15, 0.1);
 }
 
 .notification-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   gap: 16px;
+  text-align: center;
 }
 
-.notification-icon {
-  width: 48px;
-  height: 48px;
+.notification-icon-wrapper {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  margin-bottom: 8px;
+  background: var(--primary-color);
+  animation: iconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.notification-icon.success {
-  background: #4CAF50;
+.notification-icon {
+  width: 40px;
+  height: 40px;
   color: white;
 }
 
-.notification-icon.error {
-  background: #dc3545;
-  color: white;
+.icon-circle {
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.2;
+}
+
+.icon-path {
+  animation: drawPath 0.6s ease forwards 0.2s;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.notification-text {
+  margin-top: 8px;
 }
 
 .notification-title {
-  margin: 0;
-  font-size: 1.25rem;
+  color: var(--primary-color);
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #2c3e50;
+  margin: 0 0 8px;
 }
 
-.notification-content p {
-  margin: 0;
-  color: #4a5568;
+.notification-message {
+  color: #4b5563;
   font-size: 1rem;
   line-height: 1.5;
+  margin: 0;
 }
 
 .notification-close-btn {
-  margin-top: 8px;
-  padding: 10px 24px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
   border: none;
-  border-radius: 6px;
-  background: #2c3e50;
-  color: white;
-  font-size: 0.95rem;
-  font-weight: 500;
+  background: rgba(255, 135, 15, 0.1);
+  color: var(--primary-color);
+  border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
   transition: all 0.2s ease;
 }
 
+.notification-popup {
+  position: relative;
+  /* ...existing styles... */
+}
+
+.notification-close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #ffffff;
+  color: #64748b;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  padding: 0;
+  border: 2px solid #f1f5f9;
+}
+
 .notification-close-btn:hover {
-  background: #1a202c;
-  transform: translateY(-1px);
+  background: #f8fafc;
+  color: #334155;
+  transform: scale(1.1);
+}
+
+.notification-close-btn:active {
+  transform: scale(0.95);
+}
+
+.notification-close-btn svg {
+  display: block;
+}
+
+/* Add hover effect to overlay */
+.notification-overlay {
+  transition: background-color 0.2s ease;
+}
+
+.notification-overlay:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.notification-close-btn:hover {
+  background: rgba(255, 135, 15, 0.2);
+  transform: rotate(90deg);
 }
 
 @keyframes fadeIn {
@@ -297,12 +358,32 @@
 
 @keyframes scaleIn {
   from {
-    transform: scale(0.95);
     opacity: 0;
+    transform: scale(0.95) translateY(10px);
   }
   to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes iconPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes drawPath {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
