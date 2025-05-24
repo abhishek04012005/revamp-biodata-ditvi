@@ -19,7 +19,7 @@ import {
   getStatusStyle,
 } from "../../../utils/StatusHelper";
 import { MOVE_BACKWARD, MOVE_FORWARD } from "../../../constants/StatusSteps";
-import { getFlowTypeById } from "../../../constants/FlowType";
+import { getFlowTypeById, getFlowTypeStyle } from "../../../constants/FlowType";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
 import Loader from "../../../structure/Loader/Loader";
 
@@ -166,7 +166,11 @@ const AdminDashboard = () => {
                   {requests.map((request) => (
                     <tr key={request.id}>
                       <td>{request.request_number}</td>
-                      <td>{getFlowTypeById(request.flow_type)}</td>
+                      <td>
+                        <span style={getFlowTypeStyle(request.flow_type)}>
+                          {getFlowTypeById(request.flow_type)}
+                        </span>
+                      </td>
                       <td>{request.user_details?.name}</td>
                       <td>{request.user_details?.mobileNumber}</td>
                       <td>{formatDate(request.created_at)}</td>
