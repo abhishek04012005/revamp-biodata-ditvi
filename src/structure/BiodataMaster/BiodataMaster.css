@@ -283,13 +283,6 @@
 }
 
 /* Style Controls Additional Styles */
-.control-section {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
 
 .control-item label {
   width: 100%;
@@ -333,9 +326,9 @@
 }
 
 .style-controls-sidebar {
-  width: 280px;
+  width: 300px;
   background: white;
-  padding: 20px;
+  padding: 10px;
   border-left: 1px solid #eee;
   height: 100vh;
   position: sticky;
@@ -573,4 +566,20 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+}
+
+.whatsapp-message-card + .whatsapp-message-card {
+  margin-top: 1rem;
+}
+
+.text-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.save-style-settings {
+  background-color: red;
+  color: white;
+
 }

@@ -11,7 +11,7 @@ const AdminFooter = () => {
           <img src={Logo} alt="Ditvi Biodata Admin" />
         </Link>
         <div className="admin-footer-copyright">
-          <p>© {new Date().getFullYear()} Ditvi Biodata Admin Panel | All rights reserved</p>
+          <p>© {new Date().getFullYear()} Ditvi Biodata | All rights reserved</p>
         </div>
       </div>
     </footer>

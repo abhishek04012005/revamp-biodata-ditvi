@@ -5,7 +5,7 @@ import BackgroundBiodata1111 from "../../assets/background/1111.svg";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
 import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
 import WatermarkLogo from "../../assets/watermark/logo.png";
-import {getLatestStatusId} from "../../utils/StatusHelper";
+import { getLatestStatusId } from "../../utils/StatusHelper";
 import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 
@@ -18,7 +18,7 @@ import {
   Palette,
   Settings,
   ContentCopy,
-  Check
+  Check,
 } from "@mui/icons-material";
 
 const BiodataMaster = () => {
@@ -70,38 +70,37 @@ const BiodataMaster = () => {
   };
 
   const fetchStatus = async () => {
-      BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
-            .then((response) => {
-              if (response) {
-                const statusHistory = response.status;
-                const newTimestamps = {};
-                statusHistory.forEach((status) => {
-                  newTimestamps[status.id] = status.created;
-                });
-                // setTimestamps(newTimestamps);
-                setCurrentStatus(getLatestStatusId(statusHistory));
-                // setIsValidRequest(true);
-              } else {
-                console.error("No request found with the given request number.");
-                // setIsValidRequest(false);
-              }
-            })
-            .catch((error) => {
-              console.error("Error fetching request:", error);
-              // setIsValidRequest(false);
-            });
-  }; 
+    BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
+      .then((response) => {
+        if (response) {
+          const statusHistory = response.status;
+          const newTimestamps = {};
+          statusHistory.forEach((status) => {
+            newTimestamps[status.id] = status.created;
+          });
+          // setTimestamps(newTimestamps);
+          setCurrentStatus(getLatestStatusId(statusHistory));
+          // setIsValidRequest(true);
+        } else {
+          console.error("No request found with the given request number.");
+          // setIsValidRequest(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching request:", error);
+        // setIsValidRequest(false);
+      });
+  };
 
   const handleCopyMessage = async (text) => {
-  try {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  } catch (err) {
-    console.error('Failed to copy:', err);
-  }
-};
-
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   const [styles, setStyles] = useState({
     name: {
@@ -273,7 +272,7 @@ const BiodataMaster = () => {
     try {
       const updatedData = ProductionRequestStorage.updateProductionRequestById(
         requestId,
-        {styleSettings}
+        { styleSettings }
       );
       console.log("Style settings saved successfully:", updatedData);
     } catch (error) {
@@ -286,37 +285,49 @@ const BiodataMaster = () => {
       <div className="biodata-master">
         <div className="biodata-master-container">
           <div className="style-controls-sidebar">
-            <div className="style-controls-sidebar">
-  {formData && (
-    <div className="whatsapp-message-container">
-      {(() => {
-        const messages = getWhatsappMessageByStatus(currentStatus, {
-          name: formData?.userDetails?.name || '',
-          requestNumber: requestNumber || '',
-          modelNumber: formData?.modelDetails?.modelNumber || '',
-          statusLink: `${process.env.REACT_APP_STATUS_URL || 'https://ditvi.in/status/'}${requestNumber}`
-        });
+            {formData && (
+              <div className="whatsapp-message-container">
+                {(() => {
+                  const messages = getWhatsappMessageByStatus(currentStatus, {
+                    name: formData?.userDetails?.name || "",
+                    requestNumber: requestNumber || "",
+                    modelNumber: formData?.modelDetails?.modelNumber || "",
+                    statusLink: `${
+                      process.env.REACT_APP_STATUS_URL ||
+                      "https://ditvi.in/status/"
+                    }${requestNumber}`,
+                  });
 
-        return messages.map((messageData) => (
-          <div key={messageData.id} className="whatsapp-message-card">
-            <div className="whatsapp-message-header">
-              <h4>{messageData.title}</h4>
-              <button 
-                className={`copy-button ${copied === messageData.id ? 'copied' : ''}`}
-                onClick={() => handleCopyMessage(messageData.message, messageData.id)}
-              >
-                {copied === messageData.id ? <Check /> : <ContentCopy />}
-              </button>
-            </div>
-            <div className="whatsapp-message-content">
-              {messageData.message}
-            </div>
-          </div>
-        ));
-      })()}
-    </div>
-  )}
-</div>
+                  return messages.map((messageData) => (
+                    <div key={messageData.id} className="whatsapp-message-card">
+                      <div className="whatsapp-message-header">
+                        <h4>{messageData.title}</h4>
+                        <button
+                          className={`copy-button ${
+                            copied === messageData.id ? "copied" : ""
+                          }`}
+                          onClick={() =>
+                            handleCopyMessage(
+                              messageData.message,
+                              messageData.id
+                            )
+                          }
+                        >
+                          {copied === messageData.id ? (
+                            <Check />
+                          ) : (
+                            <ContentCopy />
+                          )}
+                        </button>
+                      </div>
+                      <div className="whatsapp-message-content">
+                        {messageData.message}
+                      </div>
+                    </div>
+                  ));
+                })()}
+              </div>
+            )}
           </div>
           <div className="biodata-master-biodata-page">
             {/* Apply dynamic styles to elements */}
@@ -711,18 +722,6 @@ const BiodataMaster = () => {
                       <span className="print-label">Original</span>
                     </span>
                   </button>
-
-                <button
-                    className="print-btn original"
-                    onClick={() => saveStyleSettings(false)}
-                  >
-                    <span className="print-icon">📃</span>
-                    <span className="print-text">
-                      <span className="print-label">Save Style Settings</span>
-                      
-                    </span>
-                  </button>
-
                 </div>
               </div>
 
@@ -773,15 +772,12 @@ const BiodataMaster = () => {
                       </div>
                     </label>
                   </div>
-
-           
                 </div>
               </div>
 
               <div className="control-section">
                 <h4>Table Font</h4>
                 <div className="control-group">
-
                   <div className="control-item">
                     <label>
                       <div className="text-icon">
@@ -963,6 +959,20 @@ const BiodataMaster = () => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div className="control-section print-controls">
+              <button
+                className="print-btn save-style-settings"
+                onClick={() => saveStyleSettings(false)}
+              >
+                <span className="print-icon">
+                  <FormatSize />
+                </span>
+                <span className="print-text">
+                  <span className="print-label">Save Style Settings</span>
+                </span>
+              </button>
             </div>
           </div>
         </div>
