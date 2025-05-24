@@ -508,10 +508,69 @@
     display: none;
   }
 }
+.whatsapp-message-container {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  overflow: hidden;
+}
 
-
-.text-icon{
+.whatsapp-message-header {
+  background: #128C7E;
+  color: white;
+  padding: 12px 16px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+
+.whatsapp-message-header h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.whatsapp-message-content {
+  background: #DCF8C6;
+  padding: 16px;
+  white-space: pre-line;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.copy-button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.copy-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.copy-button.copied {
+  color: #4CAF50;
+}
+
+.copy-button svg {
+  font-size: 20px;
+}
+.whatsapp-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.whatsapp-message-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }

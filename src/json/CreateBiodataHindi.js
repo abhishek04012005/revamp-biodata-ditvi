@@ -40,11 +40,17 @@ const FamilyDataHindi = {
   sisters: { label: 'बहन', value: [] }
 };
 
+const ContactDataHindi = [
+  { label: 'पता', value: '', placeholder: '123 मुख्य सड़क, शहर, राज्य' },
+  { label: 'मोबाइल नंबर', value: '', placeholder: '9263767441' },
+];
+
 export {
   PersonalDataHindi,
   EducationDataHindi,
   ExaminationDataHindi,
   ProfessionalDataHindi,
   FamilyDataHindi,
+  ContactDataHindi,
   createEmptyPersonHindi
 };

@@ -87,6 +87,7 @@ export const ProductionRequestStorage = {
                     education_details,
                     family_details,
                     contact_details,
+                    style_settings,
                     created_at
                 `)
                 .eq('id', id)
@@ -113,7 +114,8 @@ export const ProductionRequestStorage = {
                     examination_details: productionRequest.examinationDetails,
                     education_details: productionRequest.educationDetails,
                     family_details: productionRequest.familyDetails,
-                    contact_details: productionRequest.contactDetails    
+                    contact_details: productionRequest.contactDetails,
+                    style_settings: productionRequest.styleSettings,    
                 })
                 .eq('id', id)
                 .select('*')

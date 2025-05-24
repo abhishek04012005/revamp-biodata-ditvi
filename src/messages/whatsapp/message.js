@@ -1,3 +1,1 @@
 const messageForFixedWhatsapp = `Hello Ditvi Biodata,\nI want to learn more about your services.\n\nThank You :)`;
-
-export default messageForFixedWhatsapp;
