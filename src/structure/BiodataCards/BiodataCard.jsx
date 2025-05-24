@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Container from '../Container/Container';
 import { useNavigate } from 'react-router-dom';
-import { ArrowForward, ArrowBack, Star, Visibility, ShoppingCart } from '@mui/icons-material';
+import { ArrowForward, ArrowBack, Star, Visibility, ShoppingCart, EditDocument } from '@mui/icons-material';
 import HeaderSection from '../HeaderSection/HeaderSection';
 import './BiodataCard.css';
 import GetNow from '../GetNow/GetNow';
@@ -196,6 +196,8 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true }) => {
                                 className="biodata-more-btn"
                                 onClick={() => navigate(`/${title.toLowerCase().replace(/\s+/g, '-')}`)}
                             >
+                                <EditDocument/>
+
                                 <span>View More</span>
                                 <ArrowForward />
                             </button>
