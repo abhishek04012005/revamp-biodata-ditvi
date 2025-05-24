@@ -177,6 +177,26 @@ export const BiodataRequestStorage = {
     }
   },
 
+  async updateStatusBiodataRequestByRequestNumber(requestNumber, status) {
+    try {
+      const { data, error } = await supabase
+        .from(biodataRequestTableName)
+        .update({
+          status: status,
+        })
+        .eq("request_number", requestNumber)
+        .select("*")
+        .single();
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      console.error("Error updateStatusBiodataRequestById:", error);
+      throw error;
+    }
+  },
+
   async deleteBiodataRequestById(requestId) {
     try {
       const { data, error } = await supabase

@@ -59,6 +59,18 @@ CREATE TABLE public.production_request (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
+CREATE TABLE public.payment_request (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    request_number int4 NOT NULL,
+    amount int4 NOT NULL,
+    status TEXT NOT NULL,
+    transaction_id TEXT NULL,
+    payment_response TEXT NULL,
+    deleted BOOLEAN DEFAULT FALSE,
+    updated_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
 
 CREATE TABLE public.user_feedback (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

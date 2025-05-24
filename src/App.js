@@ -31,6 +31,7 @@ import WhyUs from "./components/WhyUs/WhyUs";
 import WeWork from "./components/WeWork/WeWork";
 import ContactUs from "./components/ContactUs/ContactUs";
 import Payment from "./components/Payments/Payment/Payment";
+import PaymentSuccess from "./components/Payments/PaymentSucess/PaymentSucess";
 
 function App() {
   return (
@@ -109,8 +110,15 @@ function App() {
                       path="track-status/:requestNumber"
                       element={<CheckStatus />}
                     />
+                    <Route 
+                      path="payment/:requestNumber" 
+                      element={<Payment />} 
+                    />
+                    <Route 
+                      path="payment-success/:requestNumber" 
+                      element={<PaymentSuccess />} 
+                    />
                   </Routes>
-                  <Route path="payment" element={<Payment />} />
                   <Footer />
                 </>
               }
