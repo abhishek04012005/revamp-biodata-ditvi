@@ -30,6 +30,7 @@ import ContactUsDashboard from "./components/Admin/ContactUsDashboard/ContactUsD
 import WhyUs from "./components/WhyUs/WhyUs";
 import WeWork from "./components/WeWork/WeWork";
 import ContactUs from "./components/ContactUs/ContactUs";
+import Payment from "./components/Payments/Payment/Payment";
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
                       element={<CheckStatus />}
                     />
                   </Routes>
+                  <Route path="payment" element={<Payment />} />
                   <Footer />
                 </>
               }

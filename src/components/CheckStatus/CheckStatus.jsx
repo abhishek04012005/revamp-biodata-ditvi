@@ -177,6 +177,8 @@ const CheckStatus = () => {
 
       <div className="status-card">
 
+
+<div className="h"></div>
   
 
         <div className="status-header">
@@ -194,7 +196,7 @@ const CheckStatus = () => {
                 <h2>
                   <Schedule className="time-icon" /> Total Estimated Time
                 </h2>
-                <p>72-96 hours from request initiation</p>
+                <p>12-48 hours from request initiation</p>
               </div>
             </div>
 
