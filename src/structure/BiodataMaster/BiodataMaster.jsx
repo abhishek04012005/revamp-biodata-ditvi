@@ -20,6 +20,9 @@ import {
   ContentCopy,
   Check,
 } from "@mui/icons-material";
+import DEFAULT_STYLES from "../../json/Styles";
+import { ICON_MAPPING } from "../../json/createBiodata";
+import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
@@ -31,11 +34,13 @@ const BiodataMaster = () => {
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [styles, setStyles] = useState(DEFAULT_STYLES);
+  const [modelDetails, setModelDetails] = useState(null);
+
 
   useEffect(() => {
     fetchRequestData();
-    fetchStatus();
-  }, [requestId]);
+  }, []);
 
   const fetchRequestData = async () => {
     try {
@@ -59,8 +64,11 @@ const BiodataMaster = () => {
         };
 
         setRequestNumber(response.request_number);
+        setModelDetails(response.model_details);
         setFormData(initialFormData);
         setOriginalData(initialFormData);
+        setStyles(response.style_settings || DEFAULT_STYLES);
+        fetchStatus(response.request_number);
       }
     } catch (error) {
       console.error("Error fetching request:", error);
@@ -69,7 +77,7 @@ const BiodataMaster = () => {
     }
   };
 
-  const fetchStatus = async () => {
+  const fetchStatus = async (requestNumber) => {
     BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
       .then((response) => {
         if (response) {
@@ -101,20 +109,6 @@ const BiodataMaster = () => {
       console.error("Failed to copy:", err);
     }
   };
-
-  const [styles, setStyles] = useState({
-    name: {
-      fontSize: "20px",
-    },
-    headings: {
-      fontSize: "16px",
-    },
-    table: {
-      headerFontSize: "14px",
-      dataFontSize: "12px",
-      rowGap: "8px",
-    },
-  });
 
   const handlePrint = (withWatermark = false) => {
     // Store current page styles
@@ -268,13 +262,12 @@ const BiodataMaster = () => {
     }, 500);
   };
 
-  const saveStyleSettings = async (styleSettings) => {
+  const saveStyleSettings = async () => {
     try {
       const updatedData = ProductionRequestStorage.updateProductionRequestById(
         requestId,
-        { styleSettings }
+        { styleSettings : styles }
       );
-      console.log("Style settings saved successfully:", updatedData);
     } catch (error) {
       console.error("Error saving style settings:", error);
     }
@@ -404,7 +397,7 @@ const BiodataMaster = () => {
                       <h3>
                         {
                           formData?.personalDetails?.find(
-                            (field) => field.label === "Name"
+                            (field) => field.label.match(/^(Name|नाम)$/)
                           )?.value
                         }
                       </h3>
@@ -415,9 +408,10 @@ const BiodataMaster = () => {
                       <tbody>
                         {formData?.personalDetails?.map(
                           (field, index) =>
-                            field.label !== "Name" && (
+                            !field.label.match(/^(Name|नाम)$/) && (
                               <tr key={index}>
                                 <td className="biodata-master-personal-icon-alignment">
+                                  {ICON_MAPPING[field.label] || ICON_MAPPING_HINDI[field.label]}
                                   {field.label}
                                 </td>
                                 <td>{field.value || "Not Provided"}</td>
@@ -532,7 +526,7 @@ const BiodataMaster = () => {
                       </tr>
                       {/* Father's Details */}
                       <tr>
-                        <td>Father</td>
+                        <td>{formData?.familyDetails?.father?.label}</td>
                         <td>
                           {formData?.familyDetails?.father?.value?.name ||
                             "Not Provided"}
@@ -545,7 +539,7 @@ const BiodataMaster = () => {
                       </tr>
                       {/* Mother's Details */}
                       <tr>
-                        <td>Mother</td>
+                        <td>{formData?.familyDetails?.mother?.label}</td>
                         <td>
                           {formData?.familyDetails?.mother?.value?.name ||
                             "Not Provided"}
@@ -559,7 +553,7 @@ const BiodataMaster = () => {
                       {/* Brothers Details in one row */}
                       {formData?.familyDetails?.brothers?.value?.length > 0 && (
                         <tr>
-                          <td>Brothers</td>
+                          <td>{formData?.familyDetails?.brothers?.label}</td>
                           <td>
                             {formData.familyDetails.brothers.value.map(
                               (brother, index) => (
@@ -613,7 +607,7 @@ const BiodataMaster = () => {
                       {/* Sisters Details in one row */}
                       {formData?.familyDetails?.sisters?.value?.length > 0 && (
                         <tr>
-                          <td>Sisters</td>
+                          <td>{formData?.familyDetails?.sisters?.label}</td>
                           <td>
                             {formData.familyDetails.sisters.value.map(
                               (sister, index) => (
@@ -677,21 +671,25 @@ const BiodataMaster = () => {
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">
-                    <tbody>
-                      <tr>
-                        <th>Address</th>
-                        <th>Mobile No.</th>
-                      </tr>
-                      <tr>
-                        <td>
-                          {formData?.contactDetails?.address || "Not Provided"}
-                        </td>
-                        <td>
-                          {formData?.contactDetails?.mobile || "Not Provided"}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      <tbody>
+                        <tr>
+                          {formData?.contactDetails?.map(
+                            (field, index) => (
+                              <th key={index}>{field.label}</th>
+                            )
+                          )}
+                        </tr>
+                        <tr>
+                          {formData?.contactDetails?.map(
+                            (field, index) => (
+                              <td key={index}>
+                                {field.value || "Not Provided"}
+                              </td>
+                            )
+                          )}
+                        </tr>
+                      </tbody>
+                    </table>
                 </div>
               </div>
             </div>
@@ -964,7 +962,7 @@ const BiodataMaster = () => {
             <div className="control-section print-controls">
               <button
                 className="print-btn save-style-settings"
-                onClick={() => saveStyleSettings(false)}
+                onClick={saveStyleSettings}
               >
                 <span className="print-icon">
                   <FormatSize />

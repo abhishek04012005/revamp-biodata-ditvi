@@ -1,4 +1,11 @@
+import { Height, Palette, Person, CalendarMonth } from '@mui/icons-material';
 
+const ICON_MAPPING_HINDI = {
+    "जन्म तिथि": <CalendarMonth className="g1111-icon" />,
+    "ऊंचाई": <Height className="g1111-icon" />,
+    "रंग": <Palette className="g1111-icon" />,
+    "जाति": <Person className="g1111-icon" />
+};
 
 const PersonalDataHindi = [
   { label: 'नाम', value: '', placeholder: 'राजेश कुमार' },
@@ -52,5 +59,6 @@ export {
   ProfessionalDataHindi,
   FamilyDataHindi,
   ContactDataHindi,
+  ICON_MAPPING_HINDI,
   createEmptyPersonHindi
 };
