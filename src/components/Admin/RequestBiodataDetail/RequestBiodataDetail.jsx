@@ -27,6 +27,7 @@ import {
   createEmptyPerson,
   FamilyData,
   ExaminationData,
+  ContactData,
 } from "../../../json/createBiodata";
 import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
 import { UploadFile } from "../../../supabase/UploadFile";
@@ -62,12 +63,11 @@ const RequestBiodataDetail = () => {
           userDetails: response.user_details,
           modelDetails: response.model_details,
           personalDetails: response.personal_details || PersonalData,
-          professionalDetails:
-            response.professional_details || ProfessionalData,
+          professionalDetails: response.professional_details || ProfessionalData,
           examinationDetails: response.examination_details || ExaminationData,
           educationDetails: response.education_details || [EducationData],
           familyDetails: response.family_details || FamilyData,
-          contactDetails: response.contact_details || {},
+          contactDetails: response.contact_details || ContactData,
         };
 
         setRequestNumber(response.request_number);
