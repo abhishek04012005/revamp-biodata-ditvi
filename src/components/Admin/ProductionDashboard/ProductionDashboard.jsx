@@ -42,10 +42,17 @@ const ProductionDashboard = () => {
   };
 
   const handleDelete = async (requestNumber) => {
-    await ProductionRequestStorage.deleteProductionRequestByRequestNumber(
-      requestNumber
-    );
-    fetchRequests();
+    try {
+      setIsLoading(true);
+      await ProductionRequestStorage.deleteProductionRequestByRequestNumber(
+        requestNumber
+      );
+      fetchRequests();
+    } catch (error) {
+      console.error("Error deleting request:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const productionStats = [
@@ -56,7 +63,7 @@ const ProductionDashboard = () => {
 
   return (
     <>
-       {isLoading && <Loader/>}
+      {isLoading && <Loader />}
       <div className="production-dashboard">
         <div className="production-dashboard-content">
           <div className="production-dashboard-stats">

@@ -43,11 +43,10 @@ const ProductionBiodataDetail = () => {
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
 
-
   useEffect(() => {
     fetchRequestData(requestId);
   }, [requestId]);
-  
+
   const fetchRequestData = async (requestId) => {
     try {
       setIsLoading(true);
@@ -62,7 +61,8 @@ const ProductionBiodataDetail = () => {
           userDetails: response.user_details,
           modelDetails: response.model_details,
           personalDetails: response.personal_details || PersonalData,
-          professionalDetails:response.professional_details || ProfessionalData,
+          professionalDetails:
+            response.professional_details || ProfessionalData,
           examinationDetails: response.examination_details || ExaminationData,
           educationDetails: response.education_details || [EducationData],
           familyDetails: response.family_details || FamilyData,
@@ -209,7 +209,7 @@ const ProductionBiodataDetail = () => {
             <label>{field.label}:</label>
             {isEditing ? (
               <input
-              className="input-field-edit"
+                className="input-field-edit"
                 type="text"
                 value={field.value}
                 onChange={(e) => {
@@ -327,59 +327,66 @@ const ProductionBiodataDetail = () => {
 
   const renderEducationInfo = () =>
     renderSection(
-     <School />,
-    "Education Information",
-    <>
-      {isEditing && (
-        <button className="add-btn floating" onClick={handleAddEducation}>
-          <Add /> Add Education
-        </button>
-      )}
-      <div className="education-list">
-        {Array.isArray(formData.educationDetails) && formData.educationDetails.map((eduGroup, groupIndex) => (
-          <div key={groupIndex} className="education-group animated-card">
-            <div className="group-header">
-              <h3>Education {formData.educationDetails.length - groupIndex}</h3>
-              {isEditing && (
-                <button
-                  className="remove-btn floating"
-                  onClick={() => handleRemoveEducation(groupIndex)}
-                >
-                  <Delete />
-                </button>
-              )}
-            </div>
-            <div className="info-grid">
-              {Array.isArray(eduGroup) && eduGroup.map((field, index) => (
-                <div key={index} className="detail-field animated-field">
-                  <label>{field.label}:</label>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={field.value || ''}
-                      onChange={(e) => {
-                        const newEducation = [...formData.educationDetails];
-                        newEducation[groupIndex][index].value = e.target.value;
-                        setFormData({
-                          ...formData,
-                          educationDetails: newEducation,
-                        });
-                      }}
-                      placeholder={`Enter ${field.label.toLowerCase()}`}
-                    />
-                  ) : (
-                    <span className="field-value">
-                      {field.value || "Not Provided"}
-                    </span>
+      <School />,
+      "Education Information",
+      <>
+        {isEditing && (
+          <button className="add-btn floating" onClick={handleAddEducation}>
+            <Add /> Add Education
+          </button>
+        )}
+        <div className="education-list">
+          {Array.isArray(formData.educationDetails) &&
+            formData.educationDetails.map((eduGroup, groupIndex) => (
+              <div key={groupIndex} className="education-group animated-card">
+                <div className="group-header">
+                  <h3>
+                    Education {formData.educationDetails.length - groupIndex}
+                  </h3>
+                  {isEditing && (
+                    <button
+                      className="remove-btn floating"
+                      onClick={() => handleRemoveEducation(groupIndex)}
+                    >
+                      <Delete />
+                    </button>
                   )}
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+                <div className="info-grid">
+                  {Array.isArray(eduGroup) &&
+                    eduGroup.map((field, index) => (
+                      <div key={index} className="detail-field animated-field">
+                        <label>{field.label}:</label>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            value={field.value || ""}
+                            onChange={(e) => {
+                              const newEducation = [
+                                ...formData.educationDetails,
+                              ];
+                              newEducation[groupIndex][index].value =
+                                e.target.value;
+                              setFormData({
+                                ...formData,
+                                educationDetails: newEducation,
+                              });
+                            }}
+                            placeholder={`Enter ${field.label.toLowerCase()}`}
+                          />
+                        ) : (
+                          <span className="field-value">
+                            {field.value || "Not Provided"}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ))}
+        </div>
+      </>
+    );
 
   const renderFamilyInfo = () =>
     renderSection(
@@ -612,25 +619,25 @@ const ProductionBiodataDetail = () => {
         </div>
         <div className="detail-actions">
           {isEditing ? (
-              <div className="edit-actions">
-                <button className="action-btn save" onClick={handleSave}>
-                  <Save /> Save
-                  <span className="btn-highlight"></span>
-                </button>
-                <button className="action-btn cancel" onClick={handleCancel}>
-                  <Cancel /> Cancel
-                  <span className="btn-highlight"></span>
-                </button>
-              </div>
-            ) : (
-              <button
-                className="action-btn edit"
-                onClick={() => setIsEditing(true)}
-              >
-                <Edit /> Edit Details
+            <div className="edit-actions">
+              <button className="action-btn save" onClick={handleSave}>
+                <Save /> Save
                 <span className="btn-highlight"></span>
               </button>
-            )}
+              <button className="action-btn cancel" onClick={handleCancel}>
+                <Cancel /> Cancel
+                <span className="btn-highlight"></span>
+              </button>
+            </div>
+          ) : (
+            <button
+              className="action-btn edit"
+              onClick={() => setIsEditing(true)}
+            >
+              <Edit /> Edit Details
+              <span className="btn-highlight"></span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -661,19 +668,14 @@ const ProductionBiodataDetail = () => {
           {renderPersonalInfo()}
           {formData.modelDetails?.type === ModelTypes.Student.Name
             ? renderExaminationInfo()
-            : renderProfessionalInfo()
-          }
+            : renderProfessionalInfo()}
           {renderEducationInfo()}
           {renderFamilyInfo()}
           {renderContactInfo()}
         </div>
       </div>
 
-      {isLoading && (
-        <div className="loading-overlay">
-          <div className="loader"></div>
-        </div>
-      )}
+      {isLoading && <Loader />}
     </div>
   );
 };

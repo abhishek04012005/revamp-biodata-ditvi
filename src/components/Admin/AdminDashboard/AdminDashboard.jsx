@@ -90,30 +90,44 @@ const AdminDashboard = () => {
   };
 
   const handleStatusChange = async (direction, requestId) => {
-    const request = requests.find((r) => r.id === requestId);
-    if (!request) return;
+    try {
+        setIsLoading(true);
+      const request = requests.find((r) => r.id === requestId);
+      if (!request) return;
 
-    const currentStatusArray = request.status || [];
-    const latestStatusId = getLatestStatusId(currentStatusArray);
+      const currentStatusArray = request.status || [];
+      const latestStatusId = getLatestStatusId(currentStatusArray);
 
-    if (latestStatusId === 0) moveToProduction(request);
+      if (latestStatusId === 0) moveToProduction(request);
 
-    direction === MOVE_FORWARD
-      ? currentStatusArray.push({
-          id: latestStatusId + 1,
-          created: new Date().toISOString(),
-        })
-      : currentStatusArray.length && currentStatusArray.pop();
-    await BiodataRequestStorage.updateStatusBiodataRequestById(
-      requestId,
-      currentStatusArray
-    );
-    fetchRequests();
+      direction === MOVE_FORWARD
+        ? currentStatusArray.push({
+            id: latestStatusId + 1,
+            created: new Date().toISOString(),
+          })
+        : currentStatusArray.length && currentStatusArray.pop();
+      await BiodataRequestStorage.updateStatusBiodataRequestById(
+        requestId,
+        currentStatusArray
+      );
+      fetchRequests();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async (id) => {
-    await BiodataRequestStorage.deleteBiodataRequestById(id);
-    fetchRequests();
+    try {
+      setIsLoading(true);
+      await BiodataRequestStorage.deleteBiodataRequestById(id);
+      fetchRequests();
+    } catch (error) {
+      console.error("Error deleting request:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

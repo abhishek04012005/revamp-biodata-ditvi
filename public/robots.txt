@@ -32,7 +32,7 @@ Homepage navmenu to fixed || Done
 Hindi Implementation MasterBiodata || Partial
 Loader || Done
 Add Popup when save the font size 
-Flow Type Color 
+Flow Type Color || Done
 Testing :)
 
 
