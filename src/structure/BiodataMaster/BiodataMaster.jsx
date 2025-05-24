@@ -8,18 +8,6 @@ import { getLatestStatusId } from "../../utils/StatusHelper";
 import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 
-import BackgroundBiodata1111 from "../../assets/background/1111.svg";
-import BackgroundBiodata1112 from "../../assets/background/1112.svg";
-import BackgroundBiodata1113 from "../../assets/background/1113.svg";
-import BackgroundBiodata1114 from "../../assets/background/1111.svg";
-import BackgroundBiodata1115 from "../../assets/background/1115.svg";
-import BackgroundBiodata1116 from "../../assets/background/1116.svg";
-import BackgroundBiodata1117 from "../../assets/background/1117.svg";
-import BackgroundBiodata1118 from "../../assets/background/1118.svg";
-import BackgroundBiodata1119 from "../../assets/background/1119.svg";
-import BackgroundBiodata1120 from "../../assets/background/1120.svg";
-import BackgroundBiodata1121 from "../../assets/background/1121.svg";
-
 import {
   Work,
   School,
@@ -27,12 +15,14 @@ import {
   ContactPhone,
   FormatSize,
   Palette,
+  Settings,
   ContentCopy,
   Check,
 } from "@mui/icons-material";
 import DEFAULT_STYLES from "../../json/Styles";
 import { ICON_MAPPING } from "../../json/createBiodata";
 import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
+import  {BiodataBackgrounds, getBiodataBackgroundImage } from "../../json/BiodataBackground";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
@@ -46,6 +36,9 @@ const BiodataMaster = () => {
   const [copied, setCopied] = useState(false);
   const [styles, setStyles] = useState(DEFAULT_STYLES);
   const [modelDetails, setModelDetails] = useState(null);
+  const [selectedBackground, setSelectedBackground] = useState("1111")
+
+
 
   useEffect(() => {
     fetchRequestData();
@@ -74,6 +67,7 @@ const BiodataMaster = () => {
 
         setRequestNumber(response.request_number);
         setModelDetails(response.model_details);
+        setSelectedBackground(response.model_details.modelNumber)
         setFormData(initialFormData);
         setOriginalData(initialFormData);
         setStyles(response.style_settings || DEFAULT_STYLES);
@@ -120,12 +114,15 @@ const BiodataMaster = () => {
   };
 
   const handlePrint = (withWatermark = false) => {
+    // Store current page styles
     const originalContent = document.body.innerHTML;
 
+    // Get only the biodata container content
     const biodataContent = document.querySelector(
       ".biodata-master-a4-container"
     ).innerHTML;
 
+    // Create print-specific styles with theme colors
     const printStyles = `
     
          <script>
@@ -151,7 +148,7 @@ const BiodataMaster = () => {
                 background-position: center;
                 background-repeat: no-repeat;
                 padding: 0;
-                background-image: url("${selectedBackground}");
+                background-image: url("${getBiodataBackgroundImage(selectedBackground)}");
             }
 
             /* Theme-specific styles */
@@ -329,9 +326,7 @@ const BiodataMaster = () => {
             )}
           </div>
           <div className="biodata-master-biodata-page">
-
             {/* Apply dynamic styles to elements */}
-            
             <style>
               {`
 
@@ -385,20 +380,17 @@ const BiodataMaster = () => {
             </style>
 
             {/* Existing biodata content */}
-
             <div
               className="biodata-master-a4-container"
               style={{
-                backgroundImage: `url(${selectedBackground})`,
+                backgroundImage: `url(${getBiodataBackgroundImage(selectedBackground)})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
               }}
             >
               <div className="biodata-master-biodata-content">
-
                 {/* Personal Section */}
-
                 <div className="biodata-master-personal-section">
                   <div className="biodata-master-photo-section">
                     <div className="biodata-master-photo-frame">
@@ -435,7 +427,6 @@ const BiodataMaster = () => {
                 </div>
 
                 {/* Professional/Examination Section */}
-
                 {formData?.modelDetails?.type === "Student" ? (
                   <div className="biodata-master-section examination-table">
                     <div className="biodata-master-section-title">
@@ -491,7 +482,6 @@ const BiodataMaster = () => {
                 )}
 
                 {/* Education Details */}
-
                 <div className="biodata-master-section education-section">
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
@@ -522,7 +512,6 @@ const BiodataMaster = () => {
                 </div>
 
                 {/* Family Section */}
-
                 <div className="biodata-master-section family-section">
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
@@ -538,9 +527,7 @@ const BiodataMaster = () => {
                         <th>Occupation</th>
                         <th>Married</th>
                       </tr>
-
                       {/* Father's Details */}
-
                       <tr>
                         <td>{formData?.familyDetails?.father?.label}</td>
                         <td>
@@ -553,9 +540,7 @@ const BiodataMaster = () => {
                         </td>
                         <td>-</td>
                       </tr>
-
                       {/* Mother's Details */}
-
                       <tr>
                         <td>{formData?.familyDetails?.mother?.label}</td>
                         <td>
@@ -568,9 +553,7 @@ const BiodataMaster = () => {
                         </td>
                         <td>-</td>
                       </tr>
-
                       {/* Brothers Details in one row */}
-
                       {formData?.familyDetails?.brothers?.value?.length > 0 && (
                         <tr>
                           <td>{formData?.familyDetails?.brothers?.label}</td>
@@ -624,9 +607,7 @@ const BiodataMaster = () => {
                           </td>
                         </tr>
                       )}
-
                       {/* Sisters Details in one row */}
-
                       {formData?.familyDetails?.sisters?.value?.length > 0 && (
                         <tr>
                           <td>{formData?.familyDetails?.sisters?.label}</td>
@@ -685,7 +666,6 @@ const BiodataMaster = () => {
                 </div>
 
                 {/* Contact Section */}
-
                 <div className="biodata-master-section contact-details">
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
@@ -719,7 +699,7 @@ const BiodataMaster = () => {
           </div>
 
           <div className="style-controls-sidebar">
-            <div className="control-section">
+             <div className="control-section">
               <h4 className="control-title">
                 <span className="control-icon">
                   <Palette />
@@ -730,22 +710,24 @@ const BiodataMaster = () => {
                 <div className="control-item background-selector">
                   <select
                     value={selectedBackground}
-                    onChange={handleBackgroundChange}
+                    onChange={(event) => {
+                      console.log("Selected background:", event.target.value);
+                      setSelectedBackground(event.target.value);
+                    }}
                     className="background-select"
                   >
-                    {backgroundOptions.map((bg) => (
-                      <option key={bg.id} value={bg.image}>
+                    {Object.entries(BiodataBackgrounds).map(([modelNumber, bg]) => (
+                      <option key={modelNumber} value={modelNumber}>
                         {bg.name}
                       </option>
                     ))}
                   </select>
                   <div className="background-preview">
-                    <img src={selectedBackground} alt="Selected background" />
+                    <img src={getBiodataBackgroundImage(selectedBackground)} alt="Selected background" />
                   </div>
                 </div>
               </div>
             </div>
-
             <div className="control-section">
               <div className="control-section print-controls">
                 <h4 className="control-title">
