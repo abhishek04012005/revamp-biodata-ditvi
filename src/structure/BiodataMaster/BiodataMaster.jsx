@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./BiodataMaster.css";
-import BackgroundBiodata1111 from "../../assets/background/1111.svg";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
 import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
 import WatermarkLogo from "../../assets/watermark/logo.png";
 import { getLatestStatusId } from "../../utils/StatusHelper";
 import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
+
+import BackgroundBiodata1111 from "../../assets/background/1111.svg";
+import BackgroundBiodata1112 from "../../assets/background/1112.svg";
+import BackgroundBiodata1113 from "../../assets/background/1113.svg";
+import BackgroundBiodata1114 from "../../assets/background/1111.svg";
+import BackgroundBiodata1115 from "../../assets/background/1115.svg";
+import BackgroundBiodata1116 from "../../assets/background/1116.svg";
+import BackgroundBiodata1117 from "../../assets/background/1117.svg";
+import BackgroundBiodata1118 from "../../assets/background/1118.svg";
+import BackgroundBiodata1119 from "../../assets/background/1119.svg";
+import BackgroundBiodata1120 from "../../assets/background/1120.svg";
+import BackgroundBiodata1121 from "../../assets/background/1121.svg";
 
 import {
   Work,
@@ -16,7 +27,6 @@ import {
   ContactPhone,
   FormatSize,
   Palette,
-  Settings,
   ContentCopy,
   Check,
 } from "@mui/icons-material";
@@ -36,7 +46,6 @@ const BiodataMaster = () => {
   const [copied, setCopied] = useState(false);
   const [styles, setStyles] = useState(DEFAULT_STYLES);
   const [modelDetails, setModelDetails] = useState(null);
-
 
   useEffect(() => {
     fetchRequestData();
@@ -111,15 +120,12 @@ const BiodataMaster = () => {
   };
 
   const handlePrint = (withWatermark = false) => {
-    // Store current page styles
     const originalContent = document.body.innerHTML;
 
-    // Get only the biodata container content
     const biodataContent = document.querySelector(
       ".biodata-master-a4-container"
     ).innerHTML;
 
-    // Create print-specific styles with theme colors
     const printStyles = `
     
          <script>
@@ -145,7 +151,7 @@ const BiodataMaster = () => {
                 background-position: center;
                 background-repeat: no-repeat;
                 padding: 0;
-                background-image: url("${BackgroundBiodata1111}");
+                background-image: url("${selectedBackground}");
             }
 
             /* Theme-specific styles */
@@ -323,7 +329,9 @@ const BiodataMaster = () => {
             )}
           </div>
           <div className="biodata-master-biodata-page">
+
             {/* Apply dynamic styles to elements */}
+            
             <style>
               {`
 
@@ -377,17 +385,20 @@ const BiodataMaster = () => {
             </style>
 
             {/* Existing biodata content */}
+
             <div
               className="biodata-master-a4-container"
               style={{
-                backgroundImage: `url(${BackgroundBiodata1111})`,
+                backgroundImage: `url(${selectedBackground})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
               }}
             >
               <div className="biodata-master-biodata-content">
+
                 {/* Personal Section */}
+
                 <div className="biodata-master-personal-section">
                   <div className="biodata-master-photo-section">
                     <div className="biodata-master-photo-frame">
@@ -424,6 +435,7 @@ const BiodataMaster = () => {
                 </div>
 
                 {/* Professional/Examination Section */}
+
                 {formData?.modelDetails?.type === "Student" ? (
                   <div className="biodata-master-section examination-table">
                     <div className="biodata-master-section-title">
@@ -479,6 +491,7 @@ const BiodataMaster = () => {
                 )}
 
                 {/* Education Details */}
+
                 <div className="biodata-master-section education-section">
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
@@ -509,6 +522,7 @@ const BiodataMaster = () => {
                 </div>
 
                 {/* Family Section */}
+
                 <div className="biodata-master-section family-section">
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
@@ -524,7 +538,9 @@ const BiodataMaster = () => {
                         <th>Occupation</th>
                         <th>Married</th>
                       </tr>
+
                       {/* Father's Details */}
+
                       <tr>
                         <td>{formData?.familyDetails?.father?.label}</td>
                         <td>
@@ -537,7 +553,9 @@ const BiodataMaster = () => {
                         </td>
                         <td>-</td>
                       </tr>
+
                       {/* Mother's Details */}
+
                       <tr>
                         <td>{formData?.familyDetails?.mother?.label}</td>
                         <td>
@@ -550,7 +568,9 @@ const BiodataMaster = () => {
                         </td>
                         <td>-</td>
                       </tr>
+
                       {/* Brothers Details in one row */}
+
                       {formData?.familyDetails?.brothers?.value?.length > 0 && (
                         <tr>
                           <td>{formData?.familyDetails?.brothers?.label}</td>
@@ -604,7 +624,9 @@ const BiodataMaster = () => {
                           </td>
                         </tr>
                       )}
+
                       {/* Sisters Details in one row */}
+
                       {formData?.familyDetails?.sisters?.value?.length > 0 && (
                         <tr>
                           <td>{formData?.familyDetails?.sisters?.label}</td>
@@ -663,6 +685,7 @@ const BiodataMaster = () => {
                 </div>
 
                 {/* Contact Section */}
+
                 <div className="biodata-master-section contact-details">
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
@@ -696,6 +719,33 @@ const BiodataMaster = () => {
           </div>
 
           <div className="style-controls-sidebar">
+            <div className="control-section">
+              <h4 className="control-title">
+                <span className="control-icon">
+                  <Palette />
+                </span>
+                Background Theme
+              </h4>
+              <div className="control-group">
+                <div className="control-item background-selector">
+                  <select
+                    value={selectedBackground}
+                    onChange={handleBackgroundChange}
+                    className="background-select"
+                  >
+                    {backgroundOptions.map((bg) => (
+                      <option key={bg.id} value={bg.image}>
+                        {bg.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="background-preview">
+                    <img src={selectedBackground} alt="Selected background" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="control-section">
               <div className="control-section print-controls">
                 <h4 className="control-title">
