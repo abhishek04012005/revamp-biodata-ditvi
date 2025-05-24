@@ -574,7 +574,3 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-
-.whatsapp-message-card + .whatsapp-message-card {
-  margin-top: 1rem;
-}

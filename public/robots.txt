@@ -19,10 +19,10 @@ npm install slick-carousel
 
 Drop down to biodata change theme
 Update list image of biodata section
-Message section on BiodataMaster
+Message section on BiodataMaster || Partial Done
 Font and row size save to db
 Payment Gateway Integration
-Track Status for mobile view
+Track Status for mobile view || Done
 Write Standard message for whatsapp
 Text verification and improvement
 Store All Key In Env File
@@ -30,4 +30,7 @@ Title Helmet
 SEO optimization and google analytics
 Homepage navmenu to fixed || Done
 Hindi Implementation MasterBiodata
+Loader 
 Testing :)
+
+

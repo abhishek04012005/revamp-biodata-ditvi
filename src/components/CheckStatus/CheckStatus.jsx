@@ -176,6 +176,9 @@ const CheckStatus = () => {
       />
 
       <div className="status-card">
+
+  
+
         <div className="status-header">
           <div className="header-content">
             <div className="header-left">
