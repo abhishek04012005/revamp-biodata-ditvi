@@ -12,6 +12,7 @@ import HeaderSection from '../../structure/HeaderSection/HeaderSection';
 import { UploadFile } from '../../supabase/UploadFile';
 import { BiodataRequestStorage } from '../../supabase/BiodataRequest';
 import StorageBucket from '../../constants/StorageBucket';
+import Loader from '../../structure/Loader/Loader';
 
 const UploadBiodata = () => {
     const location = useLocation();
@@ -25,6 +26,7 @@ const UploadBiodata = () => {
     const [error, setError] = useState('');
     const imageInputRef = useRef(null);
     const biodataInputRef = useRef(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
@@ -96,6 +98,7 @@ const UploadBiodata = () => {
         }
 
         try {
+            setIsLoading(true);
             const profileUrl = await UploadFile(imageFile, `${requestNumber}_profile_${new Date().getTime()}`, StorageBucket.UPLOAD_BIODATA);
             const biodataUrl = await UploadFile(biodataFile, `${requestNumber}_biodata`, StorageBucket.UPLOAD_BIODATA);
             await BiodataRequestStorage.saveBiodataRequestFromUploadBiodata({
@@ -114,6 +117,10 @@ const UploadBiodata = () => {
         catch (error) {
             console.error('Error submitting form:', error);
         }
+        finally {
+            setIsLoading(false);
+        }
+
     };
 
     return (
@@ -267,6 +274,7 @@ const UploadBiodata = () => {
                     </div>
                 </div>
             </Container>
+            {isLoading && <Loader/>}
         </section>
     );
 };
