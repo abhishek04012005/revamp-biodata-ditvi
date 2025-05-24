@@ -19,7 +19,7 @@ import {
   getStatusStyle,
 } from "../../../utils/StatusHelper";
 import { MOVE_BACKWARD, MOVE_FORWARD } from "../../../constants/StatusSteps";
-import { getFlowTypeById } from "../../../constants/FlowType";
+import { getFlowTypeById, getFlowTypeStyle } from "../../../constants/FlowType";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
 import Loader from "../../../structure/Loader/Loader";
 
@@ -90,30 +90,44 @@ const AdminDashboard = () => {
   };
 
   const handleStatusChange = async (direction, requestId) => {
-    const request = requests.find((r) => r.id === requestId);
-    if (!request) return;
+    try {
+        setIsLoading(true);
+      const request = requests.find((r) => r.id === requestId);
+      if (!request) return;
 
-    const currentStatusArray = request.status || [];
-    const latestStatusId = getLatestStatusId(currentStatusArray);
+      const currentStatusArray = request.status || [];
+      const latestStatusId = getLatestStatusId(currentStatusArray);
 
-    if (latestStatusId === 0) moveToProduction(request);
+      if (latestStatusId === 0) moveToProduction(request);
 
-    direction === MOVE_FORWARD
-      ? currentStatusArray.push({
-          id: latestStatusId + 1,
-          created: new Date().toISOString(),
-        })
-      : currentStatusArray.length && currentStatusArray.pop();
-    await BiodataRequestStorage.updateStatusBiodataRequestById(
-      requestId,
-      currentStatusArray
-    );
-    fetchRequests();
+      direction === MOVE_FORWARD
+        ? currentStatusArray.push({
+            id: latestStatusId + 1,
+            created: new Date().toISOString(),
+          })
+        : currentStatusArray.length && currentStatusArray.pop();
+      await BiodataRequestStorage.updateStatusBiodataRequestById(
+        requestId,
+        currentStatusArray
+      );
+      fetchRequests();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async (id) => {
-    await BiodataRequestStorage.deleteBiodataRequestById(id);
-    fetchRequests();
+    try {
+      setIsLoading(true);
+      await BiodataRequestStorage.deleteBiodataRequestById(id);
+      fetchRequests();
+    } catch (error) {
+      console.error("Error deleting request:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -166,7 +180,11 @@ const AdminDashboard = () => {
                   {requests.map((request) => (
                     <tr key={request.id}>
                       <td>{request.request_number}</td>
-                      <td>{getFlowTypeById(request.flow_type)}</td>
+                      <td>
+                        <span style={getFlowTypeStyle(request.flow_type)}>
+                          {getFlowTypeById(request.flow_type)}
+                        </span>
+                      </td>
                       <td>{request.user_details?.name}</td>
                       <td>{request.user_details?.mobileNumber}</td>
                       <td>{formatDate(request.created_at)}</td>

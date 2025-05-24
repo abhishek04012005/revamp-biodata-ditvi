@@ -10,6 +10,7 @@ import {
 import "./ContactUsDashboard.css";
 import { ContactUsStorage } from "../../../supabase/ContactUs";
 import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
+import Loader from "../../../structure/Loader/Loader";
 
 const ContactUsDashboard = () => {
   const [contacts, setContacts] = useState([]);
@@ -41,27 +42,21 @@ const ContactUsDashboard = () => {
     }
   };
 
-  // const handleDelete = async (id) => {
-  //   try {
-  //     if (window.confirm("Are you sure you want to delete this contact?")) {
-  //       await ContactUsStorage.deleteContactUsById(id);
-  //       setContacts(contacts.filter((contact) => contact.id !== id));
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
-
   const handleDelete = async () => {
-  try {
-    await ContactUsStorage.deleteContactUsById(deleteModal.contactId);
-    setContacts(contacts.filter((contact) => contact.id !== deleteModal.contactId));
-    setDeleteModal({ show: false, contactId: null });
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
+    try {
+      setIsLoading(true);
+      await ContactUsStorage.deleteContactUsById(deleteModal.contactId);
+      setContacts(
+        contacts.filter((contact) => contact.id !== deleteModal.contactId)
+      );
+      setDeleteModal({ show: false, contactId: null });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
 
   const showDeleteModal = (id) => {
     setDeleteModal({ show: true, contactId: id });
@@ -78,6 +73,7 @@ const ContactUsDashboard = () => {
   };
 
   const handleViewDetails = (contact) => {
+    
     setSelectedContact(contact);
   };
 
@@ -216,74 +212,68 @@ const ContactUsDashboard = () => {
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Loading contacts...</p>
-        </div>
-      ) : (
-        <div className="contacts-table-container">
-          <table className="contacts-table">
-            <thead>
-              <tr>
-                <th onClick={() => handleSort("name")}>
-                  Number <FilterList />
-                </th>
-                <th onClick={() => handleSort("name")}>
-                  Name <FilterList />
-                </th>
-                <th onClick={() => handleSort("email")}>
-                  Email <FilterList />
-                </th>
-                <th onClick={() => handleSort("phone")}>
-                  Mobile <FilterList />
-                </th>
-                <th>Message</th>
-                <th onClick={() => handleSort("created_at")}>
-                  Date <FilterList />
-                </th>
-                <th>Actions</th>
+      <div className="contacts-table-container">
+        <table className="contacts-table">
+          <thead>
+            <tr>
+              <th onClick={() => handleSort("name")}>
+                Number <FilterList />
+              </th>
+              <th onClick={() => handleSort("name")}>
+                Name <FilterList />
+              </th>
+              <th onClick={() => handleSort("email")}>
+                Email <FilterList />
+              </th>
+              <th onClick={() => handleSort("phone")}>
+                Mobile <FilterList />
+              </th>
+              <th>Message</th>
+              <th onClick={() => handleSort("created_at")}>
+                Date <FilterList />
+              </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredContacts.map((contact) => (
+              <tr key={contact.id} className="contact-row">
+                <td>{contact.number}</td>
+                <td>{contact.name}</td>
+                <td>{contact.email}</td>
+                <td>{contact.mobile}</td>
+                <td>
+                  <div className="message-cell">{contact.message}</div>
+                </td>
+                <td>
+                  {new Date(contact.created_at).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </td>
+                <td className="action-buttons">
+                  <button
+                    className="view-btn"
+                    onClick={() => handleViewDetails(contact)}
+                    title="View Details"
+                  >
+                    <Visibility />
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => showDeleteModal(contact.id)}
+                    title="Delete"
+                  >
+                    <Delete />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredContacts.map((contact) => (
-                <tr key={contact.id} className="contact-row">
-                  <td>{contact.number}</td>
-                  <td>{contact.name}</td>
-                  <td>{contact.email}</td>
-                  <td>{contact.mobile}</td>
-                  <td>
-                    <div className="message-cell">{contact.message}</div>
-                  </td>
-                  <td>
-                    {new Date(contact.created_at).toLocaleDateString("en-US", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </td>
-                  <td className="action-buttons">
-                    <button
-                      className="view-btn"
-                      onClick={() => handleViewDetails(contact)}
-                      title="View Details"
-                    >
-                      <Visibility />
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => showDeleteModal(contact.id)}
-                      title="Delete"
-                    >
-                      <Delete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {isLoading && <Loader />}
     </div>
   );
 };
