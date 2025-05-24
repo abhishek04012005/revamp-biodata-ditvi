@@ -266,6 +266,18 @@ const BiodataMaster = () => {
     }, 500);
   };
 
+  const saveStyleSettings = async (styleSettings) => {
+    try {
+      const updatedData = ProductionRequestStorage.updateProductionRequestById(
+        requestId,
+        {styleSettings}
+      );
+      console.log("Style settings saved successfully:", updatedData);
+    } catch (error) {
+      console.error("Error saving style settings:", error);
+    }
+  };
+
   return (
     <>
       <div className="biodata-master">
@@ -682,6 +694,18 @@ const BiodataMaster = () => {
                       
                     </span>
                   </button>
+
+                <button
+                    className="print-btn original"
+                    onClick={() => saveStyleSettings(false)}
+                  >
+                    <span className="print-icon">📃</span>
+                    <span className="print-text">
+                      <span className="print-label">Save Style Settings</span>
+                      
+                    </span>
+                  </button>
+
                 </div>
               </div>
               <div className="control-section">
