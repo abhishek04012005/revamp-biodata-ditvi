@@ -7,6 +7,7 @@ import { Box, TextField, Button, CircularProgress } from "@mui/material";
 import { Email, Phone, Person, Message } from "@mui/icons-material";
 import ContactUsImg from "../../assets/contactus.svg";
 import { ContactUsStorage } from "../../supabase/ContactUs";
+import Loader from "../../structure/Loader/Loader";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,6 @@ const ContactUs = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //   const handleSubmit = async (e) => {
   //     e.preventDefault();
   //     setLoading(true);
 
@@ -93,6 +93,7 @@ const ContactUs = () => {
 
   return (
     <>
+      {setLoading && <Loader />}
       <div className="contact-us">
         <section className="contact">
           <div className="contact-background">
@@ -186,14 +187,6 @@ const ContactUs = () => {
                       className="contact-submit-btn"
                       disabled={loading}
                     >
-                      {loading ? (
-                        <CircularProgress
-                          size={24}
-                          className="contact-loader"
-                        />
-                      ) : (
-                        "Send Message"
-                      )}
                       <div className="contact-btn-shine"></div>
                     </Button>
                   </Box>
@@ -210,76 +203,90 @@ const ContactUs = () => {
         </section>
       </div>
 
-   {notification.show && (
-   <div 
-    className="notification-overlay"
-    onClick={() => setNotification({ show: false, message: "", type: "success" })}
-  >
-    <div 
-      className={`notification-popup ${notification.type}`}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        className="notification-close-btn"
-        onClick={() => setNotification({ show: false, message: "", type: "success" })}
-        aria-label="Close notification"
-      >
-        <svg viewBox="0 0 24 24" width="18" height="18">
-          <path
-            d="M18 6L6 18M6 6l12 12"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </button>
-      <div className="notification-content">
-        <div className={`notification-icon-wrapper ${notification.type}`}>
-          {notification.type === "success" ? (
-            <div className="notification-icon">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" className="icon-circle"/>
-                <path 
-                  d="M8 12l3 3 5-5" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round"
-                  className="icon-path"
-                />
-              </svg>
-            </div>
-          ) : (
-            <div className="notification-icon">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" className="icon-circle"/>
-                <path 
-                  d="M15 9l-6 6M9 9l6 6" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round"
-                  className="icon-path"
-                />
-              </svg>
-            </div>
-          )}
-        </div>
-        <div className="notification-text">
-          <h3 className="notification-title">
-            {notification.type === "success" ? "Thank You!" : "Oops!"}
-          </h3>
-          <p className="notification-message">{notification.message}</p>
-        </div>
-        <button
-          className="notification-close-btn"
-          onClick={() => setNotification({ show: false, message: "", type: "success" })}
-          aria-label="Close notification"
+      {notification.show && (
+        <div
+          className="notification-overlay"
+          onClick={() =>
+            setNotification({ show: false, message: "", type: "success" })
+          }
         >
-          <span>×</span>
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+          <div
+            className={`notification-popup ${notification.type}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="notification-close-btn"
+              onClick={() =>
+                setNotification({ show: false, message: "", type: "success" })
+              }
+              aria-label="Close notification"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+            <div className="notification-content">
+              <div className={`notification-icon-wrapper ${notification.type}`}>
+                {notification.type === "success" ? (
+                  <div className="notification-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="12" cy="12" r="10" className="icon-circle" />
+                      <path
+                        d="M8 12l3 3 5-5"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        className="icon-path"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="notification-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="12" cy="12" r="10" className="icon-circle" />
+                      <path
+                        d="M15 9l-6 6M9 9l6 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        className="icon-path"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <div className="notification-text">
+                <h3 className="notification-title">
+                  {notification.type === "success" ? "Thank You!" : "Oops!"}
+                </h3>
+                <p className="notification-message">{notification.message}</p>
+              </div>
+              <button
+                className="notification-close-btn"
+                onClick={() =>
+                  setNotification({ show: false, message: "", type: "success" })
+                }
+                aria-label="Close notification"
+              >
+                <span>×</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
