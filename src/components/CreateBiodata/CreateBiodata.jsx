@@ -1,4 +1,3 @@
-/* eslint-disable default-case */
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../structure/Loader/Loader";
@@ -10,6 +9,7 @@ import {
   createEmptyPerson,
   FamilyData,
   ExaminationData,
+  ContactData,
 } from "../../json/createBiodata";
 
 import {
@@ -19,6 +19,7 @@ import {
   FamilyDataHindi,
   ExaminationDataHindi,
   createEmptyPersonHindi,
+  ContactDataHindi
 } from "../../json/CreateBiodataHindi";
 
 
@@ -46,6 +47,7 @@ const CreateBiodata = () => {
         education: EducationDataHindi,
         family: FamilyDataHindi,
         examination: ExaminationDataHindi,
+        contact: ContactDataHindi,
         steps: [
           "प्रोफाइल छवि",
           "व्यक्तिगत जानकारी",
@@ -56,10 +58,6 @@ const CreateBiodata = () => {
           "पूर्वावलोकन",
         ],
         placeholders: {
-          address: "मकान नंबर 341, स्कीम नंबर 94सी, रिंग रोड, इंदौर, मध्य प्रदेश",
-          mobile: "9263767441",
-          addressLabel: "पता",
-          mobileLabel: "मोबाइल नंबर",
           addEducation: "शिक्षा जोड़ें",
           remaining: "शेष",
           addBrother: "भाई जोड़ें",
@@ -80,6 +78,7 @@ const CreateBiodata = () => {
       education: EducationData,
       family: FamilyData,
       examination: ExaminationData,
+      contact: ContactData,
       steps: [
         "Profile Image",
         "Personal",
@@ -90,10 +89,6 @@ const CreateBiodata = () => {
         "Preview",
       ],
       placeholders: {
-        address: "House No. 341, 2 Scheme No 94C, Ring Road, Indore",
-        mobile: "9263767441",
-        addressLabel: "Address",
-        mobileLabel: "Mobile No",
         addEducation: "Add Education",
         remaining: "remaining",
         addBrother: "Add Brother",
@@ -136,7 +131,9 @@ const CreateBiodata = () => {
       })),
     ],
     familyDetails: langData.family,
-    contactDetails: {},
+    contactDetails: langData.contact.map(
+      ({ label, value, placeholder }) => ({ label, value, placeholder })
+    ),
   });
 
   const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB in bytes
@@ -704,46 +701,46 @@ const CreateBiodata = () => {
           </>
         );
       case 5: //Contact Details
-        return (
-          <div className="create-biodata-section">
-            <h2>Contact Details</h2>
-            <div className="create-biodata-label-input">
-              <label className="create-biodata-label">{langData.placeholders.addressLabel}:</label>
-              <textarea
-                placeholder={langData.placeholders.address}
-                value={formData.contactDetails.address}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    contactDetails: {
-                      ...formData.contactDetails,
-                      address: e.target.value,
-                    },
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="create-biodata-label-input">
-              <label className="create-biodata-label">{langData.placeholders.mobileLabel}:</label>
-              <input
-                type="text"
-                placeholder="9263767441"
-                value={formData.contactDetails.mobile}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    contactDetails: {
-                      ...formData.contactDetails,
-                      mobile: e.target.value,
-                    },
-                  })
-                }
-                required
-              />
-            </div>
-          </div>
-        );
+            return (
+              <div className="create-biodata-section">
+                <h2>Contact Details</h2>
+                {formData.contactDetails.map((field, index) => (
+                  <div key={index} className="create-biodata-label-input">
+                    <label className="create-biodata-label">{field.label}:</label>
+                    {field.label.toLowerCase().includes('address') ? (
+                      <textarea
+                        placeholder={field.placeholder}
+                        value={field.value}
+                        onChange={(e) => {
+                          const newContactDetails = [...formData.contactDetails];
+                          newContactDetails[index].value = e.target.value;
+                          setFormData({
+                            ...formData,
+                            contactDetails: newContactDetails,
+                          });
+                        }}
+                        required
+                      />
+                    ) : (
+                      <input
+                        type="text"
+                        placeholder={field.placeholder}
+                        value={field.value}
+                        onChange={(e) => {
+                          const newContactDetails = [...formData.contactDetails];
+                          newContactDetails[index].value = e.target.value;
+                          setFormData({
+                            ...formData,
+                            contactDetails: newContactDetails,
+                          });
+                        }}
+                        required
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
       case 6: // Preview Section
         return (
           <div className="create-biodata-preview">
@@ -878,20 +875,20 @@ const CreateBiodata = () => {
               <section className="preview-group">
                 <h3>Contact Details</h3>
                 <div className="preview-details">
-                  <p>
-                    <strong>{langData.placeholders.addressLabel}:</strong>{" "}
-                    {formData.contactDetails?.address || "Not Provided"}
-                  </p>
-                  <p>
-                    <strong>{langData.placeholders.mobileLabel}:</strong>{" "}
-                    {formData.contactDetails?.mobile || "Not Provided"}
-                  </p>
+                  {formData.contactDetails.map((field, index) => (
+                    <p key={index}>
+                      <strong>{field.label}:</strong>{" "}
+                      {field.value || "Not Provided"}
+                    </p>
+                  ))}
                 </div>
               </section>
             </div>
           </div>
         );
-    }
+      default:
+        return <div className="create-biodata-step-content">Step not found</div>;
+      }
   };
 
   return (
