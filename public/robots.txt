@@ -21,11 +21,11 @@ Drop down to biodata change theme || Done
 Update list image of biodata section
 Message section on BiodataMaster || Partial Done
 Font and row size save to db || Done
-Payment Gateway Integration
+Payment Gateway Integration || Done
 Track Status for mobile view || Done
-Write Standard message for whatsapp
+Write Standard message for whatsapp 
 Text verification and improvement
-Store All Key In Env File
+Store All Key In Env File || Done
 Title Helmet
 SEO optimization and google analytics
 Homepage navmenu to fixed || Done

@@ -14,7 +14,7 @@
 }
 
 .success-header {
-  background: #4CAF50;
+  background: var(--primary-color);
   color: white;
   padding: 2rem;
   text-align: center;
@@ -23,6 +23,7 @@
 .success-icon {
   font-size: 4rem !important;
   margin-bottom: 1rem;
+  color: white;
 }
 
 .success-header h2 {
@@ -61,7 +62,7 @@
 }
 
 .detail-icon {
-  color: #4CAF50;
+  color:var(--primary-color);
   font-size: 1.5rem !important;
 }
 
@@ -83,7 +84,7 @@
 }
 
 .detail-content .amount {
-  color: #4CAF50;
+  color: var(--primary-color);
   font-size: 1.5rem;
   font-weight: 600;
 }
@@ -98,7 +99,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: #4CAF50;
+  background: var(--primary-color);
   color: white;
   border: none;
   border-radius: 8px;
@@ -108,7 +109,7 @@
 }
 
 .download-btn:hover {
-  background: #43A047;
+  background: var(--primary-color);
 }
 
 .next-steps {
@@ -155,7 +156,7 @@
 }
 
 .step-icon {
-  color: #4CAF50;
+  color: var(--primary-color);
 }
 
 /* Loading State */
@@ -170,7 +171,7 @@
 
 .loader-icon {
   font-size: 3rem !important;
-  color: #4CAF50;
+  color: var(--primary-color);
   animation: spin 1s linear infinite;
 }
 

@@ -12,6 +12,7 @@ import './PaymentSuccess.css';
 import HeaderSection from '../../../structure/HeaderSection/HeaderSection';
 import { PaymentRequestStorage } from '../../../supabase/PaymentRequest';
 import formatDate from '../../../utils/DateHelper';
+import Loader from '../../../structure/Loader/Loader';
 
 const PaymentSuccess = () => {
   const { requestNumber } = useParams();
@@ -41,12 +42,7 @@ const PaymentSuccess = () => {
 
   if (loading) {
     return (
-      <div className="payment-success-container">
-        <div className="payment-success-loader">
-          <Timer className="loader-icon spin" />
-          <p>Loading payment details...</p>
-        </div>
-      </div>
+    <Loader/>
     );
   }
 
