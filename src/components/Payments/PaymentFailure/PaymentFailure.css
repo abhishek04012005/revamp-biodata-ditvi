@@ -1,0 +1,160 @@
+.payment-failure {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.failure-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  animation: slideIn 0.3s ease;
+}
+
+.failure-icon-container {
+  width: 80px;
+  height: 80px;
+  background: #fee2e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.failure-icon {
+  font-size: 40px !important;
+  color: #dc2626;
+  animation: pulse 2s infinite;
+}
+
+.failure-content h2 {
+  color: #dc2626;
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+}
+
+.failure-message {
+  color: #4b5563;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.request-number {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+  padding: 8px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.failure-details {
+  text-align: left;
+  margin: 24px 0;
+  padding: 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.failure-details h3 {
+  color: #374151;
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+}
+
+.failure-details ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #4b5563;
+}
+
+.failure-details li {
+  margin-bottom: 8px;
+}
+
+.failure-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.retry-payment-btn,
+.check-status-btn,
+.home-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.retry-payment-btn {
+  background: var(--primary-color);
+  color: white;
+}
+
+.check-status-btn {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.home-btn {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.retry-payment-btn:hover,
+.check-status-btn:hover,
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .failure-card {
+    padding: 24px 16px;
+  }
+
+  .failure-actions {
+    flex-direction: column;
+  }
+
+  .retry-payment-btn,
+  .check-status-btn,
+  .home-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

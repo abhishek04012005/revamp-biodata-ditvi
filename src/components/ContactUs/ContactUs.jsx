@@ -28,31 +28,6 @@ const ContactUs = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //     e.preventDefault();
-  //     setLoading(true);
-
-  //     try {
-  //       const response = await ContactUsStorage.saveContactUs({
-  //         name: formData.name,
-  //         email: formData.email,
-  //         mobile: formData.number,
-  //         message: formData.message,
-  //       });
-
-  //       if (response) {
-  //         alert("Thank You! We'll get back to you soon.");
-  //         setFormData({ name: "", email: "", message: "", number: "" });
-  //       } else {
-  //         alert("There was an error submitting the form.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //       alert("There was an error submitting the form.");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -93,7 +68,6 @@ const ContactUs = () => {
 
   return (
     <>
-      {setLoading && <Loader />}
       <div className="contact-us">
         <section className="contact">
           <div className="contact-background">
@@ -187,6 +161,7 @@ const ContactUs = () => {
                       className="contact-submit-btn"
                       disabled={loading}
                     >
+                      Submit
                       <div className="contact-btn-shine"></div>
                     </Button>
                   </Box>
@@ -287,6 +262,7 @@ const ContactUs = () => {
           </div>
         </div>
       )}
+      {loading && <Loader />}
     </>
   );
 };

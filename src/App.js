@@ -32,6 +32,7 @@ import WeWork from "./components/WeWork/WeWork";
 import ContactUs from "./components/ContactUs/ContactUs";
 import Payment from "./components/Payments/Payment/Payment";
 import PaymentSuccess from "./components/Payments/PaymentSucess/PaymentSucess";
+import PaymentFailure from "./components/Payments/PaymentFailure/PaymentFailure";
 
 function App() {
   return (
@@ -83,11 +84,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Main />} />
                     <Route path="biodata" element={<AllBiodata />} />
-                    <Route
-                      path="biodata/:modelNumber"
-                      element={<BiodataDetail />}
-                    />
-
+                    <Route path="biodata/:modelNumber" element={<BiodataDetail />}/>
                     <Route path="contact" element={<ContactUs />} />
                     <Route path="how-we-work" element={<WeWork />} />
                     <Route path="whyus" element={<WhyUs />} />
@@ -98,27 +95,13 @@ function App() {
                     <Route path="choose-option" element={<ChooseOption />} />
                     <Route path="upload-biodata" element={<UploadBiodata />} />
                     <Route path="create-biodata" element={<CreateBiodata />} />
-                    <Route
-                      path="confirmation"
-                      element={<RequestConfirmation />}
-                    />
-                    <Route
-                      path="feedback/:requestNumber"
-                      element={<Feedback />}
-                    />
-                    <Route
-                      path="track-status/:requestNumber"
-                      element={<CheckStatus />}
-                    />
-                    <Route 
-                      path="payment/:requestNumber" 
-                      element={<Payment />} 
-                    />
-                    <Route 
-                      path="payment-success/:requestNumber" 
-                      element={<PaymentSuccess />} 
-                    />
-                  </Routes>
+                    <Route path="confirmation" element={<RequestConfirmation />}/>
+                    <Route path="feedback/:requestNumber" element={<Feedback />} />
+                    <Route path="track-status/:requestNumber" element={<CheckStatus />}/>
+                    <Route path="payment/:requestNumber" element={<Payment />} />
+                    <Route path="payment-success/:requestNumber" element={<PaymentSuccess />} />
+                    <Route path="payment/failure" element={<PaymentFailure />} />             
+                    </Routes>
                   <Footer />
                 </>
               }

@@ -31,7 +31,7 @@ SEO optimization and google analytics
 Homepage navmenu to fixed || Done
 Hindi Implementation MasterBiodata || Partial
 Loader 
-Add Popup when save the font size
+Add Popup when save the font size 
 Testing :)
 
 
