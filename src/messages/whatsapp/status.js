@@ -5,30 +5,16 @@ const WhatsAppMessageByStatus = [
             {
                 id: 'request_received',
                 title: 'Ditvi Biodata - Request Received',
-                message: `Dear *$$name$$!* 🎉
-                For your Request No: *$$requestNumber$$* and Model No: *$$modelNumber$$*
+                message: 
+                `Dear *$$name$$* 🎉
+                For your Request No: *$$requestNumber$$*.
                 Your customized & traditional Ditvi Biodata sample is ready to impress!
-                Please check the attached watermarked sample and let us know if it brightens your day!
-                Remember—you pay only when you're delighted! 💖
-                Thanks for choosing Ditvi Biodata. We're excited for you! 🌟
+                Please check the attached watermarked sample and let us know if it enhances your experience!
+                *Remember* —You pay only when you're happy! 💖
                 Check your real-time status here: $$statusLink$$
-
+                Thanks for choosing Ditvi Biodata. We're excited for you! 🌟
                 Warm wishes,
                 The Ditvi Biodata Team!`
-            },
-            {
-                id: 'request_received_hindi',
-                title: 'दित्वी बायोडाटा - अनुरोध प्राप्त',
-                message: `प्रिय *$$name$$!* 🎉
-                आपका अनुरोध संख्या: *$$requestNumber$$* और मॉडल संख्या: *$$modelNumber$$*
-                आपका कस्टमाइज्ड दित्वी बायोडाटा सैंपल तैयार है!
-                कृपया वॉटरमार्क सैंपल देखें और हमें बताएं कि यह आपको पसंद आया या नहीं!
-                याद रखें - आप केवल तभी भुगतान करें जब आप खुश हों! 💖
-                दित्वी बायोडाटा चुनने के लिए धन्यवाद। 🌟
-                यहां अपनी स्थिति देखें: $$statusLink$$
-
-                शुभकामनाएं,
-                दित्वी बायोडाटा टीम!`
             }
         ]
     },
@@ -36,17 +22,89 @@ const WhatsAppMessageByStatus = [
         status: 2,
         templates: [
             {
-                id: 'payment_pending',
-                title: 'Ditvi Biodata - Payment Pending',
-                message: `Dear *$$name$$!* 🎉
-                For your Request No: *$$requestNumber$$* and Model No: *$$modelNumber$$*
-                Your customized Ditvi Biodata is ready to impress!
-                Please check the attached watermarked sample and let us know if it brightens your day!
-                Remember—you pay only when you're delighted! 💖
-                Thanks for choosing Ditvi Biodata. We're excited for you! 🌟
+                id: 'approval_pending',
+                title: 'Ditvi Biodata - Approval Pending',
+                message: 
+                `Dear *$$name$$* 🌟
+                We hope you're doing great.
+                We haven't received your feedback on your Ditvi Biodata sample for Request No: *$$requestNumber$$* yet.
+                Have you had a chance to review the watermarked sample?
+                we can't wait to hear from you! 💫
+                *Remember* —You pay only when you're happy! 💖
                 Check your real-time status here: $$statusLink$$
-                
-                Warm wishes,    
+                Warm wishes,
+                The Ditvi Biodata Team`
+            }
+        ]
+    },
+        {
+        status: 3,
+        templates: [
+            {
+                id: 'payment_link',
+                title: 'Ditvi Biodata - Payment Link',
+                message: 
+                `Dear *$$name$$* 🎉
+                We are exicted to hear, you loved our Ditvi Biodata for Request No: *$$requestNumber$$*.💝
+                To receive your personalized biodata without watermark, please complete the payment using this secure link: $$paymentLink$$
+                *Remember* —we're just one step away from your perfect biodata! 💫
+                Warm wishes,
+                The Ditvi Biodata Team!`
+            },
+            {
+                id: 'payment_followup',
+                title: 'Ditvi Biodata - Payment Follow up',
+                message: 
+                `Dear *$$name$$* 🌟
+                We noticed that the payment for your Ditvi Biodata (Request No: *$$requestNumber$$*) is pending.
+                To receive your personalized biodata without watermark, please complete the payment here: $$paymentLink$$
+                Need assistance? We're here to help! 💝
+                Warm wishes,
+                The Ditvi Biodata Team!`
+            },
+        ]
+    },
+    {
+        status: 4,
+        templates: [
+            {
+                id: 'payment_received',
+                title: 'Ditvi Biodata - Payment Confirmation',
+                message: 
+                `Dear *$$name$$* 🎉
+                Thank you for your payment for Request No: *$$requestNumber$$*.
+                We're processing your final biodata and will share it shortly.
+                Your trust means the world to us! 💖
+                Check your real-time status here: $$statusLink$$
+                Warm wishes,
+                The Ditvi Biodata Team!`
+            },
+            {
+                id: 'share_original',
+                title: 'Ditvi Biodata - Original Biodata',
+                message: 
+                `Dear *$$name$$* 🌟
+                Your final Ditvi Biodata for Request No: *$$requestNumber$$* is ready!💖
+                We've attached your personalized biodata without watermark.
+                We hope it exceeds your expectations! ✨
+                Warm wishes,
+                The Ditvi Biodata Team!`
+            },
+        ]
+    },
+    {
+        status: 5,
+        templates: [
+            {
+                id: 'feedback_request',
+                title: 'Ditvi Biodata - Feedback Request',
+                message: 
+                `Dear *$$name$$* 💫
+                We hope you're loving your Ditvi Biodata (Request No: *$$requestNumber$$*)💖
+                Your feedback would help us serve you better. Please take a moment to share your experience.🌟
+                Please share your feedback here: $$feedbackLink$$
+                Thank you for choosing Ditvi Biodata!
+                Warm wishes,
                 The Ditvi Biodata Team!`
             }
         ]
@@ -70,10 +128,12 @@ const getWhatsappMessageByStatus = (statusId, info) => {
 
             // Define replacements
             const replacements = {
-                '\\$\\$name\\$\\$': info.name || 'User',
-                '\\$\\$requestNumber\\$\\$': info.requestNumber || 'N/A',
-                '\\$\\$modelNumber\\$\\$': info.modelNumber || 'N/A',
-                '\\$\\$statusLink\\$\\$': info.statusLink || '#'
+                '\\$\\$name\\$\\$': info.name.toString().trim() || 'User',
+                '\\$\\$requestNumber\\$\\$': info.requestNumber.toString().trim() || 'N/A',
+                '\\$\\$modelNumber\\$\\$': info.modelNumber.toString().trim() || 'N/A',
+                '\\$\\$statusLink\\$\\$': info.statusLink || '#',
+                '\\$\\$paymentLink\\$\\$': info.paymentLink || '#',
+                '\\$\\$feedbackLink\\$\\$': info.feedbackLink || '#',
             };
 
             // Replace placeholders in message
@@ -88,6 +148,7 @@ const getWhatsappMessageByStatus = (statusId, info) => {
                 .map(line => line.trim())
                 .filter(line => line)
                 .join('\n');
+
 
             return {
                 id: template.id,

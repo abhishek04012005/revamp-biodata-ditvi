@@ -290,7 +290,15 @@ const BiodataMaster = () => {
                     modelNumber: formData?.modelDetails?.modelNumber || "",
                     statusLink: `${
                       process.env.REACT_APP_STATUS_URL ||
-                      "https://ditvi.in/status/"
+                      "http://192.168.1.22:3000/track-status/"
+                    }${requestNumber}`,
+                    paymentLink: `${
+                      process.env.REACT_APP_STATUS_URL ||
+                      "http://192.168.1.22:3000/payment/"
+                    }${requestNumber}`,
+                    feedbackLink: `${
+                      process.env.REACT_APP_STATUS_URL ||
+                      "http://192.168.1.22:3000/feedback/"
                     }${requestNumber}`,
                   });
 

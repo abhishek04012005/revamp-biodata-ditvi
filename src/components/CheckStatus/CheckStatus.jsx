@@ -16,7 +16,7 @@ import {
   ArrowForward,
   ErrorOutline,
   SearchOff,
-  Home,
+  Home
 } from "@mui/icons-material";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
@@ -34,13 +34,20 @@ const CheckStatus = () => {
       id: 0,
       title: "Request Received",
       icon: <AssignmentTurnedIn />,
-      description:
-        "Your biodata request has been received and is being processed.",
+      description: "Your biodata request has been received and is being processed.",
       expectedDuration: "1-2 hours",
       color: { light: "#E3F2FD", main: "#2196F3", dark: "#1976D2" },
     },
     {
       id: 1,
+      title: "Work in Progress",
+      icon: <Schedule />,
+      description: "Our team is working on creating your biodata.",
+      expectedDuration: "24-48 hours",
+      color: { light: "#FFF3E0", main: "#FFC107", dark: "#FFA000" },
+    },
+    {
+      id: 2,
       title: "Sample Shared",
       icon: <Description />,
       description: "Sample biodata has been shared for your review.",
@@ -48,7 +55,7 @@ const CheckStatus = () => {
       color: { light: "#F3E5F5", main: "#9C27B0", dark: "#7B1FA2" },
     },
     {
-      id: 2,
+      id: 3,
       title: "User Approval",
       icon: <ThumbUpAlt />,
       description: "Waiting for your approval on the sample biodata.",
@@ -56,7 +63,7 @@ const CheckStatus = () => {
       color: { light: "#E8F5E9", main: "#4CAF50", dark: "#388E3C" },
     },
     {
-      id: 3,
+      id: 4,
       title: "Payment",
       icon: <Payment />,
       description: "Payment confirmation pending.",
@@ -64,7 +71,7 @@ const CheckStatus = () => {
       color: { light: "#FFF3E0", main: "#FF9800", dark: "#F57C00" },
     },
     {
-      id: 4,
+      id: 5,
       title: "Completed",
       icon: <Done />,
       description: "Your biodata request has been completed successfully.",
@@ -72,15 +79,14 @@ const CheckStatus = () => {
       color: { light: "#FCE4EC", main: "#E91E63", dark: "#C2185B" },
     },
     {
-      id: 4,
+      id: 6,
       title: "Feedback",
       icon: <Done />,
-      description:
-        "Your feedback is important to us. Please share your experience.",
+      description: "Your feedback is important to us. Please share your experience.",
       expectedDuration: "2-4 hours",
       color: { light: "#E8F5E9", main: "#4CAF50", dark: "#388E3C" },
     },
-  ];
+];
 
   useEffect(() => {
     BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)

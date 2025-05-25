@@ -60,7 +60,7 @@ const AdminDashboard = () => {
   ];
 
   const isBackwardDisabled = (statusId) => [0, 1].includes(statusId);
-  const isForwardDisabled = (statusId) => statusId === 4;
+  const isForwardDisabled = (statusId) => statusId === 5;
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
