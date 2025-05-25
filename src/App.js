@@ -38,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <AdminProvider>
-        <Router basename="/">
+        <Router basename="/revamp-biodata-ditvi">
           <ScrollToTop />
           <Routes>
             {/* Admin Routes */}

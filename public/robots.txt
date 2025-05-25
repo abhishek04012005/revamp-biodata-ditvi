@@ -33,6 +33,8 @@ Hindi Implementation MasterBiodata || Partial
 Loader || Done
 Add Popup when save the font size 
 Flow Type Color || Done
+Photo Frame circle on  biodata master dynamic size
+Whatsapp Messaga
 Testing :)
 
 
