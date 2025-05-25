@@ -29,7 +29,7 @@ const WhatsAppMessageByStatus = [
                 We hope you're doing great.
                 We haven't received your feedback on your Ditvi Biodata sample for Request No: *$$requestNumber$$* yet.
                 Have you had a chance to review the watermarked sample?
-                we can't wait to hear from you! 💫
+                We can't wait to hear from you! 💫
                 *Remember* —You pay only when you're happy! 💖
                 Check your real-time status here: $$statusLink$$
                 Warm wishes,
@@ -47,7 +47,7 @@ const WhatsAppMessageByStatus = [
                 `Dear *$$name$$* 🎉
                 We are exicted to hear, you loved our Ditvi Biodata for Request No: *$$requestNumber$$*.💝
                 To receive your personalized biodata without watermark, please complete the payment using this secure link: $$paymentLink$$
-                *Remember* —we're just one step away from your perfect biodata! 💫
+                *Remember* — We're just one step away from your perfect biodata! 💫
                 Warm wishes,
                 The Ditvi Biodata Team!`
             },
