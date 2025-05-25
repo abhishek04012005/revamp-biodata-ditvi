@@ -1,0 +1,44 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+
+External Dependency:
+
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm install react-router-dom
+npm install react-scroll
+npm install gh-pages
+npm install @supabase/supabase-js
+npm install slick-carousel
+
+
+
+
+
+Drop down to biodata change theme || Done
+Update list image of biodata section
+Message section on BiodataMaster || Partial Done
+Font and row size save to db || Done
+Payment Gateway Integration || Done
+Track Status for mobile view || Done
+Write Standard message for whatsapp 
+Text verification and improvement
+Store All Key In Env File || Done
+Title Helmet
+SEO optimization and google analytics
+Homepage navmenu to fixed || Done
+Hindi Implementation MasterBiodata || Partial
+Loader || Done
+Add Popup when save the font size 
+Flow Type Color || Done
+Photo Frame circle on  biodata master dynamic size
+Whatsapp Messaga
+Testing :)
+
+
+REACT_APP_SUPABASE_URL=https://jgkgpmvynvzbxcsyeeth.supabase.co
+REACT_APP_SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impna2dwbXZ5bnZ6Ynhjc3llZXRoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjcyOTI3MiwiZXhwIjoyMDYyMzA1MjcyfQ.davleCKvqYV7_mnuD-0jscY-94889_rjtYUQTbjmH4c
+REACT_APP_RAZORPAY_KEY=rzp_live_HvH8c7vXtsOEjK
+
