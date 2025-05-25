@@ -126,7 +126,6 @@ const getWhatsappMessageByStatus = (statusId, info) => {
         const messages = statusTemplates.map(template => {
             let { title, message } = template;
 
-            // Define replacements
             const replacements = {
                 '\\$\\$name\\$\\$': info.name.toString().trim() || 'User',
                 '\\$\\$requestNumber\\$\\$': info.requestNumber.toString().trim() || 'N/A',
