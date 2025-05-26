@@ -1,6 +1,8 @@
 import ModelTypes from "../../../json/ModelTypes";
 
 const PreviewSection = ({ formData,  langData, modelDetails, currentStep }) => {
+  const isModelTypeStudent = modelDetails.type === ModelTypes.Student.Name;
+
   return (
       <div className="create-biodata-preview">
             <h2>{langData.steps[currentStep]}</h2>
@@ -20,7 +22,7 @@ const PreviewSection = ({ formData,  langData, modelDetails, currentStep }) => {
               )}
               {/* Personal Details */}
               <section className="preview-group">
-                <h3>{langData.steps[1]}</h3>
+                <h3>{langData.biodataMaster.personalDetails}</h3>
                 <div className="preview-details">
                   {/* Personal Data */}
                   {formData.personalDetails?.map((field, index) => (
@@ -34,9 +36,10 @@ const PreviewSection = ({ formData,  langData, modelDetails, currentStep }) => {
 
               {/* Professional/Examination Details */}
                 <section className="preview-group">
-                  <h3>{langData.steps[2]}</h3>
+                  <h3>{isModelTypeStudent ? 
+                    langData.biodataMaster.examinationDetails : langData.biodataMaster.professionalDetails}</h3>
                   <div className="preview-details">
-                    {modelDetails?.type === ModelTypes.Student.Name ? (
+                    {isModelTypeStudent ? (
                       // Examination Details
                       formData.examinationDetails.map((field, index) => (
                         <p key={index}>
@@ -58,7 +61,7 @@ const PreviewSection = ({ formData,  langData, modelDetails, currentStep }) => {
 
               {/* Education Details */}
               <section className="preview-group">
-                <h3>{langData.steps[3]}</h3>
+                <h3>{langData.biodataMaster.educationDetails}</h3>
                 <div className="preview-details">
                   {formData.educationDetails.map((eduGroup, index) => (
                     <div key={index} className="education-item">
@@ -78,7 +81,7 @@ const PreviewSection = ({ formData,  langData, modelDetails, currentStep }) => {
 
               {/* Family Details */}
               <section className="preview-group">
-                <h3>{langData.steps[4]}</h3>
+                <h3>{langData.biodataMaster.familyDetails}</h3>
                 <div className="preview-details">
                   {/* Parents Section */}
                   {["father", "mother"].map((relation) => (
@@ -126,7 +129,7 @@ const PreviewSection = ({ formData,  langData, modelDetails, currentStep }) => {
 
               {/* Contact Details */}
               <section className="preview-group">
-                <h3>{langData.steps[5]}</h3>
+                <h3>{langData.biodataMaster.contactDetails}</h3>
                 <div className="preview-details">
                   {formData.contactDetails.map((field, index) => (
                     <p key={index}>

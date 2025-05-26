@@ -5,8 +5,7 @@ import {
   EducationData,
   FamilyData,
   ExaminationData,
-  ContactData,
-  createEmptyPerson,
+  ContactData
 } from "../json/createBiodata";
 
 import {
@@ -15,7 +14,6 @@ import {
   EducationDataHindi,
   FamilyDataHindi,
   ExaminationDataHindi,
-  createEmptyPersonHindi,
   ContactDataHindi
 } from "../json/CreateBiodataHindi";
 import ModelTypes from './ModelTypes';
@@ -52,6 +50,14 @@ export const getLanguageData = (modelDetails) => {
         notProvided: "उपलब्ध नहीं",
         yes: "हाँ",
         no: "नहीं",
+      },
+      biodataMaster: {
+        personalDetails: "व्यक्तिगत विवरण",
+        professionalDetails: "व्यावसायिक विवरण",
+        examinationDetails: "परीक्षा विवरण",
+        educationDetails: "शैक्षिक विवरण",
+        familyDetails: "पारिवारिक विवरण",
+        contactDetails: "संपर्क विवरण",
       }
     };
   }
@@ -83,6 +89,14 @@ export const getLanguageData = (modelDetails) => {
       notProvided: "Not Provided",
       yes: "Yes",
       no: "No",
+    },
+    biodataMaster: {
+      personalDetails: "Personal Details",
+      professionalDetails: "Professional Details",
+      examinationDetails: "Examination Details",
+      educationDetails: "Education Details",
+      familyDetails: "Family Details",
+      contactDetails: "Contact Details",
     }
   };
 };
