@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./BiodataMaster.css";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
 import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
@@ -22,14 +22,10 @@ import {
 import DEFAULT_STYLES from "../../json/Styles";
 import { ICON_MAPPING } from "../../json/createBiodata";
 import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
-import {
-  BiodataBackgrounds,
-  getBiodataBackgroundImage,
-} from "../../json/BiodataBackground";
-import Loader from "../Loader/Loader";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
+    const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -96,17 +92,14 @@ const BiodataMaster = () => {
           statusHistory.forEach((status) => {
             newTimestamps[status.id] = status.created;
           });
-          // setTimestamps(newTimestamps);
           setCurrentStatus(getLatestStatusId(statusHistory));
-          // setIsValidRequest(true);
         } else {
           console.error("No request found with the given request number.");
-          // setIsValidRequest(false);
+
         }
       })
       .catch((error) => {
         console.error("Error fetching request:", error);
-        // setIsValidRequest(false);
       });
   };
 
@@ -119,6 +112,9 @@ const BiodataMaster = () => {
       console.error("Failed to copy:", err);
     }
   };
+
+  console.log('fdsf', formData);
+  const isLanguageEnglish = modelDetails?.language === Languages.English.Name;
 
   const handlePrint = (withWatermark = false) => {
     // Store current page styles
@@ -313,6 +309,12 @@ const BiodataMaster = () => {
     }
   };
 
+   const getBaseUrl = () => {
+    const protocol = window.location.protocol;
+    const host = window.location.host;
+    return `${protocol}//${host}`;
+  };
+
   return (
     <>
       <div className="biodata-master">
@@ -325,18 +327,9 @@ const BiodataMaster = () => {
                     name: formData?.userDetails?.name || "",
                     requestNumber: requestNumber || "",
                     modelNumber: formData?.modelDetails?.modelNumber || "",
-                    statusLink: `${
-                      process.env.REACT_APP_STATUS_URL ||
-                      "http://192.168.1.22:3000/track-status/"
-                    }${requestNumber}`,
-                    paymentLink: `${
-                      process.env.REACT_APP_STATUS_URL ||
-                      "http://192.168.1.22:3000/payment/"
-                    }${requestNumber}`,
-                    feedbackLink: `${
-                      process.env.REACT_APP_STATUS_URL ||
-                      "http://192.168.1.22:3000/feedback/"
-                    }${requestNumber}`,
+                    statusLink: `${getBaseUrl()}/track-status/${requestNumber}`,
+                    paymentLink: `${getBaseUrl()}/payment/${requestNumber}`,
+                    feedbackLink: `${getBaseUrl()}/feedback/${requestNumber}`
                   });
 
                   return messages.map((messageData) => (
@@ -503,7 +496,7 @@ const BiodataMaster = () => {
                     <div className="biodata-master-section-title">
                       <span className="biodata-master-flex-section">
                         <Work className="biodata-master-section-icon" />
-                        <h3>Professional Details</h3>
+                        <h3>{isLanguageEnglish ? 'Professional Details': 'व्यावसायिक विवरण'}</h3>
                       </span>
                     </div>
                     <table className="biodata-master-bio-table">
@@ -534,7 +527,7 @@ const BiodataMaster = () => {
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
                       <School className="biodata-master-section-icon" />
-                      <h3>Education Details</h3>
+                      <h3>{isLanguageEnglish ? 'Educationl Details': 'शैक्षिक विवरण'}</h3>
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">
@@ -564,16 +557,16 @@ const BiodataMaster = () => {
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
                       <People className="biodata-master-section-icon" />
-                      <h3>Family Details</h3>
+                      <h3>{isLanguageEnglish ? 'Family Details': 'परिवार विवरण'}</h3>
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">
                     <tbody>
                       <tr>
-                        <th>Relation</th>
-                        <th>Name</th>
-                        <th>Occupation</th>
-                        <th>Married</th>
+                        <th>{isLanguageEnglish ? 'Relation': 'संबंध'}</th>
+                        <th>{isLanguageEnglish ? 'Name': 'नाम'}</th>
+                        <th>{isLanguageEnglish ? 'Occupation': 'व्यावसायिक'}</th>
+                        <th>{isLanguageEnglish ? 'Married': 'विवाहित'}</th>
                       </tr>
                       {/* Father's Details */}
                       <tr>
@@ -718,7 +711,7 @@ const BiodataMaster = () => {
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
                       <ContactPhone className="biodata-master-section-icon" />
-                      <h3>Contact Details</h3>
+                      <h3>{isLanguageEnglish ? 'Contact Details': 'संपर्क विवरण'}</h3>
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">

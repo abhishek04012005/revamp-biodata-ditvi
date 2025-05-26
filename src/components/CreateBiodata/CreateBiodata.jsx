@@ -650,8 +650,8 @@ const CreateBiodata = () => {
                                   type="radio"
                                   className="create-biodata-sibling-radio-input"
                                   name={`married-${relation}-${idx}`}
-                                  value="No"
-                                  checked={sibling.married === "No"}
+                                  value={langData.placeholders.no}
+                                  checked={sibling.married === langData.placeholders.no}
                                   onChange={(e) =>
                                     setFamilyDetails(
                                       relation,
@@ -661,15 +661,15 @@ const CreateBiodata = () => {
                                     )
                                   }
                                 />
-                                <span>No</span>
+                                <span>{langData.placeholders.no}</span>
                               </label>
                               <label className="sibling-radio-option">
                                 <input
                                   type="radio"
                                   className="create-biodata-sibling-radio-input"
                                   name={`married-${relation}-${idx}`}
-                                  value="Yes"
-                                  checked={sibling.married === "Yes"}
+                                  value={langData.placeholders.yes}
+                                  checked={sibling.married === langData.placeholders.yes}
                                   onChange={(e) =>
                                     setFamilyDetails(
                                       relation,
@@ -679,7 +679,7 @@ const CreateBiodata = () => {
                                     )
                                   }
                                 />
-                                <span>Yes</span>
+                                <span>{langData.placeholders.yes}</span>
                               </label>
                             </div>
                             <button
