@@ -118,7 +118,7 @@
 
 .contact-submit-btn {
     height: 48px;
-    border-radius: 12px !important;
+    border-radius: 50px !important;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
     color: white !important;
     font-size: 1rem !important;
