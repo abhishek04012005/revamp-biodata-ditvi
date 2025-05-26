@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/revamp-biodata-ditvi/static/css/main.cde5b99a.css",
-    "main.js": "/revamp-biodata-ditvi/static/js/main.2411c3b3.js",
+    "main.css": "/revamp-biodata-ditvi/static/css/main.5e381c3a.css",
+    "main.js": "/revamp-biodata-ditvi/static/js/main.a5cad4de.js",
     "static/js/952.80a6972c.chunk.js": "/revamp-biodata-ditvi/static/js/952.80a6972c.chunk.js",
     "static/js/453.7e976675.chunk.js": "/revamp-biodata-ditvi/static/js/453.7e976675.chunk.js",
     "static/media/1112.svg": "/revamp-biodata-ditvi/static/media/1112.37701861f9a17a1b131c1a8027249c71.svg",
@@ -38,13 +38,13 @@
     "static/media/slick.ttf": "/revamp-biodata-ditvi/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/revamp-biodata-ditvi/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/revamp-biodata-ditvi/index.html",
-    "main.cde5b99a.css.map": "/revamp-biodata-ditvi/static/css/main.cde5b99a.css.map",
-    "main.2411c3b3.js.map": "/revamp-biodata-ditvi/static/js/main.2411c3b3.js.map",
+    "main.5e381c3a.css.map": "/revamp-biodata-ditvi/static/css/main.5e381c3a.css.map",
+    "main.a5cad4de.js.map": "/revamp-biodata-ditvi/static/js/main.a5cad4de.js.map",
     "952.80a6972c.chunk.js.map": "/revamp-biodata-ditvi/static/js/952.80a6972c.chunk.js.map",
     "453.7e976675.chunk.js.map": "/revamp-biodata-ditvi/static/js/453.7e976675.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cde5b99a.css",
-    "static/js/main.2411c3b3.js"
+    "static/css/main.5e381c3a.css",
+    "static/js/main.a5cad4de.js"
   ]
 }
