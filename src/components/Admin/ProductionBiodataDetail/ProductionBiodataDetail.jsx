@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./ProductionBiodataDetail.css";
+import { getLanguageData } from "../../../json/languageCofig";
 import {
   Edit,
   Save,
@@ -42,6 +43,7 @@ const ProductionBiodataDetail = () => {
   const [formData, setFormData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
+  const [langData, setLangData] = useState(null);
 
   useEffect(() => {
     fetchRequestData(requestId);
@@ -55,6 +57,8 @@ const ProductionBiodataDetail = () => {
       );
 
       if (response) {
+        const languageData = getLanguageData(response.model_details);
+        setLangData(languageData);
         const initialFormData = {
           profileImage: response.profile_url,
           biodataUrl: response.biodata_url,
@@ -311,11 +315,11 @@ const ProductionBiodataDetail = () => {
                     examinationDetails: newData,
                   });
                 }}
-                placeholder={`Enter ${field.label.toLowerCase()}`}
+                placeholder={`${field.label}`}
               />
             ) : (
               <span className="field-value">
-                {field.value || "Not Provided"}
+                {field.value || langData?.placeholders.notProvided}
               </span>
             )}
           </div>
@@ -471,7 +475,10 @@ const ProductionBiodataDetail = () => {
                         {isEditing ? (
                           field === "married" ? (
                             <div className="radio-group">
-                              {["Yes", "No"].map((option) => (
+                              {[
+                                langData?.placeholders.yes,
+                                langData?.placeholders.no,
+                              ].map((option) => (
                                 <label key={option} className="radio-option">
                                   <input
                                     type="radio"
@@ -480,7 +487,7 @@ const ProductionBiodataDetail = () => {
                                     checked={
                                       sibling[field]
                                         ? sibling[field] === option
-                                        : option === "No"
+                                        : option === langData?.placeholders.no
                                     }
                                     onChange={(e) => {
                                       const newSiblings = [
