@@ -329,7 +329,7 @@ overflow: auto;
   background: white;
   padding: 10px;
   border-left: 1px solid #eee;
-  height: 100vh;
+  /* height: 100vh; */
   position: sticky;
   top: 0;
   right: 0;
@@ -630,4 +630,128 @@ overflow: auto;
 
 .background-preview:hover img {
   transform: scale(1.05);
+}
+
+.notification-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  animation: slideIn 0.3s ease;
+}
+
+.notification-popup {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-width: 320px;
+  position: relative;
+  border-left: 5px solid;
+}
+
+.notification-popup.success {
+  border-left-color: var(--primary-color);
+}
+
+.notification-popup.error {
+  border-left-color: #dc2626;
+}
+
+.notification-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.notification-close:hover {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 20px;
+}
+
+.notification-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-icon-wrapper.success {
+  background: #ecfdf5;
+  color: var(--primary-color);
+}
+
+.notification-icon-wrapper.error {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.notification-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.notification-text {
+  flex: 1;
+}
+
+.notification-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.notification-message {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.notification-popup.hiding {
+  animation: slideOut 0.3s ease forwards;
 }

@@ -22,8 +22,6 @@ import {
 import DEFAULT_STYLES from "../../json/Styles";
 import { ICON_MAPPING } from "../../json/createBiodata";
 import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
-import  {BiodataBackgrounds, getBiodataBackgroundImage } from "../../json/BiodataBackground";
-import Languages from "../../json/Languages";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
@@ -38,9 +36,12 @@ const BiodataMaster = () => {
   const [copied, setCopied] = useState(false);
   const [styles, setStyles] = useState(DEFAULT_STYLES);
   const [modelDetails, setModelDetails] = useState(null);
-  const [selectedBackground, setSelectedBackground] = useState("1111")
-
-
+  const [selectedBackground, setSelectedBackground] = useState("1111");
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
 
   useEffect(() => {
     fetchRequestData();
@@ -69,7 +70,7 @@ const BiodataMaster = () => {
 
         setRequestNumber(response.request_number);
         setModelDetails(response.model_details);
-        setSelectedBackground(response.model_details.modelNumber)
+        setSelectedBackground(response.model_details.modelNumber);
         setFormData(initialFormData);
         setOriginalData(initialFormData);
         setStyles(response.style_settings || DEFAULT_STYLES);
@@ -150,7 +151,9 @@ const BiodataMaster = () => {
                 background-position: center;
                 background-repeat: no-repeat;
                 padding: 0;
-                background-image: url("${getBiodataBackgroundImage(selectedBackground)}");
+                background-image: url("${getBiodataBackgroundImage(
+                  selectedBackground
+                )}");
             }
 
             /* Theme-specific styles */
@@ -267,14 +270,42 @@ const BiodataMaster = () => {
     }, 500);
   };
 
+  // const saveStyleSettings = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const updatedData = ProductionRequestStorage.updateProductionRequestById(
+  //       requestId,
+  //       { styleSettings : styles }
+  //     );
+  //   } catch (error) {
+  //     console.error("Error saving style settings:", error);
+  //   }
+  //   finally{
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const saveStyleSettings = async () => {
     try {
-      const updatedData = ProductionRequestStorage.updateProductionRequestById(
-        requestId,
-        { styleSettings : styles }
-      );
+      setIsLoading(true);
+      await ProductionRequestStorage.updateProductionRequestById(requestId, {
+        styleSettings: styles,
+      });
+
+      setNotification({
+        show: true,
+        message: "Style settings saved successfully!",
+        type: "success",
+      });
     } catch (error) {
       console.error("Error saving style settings:", error);
+      setNotification({
+        show: true,
+        message: "Failed to save style settings",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -390,7 +421,9 @@ const BiodataMaster = () => {
             <div
               className="biodata-master-a4-container"
               style={{
-                backgroundImage: `url(${getBiodataBackgroundImage(selectedBackground)})`,
+                backgroundImage: `url(${getBiodataBackgroundImage(
+                  selectedBackground
+                )})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
@@ -406,8 +439,8 @@ const BiodataMaster = () => {
                     <div className="biodata-master-name-text">
                       <h3>
                         {
-                          formData?.personalDetails?.find(
-                            (field) => field.label.match(/^(Name|नाम)$/)
+                          formData?.personalDetails?.find((field) =>
+                            field.label.match(/^(Name|नाम)$/)
                           )?.value
                         }
                       </h3>
@@ -421,7 +454,8 @@ const BiodataMaster = () => {
                             !field.label.match(/^(Name|नाम)$/) && (
                               <tr key={index}>
                                 <td className="biodata-master-personal-icon-alignment">
-                                  {ICON_MAPPING[field.label] || ICON_MAPPING_HINDI[field.label]}
+                                  {ICON_MAPPING[field.label] ||
+                                    ICON_MAPPING_HINDI[field.label]}
                                   {field.label}
                                 </td>
                                 <td>{field.value || "Not Provided"}</td>
@@ -681,32 +715,26 @@ const BiodataMaster = () => {
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">
-                      <tbody>
-                        <tr>
-                          {formData?.contactDetails?.map(
-                            (field, index) => (
-                              <th key={index}>{field.label}</th>
-                            )
-                          )}
-                        </tr>
-                        <tr>
-                          {formData?.contactDetails?.map(
-                            (field, index) => (
-                              <td key={index}>
-                                {field.value || "Not Provided"}
-                              </td>
-                            )
-                          )}
-                        </tr>
-                      </tbody>
-                    </table>
+                    <tbody>
+                      <tr>
+                        {formData?.contactDetails?.map((field, index) => (
+                          <th key={index}>{field.label}</th>
+                        ))}
+                      </tr>
+                      <tr>
+                        {formData?.contactDetails?.map((field, index) => (
+                          <td key={index}>{field.value || "Not Provided"}</td>
+                        ))}
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="style-controls-sidebar">
-             <div className="control-section">
+            <div className="control-section">
               <h4 className="control-title">
                 <span className="control-icon">
                   <Palette />
@@ -723,14 +751,19 @@ const BiodataMaster = () => {
                     }}
                     className="background-select"
                   >
-                    {Object.entries(BiodataBackgrounds).map(([modelNumber, bg]) => (
-                      <option key={modelNumber} value={modelNumber}>
-                        {bg.name}
-                      </option>
-                    ))}
+                    {Object.entries(BiodataBackgrounds).map(
+                      ([modelNumber, bg]) => (
+                        <option key={modelNumber} value={modelNumber}>
+                          {bg.name}
+                        </option>
+                      )
+                    )}
                   </select>
                   <div className="background-preview">
-                    <img src={getBiodataBackgroundImage(selectedBackground)} alt="Selected background" />
+                    <img
+                      src={getBiodataBackgroundImage(selectedBackground)}
+                      alt="Selected background"
+                    />
                   </div>
                 </div>
               </div>
@@ -1014,6 +1047,69 @@ const BiodataMaster = () => {
           </div>
         </div>
       </div>
+
+      {notification.show && (
+        <div className="notification-overlay">
+          <div className={`notification-popup ${notification.type}`}>
+            <button
+              className="notification-close"
+              onClick={() =>
+                setNotification({ show: false, message: "", type: "success" })
+              }
+            >
+              ×
+            </button>
+            <div className="notification-content">
+              <div className={`notification-icon-wrapper ${notification.type}`}>
+                {notification.type === "success" ? (
+                  <div className="notification-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="12" cy="12" r="10" className="icon-circle" />
+                      <path
+                        d="M8 12l3 3 5-5"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="icon-path"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="notification-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="12" cy="12" r="10" className="icon-circle" />
+                      <path
+                        d="M15 9l-6 6M9 9l6 6"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="icon-path"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <div className="notification-text">
+                <h3 className="notification-title">
+                  {notification.type === "success" ? "Success!" : "Error!"}
+                </h3>
+                <p className="notification-message">{notification.message}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isLoading && <Loader />}
     </>
   );
 };

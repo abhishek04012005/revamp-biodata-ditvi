@@ -28,8 +28,8 @@ const Navbar = () => {
     }, []);
 
     const handleWhatsAppClick = () => {
-        const encodedMessage = encodeURIComponent({ messageForFixedWhatsapp });
-        window.open(`${whatsappUrlWithMobileNumber}?text=${encodedMessage}`, '_blank');
+      
+        window.open("https://wa.me/919263767441?text=Hello%20Ditvi%20Biodata%2C%0AI%20want%20to%20learn%20more%20about%20your%20services.%0A%0AThank%20You%20%3A)", "_blank");
     };
 
     return (
