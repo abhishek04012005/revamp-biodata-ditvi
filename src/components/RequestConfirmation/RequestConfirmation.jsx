@@ -1,9 +1,7 @@
-import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Check, WhatsApp, TrackChanges, Style, Money, Mobile, Language, Category, Badge, ConfirmationNumber } from '@mui/icons-material';
+import { Check, WhatsApp, TrackChanges, Style, CurrencyRupee, Language, Category, Badge, ConfirmationNumber } from '@mui/icons-material';
 import './RequestConfirmation.css';
 import Container from '../../structure/Container/Container';
-import ModelTypes from '../../json/ModelTypes';
 
 const RequestConfirmation = () => {
     const navigate = useNavigate();
@@ -69,7 +67,7 @@ const RequestConfirmation = () => {
                             <div className="detail-item">
                                 <span className="detail-label">
                                     <span className="detail-icon-wrapper">
-                                        <Money className="detail-icon" />
+                                        <CurrencyRupee className="detail-icon" />
                                         Amount
                                     </span>
                                 </span>

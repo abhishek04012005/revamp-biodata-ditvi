@@ -69,8 +69,6 @@ const ProductionBiodataDetail = () => {
           contactDetails: response.contact_details || {},
         };
 
-        console.log("Education Details:", initialFormData.educationDetails);
-
         setRequestNumber(response.request_number);
         setFormData(initialFormData);
         setOriginalData(initialFormData);
