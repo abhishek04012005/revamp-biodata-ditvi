@@ -3,10 +3,11 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./BiodataMaster.css";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
 import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
+import { BIODATA_THEMES } from "../../json/biodataMaster";
 import WatermarkLogo from "../../assets/watermark/logo.png";
 import { getLatestStatusId } from "../../utils/StatusHelper";
 import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
-import { BiodataRequestStorage } from "../../supabase/BiodataRequest";  
+import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import {
   BiodataBackgrounds,
   getBiodataBackgroundImage,
@@ -31,7 +32,7 @@ import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
-    const location = useLocation();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -89,6 +90,21 @@ const BiodataMaster = () => {
     }
   };
 
+  const getCurrentTheme = () => {
+    return BIODATA_THEMES[selectedBackground] || BIODATA_THEMES["1111"];
+  };
+
+  useEffect(() => {
+    // Force style update when background changes
+    const element = document.querySelector(".biodata-master");
+    if (element) {
+      element.style.display = "none";
+      setTimeout(() => {
+        element.style.display = "";
+      }, 0);
+    }
+  }, [selectedBackground]);
+
   const fetchStatus = async (requestNumber) => {
     BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
       .then((response) => {
@@ -101,7 +117,6 @@ const BiodataMaster = () => {
           setCurrentStatus(getLatestStatusId(statusHistory));
         } else {
           console.error("No request found with the given request number.");
-
         }
       })
       .catch((error) => {
@@ -118,10 +133,12 @@ const BiodataMaster = () => {
       console.error("Failed to copy:", err);
     }
   };
+  
   const isLanguageEnglish = modelDetails?.language === Languages.English.Name;
 
   const handlePrint = (withWatermark = false) => {
     // Store current page styles
+      const currentTheme = getCurrentTheme();
     const originalContent = document.body.innerHTML;
 
     // Get only the biodata container content
@@ -161,45 +178,47 @@ const BiodataMaster = () => {
             }
 
             /* Theme-specific styles */
-            .biodata-master .biodata-master-photo-frame {
-                border-color: ${
-                  BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR
-                } !important;
-            }
-            .biodata-master h3 {
-                font-size: ${BIODATA_THEME_1111.HEADINGS.FONT_SIZE} !important;
-                color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
-            }
-            .biodata-master th {
-                font-size: ${styles.table.headerFontSize} !important;
-                color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
-                background-color: ${
-                  BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR
-                } !important;
-            }
-            .biodata-master td {
-                font-size: ${styles.table.dataFontSize} !important;
-                color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
-            }
-            .biodata-master .biodata-master-section-icon {
-                color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
-            }
-            .biodata-master .biodata-master-bio-table tbody tr {
-                background-color: ${
-                  BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR
-                } !important;
-            }
-            .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
-                background-color: ${
-                  BIODATA_THEME_1111.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
-                } !important;
-            }
-            .biodata-master .biodata-master-bio-table thead tr,
-            .biodata-master .biodata-master-bio-table tbody tr:first-child {
-                background-color: ${
-                  BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR
-                } !important;
-            }
+         
+
+
+
+
+ .biodata-master .biodata-master-photo-frame {
+      border-color: ${currentTheme.PHOTO_FRAME.BORDER_COLOR} !important;
+    }
+    .biodata-master h3 {
+      font-size: ${currentTheme.HEADINGS.FONT_SIZE} !important;
+      color: ${currentTheme.HEADINGS.COLOR} !important;
+    }
+    .biodata-master th {
+      font-size: ${styles.table.headerFontSize} !important;
+      color: ${currentTheme.TABLE.HEADER.COLOR} !important;
+      background-color: ${currentTheme.TABLE.HEADER.BACKGROUND_COLOR} !important;
+    }
+    .biodata-master td {
+      font-size: ${styles.table.dataFontSize} !important;
+      color: ${currentTheme.TABLE.DATA.COLOR} !important;
+    }
+    .biodata-master .biodata-master-section-icon {
+      color: ${currentTheme.ICONS.COLOR} !important;
+    }
+    .biodata-master .biodata-master-bio-table tbody tr {
+      background-color: ${currentTheme.TABLE.DATA.BACKGROUND_COLOR} !important;
+    }
+    .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
+      background-color: ${currentTheme.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
+    }
+    .biodata-master .biodata-master-bio-table thead tr,
+    .biodata-master .biodata-master-bio-table tbody tr:first-child {
+      background-color: ${currentTheme.TABLE.HEADER.BACKGROUND_COLOR} !important;
+    }
+
+
+
+
+
+
+
             .biodata-master-bio-table td,
             .biodata-master-bio-table th {
                 padding: ${styles.table.rowGap};
@@ -274,21 +293,6 @@ const BiodataMaster = () => {
     }, 500);
   };
 
-  // const saveStyleSettings = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const updatedData = ProductionRequestStorage.updateProductionRequestById(
-  //       requestId,
-  //       { styleSettings : styles }
-  //     );
-  //   } catch (error) {
-  //     console.error("Error saving style settings:", error);
-  //   }
-  //   finally{
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const saveStyleSettings = async () => {
     try {
       setIsLoading(true);
@@ -313,7 +317,7 @@ const BiodataMaster = () => {
     }
   };
 
-   const getBaseUrl = () => {
+  const getBaseUrl = () => {
     const protocol = window.location.protocol;
     const host = window.location.host;
     return `${protocol}//${host}`;
@@ -333,7 +337,7 @@ const BiodataMaster = () => {
                     modelNumber: formData?.modelDetails?.modelNumber || "",
                     statusLink: `${getBaseUrl()}/track-status/${requestNumber}`,
                     paymentLink: `${getBaseUrl()}/payment/${requestNumber}`,
-                    feedbackLink: `${getBaseUrl()}/feedback/${requestNumber}`
+                    feedbackLink: `${getBaseUrl()}/feedback/${requestNumber}`,
                   });
 
                   return messages.map((messageData) => (
@@ -369,7 +373,7 @@ const BiodataMaster = () => {
           </div>
           <div className="biodata-master-biodata-page">
             {/* Apply dynamic styles to elements */}
-            <style>
+            {/* <style>
               {`
 
 .biodata-master .biodata-master-photo-frame {
@@ -419,7 +423,55 @@ const BiodataMaster = () => {
       border-bottom: ${styles.table.rowGap} solid transparent;
     }
   `}
-            </style>
+            </style> */}
+
+            <style>
+  {`
+    .biodata-master .biodata-master-photo-frame {
+      border-color: ${getCurrentTheme().PHOTO_FRAME.BORDER_COLOR} !important;
+    }
+    .biodata-master-name-text h3 {
+      font-size: ${styles.name.fontSize} !important;
+    }
+    .biodata-master-flex-section h3 {
+      font-size: ${styles.headings.fontSize} !important;
+    }
+    .biodata-master h3 {
+      color: ${getCurrentTheme().HEADINGS.COLOR} !important;
+    }
+    .biodata-master th {
+      font-size: ${styles.table.headerFontSize} !important;
+      color: ${getCurrentTheme().TABLE.HEADER.COLOR} !important;
+      background-color: ${getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR} !important;
+    }
+    .biodata-master td {
+      font-size: ${styles.table.dataFontSize} !important;
+      color: ${getCurrentTheme().TABLE.DATA.COLOR} !important;
+    }
+    .biodata-master .biodata-master-section-icon {
+      font-size: ${getCurrentTheme().ICONS.FONT_SIZE} !important;
+      color: ${getCurrentTheme().ICONS.COLOR} !important;
+    }
+    .biodata-master .biodata-master-bio-table {
+      --row-gap: ${styles.table.rowGap};
+    }
+    .biodata-master .biodata-master-bio-table tbody tr {
+      background-color: ${getCurrentTheme().TABLE.DATA.BACKGROUND_COLOR} !important;
+    }
+    .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
+      background-color: ${getCurrentTheme().TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
+    }
+    .biodata-master .biodata-master-bio-table thead tr,
+    .biodata-master .biodata-master-bio-table tbody tr:first-child {
+      background-color: ${getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR} !important;
+    }
+    .biodata-master-bio-table td,
+    .biodata-master-bio-table th {
+      padding: 12px;
+      border-bottom: ${styles.table.rowGap} solid transparent;
+    }
+  `}
+</style>
 
             {/* Existing biodata content */}
             <div
@@ -500,7 +552,11 @@ const BiodataMaster = () => {
                     <div className="biodata-master-section-title">
                       <span className="biodata-master-flex-section">
                         <Work className="biodata-master-section-icon" />
-                        <h3>{isLanguageEnglish ? 'Professional Details': 'व्यावसायिक विवरण'}</h3>
+                        <h3>
+                          {isLanguageEnglish
+                            ? "Professional Details"
+                            : "व्यावसायिक विवरण"}
+                        </h3>
                       </span>
                     </div>
                     <table className="biodata-master-bio-table">
@@ -531,7 +587,11 @@ const BiodataMaster = () => {
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
                       <School className="biodata-master-section-icon" />
-                      <h3>{isLanguageEnglish ? 'Educationl Details': 'शैक्षिक विवरण'}</h3>
+                      <h3>
+                        {isLanguageEnglish
+                          ? "Educationl Details"
+                          : "शैक्षिक विवरण"}
+                      </h3>
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">
@@ -561,16 +621,20 @@ const BiodataMaster = () => {
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
                       <People className="biodata-master-section-icon" />
-                      <h3>{isLanguageEnglish ? 'Family Details': 'परिवार विवरण'}</h3>
+                      <h3>
+                        {isLanguageEnglish ? "Family Details" : "परिवार विवरण"}
+                      </h3>
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">
                     <tbody>
                       <tr>
-                        <th>{isLanguageEnglish ? 'Relation': 'संबंध'}</th>
-                        <th>{isLanguageEnglish ? 'Name': 'नाम'}</th>
-                        <th>{isLanguageEnglish ? 'Occupation': 'व्यावसायिक'}</th>
-                        <th>{isLanguageEnglish ? 'Married': 'विवाहित'}</th>
+                        <th>{isLanguageEnglish ? "Relation" : "संबंध"}</th>
+                        <th>{isLanguageEnglish ? "Name" : "नाम"}</th>
+                        <th>
+                          {isLanguageEnglish ? "Occupation" : "व्यावसायिक"}
+                        </th>
+                        <th>{isLanguageEnglish ? "Married" : "विवाहित"}</th>
                       </tr>
                       {/* Father's Details */}
                       <tr>
@@ -715,7 +779,9 @@ const BiodataMaster = () => {
                   <div className="biodata-master-section-title">
                     <span className="biodata-master-flex-section">
                       <ContactPhone className="biodata-master-section-icon" />
-                      <h3>{isLanguageEnglish ? 'Contact Details': 'संपर्क विवरण'}</h3>
+                      <h3>
+                        {isLanguageEnglish ? "Contact Details" : "संपर्क विवरण"}
+                      </h3>
                     </span>
                   </div>
                   <table className="biodata-master-bio-table">
