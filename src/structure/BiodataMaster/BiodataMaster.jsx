@@ -118,8 +118,6 @@ const BiodataMaster = () => {
       console.error("Failed to copy:", err);
     }
   };
-
-  console.log('fdsf', formData);
   const isLanguageEnglish = modelDetails?.language === Languages.English.Name;
 
   const handlePrint = (withWatermark = false) => {
@@ -751,10 +749,7 @@ const BiodataMaster = () => {
                 <div className="control-item background-selector">
                   <select
                     value={selectedBackground}
-                    onChange={(event) => {
-                      console.log("Selected background:", event.target.value);
-                      setSelectedBackground(event.target.value);
-                    }}
+                    onChange={(event) => setSelectedBackground(event.target.value)}
                     className="background-select"
                   >
                     {Object.entries(BiodataBackgrounds).map(

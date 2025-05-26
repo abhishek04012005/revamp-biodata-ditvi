@@ -112,7 +112,6 @@ const WhatsAppMessageByStatus = [
 ];
 
 const getWhatsappMessageByStatus = (statusId, info) => {
-    console.log('Generating WhatsApp messages for status:', statusId, 'with info:', info);
     try {
         const statusTemplates = WhatsAppMessageByStatus.find(
             item => item.status === statusId

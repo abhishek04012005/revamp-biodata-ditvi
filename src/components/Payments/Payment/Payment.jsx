@@ -52,17 +52,7 @@ const Payment = () => {
       setLoading(true);
       const response = await BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber);
       if (response) {
-        console.log('Request Data:', response);
         setRequestData(response);
-        const updatedStatus = [
-  ...(response.status || []),
-  {
-    id: 3,
-    created: new Date().toISOString()
-  }
-];
-
-console.log('updatedStatus', updatedStatus);
       } else {
         setError('Invalid request number');
       }
@@ -79,16 +69,12 @@ console.log('updatedStatus', updatedStatus);
       setError('Payment system is not loaded yet. Please try again.');
       return;
     }
-    // Implement payment gateway integration here
-    console.log('Initiating payment for request:', requestNumber);
-    // This function should handle the payment process
     try{
       const paymentRequest = await PaymentRequestStorage.initiatePaymentRequest({
         requestNumber: requestNumber,
         amount: requestData.model_details.amount,
       })
       if (paymentRequest) {
-        console.log('Payment initiated successfully:', paymentRequest);
         // Redirect to payment gateway or handle payment confirmation
 
         const options = getRazorpayOptions({
@@ -114,7 +100,6 @@ console.log('updatedStatus', updatedStatus);
   };
 
   const handlePaymentSuccess = async (response, paymentRequestId) => {
-        console.log('Payment successful:', response);
         try {
             const dbResponse = PaymentRequestStorage.updatePaymentStatus(
               paymentRequestId,
@@ -143,7 +128,6 @@ console.log('updatedStatus', updatedStatus);
     };
 
   const handlePaymentFailure = async (response, paymentRequestId, razorpayInstance) => {
-        console.log('Payment failure:', response);
         try {
             const dbResponse = PaymentRequestStorage.updatePaymentStatus(
               paymentRequestId,
@@ -166,7 +150,6 @@ console.log('updatedStatus', updatedStatus);
     };
 
   const updatePaymentStatus = async (paymentRequestId, status) => {
-        console.log('Payment update:', status);
         try {
             const dbResponse = PaymentRequestStorage.updatePaymentStatus(
               paymentRequestId,

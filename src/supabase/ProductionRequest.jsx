@@ -104,7 +104,6 @@ export const ProductionRequestStorage = {
 
     async updateProductionRequestById(id, productionRequest) {
         try {
-            console.log('updateProductionRequestById', id, productionRequest.educationDetails);
             const { data, error } = await supabase
                 .from(productionRequestTableName)
                 .update({

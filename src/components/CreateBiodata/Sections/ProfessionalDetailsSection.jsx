@@ -1,7 +1,6 @@
 import ModelTypes from "../../../json/ModelTypes";
 
 const ProfessionalDetailsSection = ({ formData, setFormData, langData,modelDetails, currentStep }) => {
-  console.log("ProfessionalDetailsSection", formData.examinationDetails);
   return (          
         <div className="create-biodata-section">
             <h2>{langData.steps[currentStep]}</h2>

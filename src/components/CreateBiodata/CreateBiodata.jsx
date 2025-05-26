@@ -28,7 +28,6 @@ const CreateBiodata = () => {
   const { requestNumber, userDetails, modelDetails } = location.state || {};
 
   const langData = getLanguageData(modelDetails);
-  console.log("Language Data:", langData);
 
   const [formData, setFormData] = useState({
     profileImage: null,
