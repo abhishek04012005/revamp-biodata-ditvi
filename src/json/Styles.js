@@ -12,4 +12,4 @@ const DEFAULT_STYLES = {
   },
 };
 
-export default DEFAULT_STYLES
+export default DEFAULT_STYLES;

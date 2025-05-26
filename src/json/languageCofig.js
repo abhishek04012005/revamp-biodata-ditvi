@@ -1,11 +1,11 @@
-import Languages from '../json/Languages';
+import Languages from "../json/Languages";
 import {
   PersonalData,
   ProfessionalData,
   EducationData,
   FamilyData,
   ExaminationData,
-  ContactData
+  ContactData,
 } from "../json/createBiodata";
 
 import {
@@ -14,13 +14,14 @@ import {
   EducationDataHindi,
   FamilyDataHindi,
   ExaminationDataHindi,
-  ContactDataHindi
+  ContactDataHindi,
 } from "../json/CreateBiodataHindi";
-import ModelTypes from './ModelTypes';
+import ModelTypes from "./ModelTypes";
 
 export const getLanguageData = (modelDetails) => {
-    const isModelTypeProfessional = modelDetails.type === ModelTypes.Professional.Name;
-    const isLanguageHindi = modelDetails.language === Languages.Hindi.Name;
+  const isModelTypeProfessional =
+    modelDetails.type === ModelTypes.Professional.Name;
+  const isLanguageHindi = modelDetails.language === Languages.Hindi.Name;
   if (isLanguageHindi) {
     return {
       personal: PersonalDataHindi,
@@ -32,9 +33,9 @@ export const getLanguageData = (modelDetails) => {
       steps: [
         "प्रोफाइल छवि",
         "व्यक्तिगत",
-        isModelTypeProfessional ? "व्यावसायिक": "परीक्षा",
+        isModelTypeProfessional ? "व्यावसायिक" : "परीक्षा",
         "शैक्षिक",
-        "पारिवारिक",
+        "परिवार",
         "संपर्क",
         "पूर्वावलोकन",
       ],
@@ -54,11 +55,11 @@ export const getLanguageData = (modelDetails) => {
       biodataMaster: {
         personalDetails: "व्यक्तिगत विवरण",
         professionalDetails: "व्यावसायिक विवरण",
-        examinationDetails: "परीक्षा विवरण",
+        examinationDetails: "परीक्षा तैयारी विवरण",
         educationDetails: "शैक्षिक विवरण",
-        familyDetails: "पारिवारिक विवरण",
+        familyDetails: "परिवार विवरण",
         contactDetails: "संपर्क विवरण",
-      }
+      },
     };
   }
 
@@ -72,7 +73,7 @@ export const getLanguageData = (modelDetails) => {
     steps: [
       "Profile Image",
       "Personal",
-      isModelTypeProfessional ? "Professional": "Examination",
+      isModelTypeProfessional ? "Professional" : "Examination",
       "Education",
       "Family",
       "Contact",
@@ -93,10 +94,10 @@ export const getLanguageData = (modelDetails) => {
     biodataMaster: {
       personalDetails: "Personal Details",
       professionalDetails: "Professional Details",
-      examinationDetails: "Examination Details",
+      examinationDetails: "Examination Preparation Details",
       educationDetails: "Education Details",
       familyDetails: "Family Details",
       contactDetails: "Contact Details",
-    }
+    },
   };
 };
