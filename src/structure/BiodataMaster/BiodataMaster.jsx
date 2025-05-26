@@ -6,7 +6,13 @@ import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
 import WatermarkLogo from "../../assets/watermark/logo.png";
 import { getLatestStatusId } from "../../utils/StatusHelper";
 import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
-import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
+import { BiodataRequestStorage } from "../../supabase/BiodataRequest";  
+import {
+  BiodataBackgrounds,
+  getBiodataBackgroundImage,
+} from "../../json/BiodataBackground";
+import Loader from "../Loader/Loader";
+import Languages from "../../json/Languages";
 
 import {
   Work,
