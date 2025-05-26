@@ -234,7 +234,7 @@ export const BiodataRequestStorage = {
     }
   },
 
-    async getBiodataRequestByRequestId(requestId) {
+  async getBiodataRequestByRequestId(requestId) {
     try {
       const { data, error } = await supabase
         .from(biodataRequestTableName)

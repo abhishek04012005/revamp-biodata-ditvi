@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./RequestBiodataDetail.css";
+import { getLanguageData } from "../../../json/languageCofig";
 import {
   Edit,
   Save,
@@ -13,10 +14,7 @@ import {
   People,
   ContactPhone,
   CloudUpload,
-  Check,
   ArrowBack,
-  Phone,
-  LocationOn,
   Download,
   InfoOutlined,
 } from "@mui/icons-material";
@@ -45,10 +43,12 @@ const RequestBiodataDetail = () => {
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
   const [flowType, setFlowType] = useState(null);
+  const [langData, setLangData] = useState(null);
 
   useEffect(() => {
     fetchRequestData(requestId);
   }, [requestId]);
+
   const fetchRequestData = async (requestId) => {
     try {
       setIsLoading(true);
@@ -57,13 +57,18 @@ const RequestBiodataDetail = () => {
       );
 
       if (response) {
+        // Initialize language data based on model details
+        const languageData = getLanguageData(response.model_details);
+        setLangData(languageData);
+
         const initialFormData = {
           profileImage: response.profile_url,
           biodataUrl: response.biodata_url,
           userDetails: response.user_details,
           modelDetails: response.model_details,
           personalDetails: response.personal_details || PersonalData,
-          professionalDetails: response.professional_details || ProfessionalData,
+          professionalDetails:
+            response.professional_details || ProfessionalData,
           examinationDetails: response.examination_details || ExaminationData,
           educationDetails: response.education_details || [EducationData],
           familyDetails: response.family_details || FamilyData,
@@ -199,17 +204,18 @@ const RequestBiodataDetail = () => {
     </section>
   );
 
+  // Update all render functions to use langData
   const renderPersonalInfo = () =>
     renderSection(
       <Person />,
-      "Personal Information",
+      langData?.biodataMaster.personalDetails || "Personal Information",
       <div className="info-grid">
         {formData.personalDetails.map((field, index) => (
           <div key={index} className="detail-field animated-field">
             <label>{field.label}:</label>
             {isEditing ? (
               <input
-              className="input-field-edit"
+                className="input-field-edit"
                 type="text"
                 value={field.value}
                 onChange={(e) => {
@@ -220,18 +226,17 @@ const RequestBiodataDetail = () => {
                     personalDetails: newPersonalData,
                   });
                 }}
-                placeholder={`Enter ${field.label.toLowerCase()}`}
+                placeholder={`${field.label}`}
               />
             ) : (
               <span className="field-value">
-                {field.value || "Not Provided"}
+                {field.value || langData?.placeholders.notProvided}
               </span>
             )}
           </div>
         ))}
       </div>
     );
-
   const renderBiodataDownload = () =>
     renderSection(
       <CloudUpload />,
@@ -264,28 +269,29 @@ const RequestBiodataDetail = () => {
   const renderProfessionalInfo = () =>
     renderSection(
       <Work />,
-      "Professional Information",
+      langData?.biodataMaster.professionalDetails || "Professional Information",
       <div className="info-grid">
         {formData.professionalDetails.map((field, index) => (
           <div key={index} className="detail-field animated-field">
             <label>{field.label}:</label>
             {isEditing ? (
               <input
+                className="input-field-edit"
                 type="text"
                 value={field.value}
                 onChange={(e) => {
-                  const newData = [...formData.professionalDetails];
-                  newData[index].value = e.target.value;
+                  const newProfessionalData = [...formData.professionalDetails];
+                  newProfessionalData[index].value = e.target.value;
                   setFormData({
                     ...formData,
-                    professionalDetails: newData,
+                    professionalDetails: newProfessionalData,
                   });
                 }}
-                placeholder={`Enter ${field.label.toLowerCase()}`}
+                placeholder={`${field.label}`}
               />
             ) : (
               <span className="field-value">
-                {field.value || "Not Provided"}
+                {field.value || langData?.placeholders.notProvided}
               </span>
             )}
           </div>
@@ -294,148 +300,174 @@ const RequestBiodataDetail = () => {
     );
 
   const renderExaminationInfo = () =>
-  renderSection(
-    <School />,
-    "Examination Information",
-    <div className="info-grid">
-      {formData.examinationDetails.map((field, index) => (
-        <div key={index} className="detail-field animated-field">
-          <label>{field.label}:</label>
-          {isEditing ? (
-            <input
-              type="text"
-              value={field.value}
-              onChange={(e) => {
-                const newData = [...formData.examinationDetails];
-                newData[index].value = e.target.value;
-                setFormData({
-                  ...formData,
-                  examinationDetails: newData,
-                });
-              }}
-              placeholder={`Enter ${field.label.toLowerCase()}`}
-            />
-          ) : (
-            <span className="field-value">
-              {field.value || "Not Provided"}
-            </span>
-          )}
-        </div>
-      ))}
-    </div>
-  );
+    renderSection(
+      <School />,
+      langData?.biodataMaster.examinationDetails || "Examination Information",
+      <div className="info-grid">
+        {formData.examinationDetails.map((field, index) => (
+          <div key={index} className="detail-field animated-field">
+            <label>{field.label}:</label>
+            {isEditing ? (
+              <input
+                className="input-field-edit"
+                type="text"
+                value={field.value}
+                onChange={(e) => {
+                  const newExaminationData = [...formData.examinationDetails];
+                  newExaminationData[index].value = e.target.value;
+                  setFormData({
+                    ...formData,
+                    examinationDetails: newExaminationData,
+                  });
+                }}
+                placeholder={`${field.label.toLowerCase()}`}
+              />
+            ) : (
+              <span className="field-value">
+                {field.value || langData?.placeholders.notProvided}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    );
 
   const renderEducationInfo = () =>
     renderSection(
       <School />,
-      "Education Information",
-      <>
+      langData?.biodataMaster.educationDetails || "Education Information",
+      <div className="education-section">
         {isEditing && (
-          <button className="add-btn floating" onClick={handleAddEducation}>
-            <Add /> Add Education
+          <button className="add-education-btn" onClick={handleAddEducation}>
+            <Add /> {langData?.placeholders.addEducation}
           </button>
         )}
-        <div className="education-list">
-          {formData.educationDetails.map((eduGroup, groupIndex) => (
-            <div key={groupIndex} className="education-group animated-card">
-              <div className="group-header">
-                <h3>
-                  Education {formData.educationDetails.length - groupIndex}
-                </h3>
-                {isEditing && (
-                  <button
-                    className="remove-btn floating"
-                    onClick={() => handleRemoveEducation(groupIndex)}
-                  >
-                    <Delete />
-                  </button>
-                )}
-              </div>
-              <div className="info-grid">
-                {eduGroup.map((field, index) => (
-                  <div key={index} className="detail-field animated-field">
-                    <label>{field.label}:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value={field.value}
-                        onChange={(e) => {
-                          const newEducation = [...formData.educationDetails];
-                          newEducation[groupIndex][index].value =
-                            e.target.value;
-                          setFormData({
-                            ...formData,
-                            educationDetails: newEducation,
-                          });
-                        }}
-                        placeholder={`Enter ${field.label.toLowerCase()}`}
-                      />
-                    ) : (
-                      <span className="field-value">
-                        {field.value || "Not Provided"}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
+        {formData.educationDetails.map((education, eduIndex) => (
+          <div key={eduIndex} className="education-entry animated-card">
+            <h3>{`${langData?.placeholders.education} ${
+              formData.educationDetails.length - eduIndex
+            }`}</h3>
+            <div className="info-grid">
+              {education.map((field, fieldIndex) => (
+                <div key={fieldIndex} className="detail-field">
+                  <label>{field.label}:</label>
+                  {isEditing ? (
+                    <input
+                      className="input-field-edit"
+                      type="text"
+                      value={field.value}
+                      onChange={(e) => {
+                        const newEducationData = [...formData.educationDetails];
+                        newEducationData[eduIndex][fieldIndex].value =
+                          e.target.value;
+                        setFormData({
+                          ...formData,
+                          educationDetails: newEducationData,
+                        });
+                      }}
+                      placeholder={`${field.label}`}
+                    />
+                  ) : (
+                    <span className="field-value">
+                      {field.value || langData?.placeholders.notProvided}
+                    </span>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </>
+            {isEditing && eduIndex > 0 && (
+              <button
+                className="remove-education-btn"
+                onClick={() => handleRemoveEducation(eduIndex)}
+              >
+                <Delete /> {langData?.placeholders.removeEducation}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
     );
 
   const renderFamilyInfo = () =>
     renderSection(
       <People />,
-      "Family Information",
+      langData?.biodataMaster.familyDetails || "Family Information",
       <>
+        {/* Parents Section */}
         <div className="family-parents animated-card">
-          <h3>Parents</h3>
-          <div className="parents-grid">
-            {["father", "mother"].map((relation) => (
-              <div key={relation} className="parent-card">
-                <h4>{formData.familyDetails[relation].label}</h4>
-                <div className="info-grid">
-                  {["name", "occupation"].map((field) => (
-                    <div key={field} className="detail-field animated-field">
-                      <label>
-                        {field.charAt(0).toUpperCase() + field.slice(1)}:
-                      </label>
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          value={formData.familyDetails[relation].value[field]}
-                          onChange={(e) => {
-                            setFormData({
-                              ...formData,
-                              familyDetails: {
-                                ...formData.familyDetails,
-                                [relation]: {
-                                  ...formData.familyDetails[relation],
-                                  value: {
-                                    ...formData.familyDetails[relation].value,
-                                    [field]: e.target.value,
-                                  },
-                                },
+          <h3>{langData?.placeholders.parents}</h3>
+          {["father", "mother"].map((relation) => (
+            <div key={relation} className="parent-info">
+              <h4>{formData.familyDetails[relation].label}</h4>
+              <div className="info-grid">
+                <div className="detail-field">
+                  <label>{langData?.placeholders.name}:</label>
+                  {isEditing ? (
+                    <input
+                      className="input-field-edit"
+                      type="text"
+                      value={formData.familyDetails[relation].value.name}
+                      onChange={(e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          familyDetails: {
+                            ...prev.familyDetails,
+                            [relation]: {
+                              ...prev.familyDetails[relation],
+                              value: {
+                                ...prev.familyDetails[relation].value,
+                                name: e.target.value,
                               },
-                            });
-                          }}
-                          placeholder={`Enter ${field}`}
-                        />
-                      ) : (
-                        <span className="field-value">
-                          {formData.familyDetails[relation].value[field] ||
-                            "Not Provided"}
-                        </span>
-                      )}
-                    </div>
-                  ))}
+                            },
+                          },
+                        }));
+                      }}
+                      placeholder={langData?.placeholders.name}
+                    />
+                  ) : (
+                    <span className="field-value">
+                      {formData.familyDetails[relation].value.name ||
+                        langData?.placeholders.notProvided}
+                    </span>
+                  )}
+                </div>
+                <div className="detail-field">
+                  <label>{langData?.placeholders.occupation}:</label>
+                  {isEditing ? (
+                    <input
+                      className="input-field-edit"
+                      type="text"
+                      value={formData.familyDetails[relation].value.occupation}
+                      onChange={(e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          familyDetails: {
+                            ...prev.familyDetails,
+                            [relation]: {
+                              ...prev.familyDetails[relation],
+                              value: {
+                                ...prev.familyDetails[relation].value,
+                                occupation: e.target.value,
+                              },
+                            },
+                          },
+                        }));
+                      }}
+                      placeholder={langData?.placeholders.enterOccupation}
+                    />
+                  ) : (
+                    <span className="field-value">
+                      {formData.familyDetails[relation].value.occupation ||
+                        langData?.placeholders.notProvided}
+                    </span>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
+        {/* Siblings Section */}
         {["brothers", "sisters"].map((relation) => (
           <div key={relation} className="family-siblings animated-card">
             <div className="siblings-header">
@@ -445,97 +477,168 @@ const RequestBiodataDetail = () => {
                   className="add-btn floating"
                   onClick={() => handleAddSibling(relation)}
                 >
-                  <Add /> Add {relation === "brothers" ? "Brother" : "Sister"}
+                  <Add />
+                  {relation === "brothers"
+                    ? langData?.placeholders.addBrother
+                    : langData?.placeholders.addSister}
                 </button>
               )}
             </div>
-            <div className="siblings-grid">
-              {formData.familyDetails[relation].value.map((sibling, idx) => (
-                <div key={idx} className="sibling-card">
-                  {isEditing && (
-                    <button
-                      className="remove-btn floating"
-                      onClick={() => handleRemoveSibling(relation, idx)}
-                    >
-                      <Delete />
-                    </button>
-                  )}
-                  <div className="info-grid">
-                    {["name", "occupation", "married"].map((field) => (
-                      <div key={field} className="detail-field animated-field">
+            {formData.familyDetails[relation].value.map((sibling, index) => (
+              <div key={index} className="sibling-info">
+                <div className="info-grid">
+                  <div className="detail-field">
+                    <label>{langData?.placeholders.name}:</label>
+                    {isEditing ? (
+                      <input
+                        className="input-field-edit"
+                        type="text"
+                        value={sibling.name}
+                        onChange={(e) => {
+                          const updatedSiblings = [
+                            ...formData.familyDetails[relation].value,
+                          ];
+                          updatedSiblings[index] = {
+                            ...updatedSiblings[index],
+                            name: e.target.value,
+                          };
+                          setFormData((prev) => ({
+                            ...prev,
+                            familyDetails: {
+                              ...prev.familyDetails,
+                              [relation]: {
+                                ...prev.familyDetails[relation],
+                                value: updatedSiblings,
+                              },
+                            },
+                          }));
+                        }}
+                        placeholder={langData?.placeholders.name}
+                      />
+                    ) : (
+                      <span className="field-value">
+                        {sibling.name || langData?.placeholders.notProvided}
+                      </span>
+                    )}
+                  </div>
+                  <div className="detail-field">
+                    <label>{langData?.placeholders.occupation}:</label>
+                    {isEditing ? (
+                      <input
+                        className="input-field-edit"
+                        type="text"
+                        value={sibling.occupation}
+                        onChange={(e) => {
+                          const updatedSiblings = [
+                            ...formData.familyDetails[relation].value,
+                          ];
+                          updatedSiblings[index] = {
+                            ...updatedSiblings[index],
+                            occupation: e.target.value,
+                          };
+                          setFormData((prev) => ({
+                            ...prev,
+                            familyDetails: {
+                              ...prev.familyDetails,
+                              [relation]: {
+                                ...prev.familyDetails[relation],
+                                value: updatedSiblings,
+                              },
+                            },
+                          }));
+                        }}
+                        placeholder={langData?.placeholders.occupation}
+                      />
+                    ) : (
+                      <span className="field-value">
+                        {sibling.occupation ||
+                          langData?.placeholders.notProvided}
+                      </span>
+                    )}
+                  </div>
+                  <div className="detail-field">
+                    <label>{langData?.placeholders.married}:</label>
+                    {isEditing ? (
+                      <div className="radio-group">
                         <label>
-                          {field.charAt(0).toUpperCase() + field.slice(1)}:
-                        </label>
-                        {isEditing ? (
-                          field === "married" ? (
-                            <div className="radio-group">
-                              {["Yes", "No"].map((option) => (
-                                <label key={option} className="radio-option">
-                                  <input
-                                    type="radio"
-                                    name={`married-${relation}-${idx}`}
-                                    value={option}
-                                    checked={
-                                      sibling[field]
-                                        ? sibling[field] === option
-                                        : option === "No"
-                                    }
-                                    onChange={(e) => {
-                                      const newSiblings = [
-                                        ...formData.familyDetails[relation]
-                                          .value,
-                                      ];
-                                      newSiblings[idx][field] = e.target.value;
-                                      setFormData({
-                                        ...formData,
-                                        familyDetails: {
-                                          ...formData.familyDetails,
-                                          [relation]: {
-                                            ...formData.familyDetails[relation],
-                                            value: newSiblings,
-                                          },
-                                        },
-                                      });
-                                    }}
-                                  />
-                                  <span className="radio-label">{option}</span>
-                                </label>
-                              ))}
-                            </div>
-                          ) : (
-                            <input
-                              type="text"
-                              value={sibling[field]}
-                              onChange={(e) => {
-                                const newSiblings = [
-                                  ...formData.familyDetails[relation].value,
-                                ];
-                                newSiblings[idx][field] = e.target.value;
-                                setFormData({
-                                  ...formData,
-                                  familyDetails: {
-                                    ...formData.familyDetails,
-                                    [relation]: {
-                                      ...formData.familyDetails[relation],
-                                      value: newSiblings,
-                                    },
+                          <input
+                            type="radio"
+                            name={`married-${relation}-${index}`}
+                            checked={
+                              sibling.married === langData?.placeholders.yes
+                            }
+                            onChange={() => {
+                              const updatedSiblings = [
+                                ...formData.familyDetails[relation].value,
+                              ];
+                              updatedSiblings[index] = {
+                                ...updatedSiblings[index],
+                                married: langData?.placeholders.yes,
+                              };
+                              setFormData((prev) => ({
+                                ...prev,
+                                familyDetails: {
+                                  ...prev.familyDetails,
+                                  [relation]: {
+                                    ...prev.familyDetails[relation],
+                                    value: updatedSiblings,
                                   },
-                                });
-                              }}
-                              placeholder={`Enter ${field}`}
-                            />
-                          )
-                        ) : (
-                          <span className="field-value">
-                            {sibling[field] || "Not Provided"}
-                          </span>
-                        )}
+                                },
+                              }));
+                            }}
+                          />
+                          {langData?.placeholders.yes}
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name={`married-${relation}-${index}`}
+                            checked={
+                              sibling.married === langData?.placeholders.no
+                            }
+                            onChange={() => {
+                              const updatedSiblings = [
+                                ...formData.familyDetails[relation].value,
+                              ];
+                              updatedSiblings[index] = {
+                                ...updatedSiblings[index],
+                                married: langData?.placeholders.no,
+                              };
+                              setFormData((prev) => ({
+                                ...prev,
+                                familyDetails: {
+                                  ...prev.familyDetails,
+                                  [relation]: {
+                                    ...prev.familyDetails[relation],
+                                    value: updatedSiblings,
+                                  },
+                                },
+                              }));
+                            }}
+                          />
+                          {langData?.placeholders.no}
+                        </label>
                       </div>
-                    ))}
+                    ) : (
+                      <span className="field-value">
+                        {sibling.married || langData?.placeholders.no}
+                      </span>
+                    )}
                   </div>
                 </div>
-              ))}
-            </div>
+                {isEditing && (
+                  <button
+                    className="remove-btn"
+                    onClick={() => handleRemoveSibling(relation, index)}
+                  >
+                    <Delete />
+                    {relation === "brothers"
+                      ? langData?.placeholders.removeBrother
+                      : langData?.placeholders.removeSister}
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
         ))}
       </>
@@ -544,62 +647,43 @@ const RequestBiodataDetail = () => {
   const renderContactInfo = () =>
     renderSection(
       <ContactPhone />,
-      "Contact Information",
-      <div className="contact-grid">
-        <div className="detail-field animated-field">
-          <label>
-            <LocationOn /> Address:
-          </label>
-          {isEditing ? (
-            <textarea
-              value={formData.contactDetails.address || ""}
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  contactDetails: {
-                    ...formData.contactDetails,
-                    address: e.target.value,
-                  },
-                });
-              }}
-              placeholder="Enter address"
-            />
-          ) : (
-            <span className="field-value">
-              {formData.contactDetails.address || "Not Provided"}
-            </span>
-          )}
-        </div>
-        <div className="detail-field animated-field">
-          <label>
-            <Phone /> Mobile:
-          </label>
-          {isEditing ? (
-            <input
-              type="tel"
-              value={formData.contactDetails.mobile || ""}
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  contactDetails: {
-                    ...formData.contactDetails,
-                    mobile: e.target.value,
-                  },
-                });
-              }}
-              placeholder="Enter mobile number"
-            />
-          ) : (
-            <span className="field-value">
-              {formData.contactDetails.mobile || "Not Provided"}
-            </span>
-          )}
-        </div>
+      langData?.biodataMaster.contactDetails || "Contact Information",
+      <div className="info-grid">
+        {formData.contactDetails.map((field, index) => (
+          <div key={index} className="detail-field animated-field">
+            <label>{field.label}:</label>
+            {isEditing ? (
+              <input
+                className="input-field-edit"
+                type={
+                  field.label.toLowerCase().includes("email") ? "email" : "text"
+                }
+                value={field.value}
+                onChange={(e) => {
+                  const newContactData = [...formData.contactDetails];
+                  newContactData[index].value = e.target.value;
+                  setFormData({
+                    ...formData,
+                    contactDetails: newContactData,
+                  });
+                }}
+                placeholder={`${field.label}`}
+              />
+            ) : (
+              <span className="field-value">
+                {field.value || langData?.placeholders.notProvided}
+              </span>
+            )}
+          </div>
+        ))}
       </div>
     );
 
-  if (isLoading) return <Loader />;
-  if (!formData) return <div className="not-found">Request not found</div>;
+  if (isLoading || !langData) return <Loader />;
+  if (!formData)
+    return (
+      <div className="not-found">{langData?.placeholders.requestNotFound}</div>
+    );
 
   return (
     <div className="request-detail">
@@ -609,8 +693,10 @@ const RequestBiodataDetail = () => {
             <ArrowBack /> Back
           </button>
           <div className="header-info">
-            <h1>Biodata Request Details</h1>
-            <p className="request-id">Request Number: {requestNumber}</p>
+            <h1>{langData?.placeholders.biodataRequestDetails}</h1>
+            <p className="request-id">
+              {langData?.placeholders.requestNumber}: {requestNumber}
+            </p>
           </div>
         </div>
         <div className="detail-actions">
@@ -640,44 +726,45 @@ const RequestBiodataDetail = () => {
 
       <div className="detail-content">
         <div className="content-grid">
-          {renderSection(
-            <Person />,
-            "Profile Image",
-            <div className="profile-section">
-              <div className="profile-image-container">
-                <img src={formData.profileImage} alt="Profile" />
-                {isEditing && (
-                  <div className="image-upload-overlay">
-                    <CloudUpload />
-                    <span>Upload New Image</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="image-input"
-                    />
-                  </div>
-                )}
+          <div className="content-grid">
+            {renderSection(
+              <Person />,
+              "Profile Image",
+              <div className="profile-section">
+                <div className="profile-image-container">
+                  <img src={formData.profileImage} alt="Profile" />
+                  {isEditing && (
+                    <div className="image-upload-overlay">
+                      <CloudUpload />
+                      <span>Upload New Image</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="image-input"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
-          {formData.biodataUrl && renderBiodataDownload()}
-          {renderPersonalInfo()}
-          {formData.modelDetails?.type === ModelTypes.Student.Name 
-            ? renderExaminationInfo()
-            : renderProfessionalInfo()
-          }
-          {renderEducationInfo()}
-          {renderFamilyInfo()}
-          {renderContactInfo()}
+            )}
+            {formData.biodataUrl && renderBiodataDownload()}
+            {renderPersonalInfo()}
+            {formData.modelDetails?.type === ModelTypes.Student.Name
+              ? renderExaminationInfo()
+              : renderProfessionalInfo()}
+            {renderEducationInfo()}
+            {renderFamilyInfo()}
+            {renderContactInfo()}
+          </div>
         </div>
-      </div>
 
-      {isLoading && (
-        <div className="loading-overlay">
-          <div className="loader"></div>
-        </div>
-      )}
+        {isLoading && (
+          <div className="loading-overlay">
+            <div className="loader"></div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
