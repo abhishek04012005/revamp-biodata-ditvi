@@ -28,7 +28,6 @@ const PrevArrow = (props) => {
     );
 };
 
-
 const BioDataCardStructure = ({ data, isHovered, onHover, onLeave, onGetNow, onPreview }) => (
     <>
         <div
