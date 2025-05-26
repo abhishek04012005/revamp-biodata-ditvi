@@ -11,6 +11,10 @@ const FamilyDetailsSection = ({
 }) => {
   const MAXIUM_SIBLINGS = 5;
   const isLanguageHindi = modelDetails.language === Languages.Hindi.Name;
+  const occupationPlaceholder = {
+    father: isLanguageHindi ? "सरकारी सेवा" : "Government Service",
+    mother: isLanguageHindi ? "गृहिणी" : "Housewife",
+  };
 
   const setFamilyDetails = (relation, index, key, value) => {
     setFormData((prev) => ({
@@ -99,7 +103,9 @@ const FamilyDetailsSection = ({
               <input
                 type="text"
                 placeholder={
-                  relation === "father" ? "Goverment Service" : "Housewife"
+                  relation === "father"
+                    ? occupationPlaceholder.father
+                    : occupationPlaceholder.mother
                 }
                 value={formData.familyDetails[relation].value.occupation}
                 onChange={(e) =>
@@ -142,10 +148,12 @@ const FamilyDetailsSection = ({
                     <input
                       type="text"
                       placeholder={`${
-                        relation === "brothers" ? "Brother" : "Sister"
+                        relation === "brothers"
+                          ? langData.placeholders.brother
+                          : langData.placeholders.sister
                       } ${
                         formData.familyDetails[relation].value.length - idx
-                      } Name`}
+                      } ${langData.placeholders.name}`}
                       value={sibling.name}
                       onChange={(e) =>
                         setFamilyDetails(relation, idx, "name", e.target.value)
@@ -158,7 +166,7 @@ const FamilyDetailsSection = ({
                     </label>
                     <input
                       type="text"
-                      placeholder="Occupation"
+                      placeholder={langData.placeholders.occupation}
                       value={sibling.occupation}
                       onChange={(e) =>
                         setFamilyDetails(
@@ -218,8 +226,8 @@ const FamilyDetailsSection = ({
                   >
                     -{" "}
                     {relation === "brothers"
-                      ? langData.placeholders.addBrother
-                      : langData.placeholders.addSister}
+                      ? langData.placeholders.removeBrother
+                      : langData.placeholders.removeSister}
                   </button>
                 </div>
               </div>
