@@ -114,6 +114,7 @@
 .create-biodata-section {
     background: white;
     padding: clamp(1rem, 3vw, 2rem);
+    padding-top: 0.2rem;
     border-radius: 15px;
     box-shadow: var(--shadow-sm);
     margin-bottom: 2rem;
@@ -122,8 +123,8 @@
 .create-biodata-section h2 {
     color: var(--primary-color);
     font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
     border-bottom: 2px solid rgba(255, 135, 15, 0.1);
 }
 
@@ -505,3 +506,151 @@ select:focus {
   }
 }
 
+.create-biodata-notification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: createBiodataFadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.create-biodata-notification-popup {
+  background: white;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform-origin: center;
+  animation: createBiodataPopIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.create-biodata-notification-header {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.create-biodata-notification-icon-large {
+  width: 48px;
+  height: 48px;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.create-biodata-notification-alert-icon svg{
+  width: 40px;
+  height: 40px;
+}
+
+.create-biodata-notification-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.create-biodata-notification-close:hover {
+  background: #e5e7eb;
+  color: #1f2937;
+  transform: rotate(90deg);
+}
+
+.create-biodata-notification-content {
+  padding: 24px;
+}
+
+.create-biodata-notification-text {
+  margin-bottom: 24px;
+}
+
+.create-biodata-notification-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.create-biodata-notification-message {
+  color: #4b5563;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.create-biodata-notification-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.create-biodata-notification-confirm {
+  padding: 12px 24px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.create-biodata-notification-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.create-biodata-notification-confirm:active {
+  transform: translateY(0);
+}
+
+@keyframes createBiodataFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes createBiodataPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .create-biodata-notification-popup {
+    width: 70%;
+    margin: 20px;
+  }
+  
+  .create-biodata-notification-title {
+    font-size: 1.25rem;
+  }
+  
+  .create-biodata-notification-message {
+    font-size: 1rem;
+  }
+}
