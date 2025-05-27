@@ -1,19 +1,19 @@
-import BlogImage1 from '../assets/blog/blog1.png'
-import BlogImage2 from '../assets/blog/blog2.png'
-import BlogImage3 from '../assets/blog/blog3.png'
-import BlogImage4 from '../assets/blog/blog4.png'
-import BlogImage5 from '../assets/blog/blog5.png'
-import BlogImage6 from '../assets/blog/blog6.png'
-import BlogImage7 from '../assets/blog/blog7.png'
-import BlogImage8 from '../assets/blog/blog8.png'
-import BlogImage9 from '../assets/blog/blog9.png'
-import BlogImage10 from '../assets/blog/blog10.png'
+import BlogImage1 from "../assets/blog/blog1.png";
+import BlogImage2 from "../assets/blog/blog2.png";
+import BlogImage3 from "../assets/blog/blog3.png";
+import BlogImage4 from "../assets/blog/blog4.png";
+import BlogImage5 from "../assets/blog/blog5.png";
+import BlogImage6 from "../assets/blog/blog6.png";
+import BlogImage7 from "../assets/blog/blog7.png";
+import BlogImage8 from "../assets/blog/blog8.png";
+import BlogImage9 from "../assets/blog/blog9.png";
+import BlogImage10 from "../assets/blog/blog10.png";
 
 const blogPosts = [
-    {
-        "id": 1,
-        "title": "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
-        "content": `
+  {
+    id: 1,
+    title: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+    content: `
             <h2>Why a Well-Crafted Biodata Matters</h2>
             <p>A traditional biodata serves as a structured document that highlights key personal details, career background, and family information. Whether you're preparing one for marriage or professional use, crafting it effectively ensures a lasting impression.</p>
     
@@ -41,27 +41,28 @@ const blogPosts = [
             <h3>3. Final Thoughts</h3>
             <p>Creating a well-structured biodata can greatly improve your chances of making a strong impression. By following the right formatting techniques and highlighting relevant details, you can craft a biodata that stands out in both personal and professional spheres.</p>
         `,
-        "excerpt": "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
-        "image": BlogImage1,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (5 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-         "category": "Personal Development",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Resume Tips", "Professional Profile"],
-        "likes": 10,
-    },
+    excerpt:
+      "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+    image: BlogImage1,
+    author: "Abhishek",
+    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Personal Development",
+    readTime: "6 min read",
+    tags: ["Traditional Biodata", "Resume Tips", "Professional Profile"],
+    likes: 10,
+  },
 
-
-
-
-    {
-        "id": 2,
-        "title": "The Essential Elements of a Compelling Traditional Biodata",
-        "content": `
+  {
+    id: 2,
+    title: "The Essential Elements of a Compelling Traditional Biodata",
+    content: `
             <h2>Why a Well-Crafted Biodata Matters</h2>
             <p>A traditional biodata is more than just a document—it represents your personal and professional identity. Whether for matrimonial, academic, or job-related purposes, a well-structured biodata ensures clarity and impact.</p>
     
@@ -88,25 +89,34 @@ const blogPosts = [
             <h3>3. Conclusion</h3>
             <p>Crafting a compelling biodata helps you make a strong first impression. By focusing on structure, presentation, and meaningful details, you ensure that your biodata stands out and serves its intended purpose effectively.</p>
         `,
-        "excerpt": "Learn the key components that make a traditional biodata compelling and impactful.",
-        "image": BlogImage2,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (8 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Professional Development",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Resume Tips", "Professional Profile", "Matrimonial Biodata"],
-        "likes": 15,
-    },
+    excerpt:
+      "Learn the key components that make a traditional biodata compelling and impactful.",
+    image: BlogImage2,
+    author: "Abhishek",
+    date: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Professional Development",
+    readTime: "6 min read",
+    tags: [
+      "Traditional Biodata",
+      "Resume Tips",
+      "Professional Profile",
+      "Matrimonial Biodata",
+    ],
+    likes: 15,
+  },
 
-
-    {
-        "id": 3,
-        "title": "Biodata Writing for Marriage: Highlighting Your Values and Traditions",
-        "content": `
+  {
+    id: 3,
+    title:
+      "Biodata Writing for Marriage: Highlighting Your Values and Traditions",
+    content: `
             <h2>Crafting a Meaningful Marriage Biodata</h2>
             <p>A marriage biodata is more than just a formal document—it is a reflection of your values, traditions, and personality. Creating an impressive biodata helps in finding a suitable match who shares your beliefs and aspirations.</p>
     
@@ -134,25 +144,33 @@ const blogPosts = [
             <h3>3. Conclusion</h3>
             <p>A well-crafted marriage biodata helps in expressing who you are while making a lasting impression. By focusing on structure, values, and clarity, you can create a biodata that truly represents your traditions and aspirations.</p>
         `,
-        "excerpt": "Learn the key elements of writing a compelling marriage biodata that reflects your values and traditions.",
-        "image": BlogImage3,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (10 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Marriage & Relationships",
-        "readTime": "6 min read",
-        "tags": ["Marriage Biodata", "Traditional Biodata", "Finding a Match", "Personal Profile"],
-        "likes": 20,
-    },
+    excerpt:
+      "Learn the key elements of writing a compelling marriage biodata that reflects your values and traditions.",
+    image: BlogImage3,
+    author: "Abhishek",
+    date: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Marriage & Relationships",
+    readTime: "6 min read",
+    tags: [
+      "Marriage Biodata",
+      "Traditional Biodata",
+      "Finding a Match",
+      "Personal Profile",
+    ],
+    likes: 20,
+  },
 
-
-    {
-        "id": 4,
-        "title": "Making a Lasting Impression: Traditional Biodata Do's and Don'ts",
-        "content": `
+  {
+    id: 4,
+    title: "Making a Lasting Impression: Traditional Biodata Do's and Don'ts",
+    content: `
             <h2>Why Your Biodata Matters</h2>
             <p>A traditional biodata serves as the first impression when looking for matrimonial, academic, or professional opportunities. A well-structured biodata can set you apart, while errors can diminish your chances.</p>
     
@@ -179,24 +197,33 @@ const blogPosts = [
             <h3>3. Final Thoughts</h3>
             <p>A well-crafted biodata helps in making a strong first impression. By following the do’s and avoiding the don’ts, you can create a structured and appealing biodata that truly represents you.</p>
         `,
-        "excerpt": "Discover key do's and don'ts to craft a traditional biodata that makes a lasting impression.",
-        "image": BlogImage4,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (39 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Personal Development",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Resume Tips", "Matrimonial Biodata", "Professional Profile"],
-        "likes": 18,
-    },
+    excerpt:
+      "Discover key do's and don'ts to craft a traditional biodata that makes a lasting impression.",
+    image: BlogImage4,
+    author: "Abhishek",
+    date: new Date(Date.now() - 39 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Personal Development",
+    readTime: "6 min read",
+    tags: [
+      "Traditional Biodata",
+      "Resume Tips",
+      "Matrimonial Biodata",
+      "Professional Profile",
+    ],
+    likes: 18,
+  },
 
-    {
-        "id": 5,
-        "title": "Beyond the Basics: Elevating Your Traditional Biodata",
-        "content": `
+  {
+    id: 5,
+    title: "Beyond the Basics: Elevating Your Traditional Biodata",
+    content: `
             <h2>Taking Your Traditional Biodata to the Next Level</h2>
             <p>Creating a biodata isn’t just about listing facts—it’s about making a memorable impact. By refining structure, enhancing presentation, and adding thoughtful details, you can craft a biodata that stands out.</p>
     
@@ -230,24 +257,33 @@ const blogPosts = [
             <h3>4. Conclusion</h3>
             <p>Elevating your biodata requires thoughtfulness, structure, and presentation. By going beyond the basics, you can create a document that truly reflects your personality, aspirations, and strengths.</p>
         `,
-        "excerpt": "Go beyond standard biodata formats and create a compelling profile that showcases your strengths effectively.",
-        "image": BlogImage5,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (11 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Personal Branding",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Professional Profile", "Resume Writing", "Personal Branding"],
-        "likes": 11,
-    },
+    excerpt:
+      "Go beyond standard biodata formats and create a compelling profile that showcases your strengths effectively.",
+    image: BlogImage5,
+    author: "Abhishek",
+    date: new Date(Date.now() - 11 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Personal Branding",
+    readTime: "6 min read",
+    tags: [
+      "Traditional Biodata",
+      "Professional Profile",
+      "Resume Writing",
+      "Personal Branding",
+    ],
+    likes: 11,
+  },
 
-    {
-        "id": 6,
-        "title": "Personalizing Your Traditional Biodata for Success",
-        "content": `
+  {
+    id: 6,
+    title: "Personalizing Your Traditional Biodata for Success",
+    content: `
             <h2>Why Personalization Matters in a Biodata</h2>
             <p>In today's competitive world, a well-crafted biodata isn’t just about listing facts—it’s about showcasing your personality, values, and aspirations. Personalizing your biodata can set you apart, making a memorable impact on potential employers, academic institutions, or marriage prospects.</p>
     
@@ -281,24 +317,33 @@ const blogPosts = [
             <h3>4. Conclusion</h3>
             <p>Personalizing your traditional biodata creates a lasting impression. By incorporating meaningful details and ensuring a polished presentation, you can successfully craft a biodata that resonates with your audience and elevates your prospects.</p>
         `,
-        "excerpt": "Discover the key personalization strategies to make your traditional biodata stand out and leave a lasting impression.",
-        "image": BlogImage6,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (18 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Career & Personal Branding",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Personal Branding", "Resume Writing", "Professional Development"],
-        "likes": 18,
-    },
+    excerpt:
+      "Discover the key personalization strategies to make your traditional biodata stand out and leave a lasting impression.",
+    image: BlogImage6,
+    author: "Abhishek",
+    date: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Career & Personal Branding",
+    readTime: "6 min read",
+    tags: [
+      "Traditional Biodata",
+      "Personal Branding",
+      "Resume Writing",
+      "Professional Development",
+    ],
+    likes: 18,
+  },
 
-    {
-        "id": 7,
-        "title": "Traditional Biodata Format: What You Need to Know",
-        "content": `
+  {
+    id: 7,
+    title: "Traditional Biodata Format: What You Need to Know",
+    content: `
             <h2>Understanding the Traditional Biodata Format</h2>
             <p>Creating a traditional biodata requires a structured approach that highlights personal and professional details concisely. Whether for marriage, job applications, or academic purposes, following a standardized format ensures clarity and professionalism.</p>
     
@@ -333,25 +378,33 @@ const blogPosts = [
             <h3>4. Conclusion</h3>
             <p>Following the traditional biodata format ensures clarity, professionalism, and effectiveness. By organizing details strategically and maintaining a polished presentation, you can create a biodata that successfully serves its purpose.</p>
         `,
-        "excerpt": "Learn the essential elements of a traditional biodata format to present yourself effectively.",
-        "image": BlogImage7,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (85 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Professional & Personal Development",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Professional Profile", "Resume Writing", "Personal Branding"],
-        "likes": 12,
-    },
+    excerpt:
+      "Learn the essential elements of a traditional biodata format to present yourself effectively.",
+    image: BlogImage7,
+    author: "Abhishek",
+    date: new Date(Date.now() - 85 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Professional & Personal Development",
+    readTime: "6 min read",
+    tags: [
+      "Traditional Biodata",
+      "Professional Profile",
+      "Resume Writing",
+      "Personal Branding",
+    ],
+    likes: 12,
+  },
 
-
-    {
-        "id": 8,
-        "title": "Showcasing Your Family Background in a Traditional Biodata",
-        "content": `
+  {
+    id: 8,
+    title: "Showcasing Your Family Background in a Traditional Biodata",
+    content: `
             <h2>Why Family Background Matters in a Traditional Biodata</h2>
             <p>In many cultural and professional settings, a biodata serves as more than just a personal resume. It provides insights into your family background, values, and heritage, helping potential employers or marriage prospects understand your roots.</p>
     
@@ -379,24 +432,33 @@ const blogPosts = [
             <h3>4. Conclusion</h3>
             <p>A well-crafted family background section strengthens your biodata by presenting a comprehensive yet meaningful picture of your lineage. By keeping the format clear and informative, you can ensure that your biodata makes a lasting impression.</p>
         `,
-        "excerpt": "Learn how to effectively showcase your family background in a traditional biodata with structured formatting and engaging details.",
-        "image": BlogImage8,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (100 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Traditional Biodata & Personal Development",
-        "readTime": "6 min read",
-        "tags": ["Family Biodata", "Traditional Biodata", "Personal Profile", "Cultural Heritage"],
-        "likes": 13,
-    },
+    excerpt:
+      "Learn how to effectively showcase your family background in a traditional biodata with structured formatting and engaging details.",
+    image: BlogImage8,
+    author: "Abhishek",
+    date: new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Traditional Biodata & Personal Development",
+    readTime: "6 min read",
+    tags: [
+      "Family Biodata",
+      "Traditional Biodata",
+      "Personal Profile",
+      "Cultural Heritage",
+    ],
+    likes: 13,
+  },
 
-    {
-        "id": 9,
-        "title": "Writing About Your Education and Career in a Traditional Biodata",
-        "content": `
+  {
+    id: 9,
+    title: "Writing About Your Education and Career in a Traditional Biodata",
+    content: `
             <h2>Highlighting Your Education and Career in a Biodata</h2>
             <p>In a traditional biodata, your education and career play a crucial role in presenting your qualifications, achievements, and aspirations. A well-structured section about these aspects can significantly enhance your biodata’s impact.</p>
     
@@ -430,24 +492,34 @@ const blogPosts = [
             <h3>4. Conclusion</h3>
             <p>A well-crafted education and career section in your biodata enhances your profile and increases credibility. By focusing on structured formatting and relevant details, you can create a biodata that truly reflects your professional journey.</p>
         `,
-        "excerpt": "Learn how to effectively showcase your education and career in a traditional biodata with structured formatting and clarity.",
-        "image": BlogImage9,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (70 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Professional & Personal Development",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Education Profile", "Career Development", "Resume Writing"],
-        "likes": 14,
-    },
+    excerpt:
+      "Learn how to effectively showcase your education and career in a traditional biodata with structured formatting and clarity.",
+    image: BlogImage9,
+    author: "Abhishek",
+    date: new Date(Date.now() - 70 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Professional & Personal Development",
+    readTime: "6 min read",
+    tags: [
+      "Traditional Biodata",
+      "Education Profile",
+      "Career Development",
+      "Resume Writing",
+    ],
+    likes: 14,
+  },
 
-    {
-        "id": 10,
-        "title": "Traditional Biodata for the Modern Age: Balancing Culture and Expectations",
-        "content": `
+  {
+    id: 10,
+    title:
+      "Traditional Biodata for the Modern Age: Balancing Culture and Expectations",
+    content: `
             <h2>Embracing Tradition While Meeting Modern Expectations</h2>
             <p>In a fast-changing world, a traditional biodata still holds immense value, particularly for matrimonial and formal personal profiling. However, balancing cultural heritage with contemporary expectations requires a thoughtful approach.</p>
     
@@ -482,22 +554,28 @@ const blogPosts = [
             <h3>4. Conclusion</h3>
             <p>Incorporating modern elements into a traditional biodata enhances its effectiveness. By embracing culture while adapting to present-day expectations, you can create a biodata that resonates deeply across generations.</p>
         `,
-        "excerpt": "Learn how to craft a traditional biodata that balances cultural heritage with modern expectations.",
-        "image": BlogImage10,
-        "author": "Abhishek",
-        "date": new Date(Date.now() - (99 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }),
-        "category": "Personal & Professional Development",
-        "readTime": "6 min read",
-        "tags": ["Traditional Biodata", "Modern Profiles", "Personal Branding", "Professional Development"],
-        "likes": 15,
-    },
-
-]
-
-
+    excerpt:
+      "Learn how to craft a traditional biodata that balances cultural heritage with modern expectations.",
+    image: BlogImage10,
+    author: "Abhishek",
+    date: new Date(Date.now() - 99 * 24 * 60 * 60 * 1000).toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    ),
+    category: "Personal & Professional Development",
+    readTime: "6 min read",
+    tags: [
+      "Traditional Biodata",
+      "Modern Profiles",
+      "Personal Branding",
+      "Professional Development",
+    ],
+    likes: 15,
+  },
+];
 
 export default blogPosts;
