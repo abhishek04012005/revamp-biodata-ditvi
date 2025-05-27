@@ -107,7 +107,7 @@ const Payment = () => {
 
   const handlePaymentSuccess = async (response, paymentRequestId) => {
     try {
-      const dbResponse = PaymentRequestStorage.updatePaymentStatus(
+      const paymentDBResponse = PaymentRequestStorage.updatePaymentStatus(
         paymentRequestId,
         {
           status: PaymentStatus.Completed,
@@ -116,19 +116,23 @@ const Payment = () => {
         }
       );
 
-      if (dbResponse) {
+      const biodataDBResponse =
         BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(
           requestNumber,
           [
             ...requestData.status,
             {
-              id: 3,
+              id: 4,
               created: new Date().toISOString(),
             },
           ]
         );
+
+      if (paymentDBResponse && biodataDBResponse) {
         // Redirect to success page
         navigate(`/payment-success/${requestNumber}`);
+      } else {
+        alert("Satus update failed.");
       }
     } catch (error) {
       console.error("Error updating payment status:", error);
@@ -190,13 +194,13 @@ const Payment = () => {
   const isPaymentEnabled = () => {
     if (!requestData) return false;
     const latestStatus = getLatestStatusId(requestData.status);
-    return latestStatus === 2; // User Approved status
+    return latestStatus === 3; // User Approved status
   };
 
   const isPaymentCompleted = () => {
     if (!requestData) return false;
     const latestStatus = getLatestStatusId(requestData.status);
-    return latestStatus > 2; // Payment completed
+    return latestStatus > 4; // Payment completed
   };
 
   if (loading) {

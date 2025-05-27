@@ -30,6 +30,7 @@ export const PaymentRequestStorage = {
                 .from(paymentRequestTable)
                 .select("*")
                 .eq("request_number", requestNumber)
+                .eq("status", PaymentStatus.Completed)
                 .single();
 
             if (error) throw error;
