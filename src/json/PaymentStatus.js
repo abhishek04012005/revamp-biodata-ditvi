@@ -1,6 +1,6 @@
 export const PaymentStatus = {
   Initiated: "INITIATED",
-  Completed: "COMPLETED.",
+  Completed: "COMPLETED",
   Failed: "FAILED",
   Cancelled: "CANCELLED",
   Pending: "PENDING",
