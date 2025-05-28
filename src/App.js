@@ -34,6 +34,7 @@ import Payment from "./components/Payments/Payment/Payment";
 import PaymentSuccess from "./components/Payments/PaymentSucess/PaymentSucess";
 import PaymentFailure from "./components/Payments/PaymentFailure/PaymentFailure";
 import PaymentDashboard from "./components/Admin/PaymentDashboard/PaymentDashboard";
+import FeedbackDashboard from "./components/Admin/FeedbackDashboard/FeedbackDashboard";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
                     <AdminNavbar />
                     <Routes>
                       <Route path="biodata-dashboard" element={<BiodataDashboard />} />
+                        <Route path="feedback-dashboard" element={<FeedbackDashboard />} />
                       <Route
                         path="production-dashboard"
                         element={<ProductionDashboard />}

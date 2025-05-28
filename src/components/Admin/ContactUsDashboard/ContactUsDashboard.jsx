@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
-  Delete,
   Refresh,
   Search,
-  FilterList,
   Visibility,
   Close,
+  Message,
+  Email,
+  Phone,
+  ContactMail
 } from "@mui/icons-material";
 import "./ContactUsDashboard.css";
 import { ContactUsStorage } from "../../../supabase/ContactUs";
-import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
 import Loader from "../../../structure/Loader/Loader";
 
 const ContactUsDashboard = () => {
@@ -21,10 +22,34 @@ const ContactUsDashboard = () => {
     key: "created_at",
     direction: "desc",
   });
-  const [deleteModal, setDeleteModal] = useState({
-    show: false,
-    contactId: null,
-  });
+
+
+  const stats = [
+    {
+      icon: <Message />,
+      title: "Total Messages",
+      value: contacts.length,
+      color: "#4CAF50"
+    },
+    {
+      icon: <Email />,
+      title: "New Messages",
+      value: contacts.filter(c => !c.isRead).length,
+      color: "#2196F3"
+    },
+    {
+      icon: <Phone />,
+      title: "Total Calls",
+      value: "25",
+      color: "#FFC107"
+    },
+    {
+      icon: <ContactMail />,
+      title: "Active Queries",
+      value: "10",
+      color: "#9C27B0"
+    }
+  ];
 
   useEffect(() => {
     fetchContacts();
@@ -42,38 +67,8 @@ const ContactUsDashboard = () => {
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      setIsLoading(true);
-      await ContactUsStorage.deleteContactUsById(deleteModal.contactId);
-      setContacts(
-        contacts.filter((contact) => contact.id !== deleteModal.contactId)
-      );
-      setDeleteModal({ show: false, contactId: null });
-    } catch (error) {
-      console.error("Error:", error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
-  const showDeleteModal = (id) => {
-    setDeleteModal({ show: true, contactId: id });
-  };
-
-  const handleSort = (key) => {
-    setSortConfig({
-      key,
-      direction:
-        sortConfig.key === key && sortConfig.direction === "asc"
-          ? "desc"
-          : "asc",
-    });
-  };
 
   const handleViewDetails = (contact) => {
-    
     setSelectedContact(contact);
   };
 
@@ -92,189 +87,146 @@ const ContactUsDashboard = () => {
   );
 
   return (
-    <div className="contact-dashboard">
-      <HeaderSection
-        title={`Contact Request`}
-        subtitle={`Contact Request List`}
-      />
-      <div className="dashboard-header">
-        <button className="refresh-btn" onClick={fetchContacts}>
-          <Refresh /> Refresh
-        </button>
+    <>
+      {isLoading && <Loader />}
+      <div className="contact-dashboard">
+        <div className="contact-dashboard-content">
+          <div className="contact-dashboard-stats">
+            {stats.map((stat, index) => (
+              <div className="contact-dashboard-stat-card" key={index}>
+                <div 
+                  className="contact-dashboard-stat-icon"
+                  // style={{ backgroundColor: stat.color }}
+                >
+                  {stat.icon}
+                </div>
+                <div className="contact-dashboard-stat-info">
+                  <h3>{stat.title}</h3>
+                  <p>{stat.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="contact-dashboard-table-section">
+            <div className="contact-dashboard-table-header">
+              <h2>Contact Messages</h2>
+              <div className="contact-dashboard-actions">
+                <div className="contact-dashboard-search-bar">
+                  <Search />
+                  <input
+                    type="text"
+                    placeholder="Search by name, email or message..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+                <button className="contact-dashboard-refresh-btn" onClick={fetchContacts}>
+                  <Refresh /> Refresh
+                </button>
+              </div>
+            </div>
+
+            <div className="contact-dashboard-table-wrapper">
+              <table className="contact-dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Number </th>
+                    <th>Name </th>
+                    <th>Email </th>
+                    <th>Mobile </th>
+                    <th>Message</th>
+                    <th>Date </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredContacts.map((contact) => (
+                    <tr key={contact.id}>
+                      <td>{contact.number}</td>
+                      <td>{contact.name}</td>
+                      <td>{contact.email}</td>
+                      <td>{contact.mobile}</td>
+                      <td>
+                        <div className="message-preview">
+                          {contact.message.substring(0, 50)}...
+                        </div>
+                      </td>
+                      <td>
+                        {new Date(contact.created_at).toLocaleDateString("en-US", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </td>
+                      <td className="contact-dashboard-actions">
+                        <button
+                          className="contact-dashboard-view-btn"
+                          onClick={() => handleViewDetails(contact)}
+                          title="View Details"
+                        >
+                          <Visibility />
+                        </button>
+ 
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Modal for Contact Details */}
       {selectedContact && (
-        <div
-          className="contact-modal-overlay"
-          onClick={() => setSelectedContact(null)}
-        >
-          <div className="contact-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
+        <div className="contact-dashboard-modal-overlay" onClick={() => setSelectedContact(null)}>
+          <div className="contact-dashboard-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-dashboard-modal-header">
               <h2>Contact Details</h2>
-              <button
-                className="close-btn"
-                onClick={() => setSelectedContact(null)}
-              >
+              <button className="contact-dashboard-modal-close" onClick={() => setSelectedContact(null)}>
                 <Close />
               </button>
             </div>
-            <div className="modal-content">
-              <div className="detail-row">
+            <div className="contact-dashboard-modal-content">
+              <div className="contact-dashboard-detail-row">
                 <span className="detail-label">Number:</span>
                 <span className="detail-value">{selectedContact.number}</span>
               </div>
-              <div className="detail-row">
+              <div className="contact-dashboard-detail-row">
                 <span className="detail-label">Name:</span>
                 <span className="detail-value">{selectedContact.name}</span>
               </div>
-              <div className="detail-row">
+              <div className="contact-dashboard-detail-row">
                 <span className="detail-label">Email:</span>
                 <span className="detail-value">{selectedContact.email}</span>
               </div>
-              <div className="detail-row">
+              <div className="contact-dashboard-detail-row">
                 <span className="detail-label">Mobile:</span>
                 <span className="detail-value">{selectedContact.mobile}</span>
               </div>
-              <div className="detail-row">
+              <div className="contact-dashboard-detail-row">
                 <span className="detail-label">Date:</span>
                 <span className="detail-value">
-                  {new Date(selectedContact.created_at).toLocaleString(
-                    "en-US",
-                    {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }
-                  )}
+                  {new Date(selectedContact.created_at).toLocaleString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </span>
               </div>
-              <div className="detail-row message">
+              <div className="contact-dashboard-detail-row message">
                 <span className="detail-label">Message:</span>
-                <p className="detail-value message-text">
-                  {selectedContact.message}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* End of Modal */}
-
-      {/* Delete Confirmation Modal */}
-      {deleteModal.show && (
-        <div
-          className="delete-modal-overlay"
-          onClick={() => setDeleteModal({ show: false, contactId: null })}
-        >
-          <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>Confirm Delete</h2>
-              <button
-                className="close-btn"
-                onClick={() => setDeleteModal({ show: false, contactId: null })}
-              >
-                <Close />
-              </button>
-            </div>
-            <div className="modal-content">
-              <p>Are you sure you want to delete this contact?</p>
-              <p>This action cannot be undone.</p>
-              <div className="modal-actions">
-                <button
-                  className="cancel-btn"
-                  onClick={() =>
-                    setDeleteModal({ show: false, contactId: null })
-                  }
-                >
-                  Cancel
-                </button>
-                <button className="confirm-delete-btn" onClick={handleDelete}>
-                  Delete
-                </button>
+                <p className="detail-value message-text">{selectedContact.message}</p>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      <div className="dashboard-controls">
-        <div className="search-box">
-          <Search />
-          <input
-            type="text"
-            placeholder="Search by name, email or message..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className="contacts-table-container">
-        <table className="contacts-table">
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("name")}>
-                Number <FilterList />
-              </th>
-              <th onClick={() => handleSort("name")}>
-                Name <FilterList />
-              </th>
-              <th onClick={() => handleSort("email")}>
-                Email <FilterList />
-              </th>
-              <th onClick={() => handleSort("phone")}>
-                Mobile <FilterList />
-              </th>
-              <th>Message</th>
-              <th onClick={() => handleSort("created_at")}>
-                Date <FilterList />
-              </th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredContacts.map((contact) => (
-              <tr key={contact.id} className="contact-row">
-                <td>{contact.number}</td>
-                <td>{contact.name}</td>
-                <td>{contact.email}</td>
-                <td>{contact.mobile}</td>
-                <td>
-                  <div className="message-cell">{contact.message}</div>
-                </td>
-                <td>
-                  {new Date(contact.created_at).toLocaleDateString("en-US", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </td>
-                <td className="action-buttons">
-                  <button
-                    className="view-btn"
-                    onClick={() => handleViewDetails(contact)}
-                    title="View Details"
-                  >
-                    <Visibility />
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => showDeleteModal(contact.id)}
-                    title="Delete"
-                  >
-                    <Delete />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {isLoading && <Loader />}
-    </div>
+   
+    </>
   );
 };
 

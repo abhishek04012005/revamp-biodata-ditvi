@@ -80,6 +80,25 @@
     gap: 1rem;
 }
 
+.payment-dashboard-table-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.payment-dashboard-table-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    height: 3px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+
 .payment-dashboard-actions {
     display: flex;
     gap: 1rem;
@@ -266,3 +285,6 @@
     background: rgba(241, 196, 15, 0.1);
     color: #f1c40f;
 }
+
+
+

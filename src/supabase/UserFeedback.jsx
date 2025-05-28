@@ -38,4 +38,19 @@ export const UserFeedbackStorage = {
             throw error;
         }
     },
+    async getAllFeedback() {
+        try {
+            const { data, error } = await supabase
+                .from('user_feedback')
+                .select('*')
+                .order('created_at', { ascending: false });
+    
+            if (error) throw error;
+    
+            return data;
+        } catch (error) {
+            console.error('Error fetching all User Feedback:', error);
+            throw error;
+        }
+    },
 }

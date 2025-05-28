@@ -149,6 +149,7 @@ const PaymentDashboard = () => {
                 <thead>
                   <tr>
                     <th>Request No.</th>
+                    <th>Transaction Id</th>
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Status</th>
@@ -159,6 +160,7 @@ const PaymentDashboard = () => {
                   {payments.map((payment) => (
                     <tr key={payment.id}>
                       <td>{payment.request_number}</td>
+                       <td>{payment.transaction_id ? payment.transaction_id: "N/A"}</td>
                       <td>₹{payment.amount}</td>
                       <td>{formatDate(payment.updated_at)}</td>
                       <td>
