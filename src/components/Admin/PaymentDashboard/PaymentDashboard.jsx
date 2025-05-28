@@ -1,190 +1,191 @@
 import React, { useState, useEffect } from "react";
 import {
-  Payment,
   AccountBalance,
-  DateRange,
   AttachMoney,
-  Person,
   Receipt,
   Search,
-  FilterList,
-  GetApp,
+  DateRange,
+  Person,
+  Download,
+  Visibility,
 } from "@mui/icons-material";
-import { PaymentRequestStorage } from "../../../supabase/PaymentRequest";
 import "./PaymentDashboard.css";
-import { PaymentStatus } from "../../../json/PaymentStatus";
-import { PaymentTable, FilterSection } from "./Sections/PaymentTable";
+import { PaymentRequestStorage } from "../../../supabase/PaymentRequest";
+import formatDate from "../../../utils/DateHelper";
+import Loader from "../../../structure/Loader/Loader";
 
 const PaymentDashboard = () => {
   const [payments, setPayments] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [summaryStats, setSummaryStats] = useState({
-    totalRevenue: 0,
-    pendingPayments: 0,
-    completedPayments: 0,
-    totalUsers: 0,
-  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [dateRange, setDateRange] = useState({
-    start: new Date(new Date().setMonth(new Date().getMonth() - 1))
-      .toISOString()
-      .split("T")[0],
+    start: new Date().toISOString().split("T")[0],
     end: new Date().toISOString().split("T")[0],
   });
 
-  const calculateSummaryStats = (paymentsData) => {
-    const stats = {
-      totalRevenue: 0,
-      pendingPayments: 0,
-      completedPayments: 0,
-      totalUsers: new Set(),
-    };
-
-    paymentsData.forEach((payment) => {
-      if (payment.status === PaymentStatus.Completed) {
-        stats.totalRevenue += parseFloat(payment.amount);
-        stats.completedPayments++;
-      }
-      if (payment.status === PaymentStatus.Pending) {
-        stats.pendingPayments++;
-      }
-      if (payment.request_biodata?.user_details?.id) {
-        stats.totalUsers.add(payment.request_biodata.user_details.id);
-      }
-    });
-
-    setSummaryStats({
-      totalRevenue: stats.totalRevenue,
-      pendingPayments: stats.pendingPayments,
-      completedPayments: stats.completedPayments,
-      totalUsers: stats.totalUsers.size,
-    });
-  };
-
-  const fetchPayments = async () => {
-    try {
-      setLoading(true);
-      const data = await PaymentRequestStorage.getAllPayments({
-        startDate: dateRange.start,
-        endDate: dateRange.end,
-        status: filter !== "all" ? filter : null,
-        searchQuery: searchQuery,
-      });
-      setPayments(data);
-      calculateSummaryStats(data);
-    } catch (error) {
-      console.error("Error fetching payments:", error);
-      // You can add a toast notification here
-    } finally {
-      setLoading(false);
-    }
-  };
+  const stats = [
+    {
+      icon: <AttachMoney />,
+      title: "Total Revenue",
+      value: "₹50,000",
+      color: "#4CAF50",
+    },
+    {
+      icon: <Receipt />,
+      title: "Total Payments",
+      value: payments.length,
+      color: "#2196F3",
+    },
+    {
+      icon: <AccountBalance />,
+      title: "Pending Payments",
+      value: "25",
+      color: "#FFC107",
+    },
+    {
+      icon: <Person />,
+      title: "Active Users",
+      value: "100",
+      color: "#9C27B0",
+    },
+  ];
 
   useEffect(() => {
     fetchPayments();
-  }, [dateRange.start, dateRange.end, filter, searchQuery]);
+  }, []);
 
-  const handleExportData = () => {
-    const csvContent = [
-      ["Request No.", "User Name", "Amount", "Date", "Status"],
-      ...payments.map((payment) => [
-        payment.request_number,
-        payment.request_biodata?.user_details?.name,
-        payment.amount,
-        new Date(payment.created_at).toLocaleDateString(),
-        payment.status,
-      ]),
-    ]
-      .map((row) => row.join(","))
-      .join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `payments-${new Date().toISOString().split("T")[0]}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+  const fetchPayments = async () => {
+    try {
+      setIsLoading(true);
+      const response = await PaymentRequestStorage.getAllPayments();
+      if (response) {
+        setPayments(response);
+      }
+    } catch (error) {
+      console.error("Error fetching payments:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const summaryData = {
-    totalRevenue: {
-      title: "Total Revenue",
-      value: `₹${summaryStats.totalRevenue.toLocaleString()}`,
-      icon: <AttachMoney />,
-      color: "#4CAF50",
-    },
-    pendingPayments: {
-      title: "Pending Payments",
-      value: summaryStats.pendingPayments,
-      icon: <Payment />,
-      color: "#FFC107",
-    },
-    completedPayments: {
-      title: "Completed Payments",
-      value: summaryStats.completedPayments,
-      icon: <Receipt />,
-      color: "#2196F3",
-    },
-    totalUsers: {
-      title: "Total Users",
-      value: summaryStats.totalUsers,
-      icon: <Person />,
-      color: "#9C27B0",
-    },
+  const handleExport = () => {
+    // Export functionality implementation
+    console.log("Exporting data...");
   };
 
-  // ... Rest of your component code (SummaryCard, FilterSection, PaymentTable) ...
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    // Implement search logic
+  };
+
+  const handleDateChange = (type, value) => {
+    setDateRange((prev) => ({
+      ...prev,
+      [type]: value,
+    }));
+    // Implement date filter logic
+  };
+
+  const handleView = (paymentId) => {
+    // View payment details implementation
+    console.log("Viewing payment:", paymentId);
+  };
 
   return (
-    <div className="payment-dashboard">
-      <header className="dashboard-header">
-        <h1>
-          <AccountBalance /> Payment Dashboard
-        </h1>
-        <button className="export-btn" onClick={handleExportData}>
-          <GetApp /> Export Data
-        </button>
-      </header>
+    <>
+      {isLoading && <Loader />}
+      <div className="payment-dashboard">
+        <div className="payment-dashboard-content">
+          {/* Stats Section */}
+          <div className="payment-dashboard-stats">
+            {stats.map((stat, index) => (
+              <div className="payment-dashboard-stat-card" key={index}>
+                <div className="payment-dashboard-stat-icon">{stat.icon}</div>
+                <div className="payment-dashboard-stat-info">
+                  <h3>{stat.title}</h3>
+                  <p>{stat.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      <div className="summary-section">
-        {Object.values(summaryData).map((data, index) => (
-          <SummaryCard key={index} data={data} />
-        ))}
-      </div>
+          {/* Table Section */}
+          <div className="payment-dashboard-table-section">
+            <div className="payment-dashboard-table-header">
+              <h2>Payment History</h2>
+              <div className="payment-dashboard-actions">
+                {/* Date Filter */}
+                <div className="payment-dashboard-date-filter">
+                  <DateRange />
+                  <input
+                    type="date"
+                    value={dateRange.start}
+                    onChange={(e) => handleDateChange("start", e.target.value)}
+                  />
+                  <span>to</span>
+                  <input
+                    type="date"
+                    value={dateRange.end}
+                    onChange={(e) => handleDateChange("end", e.target.value)}
+                  />
+                </div>
 
-      <div className="main-content">
-        <FilterSection
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          dateRange={dateRange}
-          setDateRange={setDateRange}
-          filter={filter}
-          setFilter={setFilter}
-        />
-        <PaymentTable payments={payments} loading={loading} />
+                {/* Search Bar */}
+                <div className="payment-dashboard-search-bar">
+                  <Search />
+                  <input
+                    type="text"
+                    placeholder="Search by payment ID or name"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="payment-dashboard-table-wrapper">
+              <table className="payment-dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Request No.</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {payments.map((payment) => (
+                    <tr key={payment.id}>
+                      <td>{payment.request_number}</td>
+                      <td>₹{payment.amount}</td>
+                      <td>{formatDate(payment.updated_at)}</td>
+                      <td>
+                        <span
+                          className={`payment-dashboard-status ${payment.status}`}
+                        >
+                          {payment.status}
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className="payment-dashboard-view-btn"
+                          onClick={() => handleView(payment.id)}
+                        >
+                          <Visibility /> View
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
-
-const SummaryCard = ({ data }) => (
-  <div className="summary-card" style={{ borderColor: data.color }}>
-    <div className="card-icon" style={{ backgroundColor: data.color }}>
-      {data.icon}
-    </div>
-    <div className="card-content">
-      <h3>{data.title}</h3>
-      <p className="card-value">{data.value}</p>
-    </div>
-    <div
-      className="card-overlay"
-      style={{ backgroundColor: `${data.color}10` }}
-    />
-  </div>
-);
 
 export default PaymentDashboard;

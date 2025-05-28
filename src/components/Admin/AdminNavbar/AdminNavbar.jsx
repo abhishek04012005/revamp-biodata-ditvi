@@ -5,39 +5,38 @@ import { useAdmin } from "../AdminContext/AdminContex";
 
 import {
   ContactPage,
-  Dashboard,
   Description,
   Person2,
   Person,
   Logout,
-  Payment
+  Payment,
+  Dashboard
 } from "@mui/icons-material";
 import Logo from "../../../assets/logo.png";
-import PaymentDashboard from "../PaymentDashboard/PaymentDashboard";
 
 const adminNavLinks = [
   {
     id: "payment",
     label: "Payments",
-    path: "/admin/payment",
+    path: "/admin/payment-dashboard",
     icon: <Payment />,
   },
   {
     id: "contact",
     label: "Contact Us",
-    path: "/admin/contact",
+    path: "/admin/contact-dashboard",
     icon: <ContactPage />,
   },
   {
     id: "dashboard",
     label: "Dashboard",
-    path: "/admin/dashboard",
+    path: "/admin/biodata-dashboard",
     icon: <Dashboard />,
   },
   {
     id: "production",
     label: "Production",
-    path: "/admin/production",
+    path: "/admin/production-dashboard",
     icon: <Description />,
   },
   {

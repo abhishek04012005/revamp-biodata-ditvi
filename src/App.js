@@ -13,7 +13,7 @@ import ChooseOption from "./components/ChooseOption/ChooseOption";
 import BlogDetail from "./components/BlogDetail/BlogDetail";
 import BiodataDetail from "./components/BiodataDetail/BiodataDetail";
 import AdminLogin from "./components/Admin/AdminLogin/AdminLogin";
-import AdminDashboard from "./components/Admin/AdminDashboard/AdminDashboard";
+import BiodataDashboard from "./components/Admin/BiodataDashboard/BiodataDashboard";
 import ProductionDashboard from "./components/Admin/ProductionDashboard/ProductionDashboard";
 import BiodataMaster from "./structure/BiodataMaster/BiodataMaster";
 import UploadBiodata from "./components/UploadBiodata/UploadBiodata";
@@ -51,13 +51,13 @@ function App() {
                   <>
                     <AdminNavbar />
                     <Routes>
-                      <Route path="dashboard" element={<AdminDashboard />} />
+                      <Route path="biodata-dashboard" element={<BiodataDashboard />} />
                       <Route
-                        path="production"
+                        path="production-dashboard"
                         element={<ProductionDashboard />}
                       />
-                      <Route path="contact" element={<ContactUsDashboard />} />
-                      <Route path="payment" element={<PaymentDashboard />} />
+                      <Route path="contact-dashboard" element={<ContactUsDashboard />} />
+                      <Route path="payment-dashboard" element={<PaymentDashboard />} />
                       <Route
                         path="production/:requestId"
                         element={<ProductionBiodataDetail />}
