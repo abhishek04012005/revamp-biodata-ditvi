@@ -163,7 +163,7 @@ const PaymentDashboard = () => {
                       <td>{formatDate(payment.updated_at)}</td>
                       <td>
                         <span
-                          className={`payment-dashboard-status ${payment.status}`}
+                          className={`payment-dashboard-status ${payment.status.toLowerCase()}`}
                         >
                           {payment.status}
                         </span>

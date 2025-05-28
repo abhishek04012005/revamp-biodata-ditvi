@@ -242,3 +242,27 @@
     width: 100%;
     color: var(--text-dark);
 }
+
+
+.payment-dashboard-status {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.payment-dashboard-status.completed {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.payment-dashboard-status.cancelled {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.payment-dashboard-status.pending {
+    background: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
+}
