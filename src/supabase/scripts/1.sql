@@ -35,6 +35,7 @@ CREATE TABLE public.biodata_request (
     family_details JSONB NULL,
     contact_details JSONB NULL,
     status JSONB NOT NULL,
+    completed BOOLEAN DEFAULT FALSE,
     deleted BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT now()
 );

@@ -10,10 +10,18 @@ import {
   Person2,
   Person,
   Logout,
+  Payment
 } from "@mui/icons-material";
 import Logo from "../../../assets/logo.png";
+import PaymentDashboard from "../PaymentDashboard/PaymentDashboard";
 
 const adminNavLinks = [
+  {
+    id: "payment",
+    label: "Payments",
+    path: "/admin/payment",
+    icon: <Payment />,
+  },
   {
     id: "contact",
     label: "Contact Us",

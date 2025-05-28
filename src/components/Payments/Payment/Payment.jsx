@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
-import './Payment.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import "./Payment.css";
 import {
   ErrorOutline,
   CheckCircle,
@@ -11,14 +11,14 @@ import {
   AccessTime,
   SearchOff,
   Home,
-} from '@mui/icons-material';
-import HeaderSection from '../../../structure/HeaderSection/HeaderSection';
-import { BiodataRequestStorage } from '../../../supabase/BiodataRequest';
-import { getLatestStatusId } from '../../../utils/StatusHelper';
-import formatDate from '../../../utils/DateHelper';
-import { PaymentRequestStorage } from '../../../supabase/PaymentRequest';
-import { PaymentStatus } from '../../../json/PaymentStatus';
-import { getRazorpayOptions } from './PaymentConfig';
+} from "@mui/icons-material";
+import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
+import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
+import { getLatestStatusId } from "../../../utils/StatusHelper";
+import formatDate from "../../../utils/DateHelper";
+import { PaymentRequestStorage } from "../../../supabase/PaymentRequest";
+import { PaymentStatus } from "../../../json/PaymentStatus";
+import { getRazorpayOptions } from "./PaymentConfig";
 
 const Payment = () => {
   const { requestNumber } = useParams();
@@ -27,16 +27,15 @@ const Payment = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     // Create script element
-    const razorpayScript = document.createElement('script');
-    razorpayScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    const razorpayScript = document.createElement("script");
+    razorpayScript.src = "https://checkout.razorpay.com/v1/checkout.js";
     razorpayScript.async = true;
-    
+
     // Add to document head
     document.head.appendChild(razorpayScript);
-    
+
     // Cleanup function
     return () => {
       document.head.removeChild(razorpayScript);
@@ -50,134 +49,158 @@ const Payment = () => {
   const fetchRequestDetails = async () => {
     try {
       setLoading(true);
-      const response = await BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber);
+      const response =
+        await BiodataRequestStorage.getBiodataRequestByRequestNumber(
+          requestNumber
+        );
       if (response) {
         setRequestData(response);
       } else {
-        setError('Invalid request number');
+        setError("Invalid request number");
       }
     } catch (err) {
-      setError('Error fetching request details');
+      setError("Error fetching request details");
     } finally {
       setLoading(false);
     }
   };
 
-  const initiatePayment = async () => { 
-
-      if (!window.Razorpay) {
-      setError('Payment system is not loaded yet. Please try again.');
+  const initiatePayment = async () => {
+    if (!window.Razorpay) {
+      setError("Payment system is not loaded yet. Please try again.");
       return;
     }
-    try{
-      const paymentRequest = await PaymentRequestStorage.initiatePaymentRequest({
-        requestNumber: requestNumber,
-        amount: requestData.model_details.amount,
-      })
+    try {
+      const paymentRequest = await PaymentRequestStorage.initiatePaymentRequest(
+        {
+          requestNumber: requestNumber,
+          amount: requestData.model_details.amount,
+        }
+      );
       if (paymentRequest) {
         // Redirect to payment gateway or handle payment confirmation
 
         const options = getRazorpayOptions({
-              paymentRequest,
-              requestNumber,
-              handlePaymentSuccess,
-              updatePaymentStatus,
-              PaymentStatus
-            });
+          paymentRequest,
+          requestNumber,
+          handlePaymentSuccess,
+          updatePaymentStatus,
+          PaymentStatus,
+        });
 
-            const razorpayInstance = new window.Razorpay(options);
-            razorpayInstance.on('payment.failed', async function (response) {
-                await handlePaymentFailure(response, paymentRequest.id, razorpayInstance);
-            });
-            razorpayInstance.open();
-        
+        const razorpayInstance = new window.Razorpay(options);
+        razorpayInstance.on("payment.failed", async function (response) {
+          await handlePaymentFailure(
+            response,
+            paymentRequest.id,
+            razorpayInstance
+          );
+        });
+        razorpayInstance.open();
       } else {
-        setError('Failed to initiate payment');
+        setError("Failed to initiate payment");
       }
     } catch (err) {
-      setError('Error initiating payment'); 
+      setError("Error initiating payment");
     }
   };
 
   const handlePaymentSuccess = async (response, paymentRequestId) => {
-        try {
-            const dbResponse = PaymentRequestStorage.updatePaymentStatus(
-              paymentRequestId,
-              {
-                status: PaymentStatus.Completed,
-                response: response,
-                transactionId: response.razorpay_payment_id
-              }
-            );
-
-            if(dbResponse) {
-              BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(requestNumber, [
-                  ...(requestData.status),{
-                    id: 3,
-                    created: new Date().toISOString()
-                  }
-                ]
-              )
-              // Redirect to success page
-              navigate(`/payment-success/${requestNumber}`);
-            }
-        } catch (error) {
-            console.error('Error updating payment status:', error);
-            alert('Payment was successful but status update failed. Please contact support.');
+    try {
+      const paymentDBResponse = PaymentRequestStorage.updatePaymentStatus(
+        paymentRequestId,
+        {
+          status: PaymentStatus.Completed,
+          response: response,
+          transactionId: response.razorpay_payment_id,
         }
-    };
+      );
 
-  const handlePaymentFailure = async (response, paymentRequestId, razorpayInstance) => {
-        try {
-            const dbResponse = PaymentRequestStorage.updatePaymentStatus(
-              paymentRequestId,
-              {
-                status: PaymentStatus.Failed,
-                response: response,
-              }
-            );
+      const biodataDBResponse =
+        BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(
+          requestNumber,
+          [
+            ...requestData.status,
+            {
+              id: 4,
+              created: new Date().toISOString(),
+            },
+          ]
+        );
 
-            if(dbResponse) {
-              // Redirect to success page
-              navigate(`/payment-failure/${paymentRequestId}`);
-            }
-        } catch (error) {
-            console.error('Error updating payment status:', error);
-            alert('Payment was successful but status update failed. Please contact support.');
-        } finally {
-          razorpayInstance.close();
+      if (paymentDBResponse && biodataDBResponse) {
+        // Redirect to success page
+        navigate(`/payment-success/${requestNumber}`);
+      } else {
+        alert("Satus update failed.");
+      }
+    } catch (error) {
+      console.error("Error updating payment status:", error);
+      alert(
+        "Payment was successful but status update failed. Please contact support."
+      );
+    }
+  };
+
+  const handlePaymentFailure = async (
+    response,
+    paymentRequestId,
+    razorpayInstance
+  ) => {
+    try {
+      const dbResponse = PaymentRequestStorage.updatePaymentStatus(
+        paymentRequestId,
+        {
+          status: PaymentStatus.Failed,
+          response: response,
         }
-    };
+      );
+
+      if (dbResponse) {
+        // Redirect to success page
+        navigate(`/payment-failure/${paymentRequestId}`);
+      }
+    } catch (error) {
+      console.error("Error updating payment status:", error);
+      alert(
+        "Payment was failure and status update failed. Please contact support."
+      );
+    } finally {
+      razorpayInstance.close();
+    }
+  };
 
   const updatePaymentStatus = async (paymentRequestId, status) => {
-        try {
-            const dbResponse = PaymentRequestStorage.updatePaymentStatus(
-              paymentRequestId,
-              {
-                status: status,
-              }
-            );
-
-            if(dbResponse) {
-              // Redirect to success page
-              navigate(`/payment-cancelled/${paymentRequestId}`);
-            }
-        } catch (error) {
-            console.error('Error updating payment status:', error);
-            alert('Payment was successful but status update failed. Please contact support.');
+    try {
+      const dbResponse = PaymentRequestStorage.updatePaymentStatus(
+        paymentRequestId,
+        {
+          status: status,
         }
-    };
+      );
+
+      if (dbResponse) {
+        // Redirect to success page
+        navigate(`/payment-cancelled/${paymentRequestId}`);
+      }
+    } catch (error) {
+      console.error("Error updating payment status:", error);
+      alert(
+        "Payment was successful but status update failed. Please contact support."
+      );
+    }
+  };
 
   const isPaymentEnabled = () => {
     if (!requestData) return false;
     const latestStatus = getLatestStatusId(requestData.status);
-    return latestStatus === 2; // User Approved status
+    return latestStatus === 3; // User Approved status
   };
 
   const isPaymentCompleted = () => {
     if (!requestData) return false;
     const latestStatus = getLatestStatusId(requestData.status);
-    return latestStatus > 2; // Payment completed
+    return latestStatus > 4; // Payment completed
   };
 
   if (loading) {
@@ -198,7 +221,7 @@ const Payment = () => {
           </div>
           <div className="error-content">
             <SearchOff className="error-illustration" />
-            <p>{error || 'Request not found'}</p>
+            <p>{error || "Request not found"}</p>
             <Link to="/" className="error-action-btn">
               <Home /> Go to Home
             </Link>
@@ -221,12 +244,18 @@ const Payment = () => {
             <h2>Payment Received</h2>
           </div>
           <div className="success-content">
-            <p>We have already received the payment for request number: {requestNumber}</p>
+            <p>
+              We have already received the payment for request number:{" "}
+              {requestNumber}
+            </p>
             <div className="payment-details">
               <p>Payment Date: {formatDate(requestData.payment_date)}</p>
               <p>Amount Paid: ₹{requestData.amount}</p>
             </div>
-            <Link to={`/status/${requestNumber}`} className="success-action-btn">
+            <Link
+              to={`/status/${requestNumber}`}
+              className="success-action-btn"
+            >
               Check Status
             </Link>
           </div>
@@ -241,7 +270,7 @@ const Payment = () => {
         title="Make Payment"
         subtitle="Complete your payment to proceed with biodata creation"
       />
-      
+
       <div className="payment-card">
         <div className="payment-header">
           <PaymentIcon className="payment-header-icon" />
@@ -288,16 +317,15 @@ const Payment = () => {
         </div>
 
         {isPaymentEnabled() ? (
-          <button 
-            className="payment-button"
-            onClick={initiatePayment}
-          >
+          <button className="payment-button" onClick={initiatePayment}>
             Proceed to Pay
           </button>
         ) : (
           <div className="payment-disabled">
             <ErrorOutline />
-            <p>Payment link is not active yet. Please wait for user approval.</p>
+            <p>
+              Payment link is not active yet. Please wait for user approval.
+            </p>
           </div>
         )}
       </div>

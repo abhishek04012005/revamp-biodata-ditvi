@@ -33,6 +33,7 @@ import ContactUs from "./components/ContactUs/ContactUs";
 import Payment from "./components/Payments/Payment/Payment";
 import PaymentSuccess from "./components/Payments/PaymentSucess/PaymentSucess";
 import PaymentFailure from "./components/Payments/PaymentFailure/PaymentFailure";
+import PaymentDashboard from "./components/Admin/PaymentDashboard/PaymentDashboard";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
                         element={<ProductionDashboard />}
                       />
                       <Route path="contact" element={<ContactUsDashboard />} />
+                      <Route path="payment" element={<PaymentDashboard />} />
                       <Route
                         path="production/:requestId"
                         element={<ProductionBiodataDetail />}
