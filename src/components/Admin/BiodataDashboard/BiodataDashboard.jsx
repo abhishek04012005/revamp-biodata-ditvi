@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./AdminDashboard.css";
+import "./BiodataDashboard.css";
 import {
   Dashboard,
   People,
@@ -23,7 +23,7 @@ import { getFlowTypeById, getFlowTypeStyle } from "../../../constants/FlowType";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
 import Loader from "../../../structure/Loader/Loader";
 
-const AdminDashboard = () => {
+const BiodataDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -250,4 +250,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default BiodataDashboard;

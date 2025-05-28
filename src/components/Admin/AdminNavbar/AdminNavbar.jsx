@@ -5,40 +5,46 @@ import { useAdmin } from "../AdminContext/AdminContex";
 
 import {
   ContactPage,
-  Dashboard,
   Description,
   Person2,
   Person,
   Logout,
-  Payment
+  Payment,
+  Dashboard,
+  Feedback,
 } from "@mui/icons-material";
 import Logo from "../../../assets/logo.png";
-import PaymentDashboard from "../PaymentDashboard/PaymentDashboard";
 
 const adminNavLinks = [
   {
-    id: "payment",
-    label: "Payments",
-    path: "/admin/payment",
-    icon: <Payment />,
+    id: "feedback",
+    label: "Feedback",
+    path: "/admin/feedback-dashboard",
+    icon: <Feedback />,
   },
   {
     id: "contact",
-    label: "Contact Us",
-    path: "/admin/contact",
+    label: "Contact",
+    path: "/admin/contact-dashboard",
     icon: <ContactPage />,
   },
   {
-    id: "dashboard",
-    label: "Dashboard",
-    path: "/admin/dashboard",
-    icon: <Dashboard />,
+    id: "payment",
+    label: "Payment",
+    path: "/admin/payment-dashboard",
+    icon: <Payment />,
   },
   {
     id: "production",
     label: "Production",
-    path: "/admin/production",
+    path: "/admin/production-dashboard",
     icon: <Description />,
+  },
+  {
+    id: "biodata-dashboard",
+    label: "Biodata",
+    path: "/admin/biodata-dashboard",
+    icon: <Dashboard />,
   },
   {
     id: "profile",
@@ -119,7 +125,7 @@ const AdminNavbar = () => {
               {isProfileOpen && (
                 <div className="profile-dropdown-menu">
                   <div className="profile-dropdown-header">
-                    <Person2/>
+                    <Person2 />
                     <span className="admin-navbar-text-name">
                       {adminData?.name || "Profile"}
                     </span>
