@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../structure/Loader/Loader";
 import "./CreateBiodata.css";
 import ModelTypes from "../../json/ModelTypes";
-import { UploadFile } from '../../supabase/UploadFile';
+import { UploadFile } from "../../supabase/UploadFile";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import StorageBucket from "../../constants/StorageBucket";
-import  {getLanguageData}  from "../../json/languageCofig";
+import { getLanguageData } from "../../json/languageCofig";
 import {
   ProfileImageSection,
   PersonalDetailsSection,
@@ -14,9 +14,10 @@ import {
   EducationDetailsSection,
   FamilyDetailsSection,
   ContactDetailsSection,
-  PreviewSection
-} from './Sections';
-
+  PreviewSection,
+} from "./Sections";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import NotificationPopUp from "../../structure/NotificationPopUp/NotificationPopUp";
 const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB
 
 const CreateBiodata = () => {
@@ -26,6 +27,10 @@ const CreateBiodata = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const { requestNumber, userDetails, modelDetails } = location.state || {};
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+  });
 
   const langData = getLanguageData(modelDetails);
 
@@ -52,25 +57,38 @@ const CreateBiodata = () => {
       })),
     ],
     familyDetails: langData.family,
-    contactDetails: langData.contact.map(
-      ({ label, value, placeholder }) => ({ label, value, placeholder })
-    ),
+    contactDetails: langData.contact.map(({ label, value, placeholder }) => ({
+      label,
+      value,
+      placeholder,
+    })),
   });
 
-  const handleNext = () => setCurrentStep(prev => Math.min(prev + 1, langData.steps.length - 1));
-  const handlePrevious = () => setCurrentStep(prev => Math.max(prev - 1, 0));
+  const handleNext = () =>
+    setCurrentStep((prev) => Math.min(prev + 1, langData.steps.length - 1));
+  const handlePrevious = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     if (file.size > MAX_IMAGE_SIZE) {
-      alert("Image size should be less than or equal to 1MB");
+      setNotification({
+        show: true,
+        title: "File Size Too Large",
+        message:
+          "Please upload an image that is less than or equal to 1MB in size. Large images may affect the loading time of your biodata.",
+      });
       return;
     }
 
     if (!file.type.startsWith("image/")) {
-      alert("Only image files are allowed");
+      setNotification({
+        show: true,
+        title: "Invalid File Type",
+        message:
+          "Please upload a valid image file (JPG, PNG, etc.). Other file types are not supported.",
+      });
       return;
     }
 
@@ -78,7 +96,7 @@ const CreateBiodata = () => {
       setIsLoading(true);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           profileImage: reader.result,
         }));
@@ -100,7 +118,12 @@ const CreateBiodata = () => {
     e.preventDefault();
 
     if (currentStep === 0 && !formData.profileImage) {
-      alert("Please upload a profile image before proceeding");
+      setNotification({
+        show: true,
+        title: `Please upload a profile picture`,
+        message:
+          "Please upload a clear, recent profile picture to complete your biodata.",
+      });
       return;
     }
 
@@ -112,32 +135,31 @@ const CreateBiodata = () => {
     try {
       setIsLoading(true);
       const profileUrl = await UploadFile(
-        selectedImage, 
-        `${requestNumber}_profile`, 
+        selectedImage,
+        `${requestNumber}_profile`,
         StorageBucket.CREATE_BIODATA
       );
 
-      const response = await BiodataRequestStorage.saveBiodataRequestFromCreateBiodata({
-        requestNumber,
-        userDetails,
-        modelDetails,
-        profileUrl,
-        ...formData
-      });
-
-      if(response) {
-        navigate('/confirmation', { 
-        state: { 
+      const response =
+        await BiodataRequestStorage.saveBiodataRequestFromCreateBiodata({
           requestNumber,
           userDetails,
           modelDetails,
-        }
-      });
-    }
-        else {
-          alert('Failed. Unable to save the data.')
-        } 
-      
+          profileUrl,
+          ...formData,
+        });
+
+      if (response) {
+        navigate("/confirmation", {
+          state: {
+            requestNumber,
+            userDetails,
+            modelDetails,
+          },
+        });
+      } else {
+        alert("Failed. Unable to save the data.");
+      }
     } catch (error) {
       console.error("Error saving biodata:", error);
       alert("Failed to save biodata");
@@ -155,18 +177,26 @@ const CreateBiodata = () => {
       handleImageChange,
       selectedImage,
       setSelectedImage,
-      currentStep
+      currentStep,
     };
 
     switch (currentStep) {
-      case 0: return <ProfileImageSection {...props} />;
-      case 1: return <PersonalDetailsSection {...props} />;
-      case 2: return <ProfessionalDetailsSection {...props} />;
-      case 3: return <EducationDetailsSection {...props} />;
-      case 4: return <FamilyDetailsSection {...props} />;
-      case 5: return <ContactDetailsSection {...props} />;
-      case 6: return <PreviewSection {...props} />;
-      default: return <div>Step not found</div>;
+      case 0:
+        return <ProfileImageSection {...props} />;
+      case 1:
+        return <PersonalDetailsSection {...props} />;
+      case 2:
+        return <ProfessionalDetailsSection {...props} />;
+      case 3:
+        return <EducationDetailsSection {...props} />;
+      case 4:
+        return <FamilyDetailsSection {...props} />;
+      case 5:
+        return <ContactDetailsSection {...props} />;
+      case 6:
+        return <PreviewSection {...props} />;
+      default:
+        return <div>Step not found</div>;
     }
   };
 
@@ -183,7 +213,8 @@ const CreateBiodata = () => {
             >
               <div className="create-biodata-step-number">{index + 1}</div>
               <div className="create-biodata-step-label">
-                {step === "Professional" && modelDetails?.type === ModelTypes.Student.Name
+                {step === "Professional" &&
+                modelDetails?.type === ModelTypes.Student.Name
                   ? "Examination"
                   : step}
               </div>
@@ -203,17 +234,24 @@ const CreateBiodata = () => {
             >
               Previous
             </button>
-            <button
-              type="submit"
-              className="create-biodata-nav-button next"
-            >
+            <button type="submit" className="create-biodata-nav-button next">
               {currentStep === langData.steps.length - 1
-                ? isLoading ? "Saving..." : "Save and Preview"
+                ? isLoading
+                  ? "Saving..."
+                  : "Save and Preview"
                 : "Next"}
             </button>
           </div>
         </form>
       </div>
+          
+      {notification.show && (
+        <NotificationPopUp
+          title={notification.title}
+          message={notification.message}
+          onClose={() => setNotification({ show: false, message: "", title: "" })}
+        />
+      )}
       {isLoading && <Loader />}
     </>
   );

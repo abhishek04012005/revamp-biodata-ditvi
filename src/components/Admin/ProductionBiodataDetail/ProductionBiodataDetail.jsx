@@ -270,7 +270,7 @@ const ProductionBiodataDetail = () => {
       <div className="info-grid">
         {formData.professionalDetails.map((field, index) => (
           <div key={index} className="detail-field animated-field">
-            <label>{field.label}:</label>
+            <label className="detail-field-label">{field.label}:</label>
             {isEditing ? (
               <input
                 type="text"

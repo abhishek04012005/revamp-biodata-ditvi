@@ -25,12 +25,6 @@ const ProfileImageSection = ({ formData, handleImageChange, langData, currentSte
                       className="create-biodata-preview-image"
                     />
                   </div>
-                  {/* <button
-                    type="button"
-                    className="create-biodata-remove-image-btn"
-                    onClick={() => fileInputRef.current.click()}
-                  >
-                  </button> */}
                 </div>
               )}
               <div className="create-biodata-image-requirements">

@@ -196,16 +196,22 @@
 
 .detail-field label {
   display: block;
-  color: var(--dark);
   font-weight: 500;
   margin-bottom: 0.5rem;
   text-align: left;
+  font-size: 0.95rem;
+  color: var(--dark);
+}
+
+.detail-field-label {
+  color: var(--text-light);
+  font-size: 0.95rem;
 }
 
 .detail-field input,
 .detail-field select,
 .detail-field textarea {
-  width: 100%; /* Use full width of parent */
+  width: 90%; /* Use full width of parent */
   padding: 0.75rem;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
@@ -258,6 +264,7 @@
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
+  margin-bottom: 2rem;
 }
 
 .add-btn.floating:hover {
