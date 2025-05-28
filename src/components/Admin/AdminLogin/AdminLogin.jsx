@@ -28,7 +28,7 @@ const AdminLogin = () => {
             const response = await AdmingLoginStorage.adminLogin(credentials);
             if (response.success) {
                 loginAdmin(response.data);
-                navigate('/admin/dashboard');
+                navigate('/admin/biodata-dashboard');
             } else {
                 setError('Invalid credentials');
             }
