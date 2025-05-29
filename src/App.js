@@ -70,7 +70,7 @@ function App() {
                         element={<BiodataMaster />}
                       />
                       <Route
-                        path="request/:requestId"
+                        path="biodata/:requestId"
                         element={<RequestBiodataDetail />}
                       />
                     </Routes>

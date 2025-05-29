@@ -1,0 +1,9 @@
+export { default as ProfileSection } from './ProfileSection';
+export { default as BiodataDownloadSection } from './BiodataDownloadSection';
+export { default as PersonalInfoSection } from './PersonalInfoSection';
+export { default as ProfessionalInfoSection } from './ProfessionalInfoSection';
+export { default as EducationInfoSection } from './EducationInfoSection';
+export { default as ExaminationInfoSection } from './ExaminationInfoSection';
+export { default as FamilyInfoSection } from './FamilyInfoSection';
+export { default as ContactInfoSection } from './ContactInfoSection';
+export { default as PreviewSection } from './PreviewSection';

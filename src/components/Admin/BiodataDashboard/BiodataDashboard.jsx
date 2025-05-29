@@ -224,7 +224,7 @@ const BiodataDashboard = () => {
                       </td>
                       <td>
                         <Link
-                          to={`/admin/request/${request.id}`}
+                          to={`/admin/biodata/${request.id}`}
                           className="dashboard-view-btn"
                         >
                           View
