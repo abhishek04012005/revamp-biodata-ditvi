@@ -6,10 +6,9 @@ import {
   Description,
   Search,
   Visibility,
-  Delete,
 } from "@mui/icons-material";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
-import { getFlowTypeById } from "../../../constants/FlowType";
+import { getFlowTypeById, getFlowTypeStyle } from "../../../constants/FlowType";
 import formatDate from "../../../utils/DateHelper";
 import Loader from "../../../structure/Loader/Loader";
 
@@ -101,15 +100,19 @@ const ProductionDashboard = () => {
                     <th>Name</th>
                     <th>Mobile Number</th>
                     <th>Created Date</th>
+                    <th>Detail</th>
                     <th>Preview</th>
-                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
                   {requests.map((request) => (
                     <tr key={request.id}>
                       <td>{request.request_number}</td>
-                      <td>{getFlowTypeById(request.flow_type)}</td>
+                      <td>
+                        <span style={getFlowTypeStyle(request.flow_type)}>
+                          {getFlowTypeById(request.flow_type)}
+                        </span>
+                      </td>
                       <td>{request.user_details?.name}</td>
                       <td>{request.user_details?.mobileNumber}</td>
                       <td>{formatDate(request.created_at)}</td>
@@ -120,6 +123,8 @@ const ProductionDashboard = () => {
                         >
                           Show Details
                         </Link>
+                      </td>
+                      <td>
                         <Link
                           to={`/admin/production/preview/${request.id}`}
                           className="production-dashboard-action-btn preview-btn"
@@ -127,14 +132,6 @@ const ProductionDashboard = () => {
                           <Visibility />
                           Preview
                         </Link>
-                      </td>
-                      <td>
-                        <button
-                          className="dashboard-delete-btn"
-                          onClick={() => handleDelete(request.request_number)}
-                        >
-                          <Delete />
-                        </button>
                       </td>
                     </tr>
                   ))}

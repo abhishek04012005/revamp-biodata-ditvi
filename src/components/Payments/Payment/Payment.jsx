@@ -6,11 +6,14 @@ import {
   CheckCircle,
   Payment as PaymentIcon,
   Person,
-  Email,
   Phone,
   AccessTime,
   SearchOff,
   Home,
+  CreditCard,
+  Receipt,
+  Lock,
+  Tag
 } from "@mui/icons-material";
 import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
@@ -209,7 +212,14 @@ const Payment = () => {
   };
 
   if (loading) {
-    return <div className="payment-loader">Loading...</div>;
+    return (
+      <div className="payment-loader">
+        <div className="loader-content">
+          <div className="loader-spinner"></div>
+          <p>Processing your request...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error || !requestData) {
@@ -228,7 +238,7 @@ const Payment = () => {
             <SearchOff className="error-illustration" />
             <p>{error || "Request not found"}</p>
             <Link to="/" className="error-action-btn">
-              <Home /> Go to Home
+              <Home /> Return to Homepage
             </Link>
           </div>
         </div>
@@ -246,22 +256,32 @@ const Payment = () => {
         <div className="payment-success-card">
           <div className="success-header">
             <CheckCircle className="success-icon" />
-            <h2>Payment Received</h2>
+            <h2>Payment Successfully Received</h2>
           </div>
           <div className="success-content">
-            <p>
-              We have already received the payment for request number:{" "}
-              {requestNumber}
-            </p>
+            <div className="success-message">
+              <Receipt className="receipt-icon" />
+              <p>
+                Payment confirmed for request: <strong>{requestNumber}</strong>
+              </p>
+            </div>
             <div className="payment-details">
-              <p>Payment Date: {formatDate(requestData.payment_date)}</p>
-              <p>Amount Paid: ₹{requestData.amount}</p>
+              <div className="payment-detail-item">
+                <AccessTime className="detail-icon" />
+                <span>Payment Date:</span>
+                <strong>{formatDate(requestData.payment_date)}</strong>
+              </div>
+              <div className="payment-detail-item">
+                <CreditCard className="detail-icon" />
+                <span>Amount Paid:</span>
+                <strong>₹{requestData.amount}</strong>
+              </div>
             </div>
             <Link
               to={`/status/${requestNumber}`}
               className="success-action-btn"
             >
-              Check Status
+              Track Your Request Status
             </Link>
           </div>
         </div>
@@ -283,56 +303,73 @@ const Payment = () => {
         </div>
 
         <div className="request-details">
-          <div className="detail-row">
-            <Person className="detail-icon" />
-            <div className="detail-content">
-              <label>Name</label>
-              <p>{requestData.user_details.name}</p>
+          <div className="detail-section">
+            <h3>Personal Information</h3>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <Person className="detail-icon" />
+                <div className="detail-content">
+                  <label>Full Name</label>
+                  <p>{requestData.user_details.name}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <Phone className="detail-icon" />
+                <div className="detail-content">
+                  <label>Mobile Number</label>
+                  <p>{requestData.user_details.mobileNumber}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <Tag className="detail-icon" />
+                <div className="detail-content">
+                  <label>Request Number</label>
+                  <p>{requestNumber}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <AccessTime className="detail-icon" />
+                <div className="detail-content">
+                  <label>Request Date</label>
+                  <p>{formatDate(requestData.created_at)}</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="detail-row">
-            <Email className="detail-icon" />
-            <div className="detail-content">
-              <label>Email</label>
-              <p>{requestData.user_details.email}</p>
+          <div className="payment-summary">
+            <h3>Payment Summary</h3>
+            <div className="amount-card">
+              <div className="amount-details">
+                <span>Total Amount</span>
+                <div className="amount">
+                  ₹{requestData.model_details.amount}
+                </div>
+              </div>
+              <div className="secure-payment">
+                <Lock className="lock-icon" />
+                <span>100% Secure Payment</span>
+              </div>
             </div>
           </div>
 
-          <div className="detail-row">
-            <Phone className="detail-icon" />
-            <div className="detail-content">
-              <label>Mobile</label>
-              <p>{requestData.user_details.mobileNumber}</p>
+          {isPaymentEnabled() ? (
+            <button className="payment-button" onClick={initiatePayment}>
+              <CreditCard />
+              Proceed to Payment
+            </button>
+          ) : (
+            <div className="payment-disabled">
+              <ErrorOutline className="warning-icon" />
+              <p>
+                Payment link is not active yet. Please wait for user approval.
+              </p>
             </div>
-          </div>
-
-          <div className="detail-row">
-            <AccessTime className="detail-icon" />
-            <div className="detail-content">
-              <label>Request Date</label>
-              <p>{formatDate(requestData.created_at)}</p>
-            </div>
-          </div>
+          )}
         </div>
-
-        <div className="payment-amount">
-          <h3>Amount to Pay</h3>
-          <div className="amount">₹{requestData.model_details.amount}</div>
-        </div>
-
-        {isPaymentEnabled() ? (
-          <button className="payment-button" onClick={initiatePayment}>
-            Proceed to Pay
-          </button>
-        ) : (
-          <div className="payment-disabled">
-            <ErrorOutline />
-            <p>
-              Payment link is not active yet. Please wait for user approval.
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

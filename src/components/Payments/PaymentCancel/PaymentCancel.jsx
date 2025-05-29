@@ -6,12 +6,14 @@ import {
   ErrorOutline,
   Refresh,
   Support,
-  Numbers,
+  Tag,
   WifiOff,
   AccountBalance,
-  Timer
+  Timer,
+  Payment as PaymentIcon
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
+import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
 
 const PaymentCancel = () => {
   const navigate = useNavigate();
@@ -40,79 +42,64 @@ const PaymentCancel = () => {
   };
 
   return (
-    <div className="ditvi-payment-cancel-wrapper">
-      <div className="ditvi-payment-cancel-container">
-        <div className="ditvi-payment-cancel-status-icon">
-          <Cancel className="ditvi-cancel-icon" />
+    <div className="payment-page">
+      <HeaderSection
+        title="Payment Cancelled"
+        subtitle="Your payment was not processed"
+      />
+      
+      <div className="payment-card">
+        <div className="payment-header">
+          <PaymentIcon className="payment-header-icon" />
+          <h2>Payment Status</h2>
         </div>
 
-        <div className="ditvi-payment-cancel-header">
-          <h1 className="ditvi-payment-cancel-title">Payment Cancelled</h1>
-          <div className="ditvi-payment-request-number">
-            <Numbers className="ditvi-request-icon" />
-            Request Number: <span className="ditvi-request-value">{requestNumber}</span>
-          </div>
-        </div>
-
-        <div className="ditvi-payment-cancel-alert">
-          <ErrorOutline className="ditvi-alert-icon" />
-          <p className="ditvi-alert-message">
-            Your payment was not processed and no amount has been deducted from your account.
-          </p>
-        </div>
-
-        <div className="ditvi-payment-cancel-info">
-          <h2 className="ditvi-info-title">What went wrong?</h2>
-          <div className="ditvi-info-grid">
-            <div className="ditvi-info-card">
-              <div className="ditvi-info-card-icon">
-                <WifiOff className="ditvi-connection-icon" />
-              </div>
-              <h3 className="ditvi-info-card-title">Connection Issue</h3>
-              <p className="ditvi-info-card-text">
-                Check your internet connection and ensure stable connectivity
-              </p>
+        <div className="request-details">
+          <div className="payment-status-section">
+            <div className="status-icon-wrapper">
+              <Cancel className="cancel-icon" />
             </div>
-            <div className="ditvi-info-card">
-              <div className="ditvi-info-card-icon">
-                <AccountBalance className="ditvi-payment-icon" />
-              </div>
-              <h3 className="ditvi-info-card-title">Payment Method</h3>
-              <p className="ditvi-info-card-text">
-                Verify your payment details and bank account balance
-              </p>
-            </div>
-            <div className="ditvi-info-card">
-              <div className="ditvi-info-card-icon">
-                <Timer className="ditvi-timeout-icon" />
-              </div>
-              <h3 className="ditvi-info-card-title">Session Timeout</h3>
-              <p className="ditvi-info-card-text">
-                The payment session might have expired
-              </p>
+            <h2 className="status-title">Payment Cancelled</h2>
+            <div className="request-number">
+              <Tag className="detail-icon" />
+              Request Number: <span className="highlight">{requestNumber}</span>
             </div>
           </div>
-        </div>
 
-        <div className="ditvi-payment-actions">
-          <button 
-            className="ditvi-action-button ditvi-retry-button"
-            onClick={handleTryAgain}
-          >
-            <Refresh className="ditvi-button-icon" /> Try Payment Again
-          </button>
-          <button 
-            className="ditvi-action-button ditvi-support-button"
-            onClick={handleSupport}
-          >
-            <Support className="ditvi-button-icon" /> Contact Support
-          </button>
-          <button 
-            className="ditvi-action-button ditvi-back-button"
-            onClick={handleGoBack}
-          >
-            <ArrowBack className="ditvi-button-icon" /> Back to Dashboard
-          </button>
+          <div className="alert-message">
+            <ErrorOutline className="alert-icon" />
+            <p>Your payment was not processed and no amount has been deducted from your account.</p>
+          </div>
+
+          <div className="info-section">
+            <h3>What went wrong?</h3>
+            <div className="info-grid">
+              <div className="info-card">
+                <WifiOff className="info-icon" />
+                <h4>Connection Issue</h4>
+                <p>Check your internet connection and ensure stable connectivity</p>
+              </div>
+
+              <div className="info-card">
+                <AccountBalance className="info-icon" />
+                <h4>Payment Method</h4>
+                <p>Verify your payment details and bank account balance</p>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="action-buttons">
+            <button className="primary-button" onClick={handleTryAgain}>
+              <Refresh /> Try Payment Again
+            </button>
+            <button className="secondary-button" onClick={handleSupport}>
+              <Support /> Contact Support
+            </button>
+            <button className="tertiary-button" onClick={handleGoBack}>
+              <ArrowBack /> Back to Dashboard
+            </button>
+          </div>
         </div>
       </div>
     </div>
