@@ -1,12 +1,13 @@
 {
   "files": {
-    "main.css": "/revamp-biodata-ditvi/static/css/main.5e381c3a.css",
-    "main.js": "/revamp-biodata-ditvi/static/js/main.a5cad4de.js",
+    "main.css": "/revamp-biodata-ditvi/static/css/main.44d49ced.css",
+    "main.js": "/revamp-biodata-ditvi/static/js/main.9bded219.js",
     "static/js/952.80a6972c.chunk.js": "/revamp-biodata-ditvi/static/js/952.80a6972c.chunk.js",
     "static/js/453.7e976675.chunk.js": "/revamp-biodata-ditvi/static/js/453.7e976675.chunk.js",
+    "static/media/1121.svg": "/revamp-biodata-ditvi/static/media/1121.d060794e4d91a9fedc1bf8cc282396fb.svg",
     "static/media/1112.svg": "/revamp-biodata-ditvi/static/media/1112.37701861f9a17a1b131c1a8027249c71.svg",
     "static/media/1116.svg": "/revamp-biodata-ditvi/static/media/1116.90931d262283ff9cc2b1682bb7ba4152.svg",
-    "static/media/1121.svg": "/revamp-biodata-ditvi/static/media/1121.4a0aa2da12249f063b3383cb881c201c.svg",
+    "static/media/1114.svg": "/revamp-biodata-ditvi/static/media/1114.44682aeb4e3e96956666be836aca5b04.svg",
     "static/media/1111.svg": "/revamp-biodata-ditvi/static/media/1111.800d4b7ae9d0f7118133119eb5d67913.svg",
     "static/media/biodata-1111.png": "/revamp-biodata-ditvi/static/media/biodata-1111.470750626389e362864f.png",
     "static/media/1117.svg": "/revamp-biodata-ditvi/static/media/1117.0fd819947b9d1feb800a4d0e2f1cc79a.svg",
@@ -38,13 +39,13 @@
     "static/media/slick.ttf": "/revamp-biodata-ditvi/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/revamp-biodata-ditvi/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/revamp-biodata-ditvi/index.html",
-    "main.5e381c3a.css.map": "/revamp-biodata-ditvi/static/css/main.5e381c3a.css.map",
-    "main.a5cad4de.js.map": "/revamp-biodata-ditvi/static/js/main.a5cad4de.js.map",
+    "main.44d49ced.css.map": "/revamp-biodata-ditvi/static/css/main.44d49ced.css.map",
+    "main.9bded219.js.map": "/revamp-biodata-ditvi/static/js/main.9bded219.js.map",
     "952.80a6972c.chunk.js.map": "/revamp-biodata-ditvi/static/js/952.80a6972c.chunk.js.map",
     "453.7e976675.chunk.js.map": "/revamp-biodata-ditvi/static/js/453.7e976675.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5e381c3a.css",
-    "static/js/main.a5cad4de.js"
+    "static/css/main.44d49ced.css",
+    "static/js/main.9bded219.js"
   ]
 }

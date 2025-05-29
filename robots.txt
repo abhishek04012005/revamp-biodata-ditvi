@@ -38,7 +38,11 @@ Whatsapp Messaga
 Testing :)
 
 
-REACT_APP_SUPABASE_URL=https://jgkgpmvynvzbxcsyeeth.supabase.co
-REACT_APP_SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impna2dwbXZ5bnZ6Ynhjc3llZXRoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjcyOTI3MiwiZXhwIjoyMDYyMzA1MjcyfQ.davleCKvqYV7_mnuD-0jscY-94889_rjtYUQTbjmH4c
-REACT_APP_RAZORPAY_KEY=rzp_live_HvH8c7vXtsOEjK
 
+
+export REACT_APP_SUPABASE_URL=YOUR_KEY
+export REACT_APP_SUPABASE_KEY=YOUR_KEY
+export REACT_APP_RAZORPAY_KEY=YOUR_KEY
+export REACT_APP_APPLICATION_URL=https://abhishek04012005.github.io/revamp-biodata-ditvi/
+npm run build
+npm run deploy
