@@ -114,7 +114,7 @@ const RequestConfirmation = () => {
               <button
                 className="action-button connect"
                 onClick={() =>
-                  window.open("https://wa.me/YOUR_WHATSAPP_NUMBER", "_blank")
+                  window.open("https://wa.me/919263767441", "_blank")
                 }
               >
                 <WhatsApp />
