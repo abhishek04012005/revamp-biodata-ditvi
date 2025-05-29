@@ -35,6 +35,7 @@ import PaymentSuccess from "./components/Payments/PaymentSucess/PaymentSucess";
 import PaymentFailure from "./components/Payments/PaymentFailure/PaymentFailure";
 import PaymentDashboard from "./components/Admin/PaymentDashboard/PaymentDashboard";
 import FeedbackDashboard from "./components/Admin/FeedbackDashboard/FeedbackDashboard";
+import PaymentCancel from "./components/Payments/PaymentCancel/PaymentCancel";
 
 function App() {
   return (
@@ -104,7 +105,8 @@ function App() {
                     <Route path="track-status/:requestNumber" element={<CheckStatus />}/>
                     <Route path="payment/:requestNumber" element={<Payment />} />
                     <Route path="payment-success/:requestNumber" element={<PaymentSuccess />} />
-                    <Route path="payment/failure" element={<PaymentFailure />} />             
+                    <Route path="payment/failure" element={<PaymentFailure />} />  
+                     <Route path="payment-cancelled" element={<PaymentCancel />} />              
                     </Routes>
                   <Footer />
                 </>

@@ -654,3 +654,7 @@ select:focus {
     font-size: 1rem;
   }
 }
+
+.create-biodata-add-btn {
+  margin-bottom: 2rem;
+}

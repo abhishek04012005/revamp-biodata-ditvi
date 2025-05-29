@@ -7,7 +7,10 @@ import {
   Message,
   Email,
   Phone,
-  ContactMail
+  ContactMail,
+  Person,
+  AccessTime,
+  Reply,
 } from "@mui/icons-material";
 import "./ContactUsDashboard.css";
 import { ContactUsStorage } from "../../../supabase/ContactUs";
@@ -23,32 +26,31 @@ const ContactUsDashboard = () => {
     direction: "desc",
   });
 
-
   const stats = [
     {
       icon: <Message />,
       title: "Total Messages",
       value: contacts.length,
-      color: "#4CAF50"
+      color: "#4CAF50",
     },
     {
       icon: <Email />,
       title: "New Messages",
-      value: contacts.filter(c => !c.isRead).length,
-      color: "#2196F3"
+      value: contacts.filter((c) => !c.isRead).length,
+      color: "#2196F3",
     },
     {
       icon: <Phone />,
       title: "Total Calls",
       value: "25",
-      color: "#FFC107"
+      color: "#FFC107",
     },
     {
       icon: <ContactMail />,
       title: "Active Queries",
       value: "10",
-      color: "#9C27B0"
-    }
+      color: "#9C27B0",
+    },
   ];
 
   useEffect(() => {
@@ -66,7 +68,6 @@ const ContactUsDashboard = () => {
       setIsLoading(false);
     }
   };
-
 
   const handleViewDetails = (contact) => {
     setSelectedContact(contact);
@@ -94,7 +95,7 @@ const ContactUsDashboard = () => {
           <div className="contact-dashboard-stats">
             {stats.map((stat, index) => (
               <div className="contact-dashboard-stat-card" key={index}>
-                <div 
+                <div
                   className="contact-dashboard-stat-icon"
                   // style={{ backgroundColor: stat.color }}
                 >
@@ -121,7 +122,10 @@ const ContactUsDashboard = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <button className="contact-dashboard-refresh-btn" onClick={fetchContacts}>
+                <button
+                  className="contact-dashboard-refresh-btn"
+                  onClick={fetchContacts}
+                >
                   <Refresh /> Refresh
                 </button>
               </div>
@@ -153,11 +157,14 @@ const ContactUsDashboard = () => {
                         </div>
                       </td>
                       <td>
-                        {new Date(contact.created_at).toLocaleDateString("en-US", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
+                        {new Date(contact.created_at).toLocaleDateString(
+                          "en-US",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
                       </td>
                       <td className="contact-dashboard-actions">
                         <button
@@ -167,7 +174,6 @@ const ContactUsDashboard = () => {
                         >
                           <Visibility />
                         </button>
- 
                       </td>
                     </tr>
                   ))}
@@ -179,53 +185,102 @@ const ContactUsDashboard = () => {
       </div>
 
       {selectedContact && (
-        <div className="contact-dashboard-modal-overlay" onClick={() => setSelectedContact(null)}>
-          <div className="contact-dashboard-modal" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="contact-dashboard-modal-overlay"
+          onClick={() => setSelectedContact(null)}
+        >
+          <div
+            className="contact-dashboard-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="contact-dashboard-modal-header">
-              <h2>Contact Details</h2>
-              <button className="contact-dashboard-modal-close" onClick={() => setSelectedContact(null)}>
+              <div className="modal-title">
+                <ContactMail
+                  sx={{ color: "var(--primary-color)", fontSize: 28 }}
+                />
+                <h2>Contact Details</h2>
+              </div>
+              <button
+                className="contact-dashboard-modal-close"
+                onClick={() => setSelectedContact(null)}
+                aria-label="Close modal"
+              >
                 <Close />
               </button>
             </div>
+
             <div className="contact-dashboard-modal-content">
-              <div className="contact-dashboard-detail-row">
-                <span className="detail-label">Number:</span>
-                <span className="detail-value">{selectedContact.number}</span>
+              <div className="contact-info-grid">
+                <div className="contact-info-item">
+                  <div className="info-label">
+                    <span className="label-icon">#</span>
+                    <span>Request Number</span>
+                  </div>
+                  <div className="info-value highlight">
+                    {selectedContact.number}
+                  </div>
+                </div>
+
+                <div className="contact-info-item">
+                  <div className="info-label">
+                    <span>Full Name</span>
+                  </div>
+                  <div className="info-value">{selectedContact.name}</div>
+                </div>
+
+
+                <div className="contact-info-item">
+                  <div className="info-label">
+                    <span>Mobile Number</span>
+                  </div>
+                  <div className="info-value">
+              
+                     <div className="info-value highlight">
+                    {selectedContact.mobile}
+                  </div>
+                  </div>
+                </div>
+
+                <div className="contact-info-item">
+                  <div className="info-label">
+                    <span>Submission Date & Time</span>
+                  </div>
+                  <div className="info-value">
+                    {new Date(selectedContact.created_at).toLocaleString(
+                      "en-US",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="contact-dashboard-detail-row">
-                <span className="detail-label">Name:</span>
-                <span className="detail-value">{selectedContact.name}</span>
+
+              <div className="message-section">
+                <div className="message-header">
+                  <h3>Message Content</h3>
+                </div>
+                <div className="message-content">
+                  <p>{selectedContact.message}</p>
+                </div>
               </div>
-              <div className="contact-dashboard-detail-row">
-                <span className="detail-label">Email:</span>
-                <span className="detail-value">{selectedContact.email}</span>
-              </div>
-              <div className="contact-dashboard-detail-row">
-                <span className="detail-label">Mobile:</span>
-                <span className="detail-value">{selectedContact.mobile}</span>
-              </div>
-              <div className="contact-dashboard-detail-row">
-                <span className="detail-label">Date:</span>
-                <span className="detail-value">
-                  {new Date(selectedContact.created_at).toLocaleString("en-US", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </span>
-              </div>
-              <div className="contact-dashboard-detail-row message">
-                <span className="detail-label">Message:</span>
-                <p className="detail-value message-text">{selectedContact.message}</p>
+
+              <div className="modal-actions">
+                <button
+                  className="action-btn close-btn"
+                  onClick={() => setSelectedContact(null)}
+                >
+                  <Close /> Close Details
+                </button>
               </div>
             </div>
           </div>
         </div>
       )}
-
-   
     </>
   );
 };
