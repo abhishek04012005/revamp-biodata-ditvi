@@ -105,7 +105,7 @@ function App() {
                     <Route path="track-status/:requestNumber" element={<CheckStatus />}/>
                     <Route path="payment/:requestNumber" element={<Payment />} />
                     <Route path="payment-success/:requestNumber" element={<PaymentSuccess />} />
-                    <Route path="payment/failure" element={<PaymentFailure />} />  
+                    <Route path="payment-failure" element={<PaymentFailure />} />  
                      <Route path="payment-cancelled" element={<PaymentCancel />} />              
                     </Routes>
                   <Footer />
