@@ -288,3 +288,70 @@
 
 
 
+.transaction-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.transaction-status.success {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+}
+
+.transaction-status.success:hover {
+  background-color: rgba(76, 175, 80, 0.2);
+  transform: translateY(-2px);
+}
+
+.transaction-status.pending {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #F44336;
+}
+
+.transaction-status.pending:hover {
+  background-color: rgba(244, 67, 54, 0.2);
+  transform: translateY(-2px);
+}
+
+.amount-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.amount-low {
+  background-color: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+}
+
+.amount-medium {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #2196f3;
+}
+
+.amount-high {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+}
+
+.amount-very-high {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+.amount-premium {
+  background-color: rgba(255, 140, 66, 0.1);
+  color: #ff8c42;
+}
+
+/* Hover effects */
+.amount-badge:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.95);
+}

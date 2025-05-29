@@ -23,6 +23,14 @@ const PaymentDashboard = () => {
     end: new Date().toISOString().split("T")[0],
   });
 
+  const getAmountColorClass = (amount) => {
+    if (amount <= 100) return "amount-low";
+    if (amount <= 200) return "amount-medium";
+    if (amount <= 300) return "amount-high";
+    if (amount <= 400) return "amount-very-high";
+    return "amount-premium";
+  };
+
   const stats = [
     {
       icon: <AttachMoney />,
@@ -160,8 +168,26 @@ const PaymentDashboard = () => {
                   {payments.map((payment) => (
                     <tr key={payment.id}>
                       <td>{payment.request_number}</td>
-                       <td>{payment.transaction_id ? payment.transaction_id: "N/A"}</td>
-                      <td>₹{payment.amount}</td>
+                      <td>
+                        <span
+                          className={`transaction-status ${
+                            payment.transaction_id ? "success" : "pending"
+                          }`}
+                        >
+                          {payment.transaction_id
+                            ? payment.transaction_id
+                            : "N/A"}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={`amount-badge ${getAmountColorClass(
+                            payment.amount
+                          )}`}
+                        >
+                          ₹{payment.amount}
+                        </span>
+                      </td>
                       <td>{formatDate(payment.updated_at)}</td>
                       <td>
                         <span
