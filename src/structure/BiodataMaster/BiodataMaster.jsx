@@ -133,12 +133,12 @@ const BiodataMaster = () => {
       console.error("Failed to copy:", err);
     }
   };
-  
+
   const isLanguageEnglish = modelDetails?.language === Languages.English.Name;
 
   const handlePrint = (withWatermark = false) => {
     // Store current page styles
-      const currentTheme = getCurrentTheme();
+    const currentTheme = getCurrentTheme();
     const originalContent = document.body.innerHTML;
 
     // Get only the biodata container content
@@ -178,22 +178,27 @@ const BiodataMaster = () => {
             }
 
             /* Theme-specific styles */
-         
-
-
-
 
  .biodata-master .biodata-master-photo-frame {
       border-color: ${currentTheme.PHOTO_FRAME.BORDER_COLOR} !important;
     }
     .biodata-master h3 {
-      font-size: ${currentTheme.HEADINGS.FONT_SIZE} !important;
+      font-size: ${styles.name.fontSize} !important;
       color: ${currentTheme.HEADINGS.COLOR} !important;
+    }
+
+     .biodata-master-flex-section h3 {
+      font-size: ${styles.headings.fontSize} !important;
+    }
+    .biodata-master h3 {
+      color: ${getCurrentTheme().HEADINGS.COLOR} !important;
     }
     .biodata-master th {
       font-size: ${styles.table.headerFontSize} !important;
       color: ${currentTheme.TABLE.HEADER.COLOR} !important;
-      background-color: ${currentTheme.TABLE.HEADER.BACKGROUND_COLOR} !important;
+      background-color: ${
+        currentTheme.TABLE.HEADER.BACKGROUND_COLOR
+      } !important;
     }
     .biodata-master td {
       font-size: ${styles.table.dataFontSize} !important;
@@ -206,24 +211,21 @@ const BiodataMaster = () => {
       background-color: ${currentTheme.TABLE.DATA.BACKGROUND_COLOR} !important;
     }
     .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
-      background-color: ${currentTheme.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
+      background-color: ${
+        currentTheme.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
+      } !important;
     }
     .biodata-master .biodata-master-bio-table thead tr,
     .biodata-master .biodata-master-bio-table tbody tr:first-child {
-      background-color: ${currentTheme.TABLE.HEADER.BACKGROUND_COLOR} !important;
+      background-color: ${
+        currentTheme.TABLE.HEADER.BACKGROUND_COLOR
+      } !important;
     }
+          .biodata-master-bio-table td,
+    .biodata-master-bio-table th {
 
-
-
-
-
-
-
-            .biodata-master-bio-table td,
-            .biodata-master-bio-table th {
-                padding: ${styles.table.rowGap};
-                border-bottom: ${styles.table.rowGap} solid transparent;
-            }
+      border-bottom: ${styles.table.rowGap} solid transparent;
+    }
 
             .img-watermark {
                 display: ${
@@ -372,61 +374,8 @@ const BiodataMaster = () => {
             )}
           </div>
           <div className="biodata-master-biodata-page">
-            {/* Apply dynamic styles to elements */}
-            {/* <style>
-              {`
-
-.biodata-master .biodata-master-photo-frame {
-  border-color: ${BIODATA_THEME_1111.PHOTO_FRAME.BORDER_COLOR} !important;
-  }
-  .biodata-master-name-text h3 {
-      font-size: ${styles.name.fontSize} !important;
-              }
-
-              .biodata-master-flex-section h3 {
-              font-size: ${styles.headings.fontSize} !important;
-              }
-
-    .biodata-master h3 {
-  
-      color: ${BIODATA_THEME_1111.HEADINGS.COLOR} !important;
-    }
-    .biodata-master th {
-      font-size: ${styles.table.headerFontSize} !important;
-      color: ${BIODATA_THEME_1111.TABLE.HEADER.COLOR} !important;
-      background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
-    }
-    .biodata-master td {
-      font-size: ${styles.table.dataFontSize} !important;
-      color: ${BIODATA_THEME_1111.TABLE.DATA.COLOR} !important;
-    }
-    .biodata-master .biodata-master-section-icon {
-      font-size: ${BIODATA_THEME_1111.ICONS.FONT_SIZE} !important;
-      color: ${BIODATA_THEME_1111.ICONS.COLOR} !important;
-    }
-    .biodata-master .biodata-master-bio-table {
-      --row-gap: ${styles.table.rowGap};
-    }
-    .biodata-master .biodata-master-bio-table tbody tr {
-      background-color: ${BIODATA_THEME_1111.TABLE.DATA.BACKGROUND_COLOR} !important;
-    }
-    .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
-      background-color: ${BIODATA_THEME_1111.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
-    }
-    .biodata-master .biodata-master-bio-table thead tr,
-    .biodata-master .biodata-master-bio-table tbody tr:first-child {
-      background-color: ${BIODATA_THEME_1111.TABLE.HEADER.BACKGROUND_COLOR} !important;
-    }
-      .biodata-master-bio-table td,
-    .biodata-master-bio-table th {
-      padding: 12px;
-      border-bottom: ${styles.table.rowGap} solid transparent;
-    }
-  `}
-            </style> */}
-
             <style>
-  {`
+              {`
     .biodata-master .biodata-master-photo-frame {
       border-color: ${getCurrentTheme().PHOTO_FRAME.BORDER_COLOR} !important;
     }
@@ -442,7 +391,9 @@ const BiodataMaster = () => {
     .biodata-master th {
       font-size: ${styles.table.headerFontSize} !important;
       color: ${getCurrentTheme().TABLE.HEADER.COLOR} !important;
-      background-color: ${getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR} !important;
+      background-color: ${
+        getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR
+      } !important;
     }
     .biodata-master td {
       font-size: ${styles.table.dataFontSize} !important;
@@ -456,14 +407,20 @@ const BiodataMaster = () => {
       --row-gap: ${styles.table.rowGap};
     }
     .biodata-master .biodata-master-bio-table tbody tr {
-      background-color: ${getCurrentTheme().TABLE.DATA.BACKGROUND_COLOR} !important;
+      background-color: ${
+        getCurrentTheme().TABLE.DATA.BACKGROUND_COLOR
+      } !important;
     }
     .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
-      background-color: ${getCurrentTheme().TABLE.DATA.ALTERNATE_BACKGROUND_COLOR} !important;
+      background-color: ${
+        getCurrentTheme().TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
+      } !important;
     }
     .biodata-master .biodata-master-bio-table thead tr,
     .biodata-master .biodata-master-bio-table tbody tr:first-child {
-      background-color: ${getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR} !important;
+      background-color: ${
+        getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR
+      } !important;
     }
     .biodata-master-bio-table td,
     .biodata-master-bio-table th {
@@ -471,7 +428,7 @@ const BiodataMaster = () => {
       border-bottom: ${styles.table.rowGap} solid transparent;
     }
   `}
-</style>
+            </style>
 
             {/* Existing biodata content */}
             <div
@@ -815,7 +772,9 @@ const BiodataMaster = () => {
                 <div className="control-item background-selector">
                   <select
                     value={selectedBackground}
-                    onChange={(event) => setSelectedBackground(event.target.value)}
+                    onChange={(event) =>
+                      setSelectedBackground(event.target.value)
+                    }
                     className="background-select"
                   >
                     {Object.entries(BiodataBackgrounds).map(
