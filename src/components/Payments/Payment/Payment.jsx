@@ -84,8 +84,7 @@ const Payment = () => {
           paymentRequest,
           requestNumber,
           handlePaymentSuccess,
-          updatePaymentStatus,
-          PaymentStatus,
+          handlePaymentCancelled,
         });
 
         const razorpayInstance = new window.Razorpay(options);
@@ -170,18 +169,24 @@ const Payment = () => {
     }
   };
 
-  const updatePaymentStatus = async (paymentRequestId, status) => {
+  const handlePaymentCancelled = async (paymentRequestId) => {
     try {
       const dbResponse = PaymentRequestStorage.updatePaymentStatus(
         paymentRequestId,
         {
-          status: status,
+          status: PaymentStatus.Cancelled,
         }
       );
 
       if (dbResponse) {
         // Redirect to success page
-        navigate(`/payment-cancelled/${paymentRequestId}`);
+        navigate("/payment-cancelled", {
+          state: {
+            requestNumber: requestNumber,
+            userDetails: requestData.user_details,
+            modelDetails: requestData.model_details,
+          },
+        });
       }
     } catch (error) {
       console.error("Error updating payment status:", error);

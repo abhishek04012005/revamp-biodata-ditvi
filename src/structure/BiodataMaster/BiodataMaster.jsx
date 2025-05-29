@@ -337,9 +337,15 @@ const BiodataMaster = () => {
                     name: formData?.userDetails?.name || "",
                     requestNumber: requestNumber || "",
                     modelNumber: formData?.modelDetails?.modelNumber || "",
-                    statusLink: `${getBaseUrl()}/track-status/${requestNumber}`,
-                    paymentLink: `${getBaseUrl()}/payment/${requestNumber}`,
-                    feedbackLink: `${getBaseUrl()}/feedback/${requestNumber}`,
+                    statusLink: `${
+                      process.env.REACT_APP_APPLICATION_URL || getBaseUrl()
+                    }/track-status/${requestNumber}`,
+                    paymentLink: `${
+                      process.env.REACT_APP_APPLICATION_URL || getBaseUrl()
+                    }/payment/${requestNumber}`,
+                    feedbackLink: `${
+                      process.env.REACT_APP_APPLICATION_URL || getBaseUrl()
+                    }/feedback/${requestNumber}`,
                   });
 
                   return messages.map((messageData) => (

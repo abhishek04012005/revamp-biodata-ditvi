@@ -4,7 +4,7 @@ export const getRazorpayOptions = ({
   paymentRequest,
   requestNumber,
   handlePaymentSuccess,
-  updatePaymentStatus
+  handlePaymentCancelled,
 }) => {
   return {
     key: process.env.REACT_APP_RAZORPAY_KEY || '',
@@ -17,7 +17,7 @@ export const getRazorpayOptions = ({
     },
     modal: {
       ondismiss: async function () {
-        await updatePaymentStatus(paymentRequest.id, PaymentStatus.Cancelled);
+        await handlePaymentCancelled(paymentRequest.id);
       }
     },
     prefill: {

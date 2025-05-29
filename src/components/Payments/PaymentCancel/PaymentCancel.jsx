@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Cancel,
   ArrowBack,
@@ -15,12 +15,15 @@ import "./PaymentCancel.css";
 
 const PaymentCancel = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const requestNumber = searchParams.get("request_number");
+  const location = useLocation();
+  const { requestNumber, userDetails, modelDetails } = location.state || {};
+  console.log('requestNumber', requestNumber);
+  console.log('userDetails', userDetails);
+  console.log('modelDetails', modelDetails);
 
   useEffect(() => {
     if (!requestNumber) {
-      navigate("/dashboard");
+      navigate(`/payment/${requestNumber}`);
     }
   }, [requestNumber, navigate]);
 
@@ -29,7 +32,7 @@ const PaymentCancel = () => {
   };
 
   const handleTryAgain = () => {
-    navigate(`/payment?request_number=${requestNumber}`);
+    navigate(`/payment/${requestNumber}`);
   };
 
   const handleSupport = () => {
