@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProductionDashboard.css";
-import {
-  Storage,
-  Description,
-  Search,
-  Visibility,
-} from "@mui/icons-material";
+import { Storage, Description, Search, Visibility } from "@mui/icons-material";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
 import { getFlowTypeById, getFlowTypeStyle } from "../../../constants/FlowType";
 import formatDate from "../../../utils/DateHelper";
@@ -39,7 +34,6 @@ const ProductionDashboard = () => {
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-
 
   const productionStats = [
     { icon: <Storage />, title: "Total Request", value: 100 },
