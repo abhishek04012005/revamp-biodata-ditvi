@@ -32,8 +32,7 @@ const RequestConfirmation = () => {
               Your biodata request has been successfully received.
             </p>
 
-            <div className="confirmation-details">
-              <div className="detail-item">
+            {/* <div className="detail-item">
                 <span className="detail-label">
                   <span className="detail-icon-wrapper">
                     <ConfirmationNumber className="detail-icon" />
@@ -41,7 +40,19 @@ const RequestConfirmation = () => {
                   </span>
                 </span>
                 <span className="detail-value highlight">{requestNumber}</span>
+              </div> */}
+
+            <div className="request-number-title">
+              <div className="request-number-wrapper">
+                <ConfirmationNumber className="request-number-icon" />
+                <div className="request-number-content">
+                  <span className="request-number-label">Request Number</span>
+                  <span className="request-number-value">{requestNumber}</span>
+                </div>
               </div>
+            </div>
+
+            <div className="confirmation-details">
               <div className="detail-item">
                 <span className="detail-label">
                   <span className="detail-icon-wrapper">
