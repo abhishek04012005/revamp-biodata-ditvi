@@ -287,7 +287,6 @@
 }
 
 .remove-btn.floating:hover {
-  transform: rotate(90deg);
   background: #ff4757;
 }
 

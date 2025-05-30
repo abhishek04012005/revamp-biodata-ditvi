@@ -9,8 +9,7 @@ import {
   Tag,
   WifiOff,
   AccountBalance,
-  Timer,
-  Payment as PaymentIcon
+  Payment as PaymentIcon,
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
 import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
@@ -19,9 +18,9 @@ const PaymentCancel = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { requestNumber, userDetails, modelDetails } = location.state || {};
-  console.log('requestNumber', requestNumber);
-  console.log('userDetails', userDetails);
-  console.log('modelDetails', modelDetails);
+  console.log("requestNumber", requestNumber);
+  console.log("userDetails", userDetails);
+  console.log("modelDetails", modelDetails);
 
   useEffect(() => {
     if (!requestNumber) {
@@ -47,7 +46,7 @@ const PaymentCancel = () => {
         title="Payment Cancelled"
         subtitle="Your payment was not processed"
       />
-      
+
       <div className="payment-card">
         <div className="payment-header">
           <PaymentIcon className="payment-header-icon" />
@@ -68,7 +67,10 @@ const PaymentCancel = () => {
 
           <div className="alert-message">
             <ErrorOutline className="alert-icon" />
-            <p>Your payment was not processed and no amount has been deducted from your account.</p>
+            <p>
+              Your payment was not processed and no amount has been deducted
+              from your account.
+            </p>
           </div>
 
           <div className="info-section">
@@ -77,7 +79,9 @@ const PaymentCancel = () => {
               <div className="info-card">
                 <WifiOff className="info-icon" />
                 <h4>Connection Issue</h4>
-                <p>Check your internet connection and ensure stable connectivity</p>
+                <p>
+                  Check your internet connection and ensure stable connectivity
+                </p>
               </div>
 
               <div className="info-card">
@@ -85,7 +89,6 @@ const PaymentCancel = () => {
                 <h4>Payment Method</h4>
                 <p>Verify your payment details and bank account balance</p>
               </div>
-
             </div>
           </div>
 

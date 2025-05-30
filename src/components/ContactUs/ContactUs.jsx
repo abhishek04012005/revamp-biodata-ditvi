@@ -3,7 +3,7 @@ import "./ContactUs.css";
 import Container from "../../structure/Container/Container";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import Grid from "@mui/material/Grid";
-import { Box, TextField, Button, CircularProgress } from "@mui/material";
+import { Box, TextField, Button } from "@mui/material";
 import { Email, Phone, Person, Message } from "@mui/icons-material";
 import ContactUsImg from "../../assets/contactus.svg";
 import { ContactUsStorage } from "../../supabase/ContactUs";

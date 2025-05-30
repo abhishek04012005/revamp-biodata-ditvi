@@ -1,3 +1,4 @@
+import React from "react";
 import { School, Add, Delete } from "@mui/icons-material";
 import { MAXIMUM_EDUCATION_GROUPS } from "../../../../utils/Constants";
 
@@ -30,68 +31,70 @@ export const EducationInfoSection = ({
     }
   };
 
-  return (
-    <div className="detail-section">
-      <div className="section-header">
-        <div className="section-icon">
-          <School />
-        </div>
-        <div className="section-title">
-          <h2>{langData?.biodataMaster.educationDetails}</h2>
-        </div>
-      </div>
-
-      <div className="section-content">
-        {formData.educationDetails.map((educationGroup, index) => (
-          <div key={index} className="detail-group animated-card">
-            <div className="detail-group-header">
-              <h3>{`${langData?.placeholders.education} ${
-                formData.educationDetails.length - index
-              }`}</h3>
-              {isEditing && index > 0 && (
-                <button
-                  className="remove-btn floating"
-                  onClick={() => handleRemoveEducation(index)}
-                >
-                  <Delete />
-                </button>
-              )}
-            </div>
-            <div className="detail-fields">
-              {educationGroup.map((field, fieldIndex) => (
-                <div key={fieldIndex} className="detail-field">
-                  <label className="detail-label">{field.label}:</label>
-                  {isEditing ? (
-                    <input
-                      className="detail-field input"
-                      type="text"
-                      value={field.value}
-                      onChange={(e) => {
-                        const newEducationData = [...formData.educationDetails];
-                        newEducationData[index][fieldIndex].value =
-                          e.target.value;
-                        setFormData({
-                          ...formData,
-                          educationDetails: newEducationData,
-                        });
-                      }}
-                      placeholder={`${field.label}`}
-                    />
-                  ) : (
-                    <span className="detail-value">{field.value}</span>
-                  )}
-                </div>
-              ))}
-            </div>
+  return renderSection(
+    <School />,
+    langData?.biodataMaster.educationDetails || "Education Details",
+    <div className="education-groups">
+      {formData.educationDetails.map((educationGroup, groupIndex) => (
+        <div key={groupIndex} className="detail-group animated-card">
+          <div className="group-header">
+            <h3>{`${langData?.placeholders.education} ${
+              formData.educationDetails.length - groupIndex
+            }`}</h3>
           </div>
-        ))}
-        {isEditing &&
-          formData.educationDetails.length < MAXIMUM_EDUCATION_GROUPS && (
-            <button className="add-btn floating" onClick={handleAddEducation}>
-              <Add /> {langData?.placeholders.addEducation}
-            </button>
-          )}
-      </div>
+          <div className="info-grid">
+            {educationGroup.map((field, fieldIndex) => (
+              <div key={fieldIndex} className="detail-field animated-field">
+                <label>{field.label}:</label>
+                {isEditing ? (
+                  <input
+                    className="input-field-edit"
+                    type="text"
+                    value={field.value}
+                    onChange={(e) => {
+                      const newEducationData = [...formData.educationDetails];
+                      newEducationData[groupIndex][fieldIndex].value =
+                        e.target.value;
+                      setFormData({
+                        ...formData,
+                        educationDetails: newEducationData,
+                      });
+                    }}
+                    placeholder={`${field.label}`}
+                  />
+                ) : (
+                  <span className="field-value">{field.value}</span>
+                )}
+              </div>
+            ))}
+            {isEditing && groupIndex > -1 && (
+              <button
+                className="remove-education-btn"
+                onClick={() => handleRemoveEducation(groupIndex)}
+              >
+                <Delete />
+                {langData?.placeholders.removeEducation || "Remove Education"}
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+      {isEditing &&
+        formData.educationDetails.length < MAXIMUM_EDUCATION_GROUPS && (
+          <button className="add-btn floating" onClick={handleAddEducation}>
+            <Add /> {langData?.placeholders.addEducation}
+          </button>
+        )}
     </div>
   );
 };
+
+const renderSection = (icon, title, children) => (
+  <section className="detail-section info-section">
+    <div className="section-header">
+      <div className="header-icon">{icon}</div>
+      <h2>{title}</h2>
+    </div>
+    <div className="section-content">{children}</div>
+  </section>
+);

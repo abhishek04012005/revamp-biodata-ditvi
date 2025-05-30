@@ -50,11 +50,11 @@ export const FamilyInfoSection = ({
     langData?.biodataMaster.familyDetails || "Family Details",
     <>
       {/* Parents Section */}
-      <div className="family-parents animated-card">
-        <h3>{langData?.placeholders.parents}</h3>
+      <div className="family-parent">
+        <h3 >{langData?.placeholders.parents}</h3>
         {["father", "mother"].map((relation) => (
           <div key={relation} className="parent-info">
-            <h4>{formData.familyDetails[relation].label}</h4>
+            <h3>{formData.familyDetails[relation].label}</h3>
             <div className="info-grid">
               <div className="detail-field">
                 <label>{langData?.placeholders.name}:</label>
@@ -277,7 +277,7 @@ export const FamilyInfoSection = ({
               </div>
               {isEditing && (
                 <button
-                  className="remove-btn"
+                  className="remove-btn-sibling"
                   onClick={() => handleRemoveSibling(relation, index)}
                 >
                   <Delete />

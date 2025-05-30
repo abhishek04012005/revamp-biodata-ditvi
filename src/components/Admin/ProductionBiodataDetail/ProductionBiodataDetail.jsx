@@ -283,11 +283,7 @@ const ProductionBiodataDetail = () => {
           />
         </div>
 
-        {isLoading && (
-          <div className="loading-overlay">
-            <div className="loader"></div>
-          </div>
-        )}
+        {isLoading && <Loader/>}
       </main>
     </div>
   );

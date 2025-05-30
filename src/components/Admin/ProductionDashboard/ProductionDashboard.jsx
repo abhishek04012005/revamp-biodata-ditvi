@@ -40,19 +40,6 @@ const ProductionDashboard = () => {
     setSearchTerm(e.target.value);
   };
 
-  const handleDelete = async (requestNumber) => {
-    try {
-      setIsLoading(true);
-      await ProductionRequestStorage.deleteProductionRequestByRequestNumber(
-        requestNumber
-      );
-      fetchRequests();
-    } catch (error) {
-      console.error("Error deleting request:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const productionStats = [
     { icon: <Storage />, title: "Total Request", value: 100 },
