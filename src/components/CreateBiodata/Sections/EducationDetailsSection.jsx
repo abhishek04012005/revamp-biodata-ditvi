@@ -1,10 +1,11 @@
+import { MAXIMUM_EDUCATION_GROUPS } from "../../../utils/Constants";
+
 const EducationDetailsSection = ({
   formData,
   setFormData,
   langData,
   currentStep,
 }) => {
-  const MAXIMUM_EDUCATION_GROUPS = 5;
 
   const handleAddEducation = () => {
     if (formData.educationDetails.length < MAXIMUM_EDUCATION_GROUPS) {
@@ -38,7 +39,7 @@ const EducationDetailsSection = ({
           className="create-biodata-add-btn"
           onClick={handleAddEducation}
         >
-          + Add Education ({5 - formData.educationDetails.length} remaining)
+          + Add Education ({MAXIMUM_EDUCATION_GROUPS - formData.educationDetails.length} remaining)
         </button>
       )}
 

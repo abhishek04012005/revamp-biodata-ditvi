@@ -18,7 +18,8 @@ import {
 } from "./Sections";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import NotificationPopUp from "../../structure/NotificationPopUp/NotificationPopUp";
-const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB
+import { MAXIMUM_IMAGE_SIZE } from "../../utils/Constants";
+
 
 const CreateBiodata = () => {
   const location = useLocation();
@@ -72,7 +73,7 @@ const CreateBiodata = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (file.size > MAX_IMAGE_SIZE) {
+    if (file.size > MAXIMUM_IMAGE_SIZE) {
       setNotification({
         show: true,
         title: "File Size Too Large",

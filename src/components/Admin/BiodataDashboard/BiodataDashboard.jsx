@@ -53,7 +53,7 @@ const BiodataDashboard = () => {
       icon: <Description />,
       title: "In Production",
       value: requests.filter(
-        (request) => getLatestStatusId(request.status) === 0
+        (request) => getLatestStatusId(request.status) > 0
       ).length,
     },
     { icon: <CheckCircle />, title: "Completed", value: 14 },

@@ -1,14 +1,6 @@
-import React from "react";
 import { People, Add, Delete } from "@mui/icons-material";
-import {
-  PersonalData,
-  ProfessionalData,
-  EducationData,
-  createEmptyPerson,
-  FamilyData,
-  ExaminationData,
-  ContactData,
-} from "../../../../json/createBiodata";
+import { createEmptyPerson } from "../../../../json/createBiodata";
+import { MAXIMUM_SIBLINGS } from "../../../../utils/Constants";
 
 export const FamilyInfoSection = ({
   formData,
@@ -16,17 +8,26 @@ export const FamilyInfoSection = ({
   isEditing,
   langData,
 }) => {
+  const getTotalSiblings = () => {
+    return (
+      formData.familyDetails.brothers.value.length +
+      formData.familyDetails.sisters.value.length
+    );
+  };
+
   const handleAddSibling = (relation) => {
-    setFormData((prev) => ({
-      ...prev,
-      familyDetails: {
-        ...prev.familyDetails,
-        [relation]: {
-          ...prev.familyDetails[relation],
-          value: [createEmptyPerson(), ...prev.familyDetails[relation].value],
+    if (getTotalSiblings() < MAXIMUM_SIBLINGS) {
+      setFormData((prev) => ({
+        ...prev,
+        familyDetails: {
+          ...prev.familyDetails,
+          [relation]: {
+            ...prev.familyDetails[relation],
+            value: [createEmptyPerson(), ...prev.familyDetails[relation].value],
+          },
         },
-      },
-    }));
+      }));
+    }
   };
 
   const handleRemoveSibling = (relation, index) => {
@@ -125,7 +126,7 @@ export const FamilyInfoSection = ({
         <div key={relation} className="family-siblings animated-card">
           <div className="siblings-header">
             <h3>{formData.familyDetails[relation].label}</h3>
-            {isEditing && (
+            {isEditing && getTotalSiblings() < MAXIMUM_SIBLINGS && (
               <button
                 className="add-btn floating"
                 onClick={() => handleAddSibling(relation)}
@@ -169,9 +170,7 @@ export const FamilyInfoSection = ({
                       placeholder={langData?.placeholders.name}
                     />
                   ) : (
-                    <span className="field-value">
-                      {sibling.name}
-                    </span>
+                    <span className="field-value">{sibling.name}</span>
                   )}
                 </div>
                 <div className="detail-field">
@@ -203,9 +202,7 @@ export const FamilyInfoSection = ({
                       placeholder={langData?.placeholders.occupation}
                     />
                   ) : (
-                    <span className="field-value">
-                      {sibling.occupation}
-                    </span>
+                    <span className="field-value">{sibling.occupation}</span>
                   )}
                 </div>
                 <div className="detail-field">

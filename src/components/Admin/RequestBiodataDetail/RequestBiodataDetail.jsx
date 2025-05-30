@@ -108,7 +108,7 @@ const RequestBiodataDetail = () => {
             "Profile Image",
             <div className="profile-section">
               <div className="profile-image-container">
-                {langData.profileImage ? (
+                {formData.profileImage ? (
                   <img
                     src={formData.profileImage}
                     alt="Profile"

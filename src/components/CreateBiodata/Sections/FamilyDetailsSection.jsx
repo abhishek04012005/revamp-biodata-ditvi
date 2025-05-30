@@ -1,6 +1,7 @@
 import { createEmptyPerson } from "../../../json/createBiodata";
 import { createEmptyPersonHindi } from "../../../json/CreateBiodataHindi";
 import Languages from "../../../json/Languages";
+import { MAXIMUM_SIBLINGS } from "../../../utils/Constants";
 
 const FamilyDetailsSection = ({
   formData,
@@ -9,7 +10,6 @@ const FamilyDetailsSection = ({
   langData,
   currentStep,
 }) => {
-  const MAXIUM_SIBLINGS = 5;
   const isLanguageHindi = modelDetails.language === Languages.Hindi.Name;
   const occupationPlaceholder = {
     father: isLanguageHindi ? "सरकारी सेवा" : "Government Service",
@@ -33,8 +33,14 @@ const FamilyDetailsSection = ({
     }));
   };
 
+
+   const getTotalSiblings = () => {
+    return formData.familyDetails.brothers.value.length + 
+           formData.familyDetails.sisters.value.length;
+  };
+
   const handleAddSibling = (relation) => {
-    if (formData.familyDetails[relation].value.length < MAXIUM_SIBLINGS) {
+    if (getTotalSiblings() < MAXIMUM_SIBLINGS) {
       setFormData((prev) => ({
         ...prev,
         familyDetails: {
@@ -123,8 +129,8 @@ const FamilyDetailsSection = ({
         <div key={relation} className="create-biodata-family-group">
           <div className="sibling-header">
             <h3>{formData.familyDetails[relation].label}</h3>
-            {formData.familyDetails[relation].value.length <
-              MAXIUM_SIBLINGS && (
+            {getTotalSiblings() <
+              MAXIMUM_SIBLINGS && (
               <button
                 type="button"
                 onClick={() => handleAddSibling(relation)}

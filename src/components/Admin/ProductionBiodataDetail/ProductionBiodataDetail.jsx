@@ -32,7 +32,7 @@ import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
 import ModelTypes from "../../../json/ModelTypes";
 import "./ProductionBiodataDetail.css";
-
+import { MAXIMUM_IMAGE_SIZE } from "../../../utils/Constants";
 import { ProfileSection } from "./Sections/ProfileSection";
 import { BiodataDownloadSection } from "./Sections/BiodataDownloadSection";
 import { PersonalInfoSection } from "./Sections/PersonalInfoSection";
@@ -96,6 +96,54 @@ const ProductionBiodataDetail = () => {
     }
   };
 
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > MAXIMUM_IMAGE_SIZE) {
+      // setNotification({
+      //   show: true,
+      //   title: "File Size Too Large",
+      //   message:
+      //     "Please upload an image that is less than or equal to 1MB in size. Large images may affect the loading time of your biodata.",
+      // });
+      alert('Please upload an image that is less than or equal to 1MB in size. Large images may affect the loading time of your biodata.')
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      // setNotification({
+      //   show: true,
+      //   title: "Invalid File Type",
+      //   message:
+      //     "Please upload a valid image file (JPG, PNG, etc.). Other file types are not supported.",
+      // });
+      alert("Please upload a valid image file (JPG, PNG, etc.). Other file types are not supported.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          profileImage: reader.result,
+        }));
+      };
+      reader.onerror = () => {
+        alert("Error reading file");
+      };
+      reader.readAsDataURL(file);
+      setSelectedImage(file);
+    } catch (error) {
+      console.error("Error handling image:", error);
+      alert("Failed to process image");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSave = async () => {
     try {
       setIsLoading(true);
@@ -147,10 +195,8 @@ const ProductionBiodataDetail = () => {
             <ArrowBack /> Back
           </button>
           <div className="header-info">
-            <h1>{langData?.placeholders.biodataRequestDetails}</h1>
-            <p className="request-id">
-              {langData?.placeholders.requestNumber}: {requestNumber}
-            </p>
+            <h1>Production Request Details</h1>
+            <h3 className="request-id">Request No. : {requestNumber}</h3>
           </div>
         </div>
         <div className="detail-actions">
@@ -182,7 +228,7 @@ const ProductionBiodataDetail = () => {
           <ProfileSection
             formData={formData}
             isEditing={isEditing}
-            setSelectedImage={setSelectedImage}
+            handleImageChange={handleImageChange}
             langData={langData}
           />
 
@@ -199,7 +245,6 @@ const ProductionBiodataDetail = () => {
             isEditing={isEditing}
             langData={langData}
           />
-          {console.log(formData.modelDetails)}
           {formData.modelDetails?.type === ModelTypes.Student.Name ? (
             <ExaminationInfoSection
               formData={formData}
