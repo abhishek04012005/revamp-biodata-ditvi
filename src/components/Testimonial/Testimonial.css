@@ -334,4 +334,5 @@
 .custom-arrow {
     color: white !important;
     background-color: var(--primary-color) !important;
+    border-radius: 50%;
 }

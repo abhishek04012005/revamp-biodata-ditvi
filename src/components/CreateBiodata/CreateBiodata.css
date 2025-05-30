@@ -225,6 +225,7 @@ select:focus {
     padding: 0.6rem 1rem;
     border-radius: 12px;
     cursor: pointer;
+    margin-block: 2rem;
 }
 
 .create-biodata-preview {
