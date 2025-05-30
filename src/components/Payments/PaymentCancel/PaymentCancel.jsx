@@ -42,10 +42,10 @@ const PaymentCancel = () => {
 
   return (
     <div className="payment-page">
-      <HeaderSection
+      {/* <HeaderSection
         title="Payment Cancelled"
         subtitle="Your payment was not processed"
-      />
+      /> */}
 
       <div className="payment-card">
         <div className="payment-header">
