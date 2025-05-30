@@ -25,7 +25,14 @@ const ContactUs = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "number") {
+      const value = e.target.value.replace(/\D/g, "");
+      if (value === "" || value.length <= 10) {
+        setFormData({ ...formData, number: value });
+      }
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -133,6 +140,21 @@ const ContactUs = () => {
                         variant="outlined"
                         value={formData.number}
                         onChange={handleChange}
+                        error={
+                          formData.number &&
+                          !formData.number.match(/^[6789]\d{9}$/)
+                        }
+                        helperText={
+                          formData.number &&
+                          !formData.number.match(/^[6789]\d{9}$/)
+                            ? "Please enter valid mobile number starting with 6, 7, 8 or 9"
+                            : ""
+                        }
+                        inputProps={{
+                          maxLength: 10,
+                          pattern: "[6789][0-9]*",
+                          inputMode: "numeric",
+                        }}
                         fullWidth
                         required
                       />
