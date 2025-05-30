@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./BiodataDashboard.css";
 import {
   Dashboard,
-  People,
+  FiberNew,
   Description,
   CheckCircle,
   Search,
@@ -48,22 +48,63 @@ const BiodataDashboard = () => {
 
   const stats = [
     { icon: <Dashboard />, title: "Total Requests", value: requests.length },
-    { icon: <People />, title: "Active Users", value: 100 },
+    {
+      icon: <FiberNew />,
+      title: "New Requests",
+      value: requests.filter(
+        (request) => getLatestStatusId(request.status) === 0
+      ).length,
+    },
     {
       icon: <Description />,
       title: "In Production",
       value: requests.filter(
-        (request) => getLatestStatusId(request.status) > 0
+        (request) =>
+          getLatestStatusId(request?.status) > 0 && request?.completed === false
       ).length,
     },
-    { icon: <CheckCircle />, title: "Completed", value: 14 },
+    {
+      icon: <CheckCircle />,
+      title: "Completed",
+      value:
+        requests.filter((request) => request?.completed === true).length || 0,
+    },
   ];
 
   const isBackwardDisabled = (statusId) => [0, 1].includes(statusId);
   const isForwardDisabled = (statusId) => statusId === 5;
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    const searchValue = e.target.value;
+    try {
+      const value = searchValue.trim();
+
+      if (!value) {
+        fetchRequests(); // Reset to all records if search is empty
+        return;
+      }
+
+      // Convert search value to number for comparison
+      const searchNumber = parseInt(value);
+
+      if (isNaN(searchNumber)) {
+        setRequests([]); // Clear results if not a number
+        return;
+      }
+
+      // Filter existing requests by request_number
+      const filteredRequests = requests.filter((request) =>
+        request.request_number.toString().includes(value)
+      );
+
+      if (filteredRequests.length > 0) {
+        setRequests(filteredRequests);
+      } else {
+        alert("No records found.");
+      }
+    } catch (error) {
+      console.error("Error filtering requests:", error);
+    }
   };
 
   const moveToProduction = async (request) => {
@@ -91,7 +132,7 @@ const BiodataDashboard = () => {
 
   const handleStatusChange = async (direction, requestId) => {
     try {
-        setIsLoading(true);
+      setIsLoading(true);
       const request = requests.find((r) => r.id === requestId);
       if (!request) return;
 
@@ -154,7 +195,7 @@ const BiodataDashboard = () => {
                 <Search />
                 <input
                   type="text"
-                  placeholder="Search by name or request no."
+                  placeholder="Search by Request No. or Mobile No."
                   value={searchTerm}
                   onChange={handleSearch}
                 />
@@ -177,69 +218,72 @@ const BiodataDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {requests.map((request) => (
-                    <tr key={request.id}>
-                      <td>{request.request_number}</td>
-                      <td>
-                        <span style={getFlowTypeStyle(request.flow_type)}>
-                          {getFlowTypeById(request.flow_type)}
-                        </span>
-                      </td>
-                      <td>{request.user_details?.name}</td>
-                      <td>{request.user_details?.mobileNumber}</td>
-                      <td>{formatDate(request.created_at)}</td>
+                  {console.log("requests", requests)}
+                  {requests
+                    .filter((request) => request.completed === false)
+                    .map((request) => (
+                      <tr key={request.id}>
+                        <td>{request.request_number}</td>
+                        <td>
+                          <span style={getFlowTypeStyle(request.flow_type)}>
+                            {getFlowTypeById(request.flow_type)}
+                          </span>
+                        </td>
+                        <td>{request.user_details?.name}</td>
+                        <td>{request.user_details?.mobileNumber}</td>
+                        <td>{formatDate(request.created_at)}</td>
 
-                      <td>
-                        <span
-                          style={getStatusStyle(
-                            getLatestStatusId(request.status)
-                          )}
-                        >
-                          {getLatestStatusText(request.status)}
-                        </span>
-                      </td>
-                      <td className="dashboard-status-actions">
-                        <button
-                          className="dashboard-action-btn backward"
-                          onClick={() =>
-                            handleStatusChange(MOVE_BACKWARD, request.id)
-                          }
-                          disabled={isBackwardDisabled(
-                            getLatestStatusId(request.status)
-                          )}
-                        >
-                          <ArrowBack />
-                        </button>
-                        <button
-                          className="dashboard-action-btn forward"
-                          onClick={() =>
-                            handleStatusChange(MOVE_FORWARD, request.id)
-                          }
-                          disabled={isForwardDisabled(
-                            getLatestStatusId(request.status)
-                          )}
-                        >
-                          <ArrowForward />
-                        </button>
-                      </td>
-                      <td>
-                        <Link
-                          to={`/admin/biodata/${request.id}`}
-                          className="dashboard-view-btn"
-                        >
-                          View
-                        </Link>
-                      </td>
-                      <td>
-                        <button
-                          className="dashboard-delete-btn"
-                          onClick={() => handleDelete(request.id)}
-                        >
-                          <Delete />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                        <td>
+                          <span
+                            style={getStatusStyle(
+                              getLatestStatusId(request.status)
+                            )}
+                          >
+                            {getLatestStatusText(request.status)}
+                          </span>
+                        </td>
+                        <td className="dashboard-status-actions">
+                          <button
+                            className="dashboard-action-btn backward"
+                            onClick={() =>
+                              handleStatusChange(MOVE_BACKWARD, request.id)
+                            }
+                            disabled={isBackwardDisabled(
+                              getLatestStatusId(request.status)
+                            )}
+                          >
+                            <ArrowBack />
+                          </button>
+                          <button
+                            className="dashboard-action-btn forward"
+                            onClick={() =>
+                              handleStatusChange(MOVE_FORWARD, request.id)
+                            }
+                            disabled={isForwardDisabled(
+                              getLatestStatusId(request.status)
+                            )}
+                          >
+                            <ArrowForward />
+                          </button>
+                        </td>
+                        <td>
+                          <Link
+                            to={`/admin/biodata/${request.id}`}
+                            className="dashboard-view-btn"
+                          >
+                            View
+                          </Link>
+                        </td>
+                        <td>
+                          <button
+                            className="dashboard-delete-btn"
+                            onClick={() => handleDelete(request.id)}
+                          >
+                            <Delete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
