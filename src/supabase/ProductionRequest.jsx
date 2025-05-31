@@ -23,6 +23,7 @@ export const ProductionRequestStorage = {
                     education_details,
                     family_details,
                     contact_details,
+                    completed,
                     created_at
                 `)
                 .eq('deleted', false)
@@ -114,7 +115,8 @@ export const ProductionRequestStorage = {
                     education_details: productionRequest.educationDetails,
                     family_details: productionRequest.familyDetails,
                     contact_details: productionRequest.contactDetails,
-                    style_settings: productionRequest.styleSettings,    
+                    style_settings: productionRequest.styleSettings,
+                    completed: productionRequest.completed,     
                 })
                 .eq('id', id)
                 .select('*')

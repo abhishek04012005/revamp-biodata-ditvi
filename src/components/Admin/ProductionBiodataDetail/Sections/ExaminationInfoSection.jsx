@@ -1,4 +1,3 @@
-import React from "react";
 import { School } from "@mui/icons-material";
 
 export const ExaminationInfoSection = ({
@@ -11,42 +10,36 @@ export const ExaminationInfoSection = ({
     <School />,
     langData?.biodataMaster.examinationDetails || "Examination Details",
     <div className="info-grid">
-      {Array.isArray(formData.examinationDetails) ? (
-        formData.examinationDetails.map((field, index) => {
-          return (
-            <div key={index} className="detail-field animated-field">
-              <label>{field?.label || "Label"}:</label>
-              {isEditing ? (
-                <input
-                  className="input-field-edit"
-                  type="text"
-                  value={field?.value || ""}
-                  onChange={(e) => {
-                    const newExaminationData = [...formData.examinationDetails];
-                    newExaminationData[index] = {
-                      ...newExaminationData[index],
-                      value: e.target.value,
-                    };
-                    setFormData({
-                      ...formData,
-                      examinationDetails: newExaminationData,
-                    });
-                  }}
-                  placeholder={field?.label?.toLowerCase() || ""}
-                />
-              ) : (
-                <span className="field-value">
-                  {field?.value || langData?.placeholders?.notProvided || "N/A"}
-                </span>
-              )}
-            </div>
-          );
-        })
-      ) : (
-        <div className="detail-field">
-          <span>No examination details available</span>
-        </div>
-      )}
+      {formData.examinationDetails.map((field, index) => {
+        return (
+          <div key={index} className="detail-field animated-field">
+            <label>{field?.label || "Label"}:</label>
+            {isEditing ? (
+              <input
+                className="input-field-edit"
+                type="text"
+                value={field?.value || ""}
+                onChange={(e) => {
+                  const newExaminationData = [...formData.examinationDetails];
+                  newExaminationData[index] = {
+                    ...newExaminationData[index],
+                    value: e.target.value,
+                  };
+                  setFormData({
+                    ...formData,
+                    examinationDetails: newExaminationData,
+                  });
+                }}
+                placeholder={field?.label?.toLowerCase() || ""}
+              />
+            ) : (
+              <span className="field-value">
+                {field?.value || langData?.placeholders?.notProvided || "N/A"}
+              </span>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

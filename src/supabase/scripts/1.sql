@@ -56,6 +56,7 @@ CREATE TABLE public.production_request (
     family_details JSONB NULL,
     contact_details JSONB NULL,
     style_settings JSONB NULL,
+    completed BOOLEAN DEFAULT FALSE,
     deleted BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT now()
 );

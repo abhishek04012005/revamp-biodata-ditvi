@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProductionDashboard.css";
-import { Storage, Description, Search, Visibility } from "@mui/icons-material";
+import {
+  Dashboard,
+  CheckCircle,
+  Description,
+  Search,
+  Visibility,
+} from "@mui/icons-material";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
 import { getFlowTypeById, getFlowTypeStyle } from "../../../constants/FlowType";
 import formatDate from "../../../utils/DateHelper";
 import Loader from "../../../structure/Loader/Loader";
+import { getLatestStatusId } from "../../../utils/StatusHelper";
 
 const ProductionDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,9 +43,17 @@ const ProductionDashboard = () => {
   };
 
   const productionStats = [
-    { icon: <Storage />, title: "Total Request", value: 100 },
-    { icon: <Description />, title: "Completed", value: 66 },
-    { icon: <Description />, title: "Pending", value: 14 },
+    { icon: <Dashboard />, title: "Total Requests", value: requests.length },
+    {
+      icon: <Description />,
+      title: "In Progress",
+      value: requests.filter((request) => request?.completed === false).length,
+    },
+    {
+      icon: <CheckCircle />,
+      title: "Completed",
+      value: requests.filter((request) => request?.completed === true).length,
+    },
   ];
 
   return (
@@ -86,36 +101,38 @@ const ProductionDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {requests.map((request) => (
-                    <tr key={request.id}>
-                      <td>{request.request_number}</td>
-                      <td>
-                        <span style={getFlowTypeStyle(request.flow_type)}>
-                          {getFlowTypeById(request.flow_type)}
-                        </span>
-                      </td>
-                      <td>{request.user_details?.name}</td>
-                      <td>{request.user_details?.mobileNumber}</td>
-                      <td>{formatDate(request.created_at)}</td>
-                      <td className="production-dashboard-action-buttons">
-                        <Link
-                          to={`/admin/production/${request.id}`}
-                          className="production-dashboard-action-btn details-btn"
-                        >
-                          Show Details
-                        </Link>
-                      </td>
-                      <td>
-                        <Link
-                          to={`/admin/production/preview/${request.id}`}
-                          className="production-dashboard-action-btn preview-btn"
-                        >
-                          <Visibility />
-                          Preview
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
+                  {requests
+                    .filter((request) => request.completed === false)
+                    .map((request) => (
+                      <tr key={request.id}>
+                        <td>{request.request_number}</td>
+                        <td>
+                          <span style={getFlowTypeStyle(request.flow_type)}>
+                            {getFlowTypeById(request.flow_type)}
+                          </span>
+                        </td>
+                        <td>{request.user_details?.name}</td>
+                        <td>{request.user_details?.mobileNumber}</td>
+                        <td>{formatDate(request.created_at)}</td>
+                        <td className="production-dashboard-action-buttons">
+                          <Link
+                            to={`/admin/production/${request.id}`}
+                            className="production-dashboard-action-btn details-btn"
+                          >
+                            Show Details
+                          </Link>
+                        </td>
+                        <td>
+                          <Link
+                            to={`/admin/production/preview/${request.id}`}
+                            className="production-dashboard-action-btn preview-btn"
+                          >
+                            <Visibility />
+                            Preview
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

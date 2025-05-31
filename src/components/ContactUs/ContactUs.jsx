@@ -140,6 +140,8 @@ const ContactUs = () => {
                         variant="outlined"
                         value={formData.number}
                         onChange={handleChange}
+                        maxLength={10}
+                        minLength={10}
                         error={
                           formData.number &&
                           !formData.number.match(/^[6789]\d{9}$/)
@@ -147,7 +149,7 @@ const ContactUs = () => {
                         helperText={
                           formData.number &&
                           !formData.number.match(/^[6789]\d{9}$/)
-                            ? "Please enter valid mobile number starting with 6, 7, 8 or 9"
+                            ? "Enter a valid 10-digit mobile number that begins with 6, 7, 8, or 9."
                             : ""
                         }
                         inputProps={{

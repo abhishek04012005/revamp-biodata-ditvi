@@ -124,7 +124,7 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
           </button>
         </form>
       </div>
-      {isLoading && <Loader/>}
+      {isLoading && <Loader />}
     </div>
   );
 };

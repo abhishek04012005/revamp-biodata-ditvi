@@ -17,25 +17,25 @@ import Logo from "../../../assets/logo.png";
 
 const adminNavLinks = [
   {
-    id: "feedback",
+    id: "feedback-dashboard",
     label: "Feedback",
     path: "/admin/feedback-dashboard",
     icon: <Feedback />,
   },
   {
-    id: "contact",
+    id: "contact-dashboard",
     label: "Contact",
     path: "/admin/contact-dashboard",
     icon: <ContactPage />,
   },
   {
-    id: "payment",
+    id: "payment-dashboard",
     label: "Payment",
     path: "/admin/payment-dashboard",
     icon: <Payment />,
   },
   {
-    id: "production",
+    id: "production-dashboard",
     label: "Production",
     path: "/admin/production-dashboard",
     icon: <Description />,

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import {
   AccountBalance,
-  AttachMoney,
+  CurrencyRupee,
   Receipt,
   Search,
   DateRange,
-  Person,
-  Download,
+  CheckCircle,
   Visibility,
 } from "@mui/icons-material";
 import "./PaymentDashboard.css";
 import { PaymentRequestStorage } from "../../../supabase/PaymentRequest";
 import formatDate from "../../../utils/DateHelper";
 import Loader from "../../../structure/Loader/Loader";
+import { PaymentStatus } from "../../../json/PaymentStatus";
 
 const PaymentDashboard = () => {
   const [payments, setPayments] = useState([]);
@@ -33,28 +33,38 @@ const PaymentDashboard = () => {
 
   const stats = [
     {
-      icon: <AttachMoney />,
-      title: "Total Revenue",
-      value: "₹50,000",
+      icon: <CurrencyRupee />,
+      title: "Total Amount",
+      value: payments
+        .filter((payment) => payment.status === PaymentStatus.Completed)
+        .reduce((sum, payment) => sum + (payment.amount || 0), 0),
       color: "#4CAF50",
     },
     {
       icon: <Receipt />,
       title: "Total Payments",
-      value: payments.length,
+      value: new Set(payments.map((payment) => payment.request_number)).size,
       color: "#2196F3",
     },
     {
       icon: <AccountBalance />,
       title: "Pending Payments",
-      value: "25",
+      value: new Set(
+        payments
+          .filter((payment) => payment.status !== PaymentStatus.Completed)
+          .map((payment) => payment.request_number)
+      ).size,
       color: "#FFC107",
     },
     {
-      icon: <Person />,
-      title: "Active Users",
-      value: "100",
-      color: "#9C27B0",
+      icon: <CheckCircle />,
+      title: "Completed Payments",
+      value: new Set(
+        payments
+          .filter((payment) => payment.status === PaymentStatus.Completed)
+          .map((payment) => payment.request_number)
+      ).size,
+      color: "#FFC107",
     },
   ];
 

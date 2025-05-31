@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./BiodataMaster.css";
 import { ProductionRequestStorage } from "../../supabase/ProductionRequest";
-import { BIODATA_THEME_1111 } from "../../json/biodataMaster";
 import { BIODATA_THEMES } from "../../json/biodataMaster";
 import WatermarkLogo from "../../assets/watermark/logo.png";
 import { getLatestStatusId } from "../../utils/StatusHelper";
@@ -32,13 +31,10 @@ import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
-  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
   const [currentStatus, setCurrentStatus] = useState(1);
+  const [statusArray, setStatusArray] = useState([]);
   const [formData, setFormData] = useState(null);
-  const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
   const [copied, setCopied] = useState(false);
   const [styles, setStyles] = useState(DEFAULT_STYLES);
@@ -79,7 +75,6 @@ const BiodataMaster = () => {
         setModelDetails(response.model_details);
         setSelectedBackground(response.model_details.modelNumber);
         setFormData(initialFormData);
-        setOriginalData(initialFormData);
         setStyles(response.style_settings || DEFAULT_STYLES);
         fetchStatus(response.request_number);
       }
@@ -87,6 +82,26 @@ const BiodataMaster = () => {
       console.error("Error fetching request:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const markCompletedProductionRequest = async () => {
+    try {
+      ProductionRequestStorage.updateProductionRequestById(requestId, {
+        completed: true,
+      });
+      BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(
+        requestNumber,
+        [
+          ...statusArray,
+          {
+            id: 5,
+            created: new Date().toISOString(),
+          },
+        ]
+      );
+    } catch (err) {
+      console.error("Error markCompletedProductionRequest ", err);
     }
   };
 
@@ -109,12 +124,8 @@ const BiodataMaster = () => {
     BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
       .then((response) => {
         if (response) {
-          const statusHistory = response.status;
-          const newTimestamps = {};
-          statusHistory.forEach((status) => {
-            newTimestamps[status.id] = status.created;
-          });
-          setCurrentStatus(getLatestStatusId(statusHistory));
+          setStatusArray(response.status);
+          setCurrentStatus(getLatestStatusId(response.status));
         } else {
           console.error("No request found with the given request number.");
         }
@@ -137,6 +148,8 @@ const BiodataMaster = () => {
   const isLanguageEnglish = modelDetails?.language === Languages.English.Name;
 
   const handlePrint = (withWatermark = false) => {
+    // Mark Production Request Completed and Update Status in BiodataRequest
+    if (withWatermark === false) markCompletedProductionRequest();
     // Store current page styles
     const currentTheme = getCurrentTheme();
     const originalContent = document.body.innerHTML;
