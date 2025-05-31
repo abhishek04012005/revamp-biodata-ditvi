@@ -13,7 +13,6 @@ import {
   CreditCard,
   Receipt,
   Lock,
-  Tag
 } from "@mui/icons-material";
 import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
@@ -22,6 +21,7 @@ import formatDate from "../../../utils/DateHelper";
 import { PaymentRequestStorage } from "../../../supabase/PaymentRequest";
 import { PaymentStatus } from "../../../json/PaymentStatus";
 import { getRazorpayOptions } from "./PaymentConfig";
+import Loader from "../../../structure/Loader/Loader";
 
 const Payment = () => {
   const { requestNumber } = useParams();
@@ -212,23 +212,16 @@ const Payment = () => {
   };
 
   if (loading) {
-    return (
-      <div className="payment-loader">
-        <div className="loader-content">
-          <div className="loader-spinner"></div>
-          <p>Processing your request...</p>
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (error || !requestData) {
     return (
       <div className="payment-page">
-        <HeaderSection
+        {/* <HeaderSection
           title="Make Payment"
           subtitle="Complete your payment to proceed with biodata creation"
-        />
+        /> */}
         <div className="payment-error-card">
           <div className="error-header">
             <ErrorOutline className="error-icon" />
@@ -291,10 +284,10 @@ const Payment = () => {
 
   return (
     <div className="payment-page">
-      <HeaderSection
+      {/* <HeaderSection
         title="Make Payment"
         subtitle="Complete your payment to proceed with biodata creation"
-      />
+      /> */}
 
       <div className="payment-card">
         <div className="payment-header">
@@ -304,7 +297,10 @@ const Payment = () => {
 
         <div className="request-details">
           <div className="detail-section">
-            <h3>Personal Information</h3>
+            <h1 className="payment-request-number">
+              Request No: #{requestNumber}
+            </h1>
+
             <div className="detail-grid">
               <div className="detail-item">
                 <Person className="detail-icon" />
@@ -321,22 +317,6 @@ const Payment = () => {
                   <p>{requestData.user_details.mobileNumber}</p>
                 </div>
               </div>
-
-              <div className="detail-item">
-                <Tag className="detail-icon" />
-                <div className="detail-content">
-                  <label>Request Number</label>
-                  <p>{requestNumber}</p>
-                </div>
-              </div>
-
-              <div className="detail-item">
-                <AccessTime className="detail-icon" />
-                <div className="detail-content">
-                  <label>Request Date</label>
-                  <p>{formatDate(requestData.created_at)}</p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -346,7 +326,8 @@ const Payment = () => {
               <div className="amount-details">
                 <span>Total Amount</span>
                 <div className="amount">
-                  ₹{requestData.model_details.amount}
+                  <span>₹ </span>
+                  {requestData.model_details.amount}
                 </div>
               </div>
               <div className="secure-payment">

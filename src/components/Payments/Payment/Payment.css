@@ -12,9 +12,10 @@
 
 /* Page Layout */
 .payment-page {
-  min-height: 100vh;
+  min-height: auto;
   padding: 2rem;
   background: linear-gradient(135deg, rgba(255, 140, 66, 0.05), rgba(78, 205, 196, 0.05));
+  margin-top: 4.5rem;
 }
 
 /* Card Styles */
@@ -77,6 +78,7 @@
 
 .detail-content {
   flex: 1;
+  text-align: left;
 }
 
 .detail-content label {
@@ -111,15 +113,16 @@
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--primary-color);
-  background: var(--bg-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
 }
 
 /* Action Buttons */
 .payment-button {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: calc(100% - 4rem);
+  gap: 1rem;
   margin: 2rem;
   padding: 1rem;
   border: none;
@@ -277,4 +280,19 @@
 .lock-icon {
   font-size: 1.5rem !important;
   color: var(--primary-color);
+}
+
+.payment-request-number {
+  margin-bottom: 3rem !important;
+  font-weight: 900;
+  color: var(--primary-color);
+}
+
+.secure-payment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
 }
