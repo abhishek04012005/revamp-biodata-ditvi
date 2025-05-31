@@ -1,32 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import {
-  Edit,
-  Save,
-  Cancel,
-  Add,
-  Delete,
-  Person,
-  Work,
-  School,
-  People,
-  ContactPhone,
-  CloudUpload,
-  ArrowBack,
-  Download,
-  InfoOutlined,
-} from "@mui/icons-material";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Edit, Save, Cancel, ArrowBack, Visibility } from "@mui/icons-material";
 import { getLanguageData } from "../../../json/languageCofig";
 import {
   PersonalData,
   ProfessionalData,
   EducationData,
-  createEmptyPerson,
   FamilyData,
   ExaminationData,
   ContactData,
 } from "../../../json/createBiodata";
-import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
 import { UploadFile } from "../../../supabase/UploadFile";
 import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
@@ -107,7 +90,9 @@ const ProductionBiodataDetail = () => {
       //   message:
       //     "Please upload an image that is less than or equal to 1MB in size. Large images may affect the loading time of your biodata.",
       // });
-      alert('Please upload an image that is less than or equal to 1MB in size. Large images may affect the loading time of your biodata.')
+      alert(
+        "Please upload an image that is less than or equal to 1MB in size. Large images may affect the loading time of your biodata."
+      );
       return;
     }
 
@@ -118,7 +103,9 @@ const ProductionBiodataDetail = () => {
       //   message:
       //     "Please upload a valid image file (JPG, PNG, etc.). Other file types are not supported.",
       // });
-      alert("Please upload a valid image file (JPG, PNG, etc.). Other file types are not supported.");
+      alert(
+        "Please upload a valid image file (JPG, PNG, etc.). Other file types are not supported."
+      );
       return;
     }
 
@@ -199,6 +186,7 @@ const ProductionBiodataDetail = () => {
             <h3 className="request-id">Request No. : {requestNumber}</h3>
           </div>
         </div>
+
         <div className="detail-actions">
           {isEditing ? (
             <div className="edit-actions">
@@ -212,13 +200,24 @@ const ProductionBiodataDetail = () => {
               </button>
             </div>
           ) : (
-            <button
-              className="action-btn edit"
-              onClick={() => setIsEditing(true)}
-            >
-              <Edit /> Edit Details
-              <span className="btn-highlight"></span>
-            </button>
+            <div className="">
+              <Link
+                to={`/admin/production/preview/${requestId}`}
+                className="action-btn preview"
+              >
+                <Visibility />
+                Preview
+                  <span className="btn-highlight"></span>
+              </Link>
+
+              <button
+                className="action-btn edit"
+                onClick={() => setIsEditing(true)}
+              >
+                <Edit /> Edit Details
+                <span className="btn-highlight"></span>
+              </button>
+            </div>
           )}
         </div>
       </header>
@@ -283,7 +282,7 @@ const ProductionBiodataDetail = () => {
           />
         </div>
 
-        {isLoading && <Loader/>}
+        {isLoading && <Loader />}
       </main>
     </div>
   );
