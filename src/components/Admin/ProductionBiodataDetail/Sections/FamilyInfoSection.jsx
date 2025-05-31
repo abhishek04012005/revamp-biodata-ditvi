@@ -51,7 +51,7 @@ export const FamilyInfoSection = ({
     <>
       {/* Parents Section */}
       <div className="family-parent">
-        <h3 >{langData?.placeholders.parents}</h3>
+        <h3>{langData?.placeholders.parents}</h3>
         {["father", "mother"].map((relation) => (
           <div key={relation} className="parent-info">
             <h3>{formData.familyDetails[relation].label}</h3>
@@ -126,20 +126,27 @@ export const FamilyInfoSection = ({
         <div key={relation} className="family-siblings animated-card">
           <div className="siblings-header">
             <h3>{formData.familyDetails[relation].label}</h3>
-            {isEditing && getTotalSiblings() < MAXIMUM_SIBLINGS && (
-              <button
-                className="add-btn floating"
-                onClick={() => handleAddSibling(relation)}
-              >
-                <Add />
-                {relation === "brothers"
-                  ? langData?.placeholders.addBrother
-                  : langData?.placeholders.addSister}
-              </button>
-            )}
           </div>
           {formData.familyDetails[relation].value.map((sibling, index) => (
             <div key={index} className="sibling-info">
+              {isEditing && (
+                <div className="remove-sibling-button-section">
+                  <button
+                    className="remove-btn-sibling"
+                    onClick={() => handleRemoveSibling(relation, index)}
+                  >
+                    <Delete />
+                    {relation === "brothers"
+                      ? langData?.placeholders.removeBrother
+                      : langData?.placeholders.removeSister}
+                   {" "}
+                    {formData.familyDetails[relation].value.length - index}
+                  </button>
+                </div>
+              )}
+              <h3>{`${formData.familyDetails[relation].label.slice(0, -3)} ${
+                formData.familyDetails[relation].value.length - index
+              }`}</h3>
               <div className="info-grid">
                 <div className="detail-field">
                   <label>{langData?.placeholders.name}:</label>
@@ -275,19 +282,19 @@ export const FamilyInfoSection = ({
                   )}
                 </div>
               </div>
-              {isEditing && (
-                <button
-                  className="remove-btn-sibling"
-                  onClick={() => handleRemoveSibling(relation, index)}
-                >
-                  <Delete />
-                  {relation === "brothers"
-                    ? langData?.placeholders.removeBrother
-                    : langData?.placeholders.removeSister}
-                </button>
-              )}
             </div>
           ))}
+          {isEditing && getTotalSiblings() < MAXIMUM_SIBLINGS && (
+            <button
+              className="add-btn floating"
+              onClick={() => handleAddSibling(relation)}
+            >
+              <Add />
+              {relation === "brothers"
+                ? langData?.placeholders.addBrother
+                : langData?.placeholders.addSister}
+            </button>
+          )}
         </div>
       ))}
     </>
