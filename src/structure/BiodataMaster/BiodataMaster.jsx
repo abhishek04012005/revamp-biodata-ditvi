@@ -828,15 +828,17 @@ const BiodataMaster = () => {
                       <span className="print-label">Watermark</span>
                     </span>
                   </button>
-                  <button
-                    className="print-btn original"
-                    onClick={() => handlePrint(false)}
-                  >
-                    <span className="print-icon">📃</span>
-                    <span className="print-text">
-                      <span className="print-label">Original</span>
-                    </span>
-                  </button>
+                  {currentStatus === 4 && (
+                    <button
+                      className="print-btn original"
+                      onClick={() => handlePrint(false)}
+                    >
+                      <span className="print-icon">📃</span>
+                      <span className="print-text">
+                        <span className="print-label">Original</span>
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
 
