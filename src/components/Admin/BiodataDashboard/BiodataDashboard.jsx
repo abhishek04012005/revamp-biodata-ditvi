@@ -218,7 +218,6 @@ const BiodataDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log("requests", requests)}
                   {requests
                     .filter((request) => request.completed === false)
                     .map((request) => (

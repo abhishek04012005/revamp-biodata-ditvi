@@ -7,17 +7,12 @@ export const ExaminationInfoSection = ({
   isEditing,
   langData,
 }) => {
-  console.log('langData', langData);
   return renderSection(
     <School />,
     langData?.biodataMaster.examinationDetails || "Examination Details",
     <div className="info-grid">
-      {console.log('Array.isArray(formData.examinationDetails)', Array.isArray(formData.examinationDetails))}
       {Array.isArray(formData.examinationDetails) ? (
         formData.examinationDetails.map((field, index) => {
-          // Debug log for each field
-          console.log("Field:", field);
-
           return (
             <div key={index} className="detail-field animated-field">
               <label>{field?.label || "Label"}:</label>

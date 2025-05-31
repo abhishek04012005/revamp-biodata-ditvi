@@ -256,6 +256,30 @@ export const BiodataRequestStorage = {
     }
   },
 
+  async checkBiodataRequestByRequestNumber(requestNumber) {
+  try {
+    const { data, error } = await supabase
+      .from(biodataRequestTableName)
+      .select("*")
+      .eq("request_number", requestNumber)
+      .eq("deleted", false)
+      .maybeSingle(); // Using maybeSingle() instead of single()
+
+    if (error) {
+      // Handle specific no-rows case
+      if (error.code === 'PGRST116') {
+        return null;
+      }
+      throw error;
+    }
+
+    return data; // Will be null if no record found
+  } catch (error) {
+    console.error("Error getBiodataRequestByRequestNumber:", error);
+    throw error;
+  }
+},
+
   async getBiodataRequestByRequestId(requestId) {
     try {
       const { data, error } = await supabase

@@ -18,9 +18,6 @@ const PaymentCancel = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { requestNumber, userDetails, modelDetails } = location.state || {};
-  console.log("requestNumber", requestNumber);
-  console.log("userDetails", userDetails);
-  console.log("modelDetails", modelDetails);
 
   useEffect(() => {
     if (!requestNumber) {

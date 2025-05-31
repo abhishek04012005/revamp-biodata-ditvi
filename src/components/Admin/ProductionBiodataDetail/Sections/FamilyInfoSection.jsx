@@ -1,6 +1,8 @@
 import { People, Add, Delete } from "@mui/icons-material";
 import { createEmptyPerson } from "../../../../json/createBiodata";
+import { createEmptyPersonHindi } from "../../../../json/CreateBiodataHindi";
 import { MAXIMUM_SIBLINGS } from "../../../../utils/Constants";
+import Languages from "../../../../json/Languages";
 
 export const FamilyInfoSection = ({
   formData,
@@ -8,6 +10,7 @@ export const FamilyInfoSection = ({
   isEditing,
   langData,
 }) => {
+  const isLanguageHindi = formData.modelDetails.language === Languages.Hindi.Name;
   const getTotalSiblings = () => {
     return (
       formData.familyDetails.brothers.value.length +
@@ -23,7 +26,10 @@ export const FamilyInfoSection = ({
           ...prev.familyDetails,
           [relation]: {
             ...prev.familyDetails[relation],
-            value: [createEmptyPerson(), ...prev.familyDetails[relation].value],
+            value: [
+              isLanguageHindi ? createEmptyPersonHindi() : createEmptyPerson(),
+              ...prev.familyDetails[relation].value,
+            ],
           },
         },
       }));
@@ -144,9 +150,15 @@ export const FamilyInfoSection = ({
                   </button>
                 </div>
               )}
-              <h3>{`${formData.familyDetails[relation].label.slice(0, -3)} ${
-                formData.familyDetails[relation].value.length - index
-              }`}</h3>
+              <h3>
+                {relation === "brothers"
+                  ? `${langData?.placeholders.brother} ${
+                      formData.familyDetails[relation].value.length - index
+                    }`
+                  : `${langData?.placeholders.sister} ${
+                      formData.familyDetails[relation].value.length - index
+                    }`}
+              </h3>
               <div className="info-grid">
                 <div className="detail-field">
                   <label>{langData?.placeholders.name}:</label>

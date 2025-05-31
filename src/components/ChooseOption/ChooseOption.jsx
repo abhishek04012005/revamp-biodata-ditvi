@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ChooseOption.css";
 import { WhatsApp, Upload, Create, ArrowForward } from "@mui/icons-material";
@@ -20,6 +20,37 @@ const ChooseOption = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    checkExistingRequest();
+  }, [requestNumber, navigate]);
+
+  const checkExistingRequest = async () => {
+    if (!requestNumber) return;
+
+    try {
+      setIsLoading(true);
+      const response =
+        await BiodataRequestStorage.checkBiodataRequestByRequestNumber(
+          requestNumber
+        );
+
+      if (response) {
+        navigate("/confirmation", {
+          state: {
+            requestNumber: requestNumber,
+            userDetails: response.user_details,
+            modelDetails: response.model_details,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching request:", error);
+      setError("Failed to fetch request details");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleWhatsAppClick = async () => {
     try {
@@ -48,40 +79,38 @@ const ChooseOption = () => {
   };
 
   const handleUploadBiodata = () => {
-  try {
-    setIsLoading(true);
-     navigate("/upload-biodata", {
-      state: {
-        requestNumber: requestNumber,
-        userDetails: userDetails,
-        modelDetails: modelDetails,
-      },
-    });
-  } catch (error) {
-    console.error("Error navigating to upload biodata:", error);
-    setError("Failed to navigate to upload biodata. Please try again.");
-  } finally {
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      navigate("/upload-biodata", {
+        state: {
+          requestNumber: requestNumber,
+          userDetails: userDetails,
+          modelDetails: modelDetails,
+        },
+      });
+    } catch (error) {
+      console.error("Error navigating to upload biodata:", error);
+      setError("Failed to navigate to upload biodata. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    
   };
 
   const handleCreateBiodata = () => {
-   try {
-    setIsLoading(true);
-     navigate("/create-biodata", {
-      state: {
-        requestNumber: requestNumber,
-        userDetails: userDetails,
-        modelDetails: modelDetails,
-      },
-    });
-   } catch (error) {
-    console.error("Error navigating to create biodata:", error);
-    setError("Failed to navigate to create biodata. Please try again.");
-   }
-    finally {
-     setIsLoading(false);
+    try {
+      setIsLoading(true);
+      navigate("/create-biodata", {
+        state: {
+          requestNumber: requestNumber,
+          userDetails: userDetails,
+          modelDetails: modelDetails,
+        },
+      });
+    } catch (error) {
+      console.error("Error navigating to create biodata:", error);
+      setError("Failed to navigate to create biodata. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -158,7 +187,7 @@ const ChooseOption = () => {
           </div>
         </div>
       </Container>
-      {isLoading && <Loader/>}
+      {isLoading && <Loader />}
     </section>
   );
 };
