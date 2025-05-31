@@ -7,33 +7,27 @@ export const BiodataDownloadSection = ({ biodataUrl, langData }) => {
   };
 
   return (
-    <div className="detail-section">
-      <div className="section-header">
-        <div className="section-icon">
-          <Description />
+    <div className="content-grid">
+      {renderSection(
+        <Description />,
+        langData?.biodataMaster.uploadedBiodata || "Uploaded Biodata",
+        <div className="profile-section-dowloand">
+          <button className="download-btn" onClick={handleDownload}>
+            <Download />
+            {langData?.placeholders.download || "Download Biodata"}
+          </button>
         </div>
-        <div className="section-title">
-          <h2>{langData?.biodataMaster.uploadedBiodata}</h2>
-        </div>
-      </div>
-
-      <div className="download-section">
-        <div className="file-info">
-          <div className="file-icon">
-            <Description />
-          </div>
-          <div className="file-details">
-            <p className="file-name">
-              {langData?.placeholders.uploadedBiodata}
-            </p>
-            <p className="file-type">PDF Document</p>
-          </div>
-        </div>
-        <button className="download-btn" onClick={handleDownload}>
-          <Download />
-          <span>{langData?.placeholders.download}</span>
-        </button>
-      </div>
+      )}
     </div>
   );
 };
+
+const renderSection = (icon, title, children) => (
+  <section className="detail-section info-section">
+    <div className="section-header">
+      <div className="header-icon">{icon}</div>
+      <h2>{title}</h2>
+    </div>
+    <div className="section-content">{children}</div>
+  </section>
+);

@@ -61,7 +61,7 @@ const FamilyData = {
 
 const ContactData = [
   { label: "Address", value: "", placeholder: "123 Main St, City, State" },
-  { label: "MobileNo", value: "", placeholder: "9263767441" },
+  { label: "Mobile No.", value: "", placeholder: "9263767441" },
 ];
 
 export {

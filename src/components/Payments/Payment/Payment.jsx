@@ -157,7 +157,6 @@ const Payment = () => {
           response: response,
         }
       );
-
       if (dbResponse) {
         // Redirect to success page
         navigate(`/payment-failure/${paymentRequestId}`);

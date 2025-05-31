@@ -35,7 +35,6 @@ const ProductionBiodataDetail = () => {
   const [formData, setFormData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
-  const [flowType, setFlowType] = useState(null);
   const [langData, setLangData] = useState(null);
 
   useEffect(() => {
@@ -70,7 +69,6 @@ const ProductionBiodataDetail = () => {
         setRequestNumber(response.request_number);
         setFormData(initialFormData);
         setOriginalData(initialFormData);
-        setFlowType(response.flow_type);
       }
     } catch (error) {
       console.error("Error fetching request:", error);

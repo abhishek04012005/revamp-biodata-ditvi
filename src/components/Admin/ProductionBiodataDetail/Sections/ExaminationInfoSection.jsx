@@ -30,12 +30,10 @@ export const ExaminationInfoSection = ({
                     examinationDetails: newExaminationData,
                   });
                 }}
-                placeholder={field?.label?.toLowerCase() || ""}
+                placeholder={field?.label}
               />
             ) : (
-              <span className="field-value">
-                {field?.value || langData?.placeholders?.notProvided || "N/A"}
-              </span>
+              <span className="field-value">{field.value}</span>
             )}
           </div>
         );
