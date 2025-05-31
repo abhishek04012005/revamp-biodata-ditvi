@@ -37,6 +37,20 @@ export const EducationInfoSection = ({
     <div className="education-groups">
       {formData.educationDetails.map((educationGroup, groupIndex) => (
         <div key={groupIndex} className="detail-group animated-card">
+          {isEditing && groupIndex > -1 && (
+            <div className="remove-button-section">
+              <button
+                className="remove-education-btn"
+                onClick={() => handleRemoveEducation(groupIndex)}
+              >
+                <Delete />
+                {`Remove ${langData?.placeholders.education}  ${
+                  formData.educationDetails.length - groupIndex
+                }`}
+              </button>
+            </div>
+          )}
+
           <div className="group-header">
             <h3>{`${langData?.placeholders.education} ${
               formData.educationDetails.length - groupIndex
@@ -67,15 +81,6 @@ export const EducationInfoSection = ({
                 )}
               </div>
             ))}
-            {isEditing && groupIndex > -1 && (
-              <button
-                className="remove-education-btn"
-                onClick={() => handleRemoveEducation(groupIndex)}
-              >
-                <Delete />
-                {langData?.placeholders.removeEducation || "Remove Education"}
-              </button>
-            )}
           </div>
         </div>
       ))}
