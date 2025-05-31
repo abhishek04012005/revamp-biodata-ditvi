@@ -24,7 +24,8 @@ export const BiodataRequestStorage = {
                     examination_details,
                     education_details,
                     family_details,
-                    contact_details
+                    contact_details,
+                    completed
                     `
         )
         .eq("deleted", false)
@@ -268,6 +269,36 @@ export const BiodataRequestStorage = {
       return data;
     } catch (error) {
       console.error("Error getBiodataRequestByRequestId:", error);
+      throw error;
+    }
+  },
+
+  async searchBiodataRequests(searchTerm) {
+    try {
+      const numericSearchTerm = parseInt(searchTerm);
+
+      if (isNaN(numericSearchTerm)) {
+        return [];
+      }
+
+      // Create array of numbers for the search
+      const searchNumbers = [
+        ...Array.from({ length: 10 }, (_, i) => parseInt(`${searchTerm}${i}`)),
+        ...Array.from({ length: 10 }, (_, i) => parseInt(`${i}${searchTerm}`)),
+        numericSearchTerm,
+      ];
+
+      const { data, error } = await supabase
+        .from(biodataRequestTableName)
+        .select("*")
+        .eq("deleted", false)
+        .in("request_number", searchNumbers)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error searching biodata requests:", error);
       throw error;
     }
   },
