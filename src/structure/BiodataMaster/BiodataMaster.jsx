@@ -511,14 +511,22 @@ const BiodataMaster = () => {
                     <table className="biodata-master-bio-table">
                       <tbody>
                         <tr>
-                          {formData?.examinationDetails?.map((field, index) => (
-                            <th key={index}>{field.label}</th>
-                          ))}
+                          {formData?.examinationDetails?.map((field, index) =>
+                            (field.label === "Examination Qualified" ||
+                              field.label === "परीक्षा उत्तीर्ण") &&
+                            !field.value ? null : (
+                              <th key={index}>{field.label}</th>
+                            )
+                          )}
                         </tr>
                         <tr>
-                          {formData?.examinationDetails?.map((field, index) => (
-                            <td key={index}>{field.value || "Not Provided"}</td>
-                          ))}
+                          {formData?.examinationDetails?.map((field, index) =>
+                            (field.label === "Examination Qualified" ||
+                              field.label === "परीक्षा उत्तीर्ण") &&
+                            !field.value ? null : (
+                              <td key={index}>{field.value}</td>
+                            )
+                          )}
                         </tr>
                       </tbody>
                     </table>

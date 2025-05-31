@@ -1,5 +1,4 @@
-import React from "react";
-import { Person, CloudUpload } from "@mui/icons-material";
+import { Person, CloudUpload, Download } from "@mui/icons-material";
 
 export const ProfileSection = ({
   formData,
@@ -7,6 +6,10 @@ export const ProfileSection = ({
   handleImageChange,
   langData,
 }) => {
+  const handleDownload = (photoUrl) => {
+    window.open(photoUrl, "_blank");
+  };
+
   return (
     <div className="content-grid">
       {renderSection(
@@ -39,18 +42,14 @@ export const ProfileSection = ({
               </div>
             )}
           </div>
-
-          <div className="profile-details">
-            <h3>{formData.userDetails?.name}</h3>
-            <p className="model-type">
-              {formData.modelDetails?.type} {langData?.placeholders.biodata}
-            </p>
-            {formData.userDetails?.email && (
-              <p className="user-email">{formData.userDetails.email}</p>
-            )}
-            {formData.userDetails?.phone && (
-              <p className="user-phone">{formData.userDetails.phone}</p>
-            )}
+          <div className="profile-section-dowloand">
+            <button
+              className="download-btn"
+              onClick={() => handleDownload(formData.profileImage)}
+            >
+              <Download />
+              Profile Photo
+            </button>
           </div>
         </div>
       )}
