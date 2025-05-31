@@ -124,7 +124,7 @@ const RequestBiodataDetail = () => {
           )}
 
           {/* Biodata Download Section */}
-          {langData.biodataUrl &&
+          {formData.biodataUrl &&
             renderSection(
               <Download />,
               "Biodata Document",
