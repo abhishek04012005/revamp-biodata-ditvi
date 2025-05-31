@@ -46,20 +46,21 @@ const PaymentCancel = () => {
 
       <div className="payment-card">
         <div className="payment-header">
-          <PaymentIcon className="payment-header-icon" />
-          <h2>Payment Status</h2>
+          <Cancel className="payment-header-icon" />
+          <h2>Payment Cancelled</h2>
         </div>
 
         <div className="request-details">
           <div className="payment-status-section">
-            <div className="status-icon-wrapper">
-              <Cancel className="cancel-icon" />
-            </div>
-            <h2 className="status-title">Payment Cancelled</h2>
             <div className="request-number">
-              <Tag className="detail-icon" />
-              Request Number: <span className="highlight">{requestNumber}</span>
+              <h1 className="payment-request-number">
+                Request No: #{requestNumber}
+              </h1>
             </div>
+          </div>
+
+          <div className="payment-success-card">
+            
           </div>
 
           <div className="alert-message">

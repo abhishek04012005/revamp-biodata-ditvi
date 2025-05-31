@@ -284,10 +284,6 @@ const Payment = () => {
 
   return (
     <div className="payment-page">
-      {/* <HeaderSection
-        title="Make Payment"
-        subtitle="Complete your payment to proceed with biodata creation"
-      /> */}
 
       <div className="payment-card">
         <div className="payment-header">
