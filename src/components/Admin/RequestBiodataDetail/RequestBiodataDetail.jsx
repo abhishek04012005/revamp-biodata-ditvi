@@ -105,7 +105,7 @@ const RequestBiodataDetail = () => {
           {/* Profile Section */}
           {renderSection(
             <Person />,
-            "Profile Image",
+            langData?.biodataMaster.profileImage,
             <div className="profile-section">
               <div className="profile-image-container">
                 {formData.profileImage ? (

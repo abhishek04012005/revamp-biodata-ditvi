@@ -58,6 +58,7 @@ export const getLanguageData = (modelDetails) => {
         no: "नहीं",
       },
       biodataMaster: {
+        profileImage: "प्रोफ़ाइल छवि",
         personalDetails: "व्यक्तिगत विवरण",
         professionalDetails: "व्यावसायिक विवरण",
         examinationDetails: "परीक्षा तैयारी विवरण",
@@ -102,6 +103,7 @@ export const getLanguageData = (modelDetails) => {
       no: "No",
     },
     biodataMaster: {
+      profileImage: "Profile Image",
       personalDetails: "Personal Details",
       professionalDetails: "Professional Details",
       examinationDetails: "Examination Preparation Details",
