@@ -803,7 +803,7 @@ const BiodataMaster = () => {
                       <span className="print-label">Watermark</span>
                     </span>
                   </button>
-                  {currentStatus === 4 && (
+                  {currentStatus >= 4 && (
                     <button
                       className="print-btn original"
                       onClick={() => handlePrint(false)}
