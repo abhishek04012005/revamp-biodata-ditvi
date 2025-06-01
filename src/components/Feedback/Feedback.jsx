@@ -14,6 +14,7 @@ import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import { getLatestStatusId } from "../../utils/StatusHelper";
 import SupportPopup from "../SupportPopup/SupportPopup";
 import Loader from "../../structure/Loader/Loader";
+import { maskMobileNumber } from "../../utils/MobileNumberHelper";
 
 const StarRating = ({ rating, onStarClick }) => {
   const getRatingText = (rating) => {
@@ -168,7 +169,11 @@ const Feedback = () => {
                 <Phone className="detail-icon" />
                 <div className="detail-content">
                   <label>Mobile Number</label>
-                  <p>{requestDetails?.user_details.mobileNumber}</p>
+                  <p>
+                    {maskMobileNumber(
+                      requestDetails?.user_details.mobileNumber
+                    )}
+                  </p>
                 </div>
               </div>
             </div>

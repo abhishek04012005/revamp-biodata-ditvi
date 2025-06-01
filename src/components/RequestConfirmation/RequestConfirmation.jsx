@@ -13,6 +13,7 @@ import {
 } from "@mui/icons-material";
 import "./RequestConfirmation.css";
 import Container from "../../structure/Container/Container";
+import { maskMobileNumber } from "../../utils/MobileNumberHelper";
 
 const RequestConfirmation = () => {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ const RequestConfirmation = () => {
                     Name
                   </span>
                 </span>
-                <span className="detail-value">{userDetails.name}</span>
+                <span className="detail-value">{userDetails?.name}</span>
               </div>
 
               <div className="detail-item">
@@ -95,7 +96,9 @@ const RequestConfirmation = () => {
                     Whatsapp Number
                   </span>
                 </span>
-                <span className="detail-value">{userDetails.mobileNumber}</span>
+                <span className="detail-value">
+                  {maskMobileNumber(userDetails?.mobileNumber)}
+                </span>
               </div>
 
               <div className="detail-item">

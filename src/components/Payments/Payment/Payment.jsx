@@ -22,6 +22,7 @@ import { PaymentRequestStorage } from "../../../supabase/PaymentRequest";
 import { PaymentStatus } from "../../../json/PaymentStatus";
 import { getRazorpayOptions } from "./PaymentConfig";
 import Loader from "../../../structure/Loader/Loader";
+import { maskMobileNumber } from "../../../utils/MobileNumberHelper";
 
 const Payment = () => {
   const { requestNumber } = useParams();
@@ -327,7 +328,9 @@ const Payment = () => {
                 <Phone className="detail-icon" />
                 <div className="detail-content">
                   <label>Mobile Number</label>
-                  <p>{requestData.user_details.mobileNumber}</p>
+                  <p>
+                    {maskMobileNumber(requestData.user_details.mobileNumber)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -359,7 +362,7 @@ const Payment = () => {
             <div className="payment-disabled">
               <ErrorOutline className="warning-icon" />
               <p>
-                  Payment link is inactive now. Please wait for admin approval.
+                Payment link is inactive now. Please wait for admin approval.
               </p>
             </div>
           )}

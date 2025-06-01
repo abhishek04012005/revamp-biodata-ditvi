@@ -11,6 +11,8 @@ import {
   Lock,
 } from "@mui/icons-material";
 import "./PaymentFailure.css";
+import { maskMobileNumber } from "../../../utils/MobileNumberHelper";
+
 import SupportPopup from "../../SupportPopup/SupportPopup";
 
 const PaymentFailure = () => {
@@ -65,7 +67,7 @@ const PaymentFailure = () => {
                 <Phone className="detail-icon" />
                 <div className="detail-content">
                   <label>Mobile Number</label>
-                  <p>{userDetails?.mobileNumber}</p>
+                  <p>{maskMobileNumber(userDetails?.mobileNumber)}</p>
                 </div>
               </div>
             </div>

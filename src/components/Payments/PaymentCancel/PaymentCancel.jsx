@@ -12,6 +12,7 @@ import {
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
 import SupportPopup from "../../SupportPopup/SupportPopup";
+import { maskMobileNumber } from "../../../utils/MobileNumberHelper";
 
 const PaymentCancel = () => {
   const [showSupport, setShowSupport] = useState(false);
@@ -56,7 +57,7 @@ const PaymentCancel = () => {
                 <Person className="detail-icon" />
                 <div className="detail-content">
                   <label>Full Name</label>
-                  <p>{userDetails.name}</p>
+                  <p>{userDetails?.name}</p>
                 </div>
               </div>
 
@@ -64,7 +65,7 @@ const PaymentCancel = () => {
                 <Phone className="detail-icon" />
                 <div className="detail-content">
                   <label>Mobile Number</label>
-                  <p>{userDetails.mobileNumber}</p>
+                  <p>{maskMobileNumber(userDetails?.mobileNumber)}</p>
                 </div>
               </div>
             </div>
