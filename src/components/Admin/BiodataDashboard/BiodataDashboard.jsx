@@ -9,6 +9,8 @@ import {
   ArrowBack,
   ArrowForward,
   Delete,
+  PendingActions,
+  Payment,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
@@ -49,11 +51,10 @@ const BiodataDashboard = () => {
   const stats = [
     { icon: <Dashboard />, title: "Total Requests", value: requests.length },
     {
-      icon: <FiberNew />,
-      title: "New Requests",
-      value: requests.filter(
-        (request) => getLatestStatusId(request.status) === 0
-      ).length,
+      icon: <CheckCircle />,
+      title: "Completed",
+      value:
+        requests.filter((request) => request?.completed === true).length || 0,
     },
     {
       icon: <Description />,
@@ -64,10 +65,27 @@ const BiodataDashboard = () => {
       ).length,
     },
     {
-      icon: <CheckCircle />,
-      title: "Completed",
-      value:
-        requests.filter((request) => request?.completed === true).length || 0,
+      icon: <FiberNew />,
+      title: "New Requests",
+      value: requests.filter(
+        (request) => getLatestStatusId(request.status) === 0
+      ).length,
+    },
+    {
+      icon: <PendingActions />,
+      title: "Pending User Approval",
+      value: requests.filter(
+        (request) => getLatestStatusId(request?.status) === 2
+      ).length,
+      color: "#FF9800", // Orange color for pending
+    },
+    {
+      icon: <Payment />,
+      title: "Payment to Collect",
+      value: requests.filter(
+        (request) => getLatestStatusId(request?.status) === 3
+      ).length,
+      color: "#F44336", // Red color for payment pending
     },
   ];
 

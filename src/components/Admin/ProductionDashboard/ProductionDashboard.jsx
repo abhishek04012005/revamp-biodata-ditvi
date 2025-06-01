@@ -12,7 +12,6 @@ import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
 import { getFlowTypeById, getFlowTypeStyle } from "../../../constants/FlowType";
 import formatDate from "../../../utils/DateHelper";
 import Loader from "../../../structure/Loader/Loader";
-import { getLatestStatusId } from "../../../utils/StatusHelper";
 
 const ProductionDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
