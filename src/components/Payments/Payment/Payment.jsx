@@ -89,7 +89,7 @@ const Payment = () => {
         }),
         modal: {
           ondismiss: function() {
-            console.log('Payment modal closed');
+            handlePaymentCancelled(paymentRequest.id);
           }
         },
         handler: function(response) {
