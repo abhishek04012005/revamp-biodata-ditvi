@@ -20,37 +20,7 @@ const ChooseOption = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    checkExistingRequest();
-  }, [requestNumber, navigate]);
-
-  const checkExistingRequest = async () => {
-    if (!requestNumber) return;
-
-    try {
-      setIsLoading(true);
-      const response =
-        await BiodataRequestStorage.checkBiodataRequestByRequestNumber(
-          requestNumber
-        );
-
-      if (response) {
-        navigate("/confirmation", {
-          state: {
-            requestNumber: requestNumber,
-            userDetails: response.user_details,
-            modelDetails: response.model_details,
-          },
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching request:", error);
-      setError("Failed to fetch request details");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  
 
   const handleWhatsAppClick = async () => {
     try {

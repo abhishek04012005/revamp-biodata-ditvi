@@ -44,7 +44,7 @@ export const EducationInfoSection = ({
                 onClick={() => handleRemoveEducation(groupIndex)}
               >
                 <Delete />
-                {`Remove ${langData?.placeholders.education}  ${
+                {`${langData?.placeholders.removeEduction}  ${
                   formData.educationDetails.length - groupIndex
                 }`}
               </button>
