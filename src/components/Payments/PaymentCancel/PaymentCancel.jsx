@@ -6,13 +6,13 @@ import {
   ErrorOutline,
   Refresh,
   Support,
-  Tag,
+  Person,
+  Phone,
   WifiOff,
   AccountBalance,
   Payment as PaymentIcon,
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
-import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
 
 const PaymentCancel = () => {
   const navigate = useNavigate();
@@ -39,11 +39,6 @@ const PaymentCancel = () => {
 
   return (
     <div className="payment-page">
-      {/* <HeaderSection
-        title="Payment Cancelled"
-        subtitle="Your payment was not processed"
-      /> */}
-
       <div className="payment-card">
         <div className="payment-header">
           <Cancel className="payment-header-icon" />
@@ -52,15 +47,27 @@ const PaymentCancel = () => {
 
         <div className="request-details">
           <div className="payment-status-section">
-            <div className="request-number">
-              <h1 className="payment-request-number">
-                Request No: #{requestNumber}
-              </h1>
-            </div>
+            <h1 className="payment-request-number">
+              Request No: #{requestNumber}
+            </h1>
           </div>
 
-          <div className="payment-success-card">
-            
+          <div className="detail-grid">
+            <div className="detail-item">
+              <Person className="detail-icon" />
+              <div className="detail-content">
+                <label>Full Name</label>
+                <p>{userDetails.name}</p>
+              </div>
+            </div>
+
+            <div className="detail-item">
+              <Phone className="detail-icon" />
+              <div className="detail-content">
+                <label>Mobile Number</label>
+                <p>{userDetails.mobileNumber}</p>
+              </div>
+            </div>
           </div>
 
           <div className="alert-message">

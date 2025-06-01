@@ -1,7 +1,7 @@
 .payment-status-section {
   text-align: center;
   padding: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0px;
 }
 
 .status-icon-wrapper {
