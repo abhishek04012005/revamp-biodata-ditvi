@@ -289,7 +289,7 @@ const Payment = () => {
         <div className="request-details">
           <div className="detail-section">
             <h1 className="payment-request-number">
-              Request No: #{requestNumber}
+              Request No. #{requestNumber}.
             </h1>
 
             <div className="detail-grid">
@@ -300,7 +300,7 @@ const Payment = () => {
                   <p>{requestData.user_details.name}</p>
                 </div>
               </div>
-
+    
               <div className="detail-item">
                 <Phone className="detail-icon" />
                 <div className="detail-content">

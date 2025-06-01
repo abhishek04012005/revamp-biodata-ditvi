@@ -44,7 +44,7 @@ const PaymentCancel = () => {
         <div className="request-details">
           <div className="detail-section">
             <h1 className="payment-request-number">
-              Request No: #{requestNumber}
+              Request No. #{requestNumber}
             </h1>
 
             <div className="detail-grid">
@@ -74,24 +74,6 @@ const PaymentCancel = () => {
             </p>
           </div>
 
-          {/* <div className="info-section">
-            <h3>What went wrong?</h3>
-            <div className="info-grid">
-              <div className="info-card">
-                <WifiOff className="info-icon" />
-                <h4>Connection Issue</h4>
-                <p>
-                  Check your internet connection and ensure stable connectivity
-                </p>
-              </div>
-
-              <div className="info-card">
-                <AccountBalance className="info-icon" />
-                <h4>Payment Method</h4>
-                <p>Verify your payment details and bank account balance</p>
-              </div>
-            </div>
-          </div> */}
 
             <div className="amount-details">
                 <span>Total Amount</span>
