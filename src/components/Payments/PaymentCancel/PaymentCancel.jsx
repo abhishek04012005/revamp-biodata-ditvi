@@ -8,12 +8,13 @@ import {
   Support,
   Person,
   Phone,
+  Lock,
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
 import SupportPopup from "../../SupportPopup/SupportPopup";
 
 const PaymentCancel = () => {
-    const [showSupport, setShowSupport] = useState(false);
+  const [showSupport, setShowSupport] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,7 +33,7 @@ const PaymentCancel = () => {
     navigate(`/payment/${requestNumber}`);
   };
 
-   const handleSupport = () => {
+  const handleSupport = () => {
     setShowSupport(true);
   };
 
@@ -69,6 +70,23 @@ const PaymentCancel = () => {
             </div>
           </div>
 
+          <div className="payment-summary">
+            <h3>Payment Summary</h3>
+            <div className="amount-card">
+              <div className="amount-details">
+                <span>Total Amount</span>
+                <div className="amount">
+                  <span>₹ </span>
+                  {modelDetails.amount}
+                </div>
+              </div>
+              <div className="secure-payment">
+                <Lock className="lock-icon" />
+                <span>100% Secure Payment</span>
+              </div>
+            </div>
+          </div>
+
           <div className="alert-message">
             <ErrorOutline className="alert-icon" />
             <p>
@@ -76,15 +94,6 @@ const PaymentCancel = () => {
               from your account.
             </p>
           </div>
-
-
-            <div className="amount-details">
-                <span>Total Amount</span>
-                <div className="amount">
-                  <span>₹ </span>
-                  {modelDetails.amount}
-                </div>
-              </div>
 
           <div className="action-buttons">
             <button className="primary-button" onClick={handleTryAgain}>
