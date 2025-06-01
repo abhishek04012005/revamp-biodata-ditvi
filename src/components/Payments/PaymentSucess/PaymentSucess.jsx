@@ -38,6 +38,7 @@ const PaymentSuccess = () => {
     navigate(`/track-status/${requestNumber}`);
   };
 
+
   const fetchPaymentDetails = async () => {
     try {
       setLoading(true);

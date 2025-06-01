@@ -359,7 +359,7 @@ const Payment = () => {
             <div className="payment-disabled">
               <ErrorOutline className="warning-icon" />
               <p>
-                Payment link is inactive yet. Please wait for admin approval.
+                  Payment link is inactive now. Please wait for admin approval.
               </p>
             </div>
           )}
