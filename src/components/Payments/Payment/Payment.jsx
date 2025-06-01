@@ -14,10 +14,8 @@ import {
   Receipt,
   Lock,
 } from "@mui/icons-material";
-import HeaderSection from "../../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
 import { getLatestStatusId } from "../../../utils/StatusHelper";
-import formatDate from "../../../utils/DateHelper";
 import { PaymentRequestStorage } from "../../../supabase/PaymentRequest";
 import { PaymentStatus } from "../../../json/PaymentStatus";
 import { getRazorpayOptions } from "./PaymentConfig";
@@ -226,7 +224,7 @@ const Payment = () => {
   const isPaymentCompleted = () => {
     if (!requestData) return false;
     const latestStatus = getLatestStatusId(requestData.status);
-    return latestStatus > 4; // Payment completed
+    return latestStatus >= 4; // Payment completed
   };
 
   if (loading) {

@@ -31,6 +31,22 @@ const PaymentDashboard = () => {
     return "amount-premium";
   };
 
+  const getLatestPaymentsByRequest = () => {
+    // Group payments by request number and get latest status
+    const latestPayments = payments.reduce((acc, payment) => {
+      const existing = acc[payment.request_number];
+      if (
+        !existing ||
+        new Date(payment.updated_at) > new Date(existing.updated_at)
+      ) {
+        acc[payment.request_number] = payment;
+      }
+      return acc;
+    }, {});
+
+    return Object.values(latestPayments);
+  };
+
   const stats = [
     {
       icon: <CurrencyRupee />,
@@ -49,22 +65,18 @@ const PaymentDashboard = () => {
     {
       icon: <AccountBalance />,
       title: "Pending Payments",
-      value: new Set(
-        payments
-          .filter((payment) => payment.status !== PaymentStatus.Completed)
-          .map((payment) => payment.request_number)
-      ).size,
+      value: getLatestPaymentsByRequest().filter(
+        (payment) => payment.status !== PaymentStatus.Completed
+      ).length,
       color: "#FFC107",
     },
     {
       icon: <CheckCircle />,
       title: "Completed Payments",
-      value: new Set(
-        payments
-          .filter((payment) => payment.status === PaymentStatus.Completed)
-          .map((payment) => payment.request_number)
-      ).size,
-      color: "#FFC107",
+      value: getLatestPaymentsByRequest().filter(
+        (payment) => payment.status === PaymentStatus.Completed
+      ).length,
+      color: "#4CAF50", // Changed to green for success
     },
   ];
 

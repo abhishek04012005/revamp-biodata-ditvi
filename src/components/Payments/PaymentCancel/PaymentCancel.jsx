@@ -81,10 +81,6 @@ const PaymentCancel = () => {
                   {modelDetails.amount}
                 </div>
               </div>
-              <div className="secure-payment">
-                <Lock className="lock-icon" />
-                <span>100% Secure Payment</span>
-              </div>
             </div>
           </div>
 
