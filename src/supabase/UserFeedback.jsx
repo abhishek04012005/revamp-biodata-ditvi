@@ -28,7 +28,7 @@ export const UserFeedbackStorage = {
                 .from('user_feedback')
                 .select('*')
                 .eq('request_number', requestNumber)
-                .single();
+                .maybeSingle();
     
             if (error) throw error;
     

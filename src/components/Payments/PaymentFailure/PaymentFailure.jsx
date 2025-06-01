@@ -1,106 +1,115 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Error,
-  Home,
-  Refresh,
   ArrowBack,
-  Tag,
-  WifiOff,
-  AccountBalance,
-  Timer,
-  Payment as PaymentIcon,
   ErrorOutline,
-  Support
-} from '@mui/icons-material';
-import './PaymentFailure.css';
-import HeaderSection from '../../../structure/HeaderSection/HeaderSection';
+  Refresh,
+  Support,
+  Person,
+  Phone,
+  Lock,
+} from "@mui/icons-material";
+import "./PaymentFailure.css";
+import SupportPopup from "../../SupportPopup/SupportPopup";
 
 const PaymentFailure = () => {
+  const [showSupport, setShowSupport] = useState(false);
+
+  const navigate = useNavigate();
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const requestNumber = searchParams.get('request_number');
-  const errorMessage = searchParams.get('error') || 'Payment could not be processed';
+  const { requestNumber, userDetails, modelDetails } = location.state || {};
+
+  useEffect(() => {
+    if (!requestNumber) {
+      navigate(`/payment/${requestNumber}`);
+    }
+  }, [requestNumber, navigate]);
+
+  const handleGoBack = () => {
+    navigate("/");
+  };
+
+  const handleTryAgain = () => {
+    navigate(`/payment/${requestNumber}`);
+  };
 
   const handleSupport = () => {
-    window.location.href = "mailto:support@ditvi.com";
+    setShowSupport(true);
   };
 
   return (
     <div className="payment-page">
-      <HeaderSection
-        title="Payment Failed"
-        subtitle="We encountered an issue processing your payment"
-      />
-
       <div className="payment-card">
         <div className="payment-header">
-          <PaymentIcon className="payment-header-icon" />
-          <h2>Payment Status</h2>
+          <Error className="payment-header-icon" />
+          <h2>Payment Failed</h2>
         </div>
 
         <div className="request-details">
-          <div className="payment-status-section">
-            <div className="status-icon-wrapper">
-              <Error className="error-icon" />
+          <div className="detail-section">
+            <h1 className="payment-request-number">
+              Request No. #{requestNumber}
+            </h1>
+
+            <div className="detail-grid">
+              <div className="detail-item">
+                <Person className="detail-icon" />
+                <div className="detail-content">
+                  <label>Full Name</label>
+                  <p>{userDetails?.name}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <Phone className="detail-icon" />
+                <div className="detail-content">
+                  <label>Mobile Number</label>
+                  <p>{userDetails?.mobileNumber}</p>
+                </div>
+              </div>
             </div>
-            <h2 className="status-title">Transaction Failed</h2>
-            <div className="request-number">
-              <Tag className="detail-icon" />
-              Request Number: <span className="highlight">{requestNumber}</span>
+          </div>
+
+          <div className="payment-summary">
+            <h3>Payment Summary</h3>
+            <div className="amount-card">
+              <div className="amount-details">
+                <span>Total Amount</span>
+                <div className="amount">
+                  <span>₹ </span>
+                  {modelDetails.amount}
+                </div>
+              </div>
+              <div className="secure-payment">
+                <Lock className="lock-icon" />
+                <span>100% Secure Payment</span>
+              </div>
             </div>
           </div>
 
           <div className="alert-message">
             <ErrorOutline className="alert-icon" />
-            <p>{errorMessage}</p>
-          </div>
-
-          <div className="info-section">
-            <h3>What went wrong?</h3>
-            <div className="info-grid">
-              <div className="info-card">
-                <WifiOff className="info-icon" />
-                <h4>Connection Issue</h4>
-                <p>Check your internet connection and ensure stable connectivity</p>
-              </div>
-
-              <div className="info-card">
-                <AccountBalance className="info-icon" />
-                <h4>Payment Method</h4>
-                <p>Verify your payment details and bank account balance</p>
-              </div>
-
-              <div className="info-card">
-                <Timer className="info-icon" />
-                <h4>Session Timeout</h4>
-                <p>The payment session might have expired</p>
-              </div>
-            </div>
+            <p>
+              Your payment was not processed and no amount has been deducted
+              from your account.
+            </p>
           </div>
 
           <div className="action-buttons">
-            <Link 
-              to={`/payment/${requestNumber}`} 
-              className="primary-button"
-            >
+            <button className="primary-button" onClick={handleTryAgain}>
               <Refresh /> Try Payment Again
-            </Link>
-            <button 
-              className="secondary-button"
-              onClick={handleSupport}
-            >
+            </button>
+            <button className="secondary-button" onClick={handleSupport}>
               <Support /> Contact Support
             </button>
-            <Link 
-              to="/dashboard" 
-              className="tertiary-button"
-            >
-              <ArrowBack /> Back to Dashboard
-            </Link>
+            <button className="tertiary-button" onClick={handleGoBack}>
+              <ArrowBack /> Back to Home
+            </button>
           </div>
         </div>
       </div>
+      {showSupport && <SupportPopup onClose={() => setShowSupport(false)} />}
     </div>
   );
 };

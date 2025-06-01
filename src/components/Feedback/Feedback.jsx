@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Star,
+  StarBorder,
+  RateReview,
+  Person,
+  Phone,
+  ArrowBack,
+} from "@mui/icons-material";
 import "./Feedback.css";
 import { UserFeedbackStorage } from "../../supabase/UserFeedback";
-import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import { getLatestStatusId } from "../../utils/StatusHelper";
-
-const FeedbackNotActive = () => (
-  <section className="feedback-section">
-    <HeaderSection
-      title="Feedback"
-      subtitle="Your feedback is very important to us."
-    />
-    <div className="feedback-container">
-      <div className="feedback-not-active">
-        <h3>Feedback Not Available Yet</h3>
-        <p>
-          The feedback option will be available once your biodata request is
-          fulfilled. Please wait until the request is complete.
-        </p>
-      </div>
-    </div>
-  </section>
-);
+import SupportPopup from "../SupportPopup/SupportPopup";
+import Loader from "../../structure/Loader/Loader";
 
 const StarRating = ({ rating, onStarClick }) => {
   const getRatingText = (rating) => {
@@ -54,9 +43,9 @@ const StarRating = ({ rating, onStarClick }) => {
             className={`star-icon ${rating >= star ? "active" : ""}`}
           >
             {star <= rating ? (
-              <StarIcon className="filled pulse" />
+              <Star className="filled pulse" />
             ) : (
-              <StarBorderIcon className="empty" />
+              <StarBorder className="empty" />
             )}
           </span>
         ))}
@@ -68,105 +57,59 @@ const StarRating = ({ rating, onStarClick }) => {
   );
 };
 
-const FeedbackForm = ({
-  formData,
-  isSubmitting,
-  comment,
-  handleSubmit,
-  handleChange,
-  handleStarClick,
-}) => (
-  <form onSubmit={handleSubmit} className="feedback-form">
-    <StarRating rating={formData.rating} onStarClick={handleStarClick} />
-
-    <div className="message-container">
-      <textarea
-        placeholder="Share your thoughts with us..."
-        value={formData.comment}
-        onChange={handleChange}
-        rows="4"
-        className="animated-textarea"
-      />
-    </div>
-
-    <button
-      type="submit"
-      className={`submit-btn ${isSubmitting ? "loading" : ""}`}
-      disabled={
-        isSubmitting || formData.rating === 0 || formData.comment === ""
-      }
-    >
-      <span className="btn-content">
-        {isSubmitting ? "Submitting..." : "Submit Feedback"}
-      </span>
-      <span className="btn-shine"></span>
-    </button>
-
-    {comment && <div className="message success">{comment}</div>}
-  </form>
-);
-
-const ThankYouScreen = () => (
-  <div className="thank-you-screen">
-    <div className="thank-you-content">
-      <div className="check-mark">✓</div>
-      <h3>Thank You!</h3>
-      <p>Your feedback has been submitted successfully</p>
-    </div>
-  </div>
-);
-
 const Feedback = () => {
   const { requestNumber } = useParams();
+  const navigate = useNavigate();
+  const [showSupport, setShowSupport] = useState(false);
   const [formData, setFormData] = useState({ rating: 0, comment: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [comment, setComment] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
-  const [status, setStatus] = useState([]);
+  const [isFeedbackEnabled, setIsFeedbackEnabled] = useState(false);
+  const [requestDetails, setRequestDetails] = useState(null);
 
   useEffect(() => {
-    UserFeedbackStorage.getUserFeedback(requestNumber)
-      .then((response) => {
-        if (response) {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const feedback = await UserFeedbackStorage.getUserFeedback(
+          requestNumber
+        );
+        const request =
+          await BiodataRequestStorage.getBiodataRequestByRequestNumber(
+            requestNumber
+          );
+
+        if (feedback) {
           setShowThankYou(true);
-          setComment("Feedback already submitted");
           setFormData({
-            rating: response.rating,
-            comment: response.comment,
+            rating: feedback.rating,
+            comment: feedback.comment,
           });
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching user feedback:", error);
-      });
 
-    BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber).then(
-      (response) => {
-        if (response) {
-          setStatus(response.status);
+        if (request) {
+          console.log("request", request);
+          setRequestDetails(request);
+          setIsFeedbackEnabled(getLatestStatusId(request.status) === 5);
         }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
-    );
+    };
+
+    fetchData();
   }, [requestNumber]);
 
-  const isFeedbackEnabled = () => {
-    if (!status) return false;
-    const latestStatus = getLatestStatusId(status);
-    return latestStatus === 5;
-  };
-
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      comment: e.target.value,
-    }));
+    setFormData((prev) => ({ ...prev, comment: e.target.value }));
   };
 
-  const handleStarClick = (selectedRating) => {
-    setFormData((prev) => ({
-      ...prev,
-      rating: selectedRating,
-    }));
+  const handleStarClick = (rating) => {
+    setFormData((prev) => ({ ...prev, rating }));
   };
 
   const handleSubmit = async (e) => {
@@ -176,75 +119,119 @@ const Feedback = () => {
     try {
       const response = await UserFeedbackStorage.saveUserFeedback({
         requestNumber,
-        comment: formData.comment,
-        rating: formData.rating,
+        ...formData,
       });
 
-      const updateResponse =
-        BiodataRequestStorage.updateStatusBiodataRequestFromFeedback(
-          requestNumber,
-          [
-            ...status,
-            {
-              id: 6,
-              created: new Date().toISOString(),
-            },
-          ]
-        );
-
-      if (response && updateResponse) {
-        setComment("Feedback submitted successfully!");
+      if (response) {
         setShowThankYou(true);
-      } else {
-        setComment("Failed to submit feedback.");
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      setComment("An error occurred while submitting feedback.");
+      setComment("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (!isFeedbackEnabled()) {
-    return <FeedbackNotActive />;
-  }
+  const handleGoBack = () => {
+    navigate("/");
+  };
 
   return (
-    <section className="feedback-section">
-      <HeaderSection
-        title="Feedback"
-        subtitle="Your feedback is very important to us. Please share your feedback."
-      />
-
-      <div className="animated-circle circle-1" />
-      <div className="animated-circle circle-2" />
-      <div className="animated-circle circle-3" />
-
-      <div
-        className={`feedback-container ${
-          showThankYou ? "thank-you-active" : ""
-        }`}
-      >
-        <div className="feedback-content">
-          <h2 className="title-animation">How was your experience?</h2>
-          <p className="subtitle-animation">
-            Your feedback helps us improve our services
-          </p>
-
-          <FeedbackForm
-            formData={formData}
-            isSubmitting={isSubmitting}
-            comment={comment}
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-            handleStarClick={handleStarClick}
-          />
+    <div className="payment-page">
+      <div className="payment-card">
+        <div className="payment-header">
+          <RateReview className="payment-header-icon" />
+          <h2>
+            {isFeedbackEnabled
+              ? "Share Your Feedback"
+              : "Feedback link is Not Available"}
+          </h2>
         </div>
 
-        <ThankYouScreen />
+        <div className="request-details">
+          <div className="detail-section">
+            <h1 className="payment-request-number">
+              Request No. #{requestNumber}
+            </h1>
+
+            <div className="detail-grid">
+              <div className="detail-item">
+                <Person className="detail-icon" />
+                <div className="detail-content">
+                  <label>Full Name</label>
+                  <p>{requestDetails?.user_details.name}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <Phone className="detail-icon" />
+                <div className="detail-content">
+                  <label>Mobile Number</label>
+                  <p>{requestDetails?.user_details.mobileNumber}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {!showThankYou ? (
+            <form onSubmit={handleSubmit} className="feedback-form-new">
+              <div className="rating-section">
+                <h3>How was your experience?</h3>
+                <StarRating
+                  rating={formData.rating}
+                  onStarClick={handleStarClick}
+                />
+              </div>
+
+              <div className="comment-section">
+                <textarea
+                  placeholder="Share your thoughts with us..."
+                  value={formData.comment}
+                  onChange={handleChange}
+                  className="feedback-textarea"
+                  rows="4"
+                />
+              </div>
+
+              <div className="action-buttons">
+                {isFeedbackEnabled ? (
+                  <button
+                    type="submit"
+                    className="primary-button"
+                    disabled={
+                      isSubmitting || formData.rating === 0 || !formData.comment
+                    }
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit Feedback"}
+                  </button>
+                ) : (
+                  <button type="button" className="primary-button disabled">
+                    Feedback link is Inactive now. Please wait for admin
+                    approval.
+                  </button>
+                )}
+              </div>
+            </form>
+          ) : (
+            <div className="thank-you-section">
+              <div className="success-message">
+                <div className="check-mark">✓</div>
+                <h3>Thank You!</h3>
+                <p>Your feedback has been submitted successfully</p>
+              </div>
+              <div className="action-buttons">
+                <button className="tertiary-button" onClick={handleGoBack}>
+                  <ArrowBack /> Back to Home
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </section>
+      {showSupport && <SupportPopup onClose={() => setShowSupport(false)} />}
+      {isLoading && <Loader />}
+    </div>
   );
 };
 

@@ -1,5 +1,3 @@
-import { PaymentStatus } from "../../../json/PaymentStatus";
-
 export const getRazorpayOptions = ({
   paymentRequest,
   requestNumber,
@@ -11,7 +9,7 @@ export const getRazorpayOptions = ({
     amount: Math.round(paymentRequest.amount * 100), // amount in paisa
     currency: "INR",
     name: "Ditvi Biodata",
-    description: `Payment for request #${requestNumber}`,
+    description: `Payment for Test Request #${requestNumber}`,
     handler: async function (response) {
       await handlePaymentSuccess(response, paymentRequest.id);
     },

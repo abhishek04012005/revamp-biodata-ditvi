@@ -151,7 +151,10 @@
   align-items: center;
   gap: 1rem;
   color: var(--error-color);
+  display: flex;
+  justify-content: center;
 }
+
 
 /* Success States */
 .payment-success-card {
