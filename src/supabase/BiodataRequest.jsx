@@ -132,32 +132,6 @@ export const BiodataRequestStorage = {
     }
   },
 
-  async updateBiodataRequestById(requestId, biodataRequest) {
-    try {
-      const { data, error } = await supabase
-        .from(biodataRequestTableName)
-        .update({
-          profile_url: biodataRequest.profileUrl,
-          personal_details: biodataRequest.personalDetails,
-          professional_details: biodataRequest.professionalDetails,
-          examination_details: biodataRequest.examinationDetails,
-          education_details: biodataRequest.educationDetails,
-          family_details: biodataRequest.familyDetails,
-          contact_details: biodataRequest.contactDetails,
-        })
-        .eq("id", requestId)
-        .select("*")
-        .single();
-
-      if (error) throw error;
-
-      return data;
-    } catch (error) {
-      console.error("Error updateBiodataRequestById:", error);
-      throw error;
-    }
-  },
-
   async updateStatusBiodataRequestById(requestId, status) {
     try {
       const { data, error } = await supabase
@@ -178,12 +152,17 @@ export const BiodataRequestStorage = {
     }
   },
 
-  async updateStatusBiodataRequestByRequestNumber(requestNumber, status) {
+  async updateStatusBiodataRequestByRequestNumber(
+    requestNumber,
+    status,
+    completed = false
+  ) {
     try {
       const { data, error } = await supabase
         .from(biodataRequestTableName)
         .update({
           status: status,
+          completed: completed,
         })
         .eq("request_number", requestNumber)
         .select("*")
@@ -193,31 +172,29 @@ export const BiodataRequestStorage = {
 
       return data;
     } catch (error) {
-      console.error("Error updateStatusBiodataRequestById:", error);
+      console.error("Error updateStatusBiodataRequestByRequestNumber:", error);
       throw error;
     }
   },
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from(biodataRequestTableName)
+  //       .update({
+  //         status: status,
+  //         completed: true,
+  //       })
+  //       .eq("request_number", requestNumber)
+  //       .select("*")
+  //       .single();
 
-  async updateStatusBiodataRequestFromFeedback(requestNumber, status) {
-    try {
-      const { data, error } = await supabase
-        .from(biodataRequestTableName)
-        .update({
-          status: status,
-          completed: true,
-        })
-        .eq("request_number", requestNumber)
-        .select("*")
-        .single();
+  //     if (error) throw error;
 
-      if (error) throw error;
-
-      return data;
-    } catch (error) {
-      console.error("Error updateStatusBiodataRequestFromFeedback:", error);
-      throw error;
-    }
-  },
+  //     return data;
+  //   } catch (error) {
+  //     console.error("Error updateStatusBiodataRequestFromFeedback:", error);
+  //     throw error;
+  //   }
+  // },
 
   async deleteBiodataRequestById(requestId) {
     try {
@@ -257,28 +234,28 @@ export const BiodataRequestStorage = {
   },
 
   async checkBiodataRequestByRequestNumber(requestNumber) {
-  try {
-    const { data, error } = await supabase
-      .from(biodataRequestTableName)
-      .select("*")
-      .eq("request_number", requestNumber)
-      .eq("deleted", false)
-      .maybeSingle(); // Using maybeSingle() instead of single()
+    try {
+      const { data, error } = await supabase
+        .from(biodataRequestTableName)
+        .select("*")
+        .eq("request_number", requestNumber)
+        .eq("deleted", false)
+        .maybeSingle(); // Using maybeSingle() instead of single()
 
-    if (error) {
-      // Handle specific no-rows case
-      if (error.code === 'PGRST116') {
-        return null;
+      if (error) {
+        // Handle specific no-rows case
+        if (error.code === "PGRST116") {
+          return null;
+        }
+        throw error;
       }
+
+      return data; // Will be null if no record found
+    } catch (error) {
+      console.error("Error getBiodataRequestByRequestNumber:", error);
       throw error;
     }
-
-    return data; // Will be null if no record found
-  } catch (error) {
-    console.error("Error getBiodataRequestByRequestNumber:", error);
-    throw error;
-  }
-},
+  },
 
   async getBiodataRequestByRequestId(requestId) {
     try {

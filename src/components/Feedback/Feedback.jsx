@@ -124,7 +124,7 @@ const Feedback = () => {
       });
 
       const responseBiodata =
-        await BiodataRequestStorage.updateStatusBiodataRequestFromFeedback(
+        await BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(
           requestNumber,
           [
             ...requestDetails.status,
@@ -132,7 +132,8 @@ const Feedback = () => {
               id: 6,
               created: new Date().toISOString(),
             },
-          ]
+          ],
+          true
         );
 
       const responseProd =
@@ -168,7 +169,7 @@ const Feedback = () => {
           <h2>
             {isFeedbackEnabled
               ? "Share Your Feedback"
-              : "Feedback link is Not Available"}
+              : "Feedback link is inactive"}
           </h2>
         </div>
 
