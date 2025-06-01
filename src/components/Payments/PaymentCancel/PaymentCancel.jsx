@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Cancel,
@@ -10,8 +10,11 @@ import {
   Phone,
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
+import SupportPopup from "../../SupportPopup/SupportPopup";
 
 const PaymentCancel = () => {
+    const [showSupport, setShowSupport] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const { requestNumber, userDetails, modelDetails } = location.state || {};
@@ -29,8 +32,8 @@ const PaymentCancel = () => {
     navigate(`/payment/${requestNumber}`);
   };
 
-  const handleSupport = () => {
-    window.location.href = "mailto:support@ditvi.com";
+   const handleSupport = () => {
+    setShowSupport(true);
   };
 
   return (
@@ -96,6 +99,7 @@ const PaymentCancel = () => {
           </div>
         </div>
       </div>
+      {showSupport && <SupportPopup onClose={() => setShowSupport(false)} />}
     </div>
   );
 };

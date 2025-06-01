@@ -283,13 +283,13 @@ const Payment = () => {
       <div className="payment-card">
         <div className="payment-header">
           <PaymentIcon className="payment-header-icon" />
-          <h2>Payment Link Inactive</h2>
+          <h2> {isPaymentEnabled()? 'Payment Details':'Payment Link Inactive'} </h2>
         </div>
 
         <div className="request-details">
           <div className="detail-section">
             <h1 className="payment-request-number">
-              Request No. #{requestNumber}.
+              Request No. #{requestNumber}
             </h1>
 
             <div className="detail-grid">
@@ -337,7 +337,7 @@ const Payment = () => {
             <div className="payment-disabled">
               <ErrorOutline className="warning-icon" />
               <p>
-                Payment link is inactive yet. Please wait for user approval.
+                Payment link is inactive yet. Please wait for admin approval.
               </p>
             </div>
           )}
