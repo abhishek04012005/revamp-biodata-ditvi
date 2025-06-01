@@ -84,26 +84,6 @@ const BiodataMaster = () => {
     }
   };
 
-  const markCompletedProductionRequest = async () => {
-    try {
-      ProductionRequestStorage.updateProductionRequestById(requestId, {
-        completed: true,
-      });
-      BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(
-        requestNumber,
-        [
-          ...statusArray,
-          {
-            id: 5,
-            created: new Date().toISOString(),
-          },
-        ]
-      );
-    } catch (err) {
-      console.error("Error markCompletedProductionRequest ", err);
-    }
-  };
-
   const getCurrentTheme = () => {
     return BIODATA_THEMES[selectedBackground] || BIODATA_THEMES["1111"];
   };
@@ -147,8 +127,6 @@ const BiodataMaster = () => {
   const isLanguageEnglish = modelDetails?.language === Languages.English.Name;
 
   const handlePrint = (withWatermark = false) => {
-    // Mark Production Request Completed and Update Status in BiodataRequest
-    if (withWatermark === false) markCompletedProductionRequest();
     // Store current page styles
     const currentTheme = getCurrentTheme();
     const originalContent = document.body.innerHTML;
@@ -491,7 +469,7 @@ const BiodataMaster = () => {
                                     ICON_MAPPING_HINDI[field.label]}
                                   {field.label}
                                 </td>
-                                <td>{field.value }</td>
+                                <td>{field.value}</td>
                               </tr>
                             )
                         )}
@@ -556,9 +534,7 @@ const BiodataMaster = () => {
                         <tr>
                           {formData?.professionalDetails?.map(
                             (field, index) => (
-                              <td key={index}>
-                                {field.value}
-                              </td>
+                              <td key={index}>{field.value}</td>
                             )
                           )}
                         </tr>
@@ -591,9 +567,7 @@ const BiodataMaster = () => {
                       {formData?.educationDetails?.map((education, index) => (
                         <tr key={index}>
                           {education.map((field, fieldIndex) => (
-                            <td key={fieldIndex}>
-                              {field.value}
-                            </td>
+                            <td key={fieldIndex}>{field.value}</td>
                           ))}
                         </tr>
                       ))}
@@ -624,9 +598,7 @@ const BiodataMaster = () => {
                       {/* Father's Details */}
                       <tr>
                         <td>{formData?.familyDetails?.father?.label}</td>
-                        <td>
-                          {formData?.familyDetails?.father?.value?.name}
-                        </td>
+                        <td>{formData?.familyDetails?.father?.value?.name}</td>
                         <td>
                           {formData?.familyDetails?.father?.value?.occupation}
                         </td>
@@ -635,9 +607,7 @@ const BiodataMaster = () => {
                       {/* Mother's Details */}
                       <tr>
                         <td>{formData?.familyDetails?.mother?.label}</td>
-                        <td>
-                          {formData?.familyDetails?.mother?.value?.name}
-                        </td>
+                        <td>{formData?.familyDetails?.mother?.value?.name}</td>
                         <td>
                           {formData?.familyDetails?.mother?.value?.occupation}
                         </td>

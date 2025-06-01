@@ -91,7 +91,6 @@ const Feedback = () => {
         }
 
         if (request) {
-          console.log("request", request);
           setRequestDetails(request);
           setIsFeedbackEnabled(getLatestStatusId(request.status) === 5);
         }
@@ -118,13 +117,35 @@ const Feedback = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await UserFeedbackStorage.saveUserFeedback({
+      const responseFeedback = await UserFeedbackStorage.saveUserFeedback({
         requestNumber,
         ...formData,
       });
 
-      if (response) {
+      const responseBiodata =
+        await BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(
+          requestNumber,
+          [
+            ...requestDetails.status,
+            {
+              id: 6,
+              created: new Date().toISOString(),
+            },
+          ]
+        );
+
+      const responseProd =
+        await ProductionRequestStorage.updateProductionRequestByRequestNumber(
+          requestNumber,
+          {
+            completed: true,
+          }
+        );
+
+      if (responseFeedback && responseBiodata && responseProd) {
         setShowThankYou(true);
+      } else {
+        setComment("An error occurred. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
