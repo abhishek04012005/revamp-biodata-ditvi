@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Check,
@@ -9,171 +9,108 @@ import {
   Language,
   Category,
   Badge,
-  ConfirmationNumber,
 } from "@mui/icons-material";
 import "./RequestConfirmation.css";
-import Container from "../../structure/Container/Container";
-import { maskMobileNumber } from "../../utils/MobileNumberHelper";
 
 const RequestConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [data, setData] = useState(null);
+  const { requestNumber, userDetails, modelDetails } = location.state || {};
 
-  useEffect(() => {
-    // Check if required data exists
-    if (
-      !location.state?.requestNumber ||
-      !location.state?.userDetails ||
-      !location.state?.modelDetails
-    ) {
-      navigate("/");
-      return;
-    }
+  const handleTrackStatus = () => {
+    navigate(`/track-status/${requestNumber}`);
+  };
 
-    setData(location.state);
-
-    // Disable back button navigation
-    const preventBack = () => {
-      window.history.pushState(null, "", window.location.href);
-      window.history.pushState(null, "", window.location.href);
-    };
-
-    window.history.pushState(null, "", window.location.href);
-    window.addEventListener("popstate", preventBack);
-
-    return () => {
-      window.removeEventListener("popstate", preventBack);
-    };
-  }, [location.state, navigate]);
-
-  // Return loading or redirect if no data
-  if (!data) {
-    return null;
-  }
-
-  const { requestNumber, userDetails, modelDetails } = data;
+  const handleWhatsApp = () => {
+    window.open("https://wa.me/919263767441", "_blank");
+  };
 
   return (
-    <section className="confirmation-page">
-      <Container>
-        <div className="confirmation-content">
-          <div className="confirmation-card">
-            <div className="success-icon-wrapper">
-              <Check className="success-icon" />
-            </div>
+    <div className="payment-page">
+      <div className="payment-card">
+        <div className="payment-header">
+          <Check className="payment-header-icon success" />
+          <h2>Request Confirmed</h2>
+        </div>
 
-            <h1>Thank You!</h1>
-            <p className="success-message">
-              Your biodata request has been successfully received.
-            </p>
+        <div className="request-details">
+          <div className="detail-section">
+            <h1 className="payment-request-number">
+              Request No. #{requestNumber}
+            </h1>
 
-            <div className="request-number-title">
-              <div className="request-number-wrapper">
-                <ConfirmationNumber className="request-number-icon" />
-                <div className="request-number-content">
-                  <span className="request-number-label">Request Number</span>
-                  <span className="request-number-value">{requestNumber}</span>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <Badge className="detail-icon" />
+                <div className="detail-content">
+                  <label>Full Name</label>
+                  <p>{userDetails.name}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <WhatsApp className="detail-icon" />
+                <div className="detail-content">
+                  <label>WhatsApp Number</label>
+                  <p>{userDetails.mobileNumber}</p>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="confirmation-details">
+          <div className="model-summary">
+            <h3>Model Details</h3>
+            <div className="detail-grid">
               <div className="detail-item">
-                <span className="detail-label">
-                  <span className="detail-icon-wrapper">
-                    <Badge className="detail-icon" />
-                    Name
-                  </span>
-                </span>
-                <span className="detail-value">{userDetails?.name}</span>
+                <Style className="detail-icon" />
+                <div className="detail-content">
+                  <label>Model Number</label>
+                  <p>{modelDetails.modelNumber}</p>
+                </div>
               </div>
 
               <div className="detail-item">
-                <span className="detail-label">
-                  <span className="detail-icon-wrapper">
-                    <WhatsApp className="detail-icon" />
-                    Whatsapp Number
-                  </span>
-                </span>
-                <span className="detail-value">
-                  {maskMobileNumber(userDetails?.mobileNumber)}
-                </span>
+                <CurrencyRupee className="detail-icon" />
+                <div className="detail-content">
+                  <label>Amount</label>
+                  <p>₹ {modelDetails.amount}</p>
+                </div>
               </div>
 
               <div className="detail-item">
-                <span className="detail-label">
-                  <span className="detail-icon-wrapper">
-                    <Style className="detail-icon" />
-                    Model Number
-                  </span>
-                </span>
-                <span className="detail-value">{modelDetails.modelNumber}</span>
+                <Category className="detail-icon" />
+                <div className="detail-content">
+                  <label>Type</label>
+                  <p>{modelDetails.type}</p>
+                </div>
               </div>
 
               <div className="detail-item">
-                <span className="detail-label">
-                  <span className="detail-icon-wrapper">
-                    <CurrencyRupee className="detail-icon" />
-                    Amount
-                  </span>
-                </span>
-                <span className="detail-value">{modelDetails.amount}</span>
+                <Language className="detail-icon" />
+                <div className="detail-content">
+                  <label>Language</label>
+                  <p>{modelDetails.language}</p>
+                </div>
               </div>
-
-              <div className="detail-item">
-                <span className="detail-label">
-                  <span className="detail-icon-wrapper">
-                    <Category className="detail-icon" />
-                    Type
-                  </span>
-                </span>
-                <span className="detail-value">{modelDetails.type}</span>
-              </div>
-
-              <div className="detail-item">
-                <span className="detail-label">
-                  <span className="detail-icon-wrapper">
-                    <Language className="detail-icon" />
-                    Language
-                  </span>
-                </span>
-                <span className="detail-value">{modelDetails.language}</span>
-              </div>
-            </div>
-
-            <div className="confirmation-actions">
-              <button
-                className="action-button track-status"
-                onClick={() => navigate(`/track-status/${requestNumber}`)}
-              >
-                <TrackChanges />
-                Track Status
-              </button>
-              <button
-                className="action-button connect"
-                onClick={() =>
-                  window.open("https://wa.me/919263767441", "_blank")
-                }
-              >
-                <WhatsApp />
-                Connect with Us
-              </button>
-            </div>
-
-            <div className="additional-info">
-              <p>
-                Save your <strong>Request Number</strong> for future reference
-                and communication.
-              </p>
-              <p className="contact-info">
-                For any queries, contact us on WhatsApp
-              </p>
             </div>
           </div>
+
+          <div className="alert-message success">
+            <Check className="alert-icon" />
+            <p>Your biodata request has been successfully received.</p>
+          </div>
+
+          <div className="action-buttons">
+            <button className="primary-button" onClick={handleTrackStatus}>
+              <TrackChanges /> Track Status
+            </button>
+            <button className="secondary-button" onClick={handleWhatsApp}>
+              <WhatsApp /> Connect on WhatsApp
+            </button>
+          </div>
         </div>
-      </Container>
-    </section>
+      </div>
+    </div>
   );
 };
 

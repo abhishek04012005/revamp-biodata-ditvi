@@ -1,300 +1,99 @@
-.confirmation-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
-  padding: 4rem 0;
-  margin-top: 4rem;
-}
-
-.confirmation-content {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.confirmation-card {
-  background: white;
-  border-radius: 20px;
-  padding: 3rem 2rem;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
-  animation: slideUp 0.6s ease-out;
-}
-
-.success-icon-wrapper {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 2rem;
-  animation: scaleIn 0.5s ease-out 0.3s both;
-}
-
-.success-icon {
-  font-size: 40px !important;
+.payment-header-icon.success {
   color: white;
 }
 
-.confirmation-card h1 {
+.model-summary {
+  margin: 1.5rem 0;
+}
+
+.model-summary h3 {
+  font-size: 1.1rem;
   color: var(--text-dark);
   margin-bottom: 1rem;
-  font-size: 2rem;
 }
 
-.success-message {
-  color: var(--text-light);
-  margin-bottom: 2rem;
-  font-size: 1.1rem;
+.alert-message.success {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.2);
 }
 
-.confirmation-details {
-  background: rgba(255, 135, 15, 0.05);
-  padding: 1.5rem;
-  border-radius: 15px;
-  margin-bottom: 2rem;
+.alert-message.success .alert-icon {
+  color: #4CAF50;
 }
 
-.detail-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 0;
+.alert-message.success p {
+  color: #2E7D32;
 }
 
-.detail-item:not(:last-child) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.detail-label {
-  color: var(--text-light);
-  font-size: 0.95rem;
-}
-
-.detail-value {
-  font-weight: 500;
-  color: var(--text-dark);
-  text-align: right;
-}
-
-.detail-value.highlight {
-  color: var(--primary-color);
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.confirmation-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.action-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+.note-message {
+  margin: 1rem 0;
   padding: 1rem;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.action-button.track-status {
-  background: rgba(255, 135, 15, 0.1);
-  color: var(--primary-color);
-}
-
-.action-button.connect {
-  background: #25d366;
-  color: white;
-}
-
-.action-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.additional-info {
-  color: var(--text-light);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.contact-info {
-  margin-top: 0.5rem;
-  color: var(--text-dark);
-}
-
-/* Add these styles to your existing CSS */
-
-.detail-icon-wrapper {
+  background: rgba(255, 152, 0, 0.1);
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
-.detail-icon {
-  font-size: 1.2rem !important;
-  color: var(--primary-color);
+.note-message .note-icon {
+  color: #F57C00;
 }
 
-.highlight-item {
-  background: rgba(255, 135, 15, 0.1);
-  margin: 1rem -1.5rem;
-  padding: 1rem 1.5rem;
+.note-message p {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
 }
 
-.confirmation-details {
+.note-message strong {
+  color: #F57C00;
+}
+
+.detail-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  padding: 1.5rem;
+  margin: 1rem 0;
 }
 
 .detail-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 0;
-  transition: all 0.3s ease;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
 }
 
-.detail-item:hover {
-  background: rgba(255, 135, 15, 0.02);
-  transform: translateX(5px);
+.detail-item .detail-icon {
+  color: var(--primary-color);
 }
 
-/* Update existing styles */
-.detail-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text-light);
-  font-size: 0.95rem;
+.detail-content label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.detail-content p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-dark);
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
-  .detail-item {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
   }
 
-  .highlight-item {
-    margin: 1rem -1rem;
-    padding: 1rem;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-@media (max-width: 768px) {
-  .confirmation-page {
-    padding: 2rem 0;
-  }
-
-  .confirmation-card {
-    padding: 2rem 1.5rem;
-  }
-
-  /* .confirmation-actions {
-        grid-template-columns: 1fr;
-    } */
-
-  .confirmation-actions {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 1rem;
-  }
-
-  .action-button {
+  .primary-button,
+  .secondary-button {
     width: 100%;
-  }
-
-  .detail-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-}
-
-.request-number-title {
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.request-number-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  /* background: rgba(255, 135, 15, 0.1); */
-  padding: 1.5rem;
-  border-radius: 12px;
-}
-
-.request-number-icon {
-  font-size: 2rem !important;
-  color: var(--primary-color);
-}
-
-.request-number-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.request-number-label {
-  color: var(--text-light);
-  font-size: 0.9rem;
-}
-
-.request-number-value {
-  color: var(--primary-color);
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-@media (max-width: 768px) {
-  .request-number-title {
-    padding: 1rem;
-  }
-
-  .request-number-icon {
-    font-size: 1.5rem !important;
-  }
-
-  .request-number-value {
-    font-size: 1.25rem;
   }
 }
