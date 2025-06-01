@@ -5,8 +5,7 @@ import {
   StarBorder,
   RateReview,
   Person,
-  AccessTime,
-  Support,
+  Phone,
   ArrowBack,
 } from "@mui/icons-material";
 import "./Feedback.css";
@@ -14,6 +13,7 @@ import { UserFeedbackStorage } from "../../supabase/UserFeedback";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import { getLatestStatusId } from "../../utils/StatusHelper";
 import SupportPopup from "../SupportPopup/SupportPopup";
+import Loader from "../../structure/Loader/Loader";
 
 const StarRating = ({ rating, onStarClick }) => {
   const getRatingText = (rating) => {
@@ -63,6 +63,7 @@ const Feedback = () => {
   const [showSupport, setShowSupport] = useState(false);
   const [formData, setFormData] = useState({ rating: 0, comment: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [comment, setComment] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
   const [isFeedbackEnabled, setIsFeedbackEnabled] = useState(false);
@@ -70,6 +71,7 @@ const Feedback = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const feedback = await UserFeedbackStorage.getUserFeedback(
           requestNumber
@@ -88,11 +90,14 @@ const Feedback = () => {
         }
 
         if (request) {
+          console.log("request", request);
           setRequestDetails(request);
           setIsFeedbackEnabled(getLatestStatusId(request.status) === 5);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -154,16 +159,16 @@ const Feedback = () => {
               <div className="detail-item">
                 <Person className="detail-icon" />
                 <div className="detail-content">
-                  <label>Request Status</label>
-                  <p>{isFeedbackEnabled ? "Ready for Feedback" : "Pending"}</p>
+                  <label>Full Name</label>
+                  <p>{requestDetails?.user_details.name}</p>
                 </div>
               </div>
 
               <div className="detail-item">
-                <AccessTime className="detail-icon" />
+                <Phone className="detail-icon" />
                 <div className="detail-content">
-                  <label>Request Date</label>
-                  <p>{requestDetails?.created_at}</p>
+                  <label>Mobile Number</label>
+                  <p>{requestDetails?.user_details.mobileNumber}</p>
                 </div>
               </div>
             </div>
@@ -225,6 +230,7 @@ const Feedback = () => {
         </div>
       </div>
       {showSupport && <SupportPopup onClose={() => setShowSupport(false)} />}
+      {isLoading && <Loader />}
     </div>
   );
 };
