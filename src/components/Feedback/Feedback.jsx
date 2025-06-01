@@ -124,7 +124,7 @@ const Feedback = () => {
       });
 
       const responseBiodata =
-        await BiodataRequestStorage.updateStatusBiodataRequestByRequestNumber(
+        await BiodataRequestStorage.updateStatusBiodataRequestFromFeedback(
           requestNumber,
           [
             ...requestDetails.status,

@@ -16,7 +16,7 @@ import {
   ArrowForward,
   ErrorOutline,
   SearchOff,
-  Home
+  Home,
 } from "@mui/icons-material";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
@@ -34,7 +34,8 @@ const CheckStatus = () => {
       id: 0,
       title: "Request Received",
       icon: <AssignmentTurnedIn />,
-      description: "Your biodata request has been received and is being processed.",
+      description:
+        "Your biodata request has been received and is being processed.",
       expectedDuration: "1-2 hours",
       color: { light: "#E3F2FD", main: "#2196F3", dark: "#1976D2" },
     },
@@ -82,11 +83,12 @@ const CheckStatus = () => {
       id: 6,
       title: "Feedback",
       icon: <Done />,
-      description: "Your feedback is important to us. Please share your experience.",
+      description:
+        "Your feedback is important to us. Please share your experience.",
       expectedDuration: "2-4 hours",
       color: { light: "#E8F5E9", main: "#4CAF50", dark: "#388E3C" },
     },
-];
+  ];
 
   useEffect(() => {
     BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
@@ -167,7 +169,6 @@ const CheckStatus = () => {
               <Link to="/" className="error-action-btn primary">
                 <Home /> Go to Home
               </Link>
-    
             </div>
           </div>
         </div>
@@ -182,11 +183,6 @@ const CheckStatus = () => {
       />
 
       <div className="status-card">
-
-
-<div className="h"></div>
-  
-
         <div className="status-header">
           <div className="header-content">
             <div className="header-left">
@@ -276,21 +272,6 @@ const CheckStatus = () => {
                     </div>
                   )}
                 </div>
-
-                {selectedStep === step.id && (
-                  <div className="step-details">
-                    <p>{step.description}</p>
-                    <div className="step-meta">
-                      <span className="duration">
-                        <Schedule />
-                        {step.expectedDuration}
-                      </span>
-                      {currentStatus === step.id && (
-                        <span className="status-badge">In Progress</span>
-                      )}
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
           </div>

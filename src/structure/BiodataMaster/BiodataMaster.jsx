@@ -328,6 +328,7 @@ const BiodataMaster = () => {
                     name: formData?.userDetails?.name || "",
                     requestNumber: requestNumber || "",
                     modelNumber: formData?.modelDetails?.modelNumber || "",
+                    amount: formData?.modelDetails?.amount || "",
                     statusLink: `${
                       process.env.REACT_APP_APPLICATION_URL || getBaseUrl()
                     }/track-status/${requestNumber}`,
