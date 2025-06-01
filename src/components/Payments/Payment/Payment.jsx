@@ -217,10 +217,6 @@ const Payment = () => {
   if (error || !requestData) {
     return (
       <div className="payment-page">
-        {/* <HeaderSection
-          title="Make Payment"
-          subtitle="Complete your payment to proceed with biodata creation"
-        /> */}
         <div className="payment-error-card">
           <div className="error-header">
             <ErrorOutline className="error-icon" />
@@ -287,7 +283,7 @@ const Payment = () => {
       <div className="payment-card">
         <div className="payment-header">
           <PaymentIcon className="payment-header-icon" />
-          <h2>Payment Details</h2>
+          <h2>Payment Link Inactive</h2>
         </div>
 
         <div className="request-details">
@@ -341,7 +337,7 @@ const Payment = () => {
             <div className="payment-disabled">
               <ErrorOutline className="warning-icon" />
               <p>
-                Payment link is not active yet. Please wait for user approval.
+                Payment link is inactive yet. Please wait for user approval.
               </p>
             </div>
           )}

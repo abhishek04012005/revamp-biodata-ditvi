@@ -8,9 +8,6 @@ import {
   Support,
   Person,
   Phone,
-  WifiOff,
-  AccountBalance,
-  Payment as PaymentIcon,
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
 
@@ -18,7 +15,6 @@ const PaymentCancel = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { requestNumber, userDetails, modelDetails } = location.state || {};
-
   useEffect(() => {
     if (!requestNumber) {
       navigate(`/payment/${requestNumber}`);
@@ -26,7 +22,7 @@ const PaymentCancel = () => {
   }, [requestNumber, navigate]);
 
   const handleGoBack = () => {
-    navigate("/dashboard");
+    navigate("/");
   };
 
   const handleTryAgain = () => {
@@ -46,26 +42,26 @@ const PaymentCancel = () => {
         </div>
 
         <div className="request-details">
-          <div className="payment-status-section">
+          <div className="detail-section">
             <h1 className="payment-request-number">
               Request No: #{requestNumber}
             </h1>
-          </div>
 
-          <div className="detail-grid">
-            <div className="detail-item">
-              <Person className="detail-icon" />
-              <div className="detail-content">
-                <label>Full Name</label>
-                <p>{userDetails.name}</p>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <Person className="detail-icon" />
+                <div className="detail-content">
+                  <label>Full Name</label>
+                  <p>{userDetails.name}</p>
+                </div>
               </div>
-            </div>
 
-            <div className="detail-item">
-              <Phone className="detail-icon" />
-              <div className="detail-content">
-                <label>Mobile Number</label>
-                <p>{userDetails.mobileNumber}</p>
+              <div className="detail-item">
+                <Phone className="detail-icon" />
+                <div className="detail-content">
+                  <label>Mobile Number</label>
+                  <p>{userDetails.mobileNumber}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -78,7 +74,7 @@ const PaymentCancel = () => {
             </p>
           </div>
 
-          <div className="info-section">
+          {/* <div className="info-section">
             <h3>What went wrong?</h3>
             <div className="info-grid">
               <div className="info-card">
@@ -95,7 +91,15 @@ const PaymentCancel = () => {
                 <p>Verify your payment details and bank account balance</p>
               </div>
             </div>
-          </div>
+          </div> */}
+
+            <div className="amount-details">
+                <span>Total Amount</span>
+                <div className="amount">
+                  <span>₹ </span>
+                  {modelDetails.amount}
+                </div>
+              </div>
 
           <div className="action-buttons">
             <button className="primary-button" onClick={handleTryAgain}>
@@ -105,7 +109,7 @@ const PaymentCancel = () => {
               <Support /> Contact Support
             </button>
             <button className="tertiary-button" onClick={handleGoBack}>
-              <ArrowBack /> Back to Dashboard
+              <ArrowBack /> Back to Home
             </button>
           </div>
         </div>

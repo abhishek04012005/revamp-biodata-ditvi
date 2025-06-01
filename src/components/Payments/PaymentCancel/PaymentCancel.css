@@ -97,9 +97,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
   min-height: 32px;
 }
 
