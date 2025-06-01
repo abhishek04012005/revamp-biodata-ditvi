@@ -68,44 +68,55 @@ const Payment = () => {
     }
   };
 
-  const initiatePayment = async () => {
-    if (!window.Razorpay) {
-      setError("Payment system is not loaded yet. Please try again.");
-      return;
-    }
-    try {
-      const paymentRequest = await PaymentRequestStorage.initiatePaymentRequest(
-        {
-          requestNumber: requestNumber,
-          amount: requestData.model_details.amount,
-        }
-      );
-      if (paymentRequest) {
-        // Redirect to payment gateway or handle payment confirmation
+ const initiatePayment = async () => {
+  if (!window.Razorpay) {
+    setError("Payment system is not loaded yet. Please try again.");
+    return;
+  }
+  try {
+    const paymentRequest = await PaymentRequestStorage.initiatePaymentRequest({
+      requestNumber: requestNumber,
+      amount: requestData.model_details.amount,
+    });
 
-        const options = getRazorpayOptions({
+    if (paymentRequest) {
+      const options = {
+        ...getRazorpayOptions({
           paymentRequest,
           requestNumber,
           handlePaymentSuccess,
           handlePaymentCancelled,
-        });
+        }),
+        modal: {
+          ondismiss: function() {
+            console.log('Payment modal closed');
+          }
+        },
+        handler: function(response) {
+          if (response.razorpay_payment_id) {
+            handlePaymentSuccess(response, paymentRequest.id);
+          }
+        }
+      };
 
-        const razorpayInstance = new window.Razorpay(options);
-        razorpayInstance.on("payment.failed", async function (response) {
-          await handlePaymentFailure(
-            response,
-            paymentRequest.id,
-            razorpayInstance
-          );
-        });
-        razorpayInstance.open();
-      } else {
-        setError("Failed to initiate payment");
-      }
-    } catch (err) {
-      setError("Error initiating payment");
+      const razorpayInstance = new window.Razorpay(options);
+
+      razorpayInstance.on('payment.failed', function(response) {
+        razorpayInstance.close();
+        setTimeout(() => {
+          handlePaymentFailure(response, paymentRequest.id);
+        }, 300);
+      });
+
+      razorpayInstance.open();
+    } else {
+      setError("Failed to initiate payment");
     }
-  };
+  } catch (err) {
+    console.error("Payment initiation error:", err);
+    setError("Error initiating payment");
+  }
+};
 
   const handlePaymentSuccess = async (response, paymentRequestId) => {
     try {
@@ -144,32 +155,35 @@ const Payment = () => {
     }
   };
 
-  const handlePaymentFailure = async (
-    response,
-    paymentRequestId,
-    razorpayInstance
-  ) => {
-    try {
-      const dbResponse = PaymentRequestStorage.updatePaymentStatus(
-        paymentRequestId,
-        {
-          status: PaymentStatus.Failed,
-          response: response,
-        }
-      );
-      if (dbResponse) {
-        // Redirect to success page
-        navigate(`/payment-failure/${paymentRequestId}`);
+const handlePaymentFailure = async (response, paymentRequestId) => {
+  try {
+    const dbResponse = await PaymentRequestStorage.updatePaymentStatus(
+      paymentRequestId,
+      {
+        status: PaymentStatus.Failed,
+        response: response,
+        error_code: response.error.code,
+        error_description: response.error.description,
       }
-    } catch (error) {
-      console.error("Error updating payment status:", error);
-      alert(
-        "Payment was failure and status update failed. Please contact support."
-      );
-    } finally {
-      razorpayInstance.close();
+    );
+
+    if (dbResponse) {
+      navigate("/payment-failure", {
+        state: {
+          requestNumber: requestNumber,
+          userDetails: requestData.user_details,
+          modelDetails: requestData.model_details,
+          error: response.error
+        },
+      });
+    } else {
+      throw new Error("Failed to update payment status");
     }
-  };
+  } catch (error) {
+    console.error("Error handling payment failure:", error);
+    alert("Something went wrong while processing your payment. Please contact support.");
+  }
+};
 
   const handlePaymentCancelled = async (paymentRequestId) => {
     try {
@@ -279,11 +293,15 @@ const Payment = () => {
 
   return (
     <div className="payment-page">
-
       <div className="payment-card">
         <div className="payment-header">
           <PaymentIcon className="payment-header-icon" />
-          <h2> {isPaymentEnabled()? 'Payment Details':'Payment Link Inactive'} </h2>
+          <h2>
+            {" "}
+            {isPaymentEnabled()
+              ? "Payment Details"
+              : "Payment Link Inactive"}{" "}
+          </h2>
         </div>
 
         <div className="request-details">
@@ -300,7 +318,7 @@ const Payment = () => {
                   <p>{requestData.user_details.name}</p>
                 </div>
               </div>
-    
+
               <div className="detail-item">
                 <Phone className="detail-icon" />
                 <div className="detail-content">
