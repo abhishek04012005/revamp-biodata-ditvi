@@ -21,7 +21,6 @@ import {
   ContactPhone,
   FormatSize,
   Palette,
-  Settings,
   ContentCopy,
   Check,
 } from "@mui/icons-material";
@@ -238,6 +237,7 @@ const BiodataMaster = () => {
     .biodata-master-bio-table th {
 
       border-bottom: ${styles.table.rowGap} solid transparent;
+      text-align: center;
     }
 
             .img-watermark {
@@ -445,6 +445,7 @@ const BiodataMaster = () => {
     .biodata-master-bio-table th {
       padding: 12px;
       border-bottom: ${styles.table.rowGap} solid transparent;
+      text-align: center;
     }
   `}
             </style>
