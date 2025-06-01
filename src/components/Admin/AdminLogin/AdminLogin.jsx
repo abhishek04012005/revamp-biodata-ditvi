@@ -29,7 +29,7 @@ const AdminLogin = () => {
         loginAdmin(response.data);
         navigate("/admin/biodata-dashboard");
       } else {
-        setError("Invalid credentials");
+        setError("Invalid credentials. Please, try again.");
       }
     } catch (err) {
       setError("Login failed. Please try again.");

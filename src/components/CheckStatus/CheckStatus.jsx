@@ -141,7 +141,7 @@ const CheckStatus = () => {
                 <ErrorOutline className="header-icon" />
                 <div>
                   <h2>Invalid Request</h2>
-                  <p className="order-id">Request Number: {requestNumber}</p>
+                  <p className="order-id">Request No. #{requestNumber}</p>
                 </div>
               </div>
             </div>
@@ -193,7 +193,7 @@ const CheckStatus = () => {
               <Timeline className="header-icon" />
               <div>
                 <h2>Request Status</h2>
-                <p className="order-id">Request Number: {requestNumber}</p>
+                <p className="order-id">Request No. #{requestNumber}</p>
               </div>
             </div>
 

@@ -254,46 +254,7 @@ const Payment = () => {
   }
 
   if (isPaymentCompleted()) {
-    return (
-      <div className="payment-page">
-        <HeaderSection
-          title="Payment Status"
-          subtitle="Thank you for your payment"
-        />
-        <div className="payment-success-card">
-          <div className="success-header">
-            <CheckCircle className="success-icon" />
-            <h2>Payment Successfully Received</h2>
-          </div>
-          <div className="success-content">
-            <div className="success-message">
-              <Receipt className="receipt-icon" />
-              <p>
-                Payment confirmed for request: <strong>{requestNumber}</strong>
-              </p>
-            </div>
-            <div className="payment-details">
-              <div className="payment-detail-item">
-                <AccessTime className="detail-icon" />
-                <span>Payment Date:</span>
-                <strong>{formatDate(requestData.payment_date)}</strong>
-              </div>
-              <div className="payment-detail-item">
-                <CreditCard className="detail-icon" />
-                <span>Amount Paid:</span>
-                <strong>₹{requestData.amount}</strong>
-              </div>
-            </div>
-            <Link
-              to={`/status/${requestNumber}`}
-              className="success-action-btn"
-            >
-              Track Your Request Status
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+    navigate(`/payment-success/${requestNumber}`);
   }
 
   return (
