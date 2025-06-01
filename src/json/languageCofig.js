@@ -41,6 +41,7 @@ export const getLanguageData = (modelDetails) => {
       ],
       placeholders: {
         addEducation: "शिक्षा जोड़ें",
+        removeEduction: "शिक्षा हटाएं",
         education: "शिक्षा",
         remaining: "शेष",
         addBrother: "भाई जोड़ें",
@@ -87,6 +88,7 @@ export const getLanguageData = (modelDetails) => {
     ],
     placeholders: {
       addEducation: "Add Education",
+      removeEduction: "Remove Education",
       education: "Education",
       remaining: "remaining",
       addBrother: "Add Brother",

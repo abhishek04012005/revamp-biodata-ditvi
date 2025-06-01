@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Check,
@@ -16,7 +17,41 @@ import Container from "../../structure/Container/Container";
 const RequestConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { requestNumber, userDetails, modelDetails } = location.state;
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Check if required data exists
+    if (
+      !location.state?.requestNumber ||
+      !location.state?.userDetails ||
+      !location.state?.modelDetails
+    ) {
+      navigate("/");
+      return;
+    }
+
+    setData(location.state);
+
+    // Disable back button navigation
+    const preventBack = () => {
+      window.history.pushState(null, "", window.location.href);
+      window.history.pushState(null, "", window.location.href);
+    };
+
+    window.history.pushState(null, "", window.location.href);
+    window.addEventListener("popstate", preventBack);
+
+    return () => {
+      window.removeEventListener("popstate", preventBack);
+    };
+  }, [location.state, navigate]);
+
+  // Return loading or redirect if no data
+  if (!data) {
+    return null;
+  }
+
+  const { requestNumber, userDetails, modelDetails } = data;
 
   return (
     <section className="confirmation-page">
@@ -31,16 +66,6 @@ const RequestConfirmation = () => {
             <p className="success-message">
               Your biodata request has been successfully received.
             </p>
-
-            {/* <div className="detail-item">
-                <span className="detail-label">
-                  <span className="detail-icon-wrapper">
-                    <ConfirmationNumber className="detail-icon" />
-                    Request Number
-                  </span>
-                </span>
-                <span className="detail-value highlight">{requestNumber}</span>
-              </div> */}
 
             <div className="request-number-title">
               <div className="request-number-wrapper">

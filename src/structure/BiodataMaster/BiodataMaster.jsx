@@ -491,7 +491,7 @@ const BiodataMaster = () => {
                                     ICON_MAPPING_HINDI[field.label]}
                                   {field.label}
                                 </td>
-                                <td>{field.value || "Not Provided"}</td>
+                                <td>{field.value }</td>
                               </tr>
                             )
                         )}
@@ -557,7 +557,7 @@ const BiodataMaster = () => {
                           {formData?.professionalDetails?.map(
                             (field, index) => (
                               <td key={index}>
-                                {field.value || "Not Provided"}
+                                {field.value}
                               </td>
                             )
                           )}
@@ -592,7 +592,7 @@ const BiodataMaster = () => {
                         <tr key={index}>
                           {education.map((field, fieldIndex) => (
                             <td key={fieldIndex}>
-                              {field.value || "Not Provided"}
+                              {field.value}
                             </td>
                           ))}
                         </tr>
@@ -625,12 +625,10 @@ const BiodataMaster = () => {
                       <tr>
                         <td>{formData?.familyDetails?.father?.label}</td>
                         <td>
-                          {formData?.familyDetails?.father?.value?.name ||
-                            "Not Provided"}
+                          {formData?.familyDetails?.father?.value?.name}
                         </td>
                         <td>
-                          {formData?.familyDetails?.father?.value?.occupation ||
-                            "Not Provided"}
+                          {formData?.familyDetails?.father?.value?.occupation}
                         </td>
                         <td>-</td>
                       </tr>
@@ -638,12 +636,10 @@ const BiodataMaster = () => {
                       <tr>
                         <td>{formData?.familyDetails?.mother?.label}</td>
                         <td>
-                          {formData?.familyDetails?.mother?.value?.name ||
-                            "Not Provided"}
+                          {formData?.familyDetails?.mother?.value?.name}
                         </td>
                         <td>
-                          {formData?.familyDetails?.mother?.value?.occupation ||
-                            "Not Provided"}
+                          {formData?.familyDetails?.mother?.value?.occupation}
                         </td>
                         <td>-</td>
                       </tr>
@@ -658,7 +654,7 @@ const BiodataMaster = () => {
                                   key={`brother-${index}`}
                                   className="sibling-info"
                                 >
-                                  {brother.name || "Not Provided"}
+                                  {brother.name}
                                   {index <
                                     formData.familyDetails.brothers.value
                                       .length -
@@ -674,7 +670,7 @@ const BiodataMaster = () => {
                                   key={`brother-occ-${index}`}
                                   className="sibling-info"
                                 >
-                                  {brother.occupation || "Not Provided"}
+                                  {brother.occupation}
                                   {index <
                                     formData.familyDetails.brothers.value
                                       .length -
@@ -712,7 +708,7 @@ const BiodataMaster = () => {
                                   key={`sister-${index}`}
                                   className="sibling-info"
                                 >
-                                  {sister.name || "Not Provided"}
+                                  {sister.name}
                                   {index <
                                     formData.familyDetails.sisters.value
                                       .length -
@@ -728,7 +724,7 @@ const BiodataMaster = () => {
                                   key={`sister-occ-${index}`}
                                   className="sibling-info"
                                 >
-                                  {sister.occupation || "Not Provided"}
+                                  {sister.occupation}
                                   {index <
                                     formData.familyDetails.sisters.value
                                       .length -
@@ -778,7 +774,7 @@ const BiodataMaster = () => {
                       </tr>
                       <tr>
                         {formData?.contactDetails?.map((field, index) => (
-                          <td key={index}>{field.value || "Not Provided"}</td>
+                          <td key={index}>{field.value}</td>
                         ))}
                       </tr>
                     </tbody>

@@ -10,6 +10,15 @@ import {
   ExaminationData,
   ContactData,
 } from "../../../json/createBiodata";
+
+import {
+  PersonalDataHindi,
+  ProfessionalDataHindi,
+  EducationDataHindi,
+  FamilyDataHindi,
+  ExaminationDataHindi,
+  ContactDataHindi,
+} from "../../../json/CreateBiodataHindi";
 import { UploadFile } from "../../../supabase/UploadFile";
 import StorageBucket from "../../../constants/StorageBucket";
 import Loader from "../../../structure/Loader/Loader";
@@ -25,6 +34,7 @@ import { EducationInfoSection } from "./Sections/EducationInfoSection";
 import { FamilyInfoSection } from "./Sections/FamilyInfoSection";
 import { ContactInfoSection } from "./Sections/ContactInfoSection";
 import { ProductionRequestStorage } from "../../../supabase/ProductionRequest";
+import Languages from "../../../json/Languages";
 
 const ProductionBiodataDetail = () => {
   const { requestId } = useParams();
@@ -36,6 +46,7 @@ const ProductionBiodataDetail = () => {
   const [originalData, setOriginalData] = useState(null);
   const [requestNumber, setRequestNumber] = useState(null);
   const [langData, setLangData] = useState(null);
+  // const [isLanguageHindi, setIsLanguageHindi] = useState(false);
 
   useEffect(() => {
     fetchRequestData(requestId);
@@ -50,20 +61,33 @@ const ProductionBiodataDetail = () => {
 
       if (response) {
         const languageData = getLanguageData(response.model_details);
+        const isLanguageHindi =
+          response.model_details.language === Languages.Hindi.Name;
         setLangData(languageData);
-
+        
         const initialFormData = {
           profileImage: response.profile_url,
           biodataUrl: response.biodata_url,
           userDetails: response.user_details,
           modelDetails: response.model_details,
-          personalDetails: response.personal_details || PersonalData,
+          personalDetails:
+            response.personal_details ||
+            (isLanguageHindi ? PersonalDataHindi : PersonalData),
           professionalDetails:
-            response.professional_details || ProfessionalData,
-          examinationDetails: response.examination_details || ExaminationData,
-          educationDetails: response.education_details || [EducationData],
-          familyDetails: response.family_details || FamilyData,
-          contactDetails: response.contact_details || ContactData,
+            response.professional_details ||
+            (isLanguageHindi ? ProfessionalDataHindi : ProfessionalData),
+          examinationDetails:
+            response.examination_details ||
+            (isLanguageHindi ? ExaminationDataHindi : ExaminationData),
+          educationDetails:
+            response.education_details ||
+            (isLanguageHindi ? [EducationDataHindi] : [EducationData]),
+          familyDetails:
+            response.family_details ||
+            (isLanguageHindi ? FamilyDataHindi : FamilyData),
+          contactDetails:
+            response.contact_details ||
+            (isLanguageHindi ? ContactDataHindi : ContactData),
         };
 
         setRequestNumber(response.request_number);
@@ -205,7 +229,7 @@ const ProductionBiodataDetail = () => {
               >
                 <Visibility />
                 Preview
-                  <span className="btn-highlight"></span>
+                <span className="btn-highlight"></span>
               </Link>
 
               <button

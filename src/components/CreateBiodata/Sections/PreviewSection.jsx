@@ -27,7 +27,7 @@ const PreviewSection = ({ formData, langData, modelDetails, currentStep }) => {
             {/* Personal Data */}
             {formData.personalDetails?.map((field, index) => (
               <p key={index}>
-                <strong>{field.label}:</strong> {field.value || "Not Provided"}
+                <strong>{field.label}:</strong> {field.value}
               </p>
             ))}
           </div>
@@ -46,14 +46,14 @@ const PreviewSection = ({ formData, langData, modelDetails, currentStep }) => {
                 formData.examinationDetails.map((field, index) => (
                   <p key={index}>
                     <strong>{field.label}:</strong>{" "}
-                    {field.value || "Not Provided"}
+                    {field.value}
                   </p>
                 ))
               : // Professional Details
                 formData.professionalDetails.map((field, index) => (
                   <p key={index}>
                     <strong>{field.label}:</strong>{" "}
-                    {field.value || "Not Provided"}
+                    {field.value}
                   </p>
                 ))}
           </div>
@@ -69,7 +69,7 @@ const PreviewSection = ({ formData, langData, modelDetails, currentStep }) => {
                 {eduGroup.map((field, fieldIndex) => (
                   <p key={fieldIndex}>
                     <strong>{field.label}:</strong>{" "}
-                    {field.value || "Not Provided"}
+                    {field.value}
                   </p>
                 ))}
               </div>
@@ -87,13 +87,11 @@ const PreviewSection = ({ formData, langData, modelDetails, currentStep }) => {
                 <h4>{formData.familyDetails?.[relation]?.label}</h4>
                 <p>
                   <strong>{langData.placeholders.name}:</strong>{" "}
-                  {formData.familyDetails?.[relation]?.value?.name ||
-                    "Not Provided"}
+                  {formData.familyDetails?.[relation]?.value?.name}
                 </p>
                 <p>
                   <strong>{langData.placeholders.occupation}:</strong>{" "}
-                  {formData.familyDetails?.[relation]?.value?.occupation ||
-                    "Not Provided"}
+                  {formData.familyDetails?.[relation]?.value?.occupation}
                 </p>
               </div>
             ))}
@@ -107,15 +105,15 @@ const PreviewSection = ({ formData, langData, modelDetails, currentStep }) => {
                     <div key={idx} className="sibling-item">
                       <p>
                         <strong>{langData.placeholders.name}:</strong>{" "}
-                        {sibling?.name || "Not Provided"}
+                        {sibling?.name}
                       </p>
                       <p>
                         <strong>{langData.placeholders.occupation}:</strong>{" "}
-                        {sibling?.occupation || "Not Provided"}
+                        {sibling?.occupation}
                       </p>
                       <p>
                         <strong>{langData.placeholders.married}:</strong>{" "}
-                        {sibling?.married || "Not Provided"}
+                        {sibling?.married}
                       </p>
                     </div>
                   )
@@ -131,7 +129,7 @@ const PreviewSection = ({ formData, langData, modelDetails, currentStep }) => {
           <div className="preview-details">
             {formData.contactDetails.map((field, index) => (
               <p key={index}>
-                <strong>{field.label}:</strong> {field.value || "Not Provided"}
+                <strong>{field.label}:</strong> {field.value}
               </p>
             ))}
           </div>
