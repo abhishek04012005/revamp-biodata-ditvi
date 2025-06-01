@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Check,
@@ -11,6 +10,7 @@ import {
   Badge,
 } from "@mui/icons-material";
 import "./RequestConfirmation.css";
+import { maskMobileNumber } from "../../utils/MobileNumberHelper";
 
 const RequestConfirmation = () => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const RequestConfirmation = () => {
                 <WhatsApp className="detail-icon" />
                 <div className="detail-content">
                   <label>WhatsApp Number</label>
-                  <p>{userDetails.mobileNumber}</p>
+                  <p>{maskMobileNumber(userDetails.mobileNumber)}</p>
                 </div>
               </div>
             </div>
