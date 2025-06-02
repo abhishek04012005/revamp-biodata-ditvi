@@ -7,6 +7,7 @@ import {
   Person,
   Phone,
   ArrowBack,
+  CheckCircle
 } from "@mui/icons-material";
 import "./Feedback.css";
 import { UserFeedbackStorage } from "../../supabase/UserFeedback";
@@ -69,6 +70,7 @@ const Feedback = () => {
   const [comment, setComment] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
   const [isFeedbackEnabled, setIsFeedbackEnabled] = useState(false);
+  const [isFeedbackShared, setIsFeedbackShared] = useState(false);
   const [requestDetails, setRequestDetails] = useState(null);
 
   useEffect(() => {
@@ -83,17 +85,19 @@ const Feedback = () => {
             requestNumber
           );
 
+        if (request) {
+          setRequestDetails(request);
+          const latestStatus = getLatestStatusId(request.status);
+          setIsFeedbackEnabled(latestStatus === 5);
+          setIsFeedbackShared(latestStatus === 6 || feedback !== null);
+        }
+
         if (feedback) {
           setShowThankYou(true);
           setFormData({
             rating: feedback.rating,
             comment: feedback.comment,
           });
-        }
-
-        if (request) {
-          setRequestDetails(request);
-          setIsFeedbackEnabled(getLatestStatusId(request.status) === 5);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -112,6 +116,21 @@ const Feedback = () => {
   const handleStarClick = (rating) => {
     setFormData((prev) => ({ ...prev, rating }));
   };
+
+  const getFeedbackTitle = () => {
+    if (isFeedbackShared) return "Thanks for your Feedback";
+    if (isFeedbackEnabled) return "Share Your Feedback";
+    return "Feedback link is inactive";
+  };
+
+  const getFeedbackIcons = () => {
+    if (isFeedbackShared) return <CheckCircle className="payment-header-icon" />;
+    if (isFeedbackEnabled) return <RateReview className="payment-header-icon" />;
+    return <RateReview className="payment-header-icon" />;
+  }
+
+  console.log("isFeedbackEnabled", isFeedbackEnabled);
+  console.log("isFeedbackShared", isFeedbackShared);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -165,12 +184,8 @@ const Feedback = () => {
     <div className="payment-page">
       <div className="payment-card">
         <div className="payment-header">
-          <RateReview className="payment-header-icon" />
-          <h2>
-            {isFeedbackEnabled
-              ? "Share Your Feedback"
-              : "Feedback link is inactive"}
-          </h2>
+          {getFeedbackIcons()}
+          <h2>{getFeedbackTitle()}</h2>
         </div>
 
         <div className="request-details">
@@ -246,7 +261,14 @@ const Feedback = () => {
               <div className="success-message">
                 <div className="check-mark">✓</div>
                 <h3>Thank You!</h3>
-                <p>Your feedback has been submitted successfully</p>
+                <p
+                  style={{
+                    color: "#4CAF50",
+                    fontWeight: 500,
+                  }}
+                >
+                  Your feedback has been submitted successfully.
+                </p>
               </div>
               <div className="action-buttons">
                 <button className="tertiary-button" onClick={handleGoBack}>
