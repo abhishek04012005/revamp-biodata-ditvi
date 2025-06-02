@@ -19,6 +19,8 @@
   margin-bottom: 0.5rem;
 }
 
+.sta
+
 .star-icon {
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -29,7 +31,14 @@
 }
 
 .star-icon.active .filled {
-  color: #FFC107;
+  color: #ffc107;
+  width: 40px;
+  height: 40px;
+}
+
+.star-icon .empty {
+  width: 40px;
+  height: 40px;
 }
 
 .rating-label {
@@ -113,4 +122,23 @@
     height: 50px;
     font-size: 1.5rem;
   }
+}
+
+.feedback-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(244, 67, 54, 0.05);
+  border-radius: 6px;
+}
+
+.feedback-heart {
+  font-size: 24px !important;
+  color: var(--primary-color);
+  margin-right: 0.5rem;
+}
+
+.feedback-heart svg {
+  width: 40px;
+  height: 40px;
 }

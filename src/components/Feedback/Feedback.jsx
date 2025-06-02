@@ -7,7 +7,9 @@ import {
   Person,
   Phone,
   ArrowBack,
-  CheckCircle
+  CheckCircle,
+  ReportProblem,
+  Favorite,
 } from "@mui/icons-material";
 import "./Feedback.css";
 import { UserFeedbackStorage } from "../../supabase/UserFeedback";
@@ -124,10 +126,12 @@ const Feedback = () => {
   };
 
   const getFeedbackIcons = () => {
-    if (isFeedbackShared) return <CheckCircle className="payment-header-icon" />;
-    if (isFeedbackEnabled) return <RateReview className="payment-header-icon" />;
-    return <RateReview className="payment-header-icon" />;
-  }
+    if (isFeedbackShared)
+      return <CheckCircle className="payment-header-icon" />;
+    if (isFeedbackEnabled)
+      return <RateReview className="payment-header-icon" />;
+    return <ReportProblem className="payment-header-icon" />;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -162,6 +166,7 @@ const Feedback = () => {
 
       if (responseFeedback && responseBiodata && responseProd) {
         setShowThankYou(true);
+        setIsFeedbackShared(true);
       } else {
         setComment("An error occurred. Please try again.");
       }
@@ -256,16 +261,47 @@ const Feedback = () => {
           ) : (
             <div className="thank-you-section">
               <div className="success-message">
-                <div className="check-mark">✓</div>
-                <h3>Thank You!</h3>
-                <p
+                <div className="feedback-heart">
+                  {[...Array(5)].map((_, index) => (
+                    <Favorite
+                      key={index}
+                      style={{
+                        animation: `fadeIn 1s ease-in ${index * 0.5}s infinite`,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <h2
                   style={{
-                    color: "#4CAF50",
-                    fontWeight: 500,
+                    color: "var(--primary-color)",
+                    fontSize: "1.8rem",
+                    fontWeight: "600",
+                    marginBottom: "1rem",
                   }}
                 >
-                  Your feedback has been submitted successfully.
-                </p>
+                  Thank You!
+                </h2>
+                <div className="feedback-success">
+                  <CheckCircle
+                    className="payment-header-icon"
+                    style={{
+                      color: "#4CAF50", // Material UI success green
+                      marginRight: "12px",
+                      height: "25px",
+                      width: "25px",
+                      animation: "fadeIn 0.3s ease-in",
+                    }}
+                  />
+                  <p
+                    style={{
+                      color: "#4CAF50",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Your feedback has been submitted successfully.
+                  </p>
+                </div>
               </div>
               <div className="action-buttons">
                 <button className="tertiary-button" onClick={handleGoBack}>

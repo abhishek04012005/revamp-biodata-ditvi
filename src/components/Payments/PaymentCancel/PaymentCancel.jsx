@@ -3,12 +3,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
   Cancel,
   ArrowBack,
-  ErrorOutline,
   Refresh,
   Support,
   Person,
   WhatsApp,
-  
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
 import SupportPopup from "../../SupportPopup/SupportPopup";
@@ -85,8 +83,12 @@ const PaymentCancel = () => {
           </div>
 
           <div className="alert-message">
-            <ErrorOutline className="alert-icon" />
-            <p>
+            <Cancel className="alert-icon" />
+            <p
+              style={{
+                color: "#d32f2f", 
+              }}
+            >
               Your payment was not processed and no amount has been deducted
               from your account.
             </p>
