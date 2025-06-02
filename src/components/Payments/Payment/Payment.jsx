@@ -3,15 +3,13 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import "./Payment.css";
 import {
   ErrorOutline,
-  CheckCircle,
   Payment as PaymentIcon,
   Person,
   Phone,
-  AccessTime,
   SearchOff,
   Home,
   CreditCard,
-  Receipt,
+  ReportProblem,
   Lock,
 } from "@mui/icons-material";
 import { BiodataRequestStorage } from "../../../supabase/BiodataRequest";
@@ -259,7 +257,14 @@ const Payment = () => {
     <div className="payment-page">
       <div className="payment-card">
         <div className="payment-header">
-          <PaymentIcon className="payment-header-icon" />
+         
+
+          {isPaymentEnabled() ? (
+            <PaymentIcon className="payment-header-icon" />
+          ) : (
+            <ReportProblem className="payment-header-icon" />
+          )}
+
           <h2>
             {" "}
             {isPaymentEnabled()
@@ -319,7 +324,7 @@ const Payment = () => {
             </button>
           ) : (
             <div className="payment-disabled">
-              <ErrorOutline className="warning-icon" />
+              <ReportProblem className="warning-icon" />
               <p>
                 Payment link is inactive now. Please wait for admin approval.
               </p>

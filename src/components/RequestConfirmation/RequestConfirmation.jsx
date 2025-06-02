@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  Check,
+  CheckCircle,
   WhatsApp,
   TrackChanges,
   Style,
@@ -29,7 +29,7 @@ const RequestConfirmation = () => {
     <div className="payment-page">
       <div className="payment-card">
         <div className="payment-header">
-          <Check className="payment-header-icon success" />
+          <CheckCircle className="payment-header-icon success" />
           <h2>Request Confirmed</h2>
         </div>
 
@@ -96,7 +96,7 @@ const RequestConfirmation = () => {
           </div>
 
           <div className="alert-message success">
-            <Check className="alert-icon" />
+            <CheckCircle className="alert-icon" />
             <p>Your biodata request has been successfully received.</p>
           </div>
 
