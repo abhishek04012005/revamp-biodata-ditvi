@@ -129,9 +129,6 @@ const Feedback = () => {
     return <RateReview className="payment-header-icon" />;
   }
 
-  console.log("isFeedbackEnabled", isFeedbackEnabled);
-  console.log("isFeedbackShared", isFeedbackShared);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
