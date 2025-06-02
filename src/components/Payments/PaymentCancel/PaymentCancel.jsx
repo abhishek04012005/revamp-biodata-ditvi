@@ -6,7 +6,7 @@ import {
   Refresh,
   Support,
   Person,
-  Phone,
+  WhatsApp,
 } from "@mui/icons-material";
 import "./PaymentCancel.css";
 import SupportPopup from "../../SupportPopup/SupportPopup";
@@ -60,9 +60,9 @@ const PaymentCancel = () => {
               </div>
 
               <div className="detail-item">
-                <Phone className="detail-icon" />
+                <WhatsApp className="detail-icon" />
                 <div className="detail-content">
-                  <label>Mobile Number</label>
+                  <label>WhatsApp Number</label>
                   <p>{maskMobileNumber(userDetails?.mobileNumber)}</p>
                 </div>
               </div>

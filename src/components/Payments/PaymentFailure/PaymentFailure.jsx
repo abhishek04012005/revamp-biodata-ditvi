@@ -7,8 +7,7 @@ import {
   Refresh,
   Support,
   Person,
-  Phone,
-  Lock,
+  WhatsApp,
 } from "@mui/icons-material";
 import "./PaymentFailure.css";
 import { maskMobileNumber } from "../../../utils/MobileNumberHelper";
@@ -64,9 +63,9 @@ const PaymentFailure = () => {
               </div>
 
               <div className="detail-item">
-                <Phone className="detail-icon" />
+                <WhatsApp className="detail-icon" />
                 <div className="detail-content">
-                  <label>Mobile Number</label>
+                  <label>WhatsApp Number</label>
                   <p>{maskMobileNumber(userDetails?.mobileNumber)}</p>
                 </div>
               </div>

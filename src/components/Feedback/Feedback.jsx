@@ -208,7 +208,7 @@ const Feedback = () => {
               <div className="detail-item">
                 <Phone className="detail-icon" />
                 <div className="detail-content">
-                  <label>Mobile Number</label>
+                  <label>Whatapp Number</label>
                   <p>
                     {maskMobileNumber(
                       requestDetails?.user_details.mobileNumber

@@ -5,7 +5,8 @@ import {
   ErrorOutline,
   Payment as PaymentIcon,
   Person,
-  Phone,
+  WhatsApp,
+  AccessTime,
   SearchOff,
   Home,
   CreditCard,
@@ -289,9 +290,9 @@ const Payment = () => {
               </div>
 
               <div className="detail-item">
-                <Phone className="detail-icon" />
+                <WhatsApp className="detail-icon" />
                 <div className="detail-content">
-                  <label>Mobile Number</label>
+                  <label>WhatsApp Number</label>
                   <p>
                     {maskMobileNumber(requestData.user_details.mobileNumber)}
                   </p>
