@@ -7,7 +7,7 @@ import {
   CurrencyRupee,
   Language,
   Category,
-  Badge,
+  Person,
 } from "@mui/icons-material";
 import "./RequestConfirmation.css";
 import { maskMobileNumber } from "../../utils/MobileNumberHelper";
@@ -41,7 +41,7 @@ const RequestConfirmation = () => {
 
             <div className="detail-grid">
               <div className="detail-item">
-                <Badge className="detail-icon" />
+                <Person className="detail-icon" />
                 <div className="detail-content">
                   <label>Full Name</label>
                   <p>{userDetails.name}</p>
