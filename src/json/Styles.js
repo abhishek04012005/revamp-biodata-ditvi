@@ -10,6 +10,11 @@ const DEFAULT_STYLES = {
     dataFontSize: "12px",
     rowGap: "8px",
   },
+  photo: {
+    width: "150px",
+    height: "150px",
+    borderRadius: "50%"
+  },
 };
 
 export default DEFAULT_STYLES;

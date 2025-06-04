@@ -426,6 +426,15 @@ const BiodataMaster = () => {
       border-bottom: ${styles.table.rowGap} solid transparent;
       text-align: center;
     }
+    .biodata-master-photo-frame {
+  width: ${styles.photo.width} !important;
+  height: ${styles.photo.width} !important;
+  border-radius: 50% !important;
+  border-color: ${getCurrentTheme().PHOTO_FRAME.BORDER_COLOR} !important;
+  overflow: hidden !important;
+}
+
+}
   `}
             </style>
 
@@ -445,8 +454,25 @@ const BiodataMaster = () => {
                 {/* Personal Section */}
                 <div className="biodata-master-personal-section">
                   <div className="biodata-master-photo-section">
-                    <div className="biodata-master-photo-frame">
-                      <img src={formData?.profileImage} alt="Profile" />
+                    <div
+                      className="biodata-master-photo-frame"
+                      style={{
+                        width: styles.photo?.width || "150px",
+                        height: styles.photo?.width || "150px", // Use width value to maintain square
+                        borderRadius: "50%", // Makes it circular
+                        overflow: "hidden", // Ensures image stays within circular boundary
+                      }}
+                    >
+                      <img
+                        src={formData?.profileImage}
+                        alt="Profile"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: "50%",
+                        }}
+                      />
                     </div>
                     <div className="biodata-master-name-text">
                       <h3>
@@ -756,6 +782,57 @@ const BiodataMaster = () => {
           </div>
 
           <div className="style-controls-sidebar">
+            <div className="control-section">
+              <h4>Photo Size</h4>
+              <div className="control-group">
+                <div className="control-item">
+                  <label>
+                    <div className="text-icon">
+                      <FormatSize /> Size
+                    </div>
+                    <div className="size-control">
+                      <button
+                        className="size-btn"
+                        onClick={() =>
+                          setStyles((prev) => {
+                            const newSize = parseInt(prev.photo.width) - 10;
+                            return {
+                              ...prev,
+                              photo: {
+                                ...prev.photo,
+                                width: `${newSize}px`,
+                                // height will automatically match width due to CSS
+                              },
+                            };
+                          })
+                        }
+                      >
+                        -
+                      </button>
+                      <span className="size-value">{styles.photo.width}</span>
+                      <button
+                        className="size-btn"
+                        onClick={() =>
+                          setStyles((prev) => {
+                            const newSize = parseInt(prev.photo.width) + 10;
+                            return {
+                              ...prev,
+                              photo: {
+                                ...prev.photo,
+                                width: `${newSize}px`,
+                                // height will automatically match width due to CSS
+                              },
+                            };
+                          })
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
             <div className="control-section">
               <h4 className="control-title">
                 <span className="control-icon">
