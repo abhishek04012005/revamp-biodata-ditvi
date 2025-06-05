@@ -36,86 +36,131 @@ import PaymentFailure from "./components/Payments/PaymentFailure/PaymentFailure"
 import PaymentDashboard from "./components/Admin/PaymentDashboard/PaymentDashboard";
 import FeedbackDashboard from "./components/Admin/FeedbackDashboard/FeedbackDashboard";
 import PaymentCancel from "./components/Payments/PaymentCancel/PaymentCancel";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   return (
-    <div className="App">
-      <AdminProvider>
-        <Router basename="/revamp-biodata-ditvi">
-          <ScrollToTop />
-          <Routes>
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route
-              path="/admin/*"
-              element={
-                <AdminRoute>
-                  <>
-                    <AdminNavbar />
-                    <Routes>
-                      <Route path="biodata-dashboard" element={<BiodataDashboard />} />
-                        <Route path="feedback-dashboard" element={<FeedbackDashboard />} />
-                      <Route
-                        path="production-dashboard"
-                        element={<ProductionDashboard />}
-                      />
-                      <Route path="contact-dashboard" element={<ContactUsDashboard />} />
-                      <Route path="payment-dashboard" element={<PaymentDashboard />} />
-                      <Route
-                        path="production/:requestId"
-                        element={<ProductionBiodataDetail />}
-                      />
-                      <Route
-                        path="production/preview/:requestId"
-                        element={<BiodataMaster />}
-                      />
-                      <Route
-                        path="biodata/:requestId"
-                        element={<RequestBiodataDetail />}
-                      />
-                    </Routes>
-                    <AdminFooter />
-                  </>
-                </AdminRoute>
-              }
-            />
+    <HelmetProvider>
+      <div className="App">
+        <AdminProvider>
+          <Router basename="/revamp-biodata-ditvi">
+            <ScrollToTop />
+            <Routes>
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route
+                path="/admin/*"
+                element={
+                  <AdminRoute>
+                    <>
+                      <AdminNavbar />
+                      <Routes>
+                        <Route
+                          path="biodata-dashboard"
+                          element={<BiodataDashboard />}
+                        />
+                        <Route
+                          path="feedback-dashboard"
+                          element={<FeedbackDashboard />}
+                        />
+                        <Route
+                          path="production-dashboard"
+                          element={<ProductionDashboard />}
+                        />
+                        <Route
+                          path="contact-dashboard"
+                          element={<ContactUsDashboard />}
+                        />
+                        <Route
+                          path="payment-dashboard"
+                          element={<PaymentDashboard />}
+                        />
+                        <Route
+                          path="production/:requestId"
+                          element={<ProductionBiodataDetail />}
+                        />
+                        <Route
+                          path="production/preview/:requestId"
+                          element={<BiodataMaster />}
+                        />
+                        <Route
+                          path="biodata/:requestId"
+                          element={<RequestBiodataDetail />}
+                        />
+                      </Routes>
+                      <AdminFooter />
+                    </>
+                  </AdminRoute>
+                }
+              />
 
-            {/* Public Routes */}
-            <Route
-              path="/*"
-              element={
-                <>
-                  <Navbar />
-                  <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="biodata" element={<AllBiodata />} />
-                    <Route path="biodata/:modelNumber" element={<BiodataDetail />}/>
-                    <Route path="contact" element={<ContactUs />} />
-                    <Route path="how-we-work" element={<WeWork />} />
-                    <Route path="whyus" element={<WhyUs />} />
-                    <Route path="blog" element={<AllBlog />} />
-                    <Route path="blog/:slug" element={<BlogDetail />} />
-                    <Route path="privacy" element={<PrivacyPolicy />} />
-                    <Route path="terms" element={<TermsOfService />} />
-                    <Route path="choose-option" element={<ChooseOption />} />
-                    <Route path="upload-biodata" element={<UploadBiodata />} />
-                    <Route path="create-biodata" element={<CreateBiodata />} />
-                    <Route path="confirmation" element={<RequestConfirmation />}/>
-                    <Route path="feedback/:requestNumber" element={<Feedback />} />
-                    <Route path="track-status/:requestNumber" element={<CheckStatus />}/>
-                    <Route path="payment/:requestNumber" element={<Payment />} />
-                    <Route path="payment-success/:requestNumber" element={<PaymentSuccess />} />
-                    <Route path="payment-failure" element={<PaymentFailure />} />  
-                     <Route path="payment-cancelled" element={<PaymentCancel />} />              
+              {/* Public Routes */}
+              <Route
+                path="/*"
+                element={
+                  <>
+                    <Navbar />
+                    <Routes>
+                      <Route path="/" element={<Main />} />
+                      <Route path="biodata" element={<AllBiodata />} />
+                      <Route
+                        path="biodata/:modelNumber"
+                        element={<BiodataDetail />}
+                      />
+                      <Route path="contact" element={<ContactUs />} />
+                      <Route path="how-we-work" element={<WeWork />} />
+                      <Route path="whyus" element={<WhyUs />} />
+                      <Route path="blog" element={<AllBlog />} />
+                      <Route path="blog/:slug" element={<BlogDetail />} />
+                      <Route path="privacy" element={<PrivacyPolicy />} />
+                      <Route path="terms" element={<TermsOfService />} />
+                      <Route path="choose-option" element={<ChooseOption />} />
+                      <Route
+                        path="upload-biodata"
+                        element={<UploadBiodata />}
+                      />
+                      <Route
+                        path="create-biodata"
+                        element={<CreateBiodata />}
+                      />
+                      <Route
+                        path="confirmation"
+                        element={<RequestConfirmation />}
+                      />
+                      <Route
+                        path="feedback/:requestNumber"
+                        element={<Feedback />}
+                      />
+                      <Route
+                        path="track-status/:requestNumber"
+                        element={<CheckStatus />}
+                      />
+                      <Route
+                        path="payment/:requestNumber"
+                        element={<Payment />}
+                      />
+                      <Route
+                        path="payment-success/:requestNumber"
+                        element={<PaymentSuccess />}
+                      />
+                      <Route
+                        path="payment-failure"
+                        element={<PaymentFailure />}
+                      />
+                      <Route
+                        path="payment-cancelled"
+                        element={<PaymentCancel />}
+                      />
                     </Routes>
-                  <Footer />
-                </>
-              }
-            />
-          </Routes>
-        </Router>
-      </AdminProvider>
-    </div>
+                    <Footer />
+                  </>
+                }
+              />
+            </Routes>
+          </Router>
+        </AdminProvider>
+      </div>
+    </HelmetProvider>
   );
 }
 
