@@ -127,16 +127,13 @@ const BiodataMaster = () => {
   const isLanguageEnglish = modelDetails?.language === Languages.English.Name;
 
   const handlePrint = (withWatermark = false) => {
-    // Store current page styles
     const currentTheme = getCurrentTheme();
     const originalContent = document.body.innerHTML;
 
-    // Get only the biodata container content
     const biodataContent = document.querySelector(
       ".biodata-master-a4-container"
     ).innerHTML;
 
-    // Create print-specific styles with theme colors
     const printStyles = `
     
          <script>
@@ -171,6 +168,10 @@ const BiodataMaster = () => {
 
  .biodata-master .biodata-master-photo-frame {
       border-color: ${currentTheme.PHOTO_FRAME.BORDER_COLOR} !important;
+          width: ${styles.photo.width} !important;
+    height: ${styles.photo.width} !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
     }
     .biodata-master h3 {
       font-size: ${styles.name.fontSize} !important;
@@ -211,12 +212,12 @@ const BiodataMaster = () => {
         currentTheme.TABLE.HEADER.BACKGROUND_COLOR
       } !important;
     }
-          .biodata-master-bio-table td,
-    .biodata-master-bio-table th {
 
-      border-bottom: ${styles.table.rowGap} solid transparent;
-      text-align: center;
-    }
+      .biodata-master-bio-table td,
+      .biodata-master-bio-table th {
+             border-bottom: ${styles.table.rowGap} solid transparent;
+             text-align: center;
+      }
 
             .img-watermark {
                 display: ${
@@ -250,7 +251,6 @@ const BiodataMaster = () => {
         </style>
     `;
 
-    // Create a new container with watermark
     const printContent = `
         <div class="biodata-master">
             <div class="biodata-master-a4-container">
@@ -269,19 +269,15 @@ const BiodataMaster = () => {
         </div>
     `;
 
-    // Replace page content with biodata content and print styles
     document.body.innerHTML = printStyles + printContent;
 
     document.title = `Biodata - ${requestNumber} ${
       withWatermark ? "Watermarked" : "Original"
     }`;
 
-    // Print after a small delay to ensure styles are applied
     setTimeout(() => {
       window.print();
-      // Restore original content
       document.body.innerHTML = originalContent;
-      // Reattach event listeners and reload page
       window.location.reload();
     }, 500);
   };
@@ -458,9 +454,9 @@ const BiodataMaster = () => {
                       className="biodata-master-photo-frame"
                       style={{
                         width: styles.photo?.width || "150px",
-                        height: styles.photo?.width || "150px", // Use width value to maintain square
-                        borderRadius: "50%", // Makes it circular
-                        overflow: "hidden", // Ensures image stays within circular boundary
+                        height: styles.photo?.width || "150px",
+                        borderRadius: "50%",
+                        overflow: "hidden",
                       }}
                     >
                       <img
@@ -801,7 +797,6 @@ const BiodataMaster = () => {
                               photo: {
                                 ...prev.photo,
                                 width: `${newSize}px`,
-                                // height will automatically match width due to CSS
                               },
                             };
                           })
