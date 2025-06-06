@@ -6,6 +6,7 @@ const footerQuickLinks = [
   { id: "how-we-work", label: "How We Work", path: "/how-we-work" },
   { id: "biodata", label: "Biodata", path: "/biodata" },
   { id: "blog", label: "Blog", path: "/blog" },
+  { id: "article", label: "Article", path: "/articles" },
 ];
 
 const contactInfo = [

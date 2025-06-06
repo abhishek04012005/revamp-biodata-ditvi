@@ -1,19 +1,19 @@
 export const BIODATA_THEMES = {
   1111: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#8E1616",
+      BORDER_COLOR: "#9d0d00ff",
     },
     HEADINGS: {
-      COLOR: "#8E1616",
+      COLOR: "#9d0d00ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#8E1616",
+        BACKGROUND_COLOR: "#9d0d00ff",
       },
       DATA: {
-        COLOR: "#1f2937",
+        COLOR: "#9d0d00ff",
         BACKGROUND_COLOR: "#ffffff",
         ALTERNATE_BACKGROUND_COLOR: "#f3f4f6",
       },

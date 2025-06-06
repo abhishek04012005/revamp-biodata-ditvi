@@ -11,7 +11,7 @@ const socialLinks = [
     id: "whatsapp",
     icon: <WhatsApp />,
     url: "https://wa.me/919263767441?text=Hello%20Ditvi%20Biodata%2C%0AI%20want%20to%20learn%20more%20about%20your%20services.%0A%0AThank%20You%20%3A)",
-    className: "whatsapp",
+    className: "whatsap",
   },
   {
     id: "instagram",

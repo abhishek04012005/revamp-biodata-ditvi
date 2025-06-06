@@ -1,231 +1,234 @@
 :root {
-    --form-gradient: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 20px 40px rgba(255, 135, 15, 0.2);
+  --form-gradient: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
+  --primary-gradient: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 40px rgba(255, 135, 15, 0.2);
 }
 
 .create-biodata-stepper {
-    max-width: 800px;
-    margin: 8rem auto 2rem;
-    padding: 2.5rem;
-    background: white;
-    border-radius: 20px;
-    box-shadow: var(--shadow-md);
-    position: relative;
+  max-width: 800px;
+  margin: 8rem auto 2rem;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow-md);
+  position: relative;
 }
 
 .create-biodata-stepper-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 3rem;
-    position: relative;
-    z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+  overflow-x: auto;
 }
 
 .create-biodata-stepper-header::after {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary-color), transparent);
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), transparent);
 }
 
 .create-biodata-step-number {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: white;
-    border: 2px solid #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 0.5rem;
-    font-weight: bold;
-    color: #666;
-    transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem;
+  font-weight: bold;
+  color: #666;
+  transition: all 0.3s ease;
 }
 
-
-
 .create-biodata-step {
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    max-width: 120px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  max-width: 120px;
 }
 
 .create-biodata-step.active .create-biodata-step-number {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    box-shadow: 0 0 0 5px rgba(255, 135, 15, 0.1);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  box-shadow: 0 0 0 5px rgba(255, 135, 15, 0.1);
 }
 
 .create-biodata-step.completed .create-biodata-step-number {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
 }
 
 .create-biodata-form-navigation {
-    padding: clamp(1rem, 3vw, 2rem);
-    border-radius: 15px;
-    margin-bottom: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  border-radius: 15px;
+  margin-bottom: 2rem;
 }
 
 .create-biodata-form-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    gap: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  gap: 1rem;
 }
 
 .create-biodata-nav-button {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    min-width: 120px;
-    transition: all 0.3s ease;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 120px;
+  transition: all 0.3s ease;
 }
 
 .create-biodata-nav-button.next {
-    background: var(--primary-gradient);
-    color: white;
+  background: var(--primary-gradient);
+  color: white;
 }
 
 .create-biodata-nav-button.prev {
-    background: white;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
+  background: white;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
 .create-biodata-nav-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .create-biodata-section {
-    background: white;
-    padding: clamp(1rem, 3vw, 2rem);
-    padding-top: 0.2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow-sm);
-    margin-bottom: 2rem;
+  background: white;
+  padding: clamp(1rem, 3vw, 2rem);
+  padding-top: 0.2rem;
+  border-radius: 15px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
 }
 
 .create-biodata-section h2 {
-    color: var(--primary-color);
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-    margin-bottom: 1.2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(255, 135, 15, 0.1);
+  color: var(--primary-color);
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 135, 15, 0.1);
 }
 
 .create-biodata-upload-button {
-    background: var(--primary-gradient);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    font-weight: 600;
-    display: inline-block;
-    transition: all 0.3s ease;
+  background: var(--primary-gradient);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  display: inline-block;
+  transition: all 0.3s ease;
 }
 
 .create-biodata-upload-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 .create-biodata-image-upload-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .create-biodata-image-upload-label {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .create-biodata-image-preview {
-    width: 200px;
-    height: 200px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .create-biodata-preview-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .create-biodata-remove-image-btn {
-    margin-top: 1rem;
-    background: #ff4444;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  margin-top: 1rem;
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .create-biodata-remove-image-btn:hover {
-    background: #cc0000;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
+  background: #cc0000;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 input,
 textarea,
 select {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    background: var(--form-gradient);
-    font-size: 1rem;
-    transition: all 0.3s ease;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: var(--form-gradient);
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(255, 135, 15, 0.1);
-    transform: translateY(-2px);
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(255, 135, 15, 0.1);
+  transform: translateY(-2px);
 }
 
 .create-biodata-add-btn {
-    background: var(--primary-gradient);
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.create-biodata-delete-btn  {
-    background: #f44336;
-    color: white;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-block: 2rem;
+.create-biodata-delete-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-block: 2rem;
 }
 
 .create-biodata-preview {
@@ -264,7 +267,7 @@ select:focus {
   background: #f8f9fa;
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #FF8C42;
+  border-left: 4px solid #ff8c42;
 }
 
 .preview-group h3 {
@@ -300,7 +303,7 @@ select:focus {
 
 .education-item h4,
 .family-item h4 {
-  color: #FF8C42;
+  color: #ff8c42;
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
@@ -315,6 +318,72 @@ select:focus {
     top: 0;
     max-width: 300px;
     margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .create-biodata-stepper {
+    padding: 1.5rem;
+    margin: 4rem auto 1rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) #f1f1f1;
+    -webkit-overflow-scrolling: touch;
+    max-width: 800px;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+  }
+
+  .create-biodata-stepper-header::after {
+    top: 50px;
+  }
+
+  .create-biodata-stepper-header {
+    overflow-x: auto;
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    background: white;
+  }
+
+  .create-biodata-step {
+    margin-inline: 1rem;
+    margin-block: 2rem;
+  }
+
+  .create-biodata-step-label {
+    font-size: 0.8rem;
+  }
+
+  .create-biodata-nav-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .create-biodata-step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
   }
 }
 
@@ -351,9 +420,9 @@ select:focus {
   display: inline-block;
   padding: 8px 16px;
   background-color: #fff;
-  border: 2px solid #FF8C42;
+  border: 2px solid #ff8c42;
   border-radius: 50px;
-  color: #FF8C42;
+  color: #ff8c42;
   font-weight: 500;
   transition: all 0.3s ease;
 }
@@ -362,8 +431,9 @@ select:focus {
   background-color: rgba(255, 140, 66, 0.1);
 }
 
-.create-biodata-sibling-radio-input:checked + .create-biodata-sibling-radio-label {
-  background-color: #FF8C42;
+.create-biodata-sibling-radio-input:checked
+  + .create-biodata-sibling-radio-label {
+  background-color: #ff8c42;
   color: white;
 }
 
@@ -373,7 +443,6 @@ select:focus {
   gap: 0.5rem;
 }
 
-
 .create-biodata-label {
   font-size: 1.2rem;
   color: var(--primary-color);
@@ -381,7 +450,6 @@ select:focus {
   width: 30%;
   text-align: left;
 }
-
 
 /* Radio Button Group Styles */
 .sibling-radio-option {
@@ -414,25 +482,25 @@ select:focus {
 }
 
 .sibling-radio-option span::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
-  border: 2px solid #FF8C42;
+  border: 2px solid #ff8c42;
   border-radius: 50%;
   transition: all 0.2s ease;
 }
 
 .create-biodata-sibling-radio-input:checked + span::before {
-  border-color: #FF8C42;
-  background-color: #FF8C42;
+  border-color: #ff8c42;
+  background-color: #ff8c42;
 }
 
 .create-biodata-sibling-radio-input:checked + span::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 6px;
   top: 50%;
@@ -474,6 +542,11 @@ select:focus {
     margin-right: 0;
     width: 100%;
   }
+
+  .preview-image-container {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 .profile-image-preview {
@@ -488,7 +561,7 @@ select:focus {
   height: 200px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid #FF8C42;
+  border: 3px solid #ff8c42;
   margin: 1rem 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -498,13 +571,6 @@ select:focus {
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-@media (max-width: 768px) {
-  .preview-image-container {
-    width: 150px;
-    height: 150px;
-  }
 }
 
 .create-biodata-notification-overlay {
@@ -550,7 +616,7 @@ select:focus {
   gap: 1rem;
 }
 
-.create-biodata-notification-alert-icon svg{
+.create-biodata-notification-alert-icon svg {
   width: 40px;
   height: 40px;
 }
@@ -618,7 +684,7 @@ select:focus {
 .create-biodata-notification-confirm:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .create-biodata-notification-confirm:active {
@@ -626,8 +692,12 @@ select:focus {
 }
 
 @keyframes createBiodataFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes createBiodataPopIn {
@@ -646,11 +716,11 @@ select:focus {
     width: 70%;
     margin: 20px;
   }
-  
+
   .create-biodata-notification-title {
     font-size: 1.25rem;
   }
-  
+
   .create-biodata-notification-message {
     font-size: 1rem;
   }

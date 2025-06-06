@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Biodata1111 from '../../assets/biodata/biodata-1111.png'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -26,7 +28,10 @@ const PrevArrow = (props) => {
     );
 };
 
+
+
 const Hero = () => {
+    const navigate = useNavigate();
 
 
     const settings = {
@@ -52,6 +57,9 @@ const Hero = () => {
         ]
     };
 
+     const handleGetStarted = () => {
+        navigate('/biodata');
+    };
 
 
     return (
@@ -78,7 +86,7 @@ const Hero = () => {
                                     YOUR SATISFACTION COMES FIRST, PAY US ONLY WHEN YOU'RE HAPPY.
                                 </h2>
                                 <div className="hero-buttons">
-                                    <button className="primary-btn">
+                                    <button className="primary-btn" onClick={handleGetStarted}>
                                         Get Started
                                         <span className="btn-shine"></span>
                                     </button>
@@ -99,23 +107,7 @@ const Hero = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="hero-right">
-                            <div className="image-wrapper">
-                                <img src={""} alt="Biodata Template" />
-                                <div className="floating-card card-1">
-                                    <span>✨ Premium Templates</span>
-                                </div>
-                                <div className="floating-card card-4">
-                                    <span>✨ Traditional Biodata</span>
-                                </div>
-                                <div className="floating-card card-2">
-                                    <span>🎯 100% Satisfaction</span>
-                                </div>
-                                <div className="floating-card card-3">
-                                    <span>🚀 Quick Delivery</span>
-                                </div>
-                            </div>
-                        </div> */}
+                        
 
                         <div className="hero-right">
                             <div className="image-wrapper">
