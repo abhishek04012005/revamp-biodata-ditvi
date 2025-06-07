@@ -93,7 +93,7 @@ const ProductionDashboard = () => {
                     <th>Request No.</th>
                     <th>Flow Type</th>
                     <th>Name</th>
-                    <th>Mobile Number</th>
+                    <th>Whatsapp Number</th>
                     <th>Created Date</th>
                     <th>Detail</th>
                     <th>Preview</th>

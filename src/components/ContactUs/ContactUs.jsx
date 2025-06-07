@@ -175,7 +175,7 @@ const ContactUs = () => {
                       <Phone className="contact-input-icon" />
                       <TextField
                         className="contact-input"
-                        label="Mobile Number"
+                        label="Whatsapp Number"
                         name="number"
                         type="tel"
                         variant="outlined"
@@ -190,7 +190,7 @@ const ContactUs = () => {
                         helperText={
                           formData.number &&
                           !formData.number.match(/^[6789]\d{9}$/)
-                            ? "Enter a valid 10-digit mobile number that begins with 6, 7, 8, or 9."
+                            ? "Enter a valid 10-digit whatsapp number that begins with 6, 7, 8, or 9."
                             : ""
                         }
                         inputProps={{

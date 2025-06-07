@@ -231,7 +231,7 @@ const ContactUsDashboard = () => {
 
                 <div className="contact-info-item">
                   <div className="info-label">
-                    <span>Mobile Number</span>
+                    <span>Whatsapp Number</span>
                   </div>
                   <div className="info-value">
               

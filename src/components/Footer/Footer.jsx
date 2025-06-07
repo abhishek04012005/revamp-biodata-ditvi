@@ -1,7 +1,6 @@
 import React from "react";
 import "./Footer.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
 import Logo from "../../assets/logo.png";
 import socialLinks from "../../json/socialMedia";
 import { footerQuickLinks, contactInfo } from "../../json/footer";
@@ -13,12 +12,10 @@ const Footer = () => {
 
   const handleLinkClick = (id, path) => {
     // Special handling for articles
-    if (id === "articles") {
-      navigate("/articles");
-      return;
-    }
 
-    if (isHomePage) {
+  
+
+    if (isHomePage && id !== "article") {
       // Handle smooth scroll on homepage
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     } else {
@@ -61,25 +58,6 @@ const Footer = () => {
                 <h3 className="footer-title">Quick Links</h3>
                 <ul className="footer-list">
                   {footerQuickLinks.map(({ id, label, path }) => (
-                    // <li key={id}>
-                    //   {isHomePage ? (
-                    //     <ScrollLink
-                    //       to={id}
-                    //       spy={true}
-                    //       smooth={true}
-                    //       offset={-70}
-                    //       duration={500}
-                    //       className="footer-link"
-                    //       activeClass="active"
-                    //     >
-                    //       {label}
-                    //     </ScrollLink>
-                    //   ) : (
-                    //     <Link to={path} className="footer-link">
-                    //       {label}
-                    //     </Link>
-                    //   )}
-                    // </li>
                     <li key={id}>
                       <Link
                         to={path}
