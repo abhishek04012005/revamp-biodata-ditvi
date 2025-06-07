@@ -6,7 +6,6 @@ import {
   Payment as PaymentIcon,
   Person,
   WhatsApp,
-  AccessTime,
   SearchOff,
   Home,
   CreditCard,
@@ -20,6 +19,7 @@ import { PaymentStatus } from "../../../json/PaymentStatus";
 import { getRazorpayOptions } from "./PaymentConfig";
 import Loader from "../../../structure/Loader/Loader";
 import { maskMobileNumber } from "../../../utils/MobileNumberHelper";
+import SEO from "../../SEO/SEO";
 
 const Payment = () => {
   const { requestNumber } = useParams();
@@ -27,6 +27,52 @@ const Payment = () => {
   const [requestData, setRequestData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const seoData = {
+    title: `Payment for Request #${requestNumber} | Ditvi Biodata`,
+    description:
+      "Secure payment gateway for Ditvi Biodata's professional marriage biodata creation service. 100% secure transactions with Razorpay.",
+    keywords:
+      "biodata payment, secure payment, Ditvi Biodata payment, Razorpay secure, marriage biodata payment",
+    ogImage: "/images/payment-og.jpg", // Add your OG image
+    canonicalUrl: `https://yourdomain.com/payment/${requestNumber}`, // Update with your domain
+    noindex: true, // Prevent indexing of payment pages
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "PaymentPage",
+      name: "Ditvi Biodata Payment",
+      provider: {
+        "@type": "Organization",
+        name: "Ditvi Biodata",
+        logo: {
+          "@type": "ImageObject",
+          url: "/images/logo.png", // Add your logo path
+        },
+      },
+      paymentMethod: {
+        "@type": "PaymentMethod",
+        name: "Razorpay",
+        termsOfService: "https://razorpay.com/terms",
+        availablePaymentMethod: [
+          "CreditCard",
+          "DebitCard",
+          "UPI",
+          "NetBanking",
+        ],
+      },
+      offer: {
+        "@type": "Offer",
+        price: requestData?.model_details?.amount || "0",
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+      },
+      security: {
+        "@type": "SecurityScreening",
+        name: "Payment Security",
+        description: "100% Secure Payment with Razorpay",
+      },
+    },
+  };
 
   useEffect(() => {
     // Create script element
@@ -255,85 +301,86 @@ const Payment = () => {
   }
 
   return (
-    <div className="payment-page">
-      <div className="payment-card">
-        <div className="payment-header">
-         
+    <>
+      <SEO {...seoData} />
+      <div className="payment-page">
+        <div className="payment-card">
+          <div className="payment-header">
+            {isPaymentEnabled() ? (
+              <PaymentIcon className="payment-header-icon" />
+            ) : (
+              <ReportProblem className="payment-header-icon" />
+            )}
 
-          {isPaymentEnabled() ? (
-            <PaymentIcon className="payment-header-icon" />
-          ) : (
-            <ReportProblem className="payment-header-icon" />
-          )}
-
-          <h2>
-            {" "}
-            {isPaymentEnabled()
-              ? "Payment Details"
-              : "Payment Link Inactive"}{" "}
-          </h2>
-        </div>
-
-        <div className="request-details">
-          <div className="detail-section">
-            <h1 className="payment-request-number">
-              Request No. #{requestNumber}
-            </h1>
-
-            <div className="detail-grid">
-              <div className="detail-item">
-                <Person className="detail-icon" />
-                <div className="detail-content">
-                  <label>Full Name</label>
-                  <p>{requestData.user_details.name}</p>
-                </div>
-              </div>
-
-              <div className="detail-item">
-                <WhatsApp className="detail-icon" />
-                <div className="detail-content">
-                  <label>WhatsApp Number</label>
-                  <p>
-                    {maskMobileNumber(requestData.user_details.mobileNumber)}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <h2>
+              {" "}
+              {isPaymentEnabled()
+                ? "Payment Details"
+                : "Payment Link Inactive"}{" "}
+            </h2>
           </div>
 
-          <div className="payment-summary">
-            <h3>Payment Summary</h3>
-            <div className="amount-card">
-              <div className="amount-details">
-                <span>Total Amount</span>
-                <div className="amount">
-                  <span>₹ </span>
-                  {requestData.model_details.amount}
+          <div className="request-details">
+            <div className="detail-section">
+              <h1 className="payment-request-number">
+                Request No. #{requestNumber}
+              </h1>
+
+              <div className="detail-grid">
+                <div className="detail-item">
+                  <Person className="detail-icon" />
+                  <div className="detail-content">
+                    <label>Full Name</label>
+                    <p>{requestData.user_details.name}</p>
+                  </div>
+                </div>
+
+                <div className="detail-item">
+                  <WhatsApp className="detail-icon" />
+                  <div className="detail-content">
+                    <label>WhatsApp Number</label>
+                    <p>
+                      {maskMobileNumber(requestData.user_details.mobileNumber)}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="secure-payment">
-                <Lock className="lock-icon" />
-                <span>100% Secure Payment</span>
+            </div>
+
+            <div className="payment-summary">
+              <h3>Payment Summary</h3>
+              <div className="amount-card">
+                <div className="amount-details">
+                  <span>Total Amount</span>
+                  <div className="amount">
+                    <span>₹ </span>
+                    {requestData.model_details.amount}
+                  </div>
+                </div>
+                <div className="secure-payment">
+                  <Lock className="lock-icon" />
+                  <span>100% Secure Payment</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {isPaymentEnabled() ? (
-            <button className="payment-button" onClick={initiatePayment}>
-              <CreditCard />
-              Proceed to Payment
-            </button>
-          ) : (
-            <div className="payment-disabled">
-              <ReportProblem className="warning-icon" />
-              <p>
-                Payment link is inactive now. Please wait for admin approval.
-              </p>
-            </div>
-          )}
+            {isPaymentEnabled() ? (
+              <button className="payment-button" onClick={initiatePayment}>
+                <CreditCard />
+                Proceed to Payment
+              </button>
+            ) : (
+              <div className="payment-disabled">
+                <ReportProblem className="warning-icon" />
+                <p>
+                  Payment link is inactive now. Please wait for admin approval.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

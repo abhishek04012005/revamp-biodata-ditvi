@@ -204,9 +204,9 @@ const BiodataMaster = () => {
       background-color: ${
         currentTheme.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
       } !important;
+      border: none !important;
     }
-    .biodata-master .biodata-master-bio-table thead tr,
-    .biodata-master .biodata-master-bio-table tbody tr:first-child {
+    .biodata-master .biodata-master-bio-table thead tr {
       background-color: ${
         currentTheme.TABLE.HEADER.BACKGROUND_COLOR
       } !important;
@@ -414,8 +414,7 @@ const BiodataMaster = () => {
         getCurrentTheme().TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
       } !important;
     }
-    .biodata-master .biodata-master-bio-table thead tr,
-    .biodata-master .biodata-master-bio-table tbody tr:first-child {
+    .biodata-master .biodata-master-bio-table thead tr {
       background-color: ${
         getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR
       } !important;

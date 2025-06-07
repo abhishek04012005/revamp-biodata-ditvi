@@ -16,10 +16,9 @@ import {
   ContactDetailsSection,
   PreviewSection,
 } from "./Sections";
-import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import NotificationPopUp from "../../structure/NotificationPopUp/NotificationPopUp";
 import { MAXIMUM_IMAGE_SIZE } from "../../utils/Constants";
-
+import SEO from "../SEO/SEO";
 
 const CreateBiodata = () => {
   const location = useLocation();
@@ -32,6 +31,80 @@ const CreateBiodata = () => {
     show: false,
     message: "",
   });
+
+  const seoData = {
+    title: "Create Your Professional Marriage Biodata | Ditvi Biodata Maker",
+    description:
+      "Create a customized, professional marriage biodata with our step-by-step form. Include personal details, professional information, family background, and more in multiple languages.",
+    keywords:
+      "create biodata, marriage biodata maker, biodata creation form, professional biodata, Ditvi Biodata, matrimonial profile",
+    ogImage: "/images/create-biodata-og.jpg", // Add your OG image
+    canonicalUrl: "https://yourdomain.com/create-biodata", // Update with your domain
+    noindex: true, // Prevent indexing of form pages
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Ditvi Biodata Creator",
+      applicationCategory: "Matrimonial Service",
+      operatingSystem: "Web Browser",
+      provider: {
+        "@type": "Organization",
+        name: "Ditvi Biodata",
+        logo: {
+          "@type": "ImageObject",
+          url: "/images/logo.png", // Add your logo path
+        },
+      },
+      offers: {
+        "@type": "Offer",
+        price: modelDetails?.amount || "0",
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+      },
+      step: [
+        {
+          "@type": "HowToStep",
+          name: "Profile Photo",
+          text: "Upload a clear, recent profile photo",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Personal Details",
+          text: "Fill in your personal information",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Professional Details",
+          text: "Add your career information",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Education Details",
+          text: "Include your educational background",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Family Details",
+          text: "Provide family information",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Contact Details",
+          text: "Add your contact information",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Preview & Submit",
+          text: "Review and submit your biodata",
+        },
+      ],
+      about: {
+        "@type": "Thing",
+        name: "Marriage Biodata",
+        description: "Professional matrimonial profile creation service",
+      },
+    },
+  };
 
   const langData = getLanguageData(modelDetails);
 
@@ -203,6 +276,7 @@ const CreateBiodata = () => {
 
   return (
     <>
+      <SEO {...seoData} />
       <div className="create-biodata-stepper">
         <div className="create-biodata-stepper-header">
           {langData.steps.map((step, index) => (
@@ -245,12 +319,14 @@ const CreateBiodata = () => {
           </div>
         </form>
       </div>
-          
+
       {notification.show && (
         <NotificationPopUp
           title={notification.title}
           message={notification.message}
-          onClose={() => setNotification({ show: false, message: "", title: "" })}
+          onClose={() =>
+            setNotification({ show: false, message: "", title: "" })
+          }
         />
       )}
       {isLoading && <Loader />}

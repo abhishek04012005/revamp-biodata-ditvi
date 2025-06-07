@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-  Person, 
-  AccessTime, 
-  ArrowForward, 
-  Article, 
+import {
+  Person,
+  AccessTime,
+  ArrowForward,
+  Article,
   Search,
-  FilterList 
+  FilterList,
 } from "@mui/icons-material";
 import Container from "../../structure/Container/Container";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import articles from "../../json/article";
 import "./ArticleBox.css";
+import SEO from "../SEO/SEO";
 
 const ArticleCard = ({ article }) => {
   const navigate = useNavigate();
-  
+
   const createSlug = (title) => {
     return title
       .toLowerCase()
@@ -59,10 +60,55 @@ const ArticleBox = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredArticles, setFilteredArticles] = useState(articles);
   const [categories, setCategories] = useState([]);
+  const seoData = {
+    title: "Biodata Articles & Guides | Expert Tips from Ditvi Biodata",
+    description:
+      "Explore our collection of expert articles on biodata creation, marriage profile tips, and traditional matrimonial practices. Comprehensive guides for the perfect biodata.",
+    keywords:
+      "biodata articles, marriage profile guides, biodata creation tips, matrimonial advice, traditional biodata writing",
+    ogImage: "/images/articles-og.jpg", // Add your articles OG image
+    canonicalUrl: "https://yourdomain.com/articles", // Update with your domain
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "Ditvi Biodata Articles",
+      description: "Expert articles and guides for biodata creation",
+      publisher: {
+        "@type": "Organization",
+        name: "Ditvi Foundation",
+        logo: {
+          "@type": "ImageObject",
+          url: "/images/logo.png", // Add your logo path
+        },
+      },
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: filteredArticles.map((article, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Article",
+            headline: article.title,
+            description: article.excerpt,
+            image: article.image,
+            author: {
+              "@type": "Person",
+              name: article.author,
+            },
+            datePublished: article.date,
+            articleSection: article.category,
+          },
+        })),
+      },
+    },
+  };
 
   useEffect(() => {
     // Extract unique categories
-    const uniqueCategories = ["all", ...new Set(articles.map(article => article.category))];
+    const uniqueCategories = [
+      "all",
+      ...new Set(articles.map((article) => article.category)),
+    ];
     setCategories(uniqueCategories);
   }, []);
 
@@ -71,14 +117,17 @@ const ArticleBox = () => {
 
     // Apply category filter
     if (selectedCategory !== "all") {
-      filtered = filtered.filter(article => article.category === selectedCategory);
+      filtered = filtered.filter(
+        (article) => article.category === selectedCategory
+      );
     }
 
     // Apply search filter
     if (searchTerm) {
-      filtered = filtered.filter(article => 
-        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (article) =>
+          article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          article.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -86,58 +135,62 @@ const ArticleBox = () => {
   }, [selectedCategory, searchTerm]);
 
   return (
-    <section className="articles">
-      <div className="articles-background">
-        <div className="articles-circle circle-1"></div>
-        <div className="articles-circle circle-2"></div>
-      </div>
-      <Container>
-        <HeaderSection 
-          title="All Articles" 
-          subtitle="Browse our complete collection of biodata creation guides and tips" 
-        />
+    <>
+      <SEO {...seoData} />
 
-        <div className="articles-filters">
-          <div className="search-box">
-            <Search />
-            <input
-              type="text"
-              placeholder="Search articles..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
-          <div className="category-filter">
-            <FilterList />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </option>
-              ))}
-            </select>
-          </div>
+      <section className="articles">
+        <div className="articles-background">
+          <div className="articles-circle circle-1"></div>
+          <div className="articles-circle circle-2"></div>
         </div>
+        <Container>
+          <HeaderSection
+            title="All Articles"
+            subtitle="Browse our complete collection of biodata creation guides and tips"
+          />
 
-        {filteredArticles.length === 0 ? (
-          <div className="no-articles">
-            <Article fontSize="large" />
-            <h3>No articles found</h3>
-            <p>Try adjusting your search or filter criteria</p>
+          <div className="articles-filters">
+            <div className="search-box">
+              <Search />
+              <input
+                type="text"
+                placeholder="Search articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
+            <div className="category-filter">
+              <FilterList />
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        ) : (
-          <div className="articles-grid">
-            {filteredArticles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
-          </div>
-        )}
-      </Container>
-    </section>
+
+          {filteredArticles.length === 0 ? (
+            <div className="no-articles">
+              <Article fontSize="large" />
+              <h3>No articles found</h3>
+              <p>Try adjusting your search or filter criteria</p>
+            </div>
+          ) : (
+            <div className="articles-grid">
+              {filteredArticles.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+          )}
+        </Container>
+      </section>
+    </>
   );
 };
 

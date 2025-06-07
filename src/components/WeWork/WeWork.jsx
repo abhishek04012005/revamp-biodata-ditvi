@@ -44,7 +44,6 @@ const WeWork = () => {
             title="How We work"
             subtitle={`Simple steps to get your traditional biodata`}
           />
-
           <div className="process-timeline">
             <div className="timeline-line"></div>
             <Grid container spacing={4}>
