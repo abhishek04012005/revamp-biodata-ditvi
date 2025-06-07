@@ -90,7 +90,7 @@ const Hero = () => {
                                         Get Started
                                         <span className="btn-shine"></span>
                                     </button>
-                                    <button className="secondary-btn">
+                                    <button className="secondary-btn" onClick={() => navigate('/whyus')}>
                                         Learn More
                                         <span className="btn-arrow">→</span>
                                     </button>
