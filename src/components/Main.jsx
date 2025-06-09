@@ -6,12 +6,52 @@ import WeWork from './WeWork/WeWork'
 import ContactUs from './ContactUs/ContactUs'
 import BlogHome from './BlogHome/BlogHome'
 import Testimonial from './Testimonial/Testimonial'
-
+import SEO from './SEO/SEO'
 
 const Main = () => {
+    const seoData = {
+        title: "Ditvi Biodata - Professional Marriage Biodata Creation Service",
+        description: "Create professional and traditional marriage biodata with Ditvi Biodata. Expert service with 100% satisfaction guarantee. Customized templates for your perfect match.",
+        keywords: "marriage biodata, biodata creation, traditional biodata, professional biodata service, matrimony biodata",
+        ogImage: "/images/ditvi-biodata-og.jpg", // Add your OG image path
+        canonicalUrl: "https://yourdomain.com", // Add your domain
+        schema: {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Ditvi Biodata",
+            "description": "Professional Marriage Biodata Creation Service",
+            "provider": {
+                "@type": "Organization",
+                "name": "Ditvi Foundation",
+                "image": "/images/logo.png" // Add your logo path
+            },
+            "areaServed": "Worldwide",
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Biodata Services",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Traditional Biodata Creation"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Modern Biodata Design"
+                        }
+                    }
+                ]
+            }
+        }
+    };
+
     return (
         <>
-
+            <SEO {...seoData} />
             <Hero />
             <BiodataHome />
             <WhyUs />

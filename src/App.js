@@ -37,6 +37,8 @@ import PaymentDashboard from "./components/Admin/PaymentDashboard/PaymentDashboa
 import FeedbackDashboard from "./components/Admin/FeedbackDashboard/FeedbackDashboard";
 import PaymentCancel from "./components/Payments/PaymentCancel/PaymentCancel";
 import { HelmetProvider } from "react-helmet-async";
+import Article from "./components/Article/Article";
+import ArticleBox from "./components/ArticleBox/ArticleBox";
 
 function App() {
   return (
@@ -107,6 +109,8 @@ function App() {
                         path="biodata/:modelNumber"
                         element={<BiodataDetail />}
                       />
+                      <Route path="/articles" element={<ArticleBox />} />
+                      <Route path="/articles/:slug" element={<Article />} />
                       <Route path="contact" element={<ContactUs />} />
                       <Route path="how-we-work" element={<WeWork />} />
                       <Route path="whyus" element={<WhyUs />} />

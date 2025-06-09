@@ -8,6 +8,7 @@ import { Email, Phone, Person, Message } from "@mui/icons-material";
 import ContactUsImg from "../../assets/contactus.svg";
 import { ContactUsStorage } from "../../supabase/ContactUs";
 import Loader from "../../structure/Loader/Loader";
+import SEO from "../SEO/SEO";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
@@ -75,6 +76,46 @@ const ContactUs = () => {
 
   return (
     <>
+      <SEO
+        title="Contact Us | Get in Touch with Biodata Maker"
+        description="Contact our team for any questions about our biodata creation service. We're here to help you create the perfect marriage biodata."
+        keywords="contact biodata maker, biodata support, marriage biodata help, biodata service contact"
+        ogImage={`${window.location.origin}/images/contact-preview.jpg`}
+        // canonicalUrl={currentUrl}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "name": "Contact Biodata Maker",
+          // "url": currentUrl,
+          "description": "Contact page for Biodata Maker service",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Biodata Maker",
+            "logo": {
+              "@type": "ImageObject",
+              "url": `${window.location.origin}/logo.png`
+            }
+          },
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "Biodata Maker",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-XXXXXXXXXX",
+              "contactType": "customer service",
+              "email": "support@your-domain.com",
+              "areaServed": "IN",
+              "availableLanguage": ["en", "hi"]
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "IN",
+              "addressLocality": "Your City",
+              "addressRegion": "Your State"
+            }
+          }
+        }}
+      />
       <div className="contact-us">
         <section className="contact">
           <div className="contact-background">
@@ -134,7 +175,7 @@ const ContactUs = () => {
                       <Phone className="contact-input-icon" />
                       <TextField
                         className="contact-input"
-                        label="Mobile Number"
+                        label="Whatsapp Number"
                         name="number"
                         type="tel"
                         variant="outlined"
@@ -149,7 +190,7 @@ const ContactUs = () => {
                         helperText={
                           formData.number &&
                           !formData.number.match(/^[6789]\d{9}$/)
-                            ? "Enter a valid 10-digit mobile number that begins with 6, 7, 8, or 9."
+                            ? "Enter a valid 10-digit whatsapp number that begins with 6, 7, 8, or 9."
                             : ""
                         }
                         inputProps={{

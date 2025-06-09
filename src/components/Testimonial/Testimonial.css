@@ -336,3 +336,10 @@
     background-color: var(--primary-color) !important;
     border-radius: 50%;
 }
+
+@media (max-width: 768px) {
+    .custom-arrow {
+        display: none !important;
+    }
+}
+

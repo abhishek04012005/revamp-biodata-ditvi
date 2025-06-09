@@ -57,6 +57,30 @@ const blogPosts = [
     readTime: "6 min read",
     tags: ["Traditional Biodata", "Resume Tips", "Professional Profile"],
     likes: 10,
+    meta: {
+      title: "Heloo to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -110,6 +134,30 @@ const blogPosts = [
       "Matrimonial Biodata",
     ],
     likes: 15,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -165,6 +213,30 @@ const blogPosts = [
       "Personal Profile",
     ],
     likes: 20,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -218,6 +290,30 @@ const blogPosts = [
       "Professional Profile",
     ],
     likes: 18,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -278,6 +374,30 @@ const blogPosts = [
       "Personal Branding",
     ],
     likes: 11,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -338,6 +458,30 @@ const blogPosts = [
       "Professional Development",
     ],
     likes: 18,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -399,6 +543,30 @@ const blogPosts = [
       "Personal Branding",
     ],
     likes: 12,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -453,6 +621,30 @@ const blogPosts = [
       "Cultural Heritage",
     ],
     likes: 13,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -513,6 +705,30 @@ const blogPosts = [
       "Resume Writing",
     ],
     likes: 14,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 
   {
@@ -575,6 +791,30 @@ const blogPosts = [
       "Professional Development",
     ],
     likes: 15,
+     meta: {
+      title: "I am to Create Perfect Traditional Biodata | Expert Tips & Tricks",
+      description:
+        "Learn expert tips and tricks for creating a perfect traditional biodata. Get insights on formatting, content structure, and best practices.",
+      keywords:
+        "traditional biodata tips, biodata creation guide, perfect biodata format, marriage biodata tips",
+      ogImage: "https://your-domain.com/blog/perfect-biodata-tips.jpg",
+      schema: {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: "Crafting Your Perfect Traditional Biodata: Tips and Tricks",
+        author: {
+          "@type": "Person",
+          name: "Abhishek",
+        },
+        datePublished: "2024-01-15",
+        description:
+          "Learn expert tips for crafting an effective traditional biodata to make the best impression.",
+        keywords:
+          "traditional biodata tips, biodata creation, marriage biodata",
+        articleSection: "Personal Development",
+        timeRequired: "PT6M",
+      },
+    },
   },
 ];
 

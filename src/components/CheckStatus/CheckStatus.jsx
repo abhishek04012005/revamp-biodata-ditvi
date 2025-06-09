@@ -21,6 +21,7 @@ import {
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import { getLatestStatusId } from "../../utils/StatusHelper";
+import SEO from "../SEO/SEO";
 
 const CheckStatus = () => {
   const { requestNumber } = useParams();
@@ -89,6 +90,57 @@ const CheckStatus = () => {
       color: { light: "#E8F5E9", main: "#4CAF50", dark: "#388E3C" },
     },
   ];
+
+  const seoData = {
+    title: `Track Request #${requestNumber} | Ditvi Biodata Status`,
+    description:
+      "Track your marriage biodata creation progress in real-time. Follow each step of your biodata request with our transparent tracking system.",
+    keywords:
+      "biodata status, track biodata, request tracking, Ditvi Biodata status, marriage biodata progress",
+    ogImage: "/images/status-tracking-og.jpg", // Add your OG image
+    canonicalUrl: `https://yourdomain.com/track/${requestNumber}`, // Update with your domain
+    noindex: true, // Prevent indexing of status pages
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "TrackAction",
+      object: {
+        "@type": "Service",
+        name: "Biodata Creation Request",
+        identifier: requestNumber,
+      },
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://yourdomain.com/track/{request_number}",
+        description: "Track biodata creation status",
+      },
+      provider: {
+        "@type": "Organization",
+        name: "Ditvi Biodata",
+        logo: {
+          "@type": "ImageObject",
+          url: "/images/logo.png", // Add your logo path
+        },
+      },
+      potentialAction: {
+        "@type": "ViewAction",
+        target: [
+          {
+            "@type": "EntryPoint",
+            urlTemplate: "https://yourdomain.com/contact",
+            name: "Contact Support",
+          },
+        ],
+      },
+      step: steps.map((step) => ({
+        "@type": "Step",
+        name: step.title,
+        description: step.description,
+        expectedDuration: step.expectedDuration,
+        url: `https://yourdomain.com/track/${requestNumber}#${step.id}`,
+        isCompleted: currentStatus >= step.id,
+      })),
+    },
+  };
 
   useEffect(() => {
     BiodataRequestStorage.getBiodataRequestByRequestNumber(requestNumber)
@@ -176,108 +228,111 @@ const CheckStatus = () => {
     );
   }
   return (
-    <div className="status-check">
-      <HeaderSection
-        title="Track Your Request"
-        subtitle="Follow your biodata creation progress in real-time"
-      />
+    <>
+      <SEO {...seoData} />
+      <div className="status-check">
+        <HeaderSection
+          title="Track Your Request"
+          subtitle="Follow your biodata creation progress in real-time"
+        />
 
-      <div className="status-card">
-        <div className="status-header">
-          <div className="header-content">
-            <div className="header-left">
-              <Timeline className="header-icon" />
-              <div>
-                <h2>Request Status</h2>
-                <p className="order-id">Request No. #{requestNumber}</p>
+        <div className="status-card">
+          <div className="status-header">
+            <div className="header-content">
+              <div className="header-left">
+                <Timeline className="header-icon" />
+                <div>
+                  <h2>Request Status</h2>
+                  <p className="order-id">Request No. #{requestNumber}</p>
+                </div>
               </div>
-            </div>
 
-            <div className="total-time">
-              <div>
-                <h2>
-                  <Schedule className="time-icon" /> Total Estimated Time
-                </h2>
-                <p>12-48 hours from request initiation</p>
+              <div className="total-time">
+                <div>
+                  <h2>
+                    <Schedule className="time-icon" /> Total Estimated Time
+                  </h2>
+                  <p>12-48 hours from request initiation</p>
+                </div>
               </div>
-            </div>
 
-            <div className="progress-tracker">
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{
-                    width: `${getProgressPercentage()}%`,
-                    background: steps[currentStatus].color.dark,
-                  }}
-                />
+              <div className="progress-tracker">
+                <div className="progress-bar">
+                  <div
+                    className="progress-fill"
+                    style={{
+                      width: `${getProgressPercentage()}%`,
+                      background: steps[currentStatus].color.dark,
+                    }}
+                  />
+                </div>
+                <span className="progress-text">
+                  {getProgressPercentage().toFixed(0)}% Complete
+                </span>
               </div>
-              <span className="progress-text">
-                {getProgressPercentage().toFixed(0)}% Complete
-              </span>
             </div>
           </div>
-        </div>
 
-        <div className="timeline-container">
-          <div className="timeline-track">
-            {steps.map((step, index) => (
-              <div
-                key={step.id}
-                className={`timeline-step ${
-                  currentStatus >= step.id ? "completed" : ""
-                } 
+          <div className="timeline-container">
+            <div className="timeline-track">
+              {steps.map((step, index) => (
+                <div
+                  key={step.id}
+                  className={`timeline-step ${
+                    currentStatus >= step.id ? "completed" : ""
+                  } 
                   ${currentStatus === step.id ? "active" : ""}
                   ${selectedStep === step.id ? "selected" : ""}`}
-                onClick={() =>
-                  setSelectedStep(selectedStep === step.id ? null : step.id)
-                }
-                style={{
-                  "--step-color": step.color.main,
-                  "--step-light": step.color.light,
-                  "--step-dark": step.color.dark,
-                }}
-              >
-                <div className="timeline-icon">
-                  {currentStatus > step.id ? (
-                    <CheckCircle />
-                  ) : currentStatus === step.id ? (
-                    step.icon
-                  ) : (
-                    <RadioButtonUnchecked />
-                  )}
-                </div>
-
-                {index < steps.length - 1 && (
-                  <div className="step-connector">
-                    <div
-                      className={`connector-line ${
-                        currentStatus > step.id ? "completed" : ""
-                      }`}
-                    />
-                    <ArrowForward
-                      className={`connector-arrow ${
-                        currentStatus > step.id ? "completed" : ""
-                      }`}
-                    />
+                  onClick={() =>
+                    setSelectedStep(selectedStep === step.id ? null : step.id)
+                  }
+                  style={{
+                    "--step-color": step.color.main,
+                    "--step-light": step.color.light,
+                    "--step-dark": step.color.dark,
+                  }}
+                >
+                  <div className="timeline-icon">
+                    {currentStatus > step.id ? (
+                      <CheckCircle />
+                    ) : currentStatus === step.id ? (
+                      step.icon
+                    ) : (
+                      <RadioButtonUnchecked />
+                    )}
                   </div>
-                )}
 
-                <div className="timeline-content">
-                  <h4>{step.title}</h4>
-                  {timestamps[step.id] && (
-                    <div className="timestamp">
-                      <AccessTime className="time-icon" />
-                      <span>{formatDate(timestamps[step.id])}</span>
+                  {index < steps.length - 1 && (
+                    <div className="step-connector">
+                      <div
+                        className={`connector-line ${
+                          currentStatus > step.id ? "completed" : ""
+                        }`}
+                      />
+                      <ArrowForward
+                        className={`connector-arrow ${
+                          currentStatus > step.id ? "completed" : ""
+                        }`}
+                      />
                     </div>
                   )}
+
+                  <div className="timeline-content">
+                    <h4>{step.title}</h4>
+                    {timestamps[step.id] && (
+                      <div className="timestamp">
+                        <AccessTime className="time-icon" />
+                        <span>{formatDate(timestamps[step.id])}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
