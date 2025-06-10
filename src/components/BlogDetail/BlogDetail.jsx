@@ -152,13 +152,7 @@ const BlogDetail = () => {
           <Container>
             <div className="blogdetail-wrapper">
               <div className="blogdetail-navigation">
-                {/* <button
-                  className="blogdetail-back"
-                  onClick={() => navigate("/blog")}
-                >
-                  <ArrowBack />
-                  <span>Back</span>
-                </button> */}
+          
 
                 <BackButton customPath={"/blog"} tooltipText="Back to Blog" />
 
