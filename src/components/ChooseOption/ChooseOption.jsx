@@ -4,6 +4,7 @@ import "./ChooseOption.css";
 import { WhatsApp, Upload, Create, ArrowForward } from "@mui/icons-material";
 import Container from "../../structure/Container/Container";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
+import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
 import Loader from "../../structure/Loader/Loader";
 import SEO from "../SEO/SEO";
 
@@ -100,10 +101,17 @@ const ChooseOption = () => {
     } finally {
       setIsLoading(false);
     }
-    window.open(
-      "https://wa.me/919263767441?text=Hello%20Ditvi%20Biodata%2C%0AI%20want%20to%20learn%20more%20about%20your%20services.%0A%0AThank%20You%20%3A)",
-      "_blank"
-    );
+
+const messageInfo = {
+    name: userDetails?.name || "",
+    requestNumber: requestNumber
+  };
+
+  const messages = getWhatsappMessageByStatus(0, messageInfo);
+  const requestConfirmationMessage = messages[0]?.message || "";
+  
+  const whatsappUrl = `https://wa.me/919263767441?text=${encodeURIComponent(requestConfirmationMessage)}`;
+  window.open(whatsappUrl, "_blank");
   };
 
   const handleUploadBiodata = () => {

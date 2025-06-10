@@ -10,6 +10,7 @@ import {
   Person,
 } from "@mui/icons-material";
 import "./RequestConfirmation.css";
+import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
 import { maskMobileNumber } from "../../utils/MobileNumberHelper";
 import SEO from "../SEO/SEO";
 
@@ -67,8 +68,17 @@ const RequestConfirmation = () => {
   };
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/919263767441", "_blank");
+  const messageInfo = {
+    name: userDetails?.name || "",
+    requestNumber: requestNumber
   };
+
+  const messages = getWhatsappMessageByStatus(0, messageInfo);
+  const requestConfirmationMessage = messages[0]?.message || "";
+  
+  const whatsappUrl = `https://wa.me/919263767441?text=${encodeURIComponent(requestConfirmationMessage)}`;
+  window.open(whatsappUrl, "_blank");
+};
 
   return (
     <>

@@ -1,20 +1,12 @@
-const mobileNumberForWhatsapp = `919263767441`;
-const mobileNumberWithCode = `+91-9263767441`;
-const whatsappUrlWithMobileNumber = `https://wa.me/919263767441`;
-const mobileNumber = '9263767441';
-const email = 'care@ditvi.org';
-const website = 'https://biodata.ditvi.org';
-const address = 'Thane, Maharashtra, India';
+export const mobileNumberForWhatsapp = `919263767441`;
+export const mobileNumberWithCode = `+91-9263767441`;
+export const whatsappUrlWithMobileNumber = `https://wa.me/919263767441`;
+export const mobileNumber = "9263767441";
+export const email = "care@ditvi.org";
+export const website = "https://biodata.ditvi.org";
+export const address = "Thane, Maharashtra, India";
 
+export const whatsappConnectMessage = `Hello Ditvi Biodata Team! 👋 
+I'm interested in getting my marriage biodata created. Would love to know more about your services! ✨
 
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
-    mobileNumber,
-    mobileNumberWithCode,
-    mobileNumberForWhatsapp,
-    whatsappUrlWithMobileNumber,
-    email,
-    website,
-    address
-}
+Looking forward to hearing from you!`;
