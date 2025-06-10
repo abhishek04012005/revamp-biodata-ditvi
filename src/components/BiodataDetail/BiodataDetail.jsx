@@ -8,6 +8,7 @@ import Languages from '../../json/Languages';
 import ModelTypes from '../../json/ModelTypes';
 import GetNow from '../../structure/GetNow/GetNow';
 import biodataDetails from '../../json/biodataDetails';
+import BackButton from '../../structure/BackButton/BackButton';
 
 const BiodataDetail = () => {
     const { modelNumber } = useParams();
@@ -49,13 +50,14 @@ const BiodataDetail = () => {
                     <div className="biodatadetail-inner">
                         <div className="biodatadetail-header">
                             <h1 className="biodatadetail-title">{biodata.title}</h1>
-                            <button
+                            <BackButton customPath={"/biodata"} tooltipText="Back to Biodata" />
+                            {/* <button
                                 onClick={() => navigate(-1)}
                                 className="biodatadetail-back"
                             >
                                 <ArrowBack />
                                 <span>Back</span>
-                            </button>
+                            </button> */}
                         </div>
 
                         <div className="biodetail-content">

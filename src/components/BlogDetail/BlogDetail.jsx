@@ -11,11 +11,13 @@ import {
   Person,
   CalendarToday,
   AccessTime,
+  ArrowBack,
 } from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
 import blogPosts from "../../json/blog";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import SEO from "../SEO/SEO";
+import BackButton from "../../structure/BackButton/BackButton";
 
 const createSlug = (title) => {
   return title
@@ -150,12 +152,10 @@ const BlogDetail = () => {
           <Container>
             <div className="blogdetail-wrapper">
               <div className="blogdetail-navigation">
-                <button
-                  className="blogdetail-back"
-                  onClick={() => navigate("/blog")}
-                >
-                  <span>Back</span>
-                </button>
+          
+
+                <BackButton customPath={"/blog"} tooltipText="Back to Blog" />
+
                 <div className="blogdetail-actions">
                   <button
                     className={`blogdetail-like ${hasLiked ? "active" : ""}`}

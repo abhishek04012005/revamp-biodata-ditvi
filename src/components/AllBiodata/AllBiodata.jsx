@@ -33,7 +33,7 @@ const AllBiodata = () => {
               position: index + 1,
               name: template.title,
               description: template.description,
-            //   image: template.images[0],
+              //   image: template.images[0],
               offers: {
                 "@type": "Offer",
                 price: template.price,
@@ -52,6 +52,7 @@ const AllBiodata = () => {
           subtitle="Discover our handcrafted traditional biodata designs"
           biodataDetails={biodataList}
           isSlider={false}
+          showButton={true}
         />
       </div>
     </>

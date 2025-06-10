@@ -1,0 +1,40 @@
+.back-button-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  left: 0;
+}
+
+.back-button {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem !important;
+  border-radius: 50px !important;
+  color: #ffffff !important; /* Primary theme color */
+  transition: all 0.3s ease !important;
+  background-color: var(--primary-color) !important;
+}
+
+.back-button-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.back-button:hover {
+  color: var(--primary-color) !important;
+  background-color: rgba(157, 13, 0, 0.04) !important;
+  transform: translateX(-4px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .back-button {
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  .back-button-text {
+    font-size: 0.8rem;
+  }
+}
