@@ -8,25 +8,29 @@ const ICON_MAPPING_HINDI = {
 };
 
 const PersonalDataHindi = [
-  { label: "नाम", value: "", placeholder: "राजेश कुमार" },
-  { label: "जन्म तिथि", value: "", placeholder: "15 अगस्त 1995" },
-  { label: "ऊंचाई", value: "", placeholder: "5 फीट 8 इंच" },
-  { label: "रंग", value: "", placeholder: "गहरा" },
-  { label: "जाति", value: "", placeholder: "ब्राह्मण" },
+  { label: "नाम", value: "", placeholder: "नेहा शर्मा" },
+  {
+    label: "जन्म तिथि",
+    value: "",
+    placeholder: "24 दिसंबर 1995 10:10 पूर्वाह्न",
+  },
+  { label: "ऊंचाई", value: "", placeholder: "5 फीट 2 इंच" },
+  { label: "रंग", value: "", placeholder: "गोरा" },
+  { label: "जाति", value: "", placeholder: "ब्राह्मण, हिंदू" },
 ];
 
 const ProfessionalDataHindi = [
   { label: "कंपनी", value: "", placeholder: "TCS" },
   { label: "पद", value: "", placeholder: "सॉफ्टवेयर इंजीनियर" },
-  { label: "अनुभव (वर्षों में)", value: "", placeholder: "3" },
-  { label: "वेतन", value: "", placeholder: "10 LPA" },
+  { label: "अनुभव (वर्षों में)", value: "", placeholder: "2" },
+  { label: "वेतन", value: "", placeholder: "8 LPA" },
 ];
 
 const EducationDataHindi = [
   { label: "डिग्री", value: "", placeholder: "बी.टेक" },
-  { label: "संस्थान", value: "", placeholder: "IIT दिल्ली" },
+  { label: "संस्थान", value: "", placeholder: "आर.जी.टी.यू. भोपाल (म.प्र.)" },
   { label: "साल", value: "", placeholder: "2018" },
-  { label: "स्कोर", value: "", placeholder: "9.0 CGPA" },
+  { label: "स्कोर", value: "", placeholder: "8.5 CGPA" },
 ];
 
 const ExaminationDataHindi = [
@@ -48,19 +52,24 @@ const FamilyDataHindi = {
   father: {
     label: "पिता",
     value: createEmptyPersonHindi(),
-    placeholder: "श्री राम शर्मा",
+    placeholder: "श्री शिव प्रसाद शर्मा",
   },
   mother: {
     label: "माता",
     value: createEmptyPersonHindi(),
-    placeholder: "श्रीमती सीता शर्मा",
+    placeholder: "श्रीमती सुरभि शर्मा",
   },
   brothers: { label: "भाई", value: [] },
   sisters: { label: "बहन", value: [] },
 };
 
 const ContactDataHindi = [
-  { label: "पता", value: "", placeholder: "123 मुख्य सड़क, शहर, राज्य" },
+  {
+    label: "पता",
+    value: "",
+    placeholder:
+      "मकान संख्या 432, रिंग रोड, योजना क्रमांक 94 सेक्टर ईबी, इंदौर, मध्य प्रदेश 452010",
+  },
   { label: "मोबाइल नंबर", value: "", placeholder: "9263767441" },
 ];
 

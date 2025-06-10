@@ -19,5 +19,19 @@ export const UserDetailsStorage = {
       console.error('Error saving User details:', error);
       throw error;
     }
+  },
+  async getAllUsers() {
+    try {
+      const { data, error } = await supabase
+        .from('user_details')
+        .select('*');
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching all users:', error);
+      throw error;
+    }
   }
 }
