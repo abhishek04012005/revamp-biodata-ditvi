@@ -78,6 +78,15 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
     }));
   };
 
+  const handleNameChange = (e) => {
+    // Allow only letters and spaces
+    const value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+    setFormData((prev) => ({
+      ...prev,
+      name: value,
+    }));
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -104,10 +113,19 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
               name="name"
               placeholder="Enter your full name"
               value={formData.name}
-              onChange={handleChange}
+              onChange={handleNameChange}
+              onKeyPress={(e) => {
+                // Prevent non-alphabetic keys (except space and control keys)
+                if (!/[A-Za-z\s]/.test(e.key) && e.key.length === 1) {
+                  e.preventDefault();
+                }
+              }}
+              pattern="[A-Za-z\s]{3,50}"
               required
               minLength={3}
               maxLength={50}
+              title="Please enter a valid name (letters and spaces only)"
+              aria-label="Full name"
             />
           </div>
           <div className="getnow-form-group">

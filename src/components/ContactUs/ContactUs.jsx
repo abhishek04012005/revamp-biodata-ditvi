@@ -74,6 +74,15 @@ const ContactUs = () => {
     }
   };
 
+  const handleNameChange = (e) => {
+    // Allow only letters and spaces, remove other characters
+    const value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+    setFormData((prev) => ({
+      ...prev,
+      name: value,
+    }));
+  };
+
   return (
     <>
       <SEO
@@ -85,35 +94,35 @@ const ContactUs = () => {
         schema={{
           "@context": "https://schema.org",
           "@type": "ContactPage",
-          "name": "Contact Biodata Maker",
+          name: "Contact Biodata Maker",
           // "url": currentUrl,
-          "description": "Contact page for Biodata Maker service",
-          "publisher": {
+          description: "Contact page for Biodata Maker service",
+          publisher: {
             "@type": "Organization",
-            "name": "Biodata Maker",
-            "logo": {
+            name: "Biodata Maker",
+            logo: {
               "@type": "ImageObject",
-              "url": `${window.location.origin}/logo.png`
-            }
-          },
-          "mainEntity": {
-            "@type": "Organization",
-            "name": "Biodata Maker",
-            "contactPoint": {
-              "@type": "ContactPoint",
-              "telephone": "+91-XXXXXXXXXX",
-              "contactType": "customer service",
-              "email": "support@your-domain.com",
-              "areaServed": "IN",
-              "availableLanguage": ["en", "hi"]
+              url: `${window.location.origin}/logo.png`,
             },
-            "address": {
+          },
+          mainEntity: {
+            "@type": "Organization",
+            name: "Biodata Maker",
+            contactPoint: {
+              "@type": "ContactPoint",
+              telephone: "+91-XXXXXXXXXX",
+              contactType: "customer service",
+              email: "support@your-domain.com",
+              areaServed: "IN",
+              availableLanguage: ["en", "hi"],
+            },
+            address: {
               "@type": "PostalAddress",
-              "addressCountry": "IN",
-              "addressLocality": "Your City",
-              "addressRegion": "Your State"
-            }
-          }
+              addressCountry: "IN",
+              addressLocality: "Your City",
+              addressRegion: "Your State",
+            },
+          },
         }}
       />
       <div className="contact-us">
@@ -150,7 +159,30 @@ const ContactUs = () => {
                         name="name"
                         variant="outlined"
                         value={formData.name}
-                        onChange={handleChange}
+                        onChange={handleNameChange}
+                        onKeyPress={(e) => {
+                          // Prevent non-alphabetic keys (except space and control keys)
+                          if (!/[A-Za-z\s]/.test(e.key) && e.key.length === 1) {
+                            e.preventDefault();
+                          }
+                        }}
+                        inputProps={{
+                          pattern: "[A-Za-z\\s]{3,50}",
+                          title:
+                            "Please enter a valid name (letters and spaces only)",
+                          minLength: 3,
+                          maxLength: 50,
+                        }}
+                        error={
+                          formData.name &&
+                          !/^[A-Za-z\s]{3,50}$/.test(formData.name)
+                        }
+                        helperText={
+                          formData.name &&
+                          !/^[A-Za-z\s]{3,50}$/.test(formData.name)
+                            ? "Name should contain only letters and spaces (3-50 characters)"
+                            : ""
+                        }
                         fullWidth
                         required
                       />

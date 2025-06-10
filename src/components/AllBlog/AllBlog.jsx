@@ -9,8 +9,8 @@ const AllBlog = () => {
     title: "Biodata Creation Blog - Tips & Guides | Ditvi Biodata",
     description: "Explore our comprehensive collection of articles about biodata creation, marriage profiles, and traditional matrimonial practices. Expert tips and professional guides.",
     keywords: "biodata blog, marriage profile tips, biodata creation guide, matrimonial advice, traditional biodata tips",
-    ogImage: "/images/blog-og.jpg", // Add your blog OG image
-    canonicalUrl: "https://biodata.ditvi.org/blog", // Update with your domain
+    ogImage: "/images/blog-og.jpg", 
+    canonicalUrl: "https://biodata.ditvi.org/blog", 
     schema: {
       "@context": "https://schema.org",
       "@type": "Blog",
