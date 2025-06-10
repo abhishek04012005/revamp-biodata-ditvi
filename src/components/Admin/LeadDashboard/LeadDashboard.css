@@ -1,0 +1,119 @@
+.lead-dashboard {
+  padding: 2rem;
+}
+
+.lead-dashboard-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lead-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.lead-dashboard-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
+.lead-dashboard-stat-icon {
+  color: var(--primary-color);
+}
+
+.lead-dashboard-stat-info h3 {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.lead-dashboard-stat-info p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0.25rem 0 0;
+}
+
+.lead-dashboard-table-section {
+  padding: 1.5rem;
+}
+
+.lead-dashboard-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.lead-dashboard-search-bar {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  width: 300px;
+}
+
+.lead-dashboard-search-bar input {
+  border: none;
+  background: none;
+  margin-left: 0.5rem;
+  width: 100%;
+}
+
+.lead-dashboard-refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.lead-dashboard-table-wrapper {
+  overflow-x: auto;
+}
+
+.lead-dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lead-dashboard-table th,
+.lead-dashboard-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.lead-dashboard-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #25D366;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.whatsapp-btn:hover {
+  background: #128C7E;
+}

@@ -39,6 +39,41 @@ export const BiodataRequestStorage = {
       throw error;
     }
   },
+
+  async getAllBiodataRequestWithoutAnyFilters() {
+    try {
+      const { data, error } = await supabase
+        .from(biodataRequestTableName)
+        .select(
+          `
+                    id,
+                    created_at,
+                    request_number,
+                    flow_type,
+                    status,
+                    user_details,
+                    model_details,
+                    profile_url,
+                    biodata_url,
+                    personal_details,
+                    professional_details,
+                    examination_details,
+                    education_details,
+                    family_details,
+                    contact_details,
+                    completed
+                    `
+        )
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      console.error("Error getAllBiodataRequestWithoutAnyFilters:", error);
+      throw error;
+    }
+  },
   async saveBiodataRequestFromWhatsapp(biodataRequest) {
     try {
       const { data, error } = await supabase

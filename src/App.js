@@ -39,6 +39,7 @@ import PaymentCancel from "./components/Payments/PaymentCancel/PaymentCancel";
 import { HelmetProvider } from "react-helmet-async";
 import Article from "./components/Article/Article";
 import ArticleBox from "./components/ArticleBox/ArticleBox";
+import LeadDashboard from "./components/Admin/LeadDashboard/LeadDashboard";
 
 function App() {
   return (
@@ -60,6 +61,10 @@ function App() {
                         <Route
                           path="biodata-dashboard"
                           element={<BiodataDashboard />}
+                        />
+                        <Route
+                          path="lead-dashboard"
+                          element={<LeadDashboard />}
                         />
                         <Route
                           path="feedback-dashboard"

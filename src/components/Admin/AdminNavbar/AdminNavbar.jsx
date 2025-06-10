@@ -12,21 +12,28 @@ import {
   Payment,
   Dashboard,
   Feedback,
+  AddIcCall,
 } from "@mui/icons-material";
 import Logo from "../../../assets/logo.png";
 
 const adminNavLinks = [
   {
-    id: "feedback-dashboard",
-    label: "Feedback",
-    path: "/admin/feedback-dashboard",
-    icon: <Feedback />,
+    id: "lead-dashboard",
+    label: "Lead",
+    path: "/admin/lead-dashboard",
+    icon: <AddIcCall />,
   },
   {
     id: "contact-dashboard",
     label: "Contact",
     path: "/admin/contact-dashboard",
     icon: <ContactPage />,
+  },
+  {
+    id: "feedback-dashboard",
+    label: "Feedback",
+    path: "/admin/feedback-dashboard",
+    icon: <Feedback />,
   },
   {
     id: "payment-dashboard",
