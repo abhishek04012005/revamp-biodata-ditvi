@@ -24,8 +24,8 @@ const ProfessionalData = [
 
 const EducationData = [
   { label: "Degree", value: "", placeholder: "B.Tech" },
-  { label: "Institution", value: "", placeholder: "IIT Delhi" },
-  { label: "Year", value: "", placeholder: "2020" },
+  { label: "Institution", value: "", placeholder: "R.G.T.U. Bhopal (M.P.)" },
+  { label: "Year", value: "", placeholder: "2018" },
   { label: "Score", value: "", placeholder: "8.5 CGPA" },
 ];
 
@@ -60,7 +60,12 @@ const FamilyData = {
 };
 
 const ContactData = [
-  { label: "Address", value: "", placeholder: "123 Main St, City, State" },
+  {
+    label: "Address",
+    value: "",
+    placeholder:
+      "House No. 432, Ring Rd, Scheme No 94 Sector EB, Indore, Madhya Pradesh 452010",
+  },
   { label: "Mobile No.", value: "", placeholder: "9263767441" },
 ];
 
