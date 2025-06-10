@@ -14,7 +14,7 @@ const Main = () => {
         description: "Create professional and traditional marriage biodata with Ditvi Biodata. Expert service with 100% satisfaction guarantee. Customized templates for your perfect match.",
         keywords: "marriage biodata, biodata creation, traditional biodata, professional biodata service, matrimony biodata",
         ogImage: "/images/ditvi-biodata-og.jpg", // Add your OG image path
-        canonicalUrl: "https://yourdomain.com", // Add your domain
+        canonicalUrl: "https://biodata.ditvi.org", // Add your domain
         schema: {
             "@context": "https://schema.org",
             "@type": "Service",

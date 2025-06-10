@@ -67,7 +67,7 @@ const ArticleBox = () => {
     keywords:
       "biodata articles, marriage profile guides, biodata creation tips, matrimonial advice, traditional biodata writing",
     ogImage: "/images/articles-og.jpg", // Add your articles OG image
-    canonicalUrl: "https://yourdomain.com/articles", // Update with your domain
+    canonicalUrl: "https://biodata.ditvi.org/articles", // Update with your domain
     schema: {
       "@context": "https://schema.org",
       "@type": "CollectionPage",

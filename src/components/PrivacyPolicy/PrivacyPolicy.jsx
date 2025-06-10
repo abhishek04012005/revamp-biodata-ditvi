@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
     keywords:
       "privacy policy, data protection, personal information security, Ditvi Biodata privacy, biodata security, user data rights",
     ogImage: "/images/privacy-policy-og.jpg", // Add your OG image
-    canonicalUrl: "https://yourdomain.com/privacy-policy", // Update with your domain
+    canonicalUrl: "https://biodata.ditvi.org/privacy-policy", // Update with your domain
     schema: {
       "@context": "https://schema.org",
       "@type": "PrivacyPolicy",
@@ -43,12 +43,12 @@ const PrivacyPolicy = () => {
           {
             "@type": "WebPage",
             name: "Data Protection",
-            url: "https://yourdomain.com/privacy-policy#data-protection",
+            url: "https://biodata.ditvi.org/privacy-policy#data-protection",
           },
           {
             "@type": "WebPage",
             name: "Your Rights",
-            url: "https://yourdomain.com/privacy-policy#your-rights",
+            url: "https://biodata.ditvi.org/privacy-policy#your-rights",
           },
         ],
       },

@@ -36,7 +36,7 @@ const UploadBiodata = () => {
     keywords:
       "upload biodata, marriage biodata upload, profile photo upload, biodata enhancement, Ditvi Biodata upload service",
     ogImage: "/images/upload-biodata-og.jpg", // Add your OG image
-    canonicalUrl: "https://yourdomain.com/upload-biodata", // Update with your domain
+    canonicalUrl: "https://biodata.ditvi.org/upload-biodata", // Update with your domain
     noindex: true, // Prevent indexing of upload pages for privacy
     schema: {
       "@context": "https://schema.org",

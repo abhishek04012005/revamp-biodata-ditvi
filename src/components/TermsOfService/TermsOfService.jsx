@@ -11,7 +11,7 @@ const TermsOfService = () => {
     keywords:
       "terms of service, Ditvi Biodata terms, biodata service terms, refund policy, delivery policy, payment terms, service agreement",
     ogImage: "/images/terms-of-service-og.jpg",
-    canonicalUrl: "https://yourdomain.com/terms-of-service",
+    canonicalUrl: "https://biodata.ditvi.org/terms-of-service",
     schema: {
       "@context": "https://schema.org",
       "@type": "WebPage",

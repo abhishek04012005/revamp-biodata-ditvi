@@ -39,7 +39,7 @@ const CreateBiodata = () => {
     keywords:
       "create biodata, marriage biodata maker, biodata creation form, professional biodata, Ditvi Biodata, matrimonial profile",
     ogImage: "/images/create-biodata-og.jpg", // Add your OG image
-    canonicalUrl: "https://yourdomain.com/create-biodata", // Update with your domain
+    canonicalUrl: "https://biodata.ditvi.org/create-biodata", // Update with your domain
     noindex: true, // Prevent indexing of form pages
     schema: {
       "@context": "https://schema.org",

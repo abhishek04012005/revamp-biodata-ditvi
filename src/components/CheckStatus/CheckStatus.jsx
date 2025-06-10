@@ -98,7 +98,7 @@ const CheckStatus = () => {
     keywords:
       "biodata status, track biodata, request tracking, Ditvi Biodata status, marriage biodata progress",
     ogImage: "/images/status-tracking-og.jpg", // Add your OG image
-    canonicalUrl: `https://yourdomain.com/track/${requestNumber}`, // Update with your domain
+    canonicalUrl: `https://biodata.ditvi.org/track/${requestNumber}`, // Update with your domain
     noindex: true, // Prevent indexing of status pages
     schema: {
       "@context": "https://schema.org",
@@ -110,7 +110,7 @@ const CheckStatus = () => {
       },
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://yourdomain.com/track/{request_number}",
+        urlTemplate: "https://biodata.ditvi.org/track/{request_number}",
         description: "Track biodata creation status",
       },
       provider: {
@@ -126,7 +126,7 @@ const CheckStatus = () => {
         target: [
           {
             "@type": "EntryPoint",
-            urlTemplate: "https://yourdomain.com/contact",
+            urlTemplate: "https://biodata.ditvi.org/contact",
             name: "Contact Support",
           },
         ],
@@ -136,7 +136,7 @@ const CheckStatus = () => {
         name: step.title,
         description: step.description,
         expectedDuration: step.expectedDuration,
-        url: `https://yourdomain.com/track/${requestNumber}#${step.id}`,
+        url: `https://biodata.ditvi.org/track/${requestNumber}#${step.id}`,
         isCompleted: currentStatus >= step.id,
       })),
     },

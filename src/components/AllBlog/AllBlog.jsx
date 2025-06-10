@@ -10,7 +10,7 @@ const AllBlog = () => {
     description: "Explore our comprehensive collection of articles about biodata creation, marriage profiles, and traditional matrimonial practices. Expert tips and professional guides.",
     keywords: "biodata blog, marriage profile tips, biodata creation guide, matrimonial advice, traditional biodata tips",
     ogImage: "/images/blog-og.jpg", // Add your blog OG image
-    canonicalUrl: "https://yourdomain.com/blog", // Update with your domain
+    canonicalUrl: "https://biodata.ditvi.org/blog", // Update with your domain
     schema: {
       "@context": "https://schema.org",
       "@type": "Blog",

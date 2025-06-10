@@ -35,7 +35,7 @@ const Payment = () => {
     keywords:
       "biodata payment, secure payment, Ditvi Biodata payment, Razorpay secure, marriage biodata payment",
     ogImage: "/images/payment-og.jpg", // Add your OG image
-    canonicalUrl: `https://yourdomain.com/payment/${requestNumber}`, // Update with your domain
+    canonicalUrl: `https://biodata.ditvi.org/payment/${requestNumber}`, // Update with your domain
     noindex: true, // Prevent indexing of payment pages
     schema: {
       "@context": "https://schema.org",

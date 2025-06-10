@@ -29,7 +29,7 @@ const ChooseOption = () => {
     keywords:
       "biodata creation, marriage biodata, whatsapp biodata service, upload biodata, create biodata, Ditvi Biodata, traditional biodata maker",
     ogImage: "/images/choose-option-og.jpg", // Add your OG image
-    canonicalUrl: "https://yourdomain.com/choose-option", // Update with your domain
+    canonicalUrl: "https://biodata.ditvi.org/choose-option", // Update with your domain
     schema: {
       "@context": "https://schema.org",
       "@type": "Service",

@@ -25,7 +25,7 @@ const RequestConfirmation = () => {
     keywords:
       "biodata confirmation, request tracking, marriage biodata status, Ditvi Biodata request, biodata WhatsApp support",
     ogImage: "/images/confirmation-og.jpg", // Add your OG image
-    canonicalUrl: `https://yourdomain.com/request-confirmation/${requestNumber}`, // Update with your domain
+    canonicalUrl: `https://biodata.ditvi.org/request-confirmation/${requestNumber}`, // Update with your domain
     noindex: true, // Prevent indexing of personal confirmation pages
     schema: {
       "@context": "https://schema.org",
