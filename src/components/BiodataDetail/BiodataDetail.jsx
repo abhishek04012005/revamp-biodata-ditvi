@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './BiodataDetail.css'
 import Background from '../../structure/Background/Background'
-import { ArrowBack, LocalOffer, Star, Description, ShoppingCart } from '@mui/icons-material';
+import {  LocalOffer, Star, Description, ShoppingCart } from '@mui/icons-material';
 import Container from '../../structure/Container/Container'
 import Languages from '../../json/Languages';
 import ModelTypes from '../../json/ModelTypes';
@@ -51,13 +51,7 @@ const BiodataDetail = () => {
                         <div className="biodatadetail-header">
                             <h1 className="biodatadetail-title">{biodata.title}</h1>
                             <BackButton customPath={"/biodata"} tooltipText="Back to Biodata" />
-                            {/* <button
-                                onClick={() => navigate(-1)}
-                                className="biodatadetail-back"
-                            >
-                                <ArrowBack />
-                                <span>Back</span>
-                            </button> */}
+            
                         </div>
 
                         <div className="biodetail-content">
