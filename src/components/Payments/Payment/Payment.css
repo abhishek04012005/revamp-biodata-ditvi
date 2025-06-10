@@ -32,7 +32,7 @@
 /* Header Styles */
 .payment-header {
   padding: 2rem;
-  background: var(--bg-gradient);
+  background: var(--primary-color) !important;
   color: white;
   display: flex;
   align-items: center;

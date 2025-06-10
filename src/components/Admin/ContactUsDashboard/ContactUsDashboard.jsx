@@ -15,6 +15,7 @@ import {
 import "./ContactUsDashboard.css";
 import { ContactUsStorage } from "../../../supabase/ContactUs";
 import Loader from "../../../structure/Loader/Loader";
+import formatDate from "../../../utils/DateHelper";
 
 const ContactUsDashboard = () => {
   const [contacts, setContacts] = useState([]);
@@ -135,10 +136,10 @@ const ContactUsDashboard = () => {
               <table className="contact-dashboard-table">
                 <thead>
                   <tr>
-                    <th>Number </th>
+                    <th>Serial No. </th>
                     <th>Name </th>
                     <th>Email </th>
-                    <th>Mobile </th>
+                    <th>Whatsapp Number </th>
                     <th>Message</th>
                     <th>Date </th>
                     <th>Actions</th>
@@ -156,16 +157,7 @@ const ContactUsDashboard = () => {
                           {contact.message.substring(0, 50)}...
                         </div>
                       </td>
-                      <td>
-                        {new Date(contact.created_at).toLocaleDateString(
-                          "en-US",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          }
-                        )}
-                      </td>
+                      <td>{formatDate(contact.created_at)}</td>
                       <td className="contact-dashboard-actions">
                         <button
                           className="contact-dashboard-view-btn"
@@ -228,16 +220,14 @@ const ContactUsDashboard = () => {
                   <div className="info-value">{selectedContact.name}</div>
                 </div>
 
-
                 <div className="contact-info-item">
                   <div className="info-label">
                     <span>Whatsapp Number</span>
                   </div>
                   <div className="info-value">
-              
-                     <div className="info-value highlight">
-                    {selectedContact.mobile}
-                  </div>
+                    <div className="info-value highlight">
+                      {selectedContact.mobile}
+                    </div>
                   </div>
                 </div>
 
@@ -246,16 +236,7 @@ const ContactUsDashboard = () => {
                     <span>Submission Date & Time</span>
                   </div>
                   <div className="info-value">
-                    {new Date(selectedContact.created_at).toLocaleString(
-                      "en-US",
-                      {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }
-                    )}
+                    {formatDate(selectedContact.created_at)}
                   </div>
                 </div>
               </div>
