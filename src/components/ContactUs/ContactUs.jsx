@@ -244,7 +244,6 @@ const ContactUs = () => {
                         variant="outlined"
                         value={formData.message}
                         onChange={handleChange}
-                        multiline
                         rows={0}
                         fullWidth
                         required

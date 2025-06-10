@@ -30,7 +30,7 @@
 /* Header Section */
 .payment-header {
   padding: clamp(1.5rem, 4vw, 2rem);
-  background: var(--bg-gradient);
+  background: var(--bg-gradient) !important;
   color: white;
   display: flex;
   align-items: center;

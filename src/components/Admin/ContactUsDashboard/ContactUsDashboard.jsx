@@ -214,7 +214,7 @@ const ContactUsDashboard = () => {
                 <div className="contact-info-item">
                   <div className="info-label">
                     <span className="label-icon">#</span>
-                    <span>Request Number</span>
+                    <span>Serial Number</span>
                   </div>
                   <div className="info-value highlight">
                     {selectedContact.number}

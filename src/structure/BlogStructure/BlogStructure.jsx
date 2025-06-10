@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Person, AccessTime, ArrowForward, Article } from "@mui/icons-material";
 import HeaderSection from "../HeaderSection/HeaderSection";
 import Container from "../Container/Container";
+import { IconButton, Tooltip } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
+import BackButton from "../BackButton/BackButton";
 
 const BlogCard = ({ post }) => {
   const navigate = useNavigate();
@@ -14,11 +17,8 @@ const BlogCard = ({ post }) => {
       .replace(/\s+/g, "-");
   };
 
-
   return (
     <div className="blog-card">
-
-
       <div className="blog-card-image">
         <img src={post.image} alt={post.title} loading="lazy" />
         <div className="blog-category">{post.category}</div>
@@ -48,7 +48,13 @@ const BlogCard = ({ post }) => {
   );
 };
 
-const BlogStructure = ({ title, blogPosts, limit, subtitle }) => {
+const BlogStructure = ({
+  title,
+  blogPosts,
+  limit,
+  subtitle,
+  showBackButton,
+}) => {
   const navigate = useNavigate();
   const displayedPosts = limit ? blogPosts.slice(0, limit) : blogPosts;
 
@@ -61,6 +67,12 @@ const BlogStructure = ({ title, blogPosts, limit, subtitle }) => {
         </div>
         <Container>
           <HeaderSection title={title} subtitle={subtitle} />
+
+          {showBackButton && (
+        
+            <BackButton customPath={`/`} tooltipText="Back to Home" />
+          )}
+
           <div className="blog-grid">
             {displayedPosts.map((post) => (
               <BlogCard key={post.id} post={post} />
