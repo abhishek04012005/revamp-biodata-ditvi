@@ -70,6 +70,14 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
     }
   };
 
+  const handleMobileNumberChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    setFormData((prev) => ({
+      ...prev,
+      mobileNumber: value,
+    }));
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -110,12 +118,20 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
               name="mobileNumber"
               placeholder="Enter your WhatsApp number"
               value={formData.mobileNumber}
-              onChange={handleChange}
+              onChange={handleMobileNumberChange}
+              onKeyPress={(e) => {
+                if (!/[0-9]/.test(e.key) || e.target.value.length >= 10) {
+                  e.preventDefault();
+                }
+              }}
               pattern="[0-9]{10}"
               maxLength={10}
               minLength={10}
+              inputMode="numeric"
+              autoComplete="tel"
               title="Please enter a valid 10-digit phone number"
               required
+              aria-label="WhatsApp number"
             />
           </div>
 
