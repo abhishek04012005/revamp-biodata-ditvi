@@ -8,7 +8,7 @@ import Client6 from "../assets/client/client6.png";
 const testimonials = [
   {
     id: 1,
-    name: "Ajay Kapoor",
+    name: "Ajay Choudhary",
     role: "Bengluru",
     testimonial:
       "The pay-only-when-satisfied policy is a game-changer. My Biodata was perfect!",
