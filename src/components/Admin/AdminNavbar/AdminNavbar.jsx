@@ -84,7 +84,7 @@ const AdminNavbar = () => {
     <nav className="admin-navbar">
       <div className="admin-navbar-background"></div>
       <div className="admin-navbar-container">
-        <Link to="/admin" className="admin-navbar-logo">
+        <Link to="/" className="admin-navbar-logo">
           <img src={Logo} alt="Ditvi Admin" />
           <div className="logo-shine"></div>
         </Link>
