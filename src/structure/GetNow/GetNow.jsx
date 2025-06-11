@@ -72,10 +72,13 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
 
   const handleMobileNumberChange = (e) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
-    setFormData((prev) => ({
-      ...prev,
-      mobileNumber: value,
-    }));
+    // Only update if first digit is 6,7,8,9 or if empty
+    if (!value || /^[6-9]/.test(value)) {
+      setFormData((prev) => ({
+        ...prev,
+        mobileNumber: value,
+      }));
+    }
   };
 
   const handleNameChange = (e) => {
@@ -138,16 +141,22 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
               value={formData.mobileNumber}
               onChange={handleMobileNumberChange}
               onKeyPress={(e) => {
-                if (!/[0-9]/.test(e.key) || e.target.value.length >= 10) {
+                // Prevent input if first digit isn't 6-9 or if length is already 10
+                if (
+                  (formData.mobileNumber.length === 0 &&
+                    !/[6-9]/.test(e.key)) ||
+                  !/[0-9]/.test(e.key) ||
+                  formData.mobileNumber.length >= 10
+                ) {
                   e.preventDefault();
                 }
               }}
-              pattern="[0-9]{10}"
+              pattern="[6-9][0-9]{9}"
               maxLength={10}
               minLength={10}
               inputMode="numeric"
               autoComplete="tel"
-              title="Please enter a valid 10-digit phone number"
+              title="Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9"
               required
               aria-label="WhatsApp number"
             />

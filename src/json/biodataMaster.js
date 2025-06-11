@@ -10,12 +10,12 @@ export const BIODATA_THEMES = {
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#550000ff",
+        BACKGROUND_COLOR: "#f15916ff",
       },
       DATA: {
         COLOR: "#9d0d00ff",
-        BACKGROUND_COLOR: "#ffffff00",
-        ALTERNATE_BACKGROUND_COLOR: "#5500001a",
+        BACKGROUND_COLOR: "#ff16007b",
+        ALTERNATE_BACKGROUND_COLOR: "#ffc67cff",
       },
     },
     ICONS: {
@@ -49,25 +49,25 @@ export const BIODATA_THEMES = {
   },
   1113: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#dc2626", // Strong but not harsh red
+      BORDER_COLOR: "#ffffffcd", // Strong but not harsh red
     },
     HEADINGS: {
-      COLOR: "#991b1b", // Deeper red for better readability
+      COLOR: "#ffffffcd", // Deeper red for better readability
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
-        COLOR: "#ffffff", // White text for contrast
-        BACKGROUND_COLOR: "#350000ff", // Rich red background
+        COLOR: "#550000ff", // White text for contrast
+        BACKGROUND_COLOR: "#ffffffcd", // Rich red background
       },
       DATA: {
-        COLOR: "#1f2937", // Dark gray for text
-        BACKGROUND_COLOR: "#ffffff", // White background
-        ALTERNATE_BACKGROUND_COLOR: "#3500001a", // Light red for alternating rows
+        COLOR: "#ffffff", // Dark gray for text
+        BACKGROUND_COLOR: "#6d0e043f", // White background
+        ALTERNATE_BACKGROUND_COLOR: "#ffffff00", // Light red for alternating rows
       },
     },
     ICONS: {
-      COLOR: "#dc2626", // Matching photo frame color
+      COLOR: "#ffffff", // Matching photo frame color
       FONT_SIZE: "24px",
     },
   },
@@ -106,10 +106,10 @@ export const BIODATA_THEMES = {
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#f97316",
+        BACKGROUND_COLOR: "#f77e6bff",
       },
       DATA: {
-        COLOR: "#1f2937",
+        COLOR: "#9a3412",
         BACKGROUND_COLOR: "#ffffff",
         ALTERNATE_BACKGROUND_COLOR: "#fff7ed",
       },
@@ -177,13 +177,13 @@ export const BIODATA_THEMES = {
     },
     TABLE: {
       HEADER: {
-        COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#ec4899",
+        COLOR: "#fce300ff",
+        BACKGROUND_COLOR: "#bd3000ff",
       },
       DATA: {
-        COLOR: "#1f2937",
-        BACKGROUND_COLOR: "#ffffff",
-        ALTERNATE_BACKGROUND_COLOR: "#fdf2f8",
+        COLOR: "#9d174d",
+        BACKGROUND_COLOR: "#fce300ff00",
+        ALTERNATE_BACKGROUND_COLOR: "#ff8905ff",
       },
     },
     ICONS: {

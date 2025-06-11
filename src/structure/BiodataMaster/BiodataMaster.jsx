@@ -169,6 +169,10 @@ const BiodataMaster = () => {
 
             /* Theme-specific styles */
 
+             .biodata-master-bio-table {
+      border-collapse: collapse;
+              }
+
  .biodata-master .biodata-master-photo-frame {
       border-color: ${currentTheme.PHOTO_FRAME.BORDER_COLOR} !important;
     }
@@ -403,6 +407,8 @@ const BiodataMaster = () => {
     }
     .biodata-master .biodata-master-bio-table {
       --row-gap: ${styles.table.rowGap};
+            border-collapse: collapse;
+
     }
     .biodata-master .biodata-master-bio-table tbody tr {
       background-color: ${
