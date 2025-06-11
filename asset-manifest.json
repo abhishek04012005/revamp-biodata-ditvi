@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/revamp-biodata-ditvi/static/css/main.a135a24e.css",
-    "main.js": "/revamp-biodata-ditvi/static/js/main.144798a5.js",
+    "main.css": "/revamp-biodata-ditvi/static/css/main.80962abd.css",
+    "main.js": "/revamp-biodata-ditvi/static/js/main.924d352e.js",
     "static/js/952.80a6972c.chunk.js": "/revamp-biodata-ditvi/static/js/952.80a6972c.chunk.js",
     "static/js/453.7e976675.chunk.js": "/revamp-biodata-ditvi/static/js/453.7e976675.chunk.js",
     "static/media/1121.svg": "/revamp-biodata-ditvi/static/media/1121.d060794e4d91a9fedc1bf8cc282396fb.svg",
@@ -37,16 +37,16 @@
     "static/media/client2.png": "/revamp-biodata-ditvi/static/media/client2.a272bea2345108799168.png",
     "static/media/slick.svg": "/revamp-biodata-ditvi/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/revamp-biodata-ditvi/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "index.html": "/revamp-biodata-ditvi/index.html",
     "static/media/slick.ttf": "/revamp-biodata-ditvi/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/revamp-biodata-ditvi/static/media/slick.295183786cd8a1389865.woff",
-    "index.html": "/revamp-biodata-ditvi/index.html",
-    "main.a135a24e.css.map": "/revamp-biodata-ditvi/static/css/main.a135a24e.css.map",
-    "main.144798a5.js.map": "/revamp-biodata-ditvi/static/js/main.144798a5.js.map",
+    "main.80962abd.css.map": "/revamp-biodata-ditvi/static/css/main.80962abd.css.map",
+    "main.924d352e.js.map": "/revamp-biodata-ditvi/static/js/main.924d352e.js.map",
     "952.80a6972c.chunk.js.map": "/revamp-biodata-ditvi/static/js/952.80a6972c.chunk.js.map",
     "453.7e976675.chunk.js.map": "/revamp-biodata-ditvi/static/js/453.7e976675.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a135a24e.css",
-    "static/js/main.144798a5.js"
+    "static/css/main.80962abd.css",
+    "static/js/main.924d352e.js"
   ]
 }
