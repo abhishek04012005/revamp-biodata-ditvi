@@ -10,12 +10,12 @@ export const BIODATA_THEMES = {
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#f15916ff",
+        BACKGROUND_COLOR: "#a30425ff",
       },
       DATA: {
         COLOR: "#9d0d00ff",
-        BACKGROUND_COLOR: "#ff16007b",
-        ALTERNATE_BACKGROUND_COLOR: "#ffc67cff",
+        BACKGROUND_COLOR: "#e7dcc800",
+        ALTERNATE_BACKGROUND_COLOR: "#e7dcc8ff",
       },
     },
     ICONS: {

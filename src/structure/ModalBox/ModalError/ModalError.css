@@ -1,0 +1,183 @@
+:root {
+  --modal-error-primary: var(--primary-color);
+  --modal-error-secondary: var(--secondary-color);
+  --modal-error-text-dark: #1a1a1a;
+  --modal-error-text-light: #666666;
+  --modal-error-white: #ffffff;
+  --modal-error-shadow: rgba(220, 38, 38, 0.15);
+}
+
+.modal-error-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-error-container {
+  background: var(--modal-error-white);
+  padding: 3rem 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px var(--modal-error-shadow);
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-error-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.modal-error-icon-wrapper {
+  width: 88px;
+  height: 88px;
+  background: linear-gradient(135deg, var(--modal-error-primary), var(--modal-error-secondary));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px -4px var(--modal-error-shadow);
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-error-icon {
+  font-size: 44px !important;
+  color: var(--modal-error-white);
+  animation: iconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+.modal-error-title {
+  color: var(--modal-error-text-dark);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.modal-error-message {
+  color: var(--modal-error-text-light);
+  font-size: 1.125rem;
+  margin: 0;
+  line-height: 1.6;
+  font-family: "Inter", sans-serif;
+  max-width: 90%;
+}
+
+.modal-error-close {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--modal-error-primary);
+  color: var(--modal-error-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px -2px var(--modal-error-shadow);
+}
+
+.modal-error-close:hover {
+  background: var(--modal-error-secondary);
+  transform: scale(1.1) rotate(90deg);
+}
+
+.modal-error-close:active {
+  transform: scale(0.95);
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    backdrop-filter: blur(0);
+  }
+  to { 
+    opacity: 1; 
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes iconPop {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-error-container {
+    padding: 2.5rem 2rem;
+    max-width: 360px;
+  }
+
+  .modal-error-icon-wrapper {
+    width: 72px;
+    height: 72px;
+  }
+
+  .modal-error-icon {
+    font-size: 36px !important;
+  }
+
+  .modal-error-title {
+    font-size: 1.875rem;
+  }
+
+  .modal-error-message {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-error-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .modal-error-title {
+    font-size: 1.625rem;
+  }
+}
