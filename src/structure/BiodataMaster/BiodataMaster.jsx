@@ -28,6 +28,7 @@ import DEFAULT_STYLES from "../../json/Styles";
 import { ICON_MAPPING } from "../../json/createBiodata";
 import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
 import ModalSuccess from "../ModalBox/ModalSuccess/ModalSuccess";
+import ModalError from "../ModalBox/ModalError/ModalError";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
@@ -40,6 +41,7 @@ const BiodataMaster = () => {
   const [styles, setStyles] = useState(DEFAULT_STYLES);
   const [modelDetails, setModelDetails] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showErrorModal, setShowErrorModal] = useState(false);
   const [selectedBackground, setSelectedBackground] = useState("1111");
   const [notification, setNotification] = useState({
     show: false,
@@ -302,11 +304,7 @@ const BiodataMaster = () => {
       setShowSuccessModal(true);
     } catch (error) {
       console.error("Error saving style settings:", error);
-      setNotification({
-        show: true,
-        message: "Failed to save style settings",
-        type: "error",
-      });
+      setShowErrorModal(true);
     } finally {
       setIsLoading(false);
     }
@@ -1151,67 +1149,14 @@ const BiodataMaster = () => {
         </div>
       </div>
 
-      {notification.show && (
-        <div className="notification-overlay">
-          <div className={`notification-popup ${notification.type}`}>
-            <button
-              className="notification-close"
-              onClick={() =>
-                setNotification({ show: false, message: "", type: "success" })
-              }
-            >
-              ×
-            </button>
-            <div className="notification-content">
-              <div className={`notification-icon-wrapper ${notification.type}`}>
-                {notification.type === "success" ? (
-                  <div className="notification-icon">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle cx="12" cy="12" r="10" className="icon-circle" />
-                      <path
-                        d="M8 12l3 3 5-5"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="icon-path"
-                      />
-                    </svg>
-                  </div>
-                ) : (
-                  <div className="notification-icon">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle cx="12" cy="12" r="10" className="icon-circle" />
-                      <path
-                        d="M15 9l-6 6M9 9l6 6"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="icon-path"
-                      />
-                    </svg>
-                  </div>
-                )}
-              </div>
-              <div className="notification-text">
-                <h3 className="notification-title">
-                  {notification.type === "success" ? "Success!" : "Error!"}
-                </h3>
-                <p className="notification-message">{notification.message}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      {showErrorModal && (
+        <ModalError
+          title="Error!"
+          message="Failed to save style settings. Please try again."
+          onClose={() => setShowErrorModal(false)}
+        />
       )}
+
       {showSuccessModal && (
         <ModalSuccess
           title="Success!"
@@ -1219,7 +1164,7 @@ const BiodataMaster = () => {
           onClose={() => setShowSuccessModal(false)}
         />
       )}
-      
+
       {isLoading && <Loader />}
     </>
   );

@@ -9,7 +9,7 @@ import ContactUsImg from "../../assets/contactus.svg";
 import { ContactUsStorage } from "../../supabase/ContactUs";
 import Loader from "../../structure/Loader/Loader";
 import SEO from "../SEO/SEO";
-import ThankYouPopUp from "../../structure/ThankYouPopUp/ThankYouPopUp";
+import ModalSuccess from "../../structure/ModalBox/ModalSuccess/ModalSuccess";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
@@ -273,9 +273,9 @@ const ContactUs = () => {
       </div>
 
       {showThankYou && (
-        <ThankYouPopUp
-          message="Thank you for contacting us!"
-          subMessage="We'll get back to you soon."
+        <ModalSuccess
+          title="Thank You!"
+          message="Thank you for contacting us! We'll get back to you soon."
           onClose={() => setShowThankYou(false)}
         />
       )}
