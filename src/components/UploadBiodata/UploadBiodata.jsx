@@ -235,7 +235,7 @@ const UploadBiodata = () => {
                   onClick={() => imageInputRef.current?.click()}
                 >
                   {imagePreview ? (
-                    <div className="preview-section">
+                    <div className="preview-section-upload-biodata">
                       <div className="preview-container">
                         <img
                           src={imagePreview}
@@ -287,7 +287,7 @@ const UploadBiodata = () => {
                   {biodataFile ? (
                     <div className="file-success">
                       {biodataPreview ? (
-                        <div className="preview-section">
+                        <div className="preview-section-upload-biodata">
                           <div className="preview-container">
                             <img
                               src={biodataPreview}
@@ -309,7 +309,7 @@ const UploadBiodata = () => {
                       ) : (
                         <>
                           <h3>{biodataFile.name}</h3>
-                         <button
+                          <button
                             className="change-image-btn"
                             onClick={(e) => {
                               e.stopPropagation();
