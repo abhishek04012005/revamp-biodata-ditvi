@@ -27,6 +27,7 @@ import {
 import DEFAULT_STYLES from "../../json/Styles";
 import { ICON_MAPPING } from "../../json/createBiodata";
 import { ICON_MAPPING_HINDI } from "../../json/CreateBiodataHindi";
+import ModalSuccess from "../ModalBox/ModalSuccess/ModalSuccess";
 
 const BiodataMaster = () => {
   const { requestId } = useParams();
@@ -38,6 +39,7 @@ const BiodataMaster = () => {
   const [copied, setCopied] = useState(false);
   const [styles, setStyles] = useState(DEFAULT_STYLES);
   const [modelDetails, setModelDetails] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedBackground, setSelectedBackground] = useState("1111");
   const [notification, setNotification] = useState({
     show: false,
@@ -297,11 +299,7 @@ const BiodataMaster = () => {
         styleSettings: styles,
       });
 
-      setNotification({
-        show: true,
-        message: "Style settings saved successfully!",
-        type: "success",
-      });
+      setShowSuccessModal(true);
     } catch (error) {
       console.error("Error saving style settings:", error);
       setNotification({
@@ -1214,6 +1212,14 @@ const BiodataMaster = () => {
           </div>
         </div>
       )}
+      {showSuccessModal && (
+        <ModalSuccess
+          title="Success!"
+          message="Style settings saved successfully!"
+          onClose={() => setShowSuccessModal(false)}
+        />
+      )}
+      
       {isLoading && <Loader />}
     </>
   );
