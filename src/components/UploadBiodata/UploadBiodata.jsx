@@ -235,16 +235,24 @@ const UploadBiodata = () => {
                   onClick={() => imageInputRef.current?.click()}
                 >
                   {imagePreview ? (
-                    <div className="preview-container">
-                      <img
-                        src={imagePreview}
-                        alt="Preview"
-                        className="image-preview"
-                      />
-                      <div className="preview-overlay">
-                        <Check className="success-icon" />
-                        <p>Click to change</p>
+                    <div className="preview-section">
+                      <div className="preview-container">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="image-preview"
+                        />
                       </div>
+                      <button
+                        className="change-image-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          imageInputRef.current?.click();
+                        }}
+                      >
+                        <Check className="success-icon-change-image" />
+                        Change Image
+                      </button>
                     </div>
                   ) : (
                     <>
@@ -279,22 +287,38 @@ const UploadBiodata = () => {
                   {biodataFile ? (
                     <div className="file-success">
                       {biodataPreview ? (
-                        <div className="preview-container">
-                          <img
-                            src={biodataPreview}
-                            alt="Biodata"
-                            className="image-preview"
-                          />
-                          <div className="preview-overlay">
-                            <Check className="success-icon" />
-                            <p>Click to change</p>
+                        <div className="preview-section">
+                          <div className="preview-container">
+                            <img
+                              src={biodataPreview}
+                              alt="Biodata"
+                              className="image-preview"
+                            />
                           </div>
+                          <button
+                            className="change-image-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              biodataInputRef.current?.click();
+                            }}
+                          >
+                            <Check className="success-icon-change-image" />
+                            Change File
+                          </button>
                         </div>
                       ) : (
                         <>
-                          <Check className="success-icon" />
                           <h3>{biodataFile.name}</h3>
-                          <p>Click to change file</p>
+                         <button
+                            className="change-image-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              biodataInputRef.current?.click();
+                            }}
+                          >
+                            <Check className="success-icon-change-image" />
+                            Change File
+                          </button>
                         </>
                       )}
                     </div>
