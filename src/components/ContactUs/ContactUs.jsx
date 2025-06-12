@@ -9,6 +9,7 @@ import ContactUsImg from "../../assets/contactus.svg";
 import { ContactUsStorage } from "../../supabase/ContactUs";
 import Loader from "../../structure/Loader/Loader";
 import SEO from "../SEO/SEO";
+import ThankYouPopUp from "../../structure/ThankYouPopUp/ThankYouPopUp";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,7 @@ const ContactUs = () => {
     message: "",
     number: "",
   });
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const [notification, setNotification] = useState({
     show: false,
@@ -49,11 +51,7 @@ const ContactUs = () => {
       });
 
       if (response) {
-        setNotification({
-          show: true,
-          message: "Thank You! We'll get back to you soon.",
-          type: "success",
-        });
+        setShowThankYou(true);
         setFormData({ name: "", email: "", message: "", number: "" });
       } else {
         setNotification({
@@ -273,6 +271,14 @@ const ContactUs = () => {
           </Container>
         </section>
       </div>
+
+      {showThankYou && (
+        <ThankYouPopUp
+          message="Thank you for contacting us!"
+          subMessage="We'll get back to you soon."
+          onClose={() => setShowThankYou(false)}
+        />
+      )}
 
       {notification.show && (
         <div
