@@ -153,7 +153,6 @@ const ContactUs = () => {
                         value={formData.name}
                         onChange={handleNameChange}
                         onKeyPress={(e) => {
-                          // Prevent non-alphabetic keys (except space and control keys)
                           if (!/[A-Za-z\s]/.test(e.key) && e.key.length === 1) {
                             e.preventDefault();
                           }

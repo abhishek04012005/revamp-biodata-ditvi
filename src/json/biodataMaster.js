@@ -15,7 +15,7 @@ export const BIODATA_THEMES = {
       DATA: {
         COLOR: "#9d0d00ff",
         BACKGROUND_COLOR: "#e7dcc800",
-        ALTERNATE_BACKGROUND_COLOR: "#e7dcc8ff",
+        ALTERNATE_BACKGROUND_COLOR: "#ffffff",
       },
     },
     ICONS: {
