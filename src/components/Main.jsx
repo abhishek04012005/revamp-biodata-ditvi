@@ -23,8 +23,8 @@ const Main = () => {
         title: "Ditvi Biodata - Professional Marriage Biodata Creation Service",
         description: "Create professional and traditional marriage biodata with Ditvi Biodata. Expert service with 100% satisfaction guarantee. Customized templates for your perfect match.",
         keywords: "marriage biodata, biodata creation, traditional biodata, professional biodata service, matrimony biodata",
-        ogImage: "/images/ditvi-biodata-og.jpg", // Add your OG image path
-        canonicalUrl: "https://biodata.ditvi.org", // Add your domain
+        ogImage: "/images/ditvi-biodata-og.jpg",
+        canonicalUrl: "https://biodata.ditvi.org", 
         schema: {
             "@context": "https://schema.org",
             "@type": "Service",
@@ -33,7 +33,7 @@ const Main = () => {
             "provider": {
                 "@type": "Organization",
                 "name": "Ditvi Foundation",
-                "image": "/images/logo.png" // Add your logo path
+                "image": "/images/logo.png" 
             },
             "areaServed": "Worldwide",
             "hasOfferCatalog": {
