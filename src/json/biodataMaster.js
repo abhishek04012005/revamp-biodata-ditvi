@@ -15,7 +15,7 @@ export const BIODATA_THEMES = {
       DATA: {
         COLOR: "#9d0d00ff",
         BACKGROUND_COLOR: "#e7dcc800",
-        ALTERNATE_BACKGROUND_COLOR: "#ffffff",
+        ALTERNATE_BACKGROUND_COLOR: "#efdebf",
       },
     },
     ICONS: {
@@ -25,44 +25,44 @@ export const BIODATA_THEMES = {
   },
   1112: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#7c3aed",
+      BORDER_COLOR: "#af1e23ff",
     },
     HEADINGS: {
-      COLOR: "#5b21b6",
+      COLOR: "#af1e23ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#8b5cf6",
+        BACKGROUND_COLOR: "#af1e23ff",
       },
       DATA: {
-        COLOR: "#1f2937",
-        BACKGROUND_COLOR: "#ffffff",
-        ALTERNATE_BACKGROUND_COLOR: "#f5f3ff",
+        COLOR: "#af1e23ff",
+        BACKGROUND_COLOR: "#ffffff00",
+        ALTERNATE_BACKGROUND_COLOR: "#f5dc99ff",
       },
     },
     ICONS: {
-      COLOR: "#7c3aed",
+      COLOR: "#af1e23ff",
       FONT_SIZE: "24px",
     },
   },
   1113: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#ffffffcd", // Strong but not harsh red
+      BORDER_COLOR: "#ffffff", // Strong but not harsh red
     },
     HEADINGS: {
-      COLOR: "#ffffffcd", // Deeper red for better readability
+      COLOR: "#ffffff", // Deeper red for better readability
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#550000ff", // White text for contrast
-        BACKGROUND_COLOR: "#ffffffcd", // Rich red background
+        BACKGROUND_COLOR: "#D9A3A3", // Rich red background
       },
       DATA: {
         COLOR: "#ffffff", // Dark gray for text
-        BACKGROUND_COLOR: "#6d0e043f", // White background
+        BACKGROUND_COLOR: "#6d0e0400", // White background
         ALTERNATE_BACKGROUND_COLOR: "#ffffff00", // Light red for alternating rows
       },
     },
@@ -169,25 +169,25 @@ export const BIODATA_THEMES = {
   },
   1118: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#be185d",
+      BORDER_COLOR: "#9d0d00ff",
     },
     HEADINGS: {
-      COLOR: "#9d174d",
+      COLOR: "#9d0d00ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
-        COLOR: "#fce300ff",
+        COLOR: "#ffffff",
         BACKGROUND_COLOR: "#bd3000ff",
       },
       DATA: {
-        COLOR: "#9d174d",
+        COLOR: "#9d0d00ff",
         BACKGROUND_COLOR: "#fce300ff00",
-        ALTERNATE_BACKGROUND_COLOR: "#ff8905ff",
+        ALTERNATE_BACKGROUND_COLOR: "#ff9703ff",
       },
     },
     ICONS: {
-      COLOR: "#be185d",
+      COLOR: "#9d0d00ff",
       FONT_SIZE: "24px",
     },
   },
