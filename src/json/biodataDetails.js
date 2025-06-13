@@ -1,5 +1,7 @@
 import Biodata1111Img from "../assets/biodata/biodata-1111.png";
-import Biodata1112Img from "../assets/background/1112.svg";
+import Biodata1112Img from "../assets/biodata/biodata-1112.png";
+import Biodata1113Img from "../assets/biodata/biodata-1113.png";
+import Biodata1118Img from "../assets/biodata/biodata-1118.png";
 import Languages from "../json/Languages";
 import ModelTypes from "../json/ModelTypes";
 
@@ -9,7 +11,7 @@ const biodataList = [
     modelNumber: "1111",
     image: Biodata1111Img,
     hindiImage: "/images/hindi-professional.jpg",
-    studentImage: Biodata1112Img,
+    studentImage: Biodata1111Img,
     hindiStudentImage: "/images/hindi-student.jpg",
     originalPrice: 201,
     discountedPrice: 101,
@@ -24,7 +26,7 @@ const biodataList = [
   {
     id: 2,
     modelNumber: "1112",
-    image: Biodata1111Img,
+    image: Biodata1112Img,
     hindiImage: "/images/hindi-professional.jpg",
     studentImage: Biodata1112Img,
     hindiStudentImage: "/images/hindi-student.jpg",
@@ -41,9 +43,9 @@ const biodataList = [
   {
     id: 3,
     modelNumber: "1113",
-    image: Biodata1111Img,
+    image: Biodata1113Img,
     hindiImage: "/images/hindi-professional.jpg",
-    studentImage: Biodata1112Img,
+    studentImage: Biodata1113Img,
     hindiStudentImage: "/images/hindi-student.jpg",
     originalPrice: 201,
     discountedPrice: 101,
@@ -60,7 +62,7 @@ const biodataList = [
     modelNumber: "1114",
     image: Biodata1111Img,
     hindiImage: "/images/hindi-professional.jpg",
-    studentImage: Biodata1112Img,
+    studentImage: Biodata1111Img,
     hindiStudentImage: "/images/hindi-student.jpg",
     originalPrice: 201,
     discountedPrice: 101,
@@ -77,7 +79,7 @@ const biodataList = [
     modelNumber: "1115",
     image: Biodata1111Img,
     hindiImage: "/images/hindi-professional.jpg",
-    studentImage: Biodata1112Img,
+    studentImage: Biodata1111Img,
     hindiStudentImage: "/images/hindi-student.jpg",
     originalPrice: 201,
     discountedPrice: 101,
@@ -94,7 +96,41 @@ const biodataList = [
     modelNumber: "1116",
     image: Biodata1111Img,
     hindiImage: "/images/hindi-professional.jpg",
-    studentImage: Biodata1112Img,
+    studentImage: Biodata1111Img,
+    hindiStudentImage: "/images/hindi-student.jpg",
+    originalPrice: 201,
+    discountedPrice: 101,
+    discount: 50,
+    title: "Madhubani Painting",
+    modelName: "madhubani-painting-6",
+    description:
+      "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
+    language: Languages.English.Name,
+    type: ModelTypes.Professional.Name,
+  },
+    {
+    id: 7,
+    modelNumber: "1117",
+    image: Biodata1111Img,
+    hindiImage: "/images/hindi-professional.jpg",
+    studentImage: Biodata1111Img,
+    hindiStudentImage: "/images/hindi-student.jpg",
+    originalPrice: 201,
+    discountedPrice: 101,
+    discount: 50,
+    title: "Madhubani Painting",
+    modelName: "madhubani-painting-6",
+    description:
+      "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
+    language: Languages.English.Name,
+    type: ModelTypes.Professional.Name,
+  },
+    {
+    id: 8,
+    modelNumber: "1118",
+    image: Biodata1118Img,
+    hindiImage: "/images/hindi-professional.jpg",
+    studentImage: Biodata1118Img,
     hindiStudentImage: "/images/hindi-student.jpg",
     originalPrice: 201,
     discountedPrice: 101,

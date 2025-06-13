@@ -1,5 +1,5 @@
 import BackgroundBiodata1111 from "../assets/background/1111.svg";
-import BackgroundBiodata1112 from "../assets/background/1112.svg";
+import BackgroundBiodata1112 from "../assets/background/1112.png";
 import BackgroundBiodata1113 from "../assets/background/1113.svg";
 import BackgroundBiodata1114 from "../assets/background/1114.svg";
 import BackgroundBiodata1115 from "../assets/background/1115.svg";
