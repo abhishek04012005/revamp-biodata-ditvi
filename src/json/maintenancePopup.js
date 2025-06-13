@@ -1,5 +1,5 @@
 export const maintenanceConfig = {
-  isMaintenanceMode: true,
+  isMaintenanceMode: false,
   maintenanceMessage: "We are currently performing system maintenance. Please check back later.",
   estimatedDowntime: "2 hours",
   startTime: "2024-06-13T10:00:00Z",

@@ -15,6 +15,7 @@ const biodataList = [
     discountedPrice: 101,
     discount: 50,
     title: "Madhubani Painting",
+    modelName: "madhubani-painting",
     description:
       "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
     language: Languages.English.Name,
@@ -30,7 +31,8 @@ const biodataList = [
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
-    title: "Madhubani Painting",
+    title: "Madhubani Oily",
+    modelName: "madhubani-oiy",
     description:
       "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
     language: Languages.English.Name,
@@ -47,6 +49,7 @@ const biodataList = [
     discountedPrice: 101,
     discount: 50,
     title: "Madhubani Painting",
+    modelName: "madhubani-painting-3",
     description:
       "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
     language: Languages.English.Name,
@@ -63,6 +66,7 @@ const biodataList = [
     discountedPrice: 101,
     discount: 50,
     title: "Madhubani Painting",
+    modelName: "madhubani-painting-4",
     description:
       "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
     language: Languages.English.Name,
@@ -79,6 +83,7 @@ const biodataList = [
     discountedPrice: 101,
     discount: 50,
     title: "Madhubani Painting",
+    modelName: "madhubani-painting-5",
     description:
       "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
     language: Languages.English.Name,
@@ -95,6 +100,7 @@ const biodataList = [
     discountedPrice: 101,
     discount: 50,
     title: "Madhubani Painting",
+    modelName: "madhubani-painting-6",
     description:
       "Madhubani painting is a traditional Indian art form that originated in the Mithila region of Bihar. It is characterized by intricate patterns, vibrant colors, and themes from mythology, nature, and daily life. The paintings are typically done on handmade paper or cloth using natural dyes and pigments. Madhubani artists often use fine brushes made from twigs or fingers to create detailed designs. This art form has gained recognition worldwide for its unique style and cultural significance.",
     language: Languages.English.Name,
