@@ -4,36 +4,41 @@ import { Grid } from "@mui/material";
 import Container from "../../structure/Container/Container";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
 import weWork from "../../json/weWork";
+import { useLocation } from "react-router-dom";
 import SEO from "../SEO/SEO";
 
 const WeWork = () => {
   const [activeStep, setActiveStep] = useState(null);
+  const location = useLocation();
 
   return (
     <>
-      <SEO
-        title="How We Work | Biodata Maker Process"
-        description="Learn how our biodata creation process works. Simple steps to create your traditional marriage biodata with professional templates."
-        keywords="biodata process, how to create biodata, marriage biodata steps, biodata maker process"
-        ogImage="https://your-domain.com/how-we-work.jpg"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "HowTo",
-          name: "How to Create Your Biodata",
-          description:
-            "Step by step process to create your traditional marriage biodata",
-          url: "https://your-domain.com/how-we-work",
-          step: weWork.map((step, index) => ({
-            "@type": "HowToStep",
-            position: step.number,
-            name: step.title,
-            itemListElement: step.steps.map((text) => ({
-              "@type": "HowToDirection",
-              text: text,
+      {location.pathname !== "/" && (
+        <SEO
+          title="How We Work | Biodata Maker Process"
+          description="Learn how our biodata creation process works. Simple steps to create your traditional marriage biodata with professional templates."
+          keywords="biodata process, how to create biodata, marriage biodata steps, biodata maker process"
+          ogImage="https://your-domain.com/how-we-work.jpg"
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            name: "How to Create Your Biodata",
+            description:
+              "Step by step process to create your traditional marriage biodata",
+            url: "https://your-domain.com/how-we-work",
+            step: weWork.map((step, index) => ({
+              "@type": "HowToStep",
+              position: step.number,
+              name: step.title,
+              itemListElement: step.steps.map((text) => ({
+                "@type": "HowToDirection",
+                text: text,
+              })),
             })),
-          })),
-        }}
-      />
+          }}
+        />
+      )}
+
       <section className="how-we-work">
         <div className="how-we-work-background">
           <div className="animated-circle circle-1"></div>
@@ -44,6 +49,7 @@ const WeWork = () => {
             title="How We work"
             subtitle={`Simple steps to get your traditional biodata`}
           />
+
           <div className="process-timeline">
             <div className="timeline-line"></div>
             <Grid container spacing={4}>

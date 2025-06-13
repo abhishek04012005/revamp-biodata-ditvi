@@ -1,7 +1,7 @@
 .contact-us {
     position: relative;
     overflow: hidden;
-    margin-top: 6rem;
+    padding-top: 4rem;
 }
 
 .contact-section {
@@ -179,6 +179,9 @@
 }
 
 @media (max-width: 768px) {
+  .contact-us {
+    margin: 0;
+  }
     .contact-section {
         padding: 4rem 0;
     }

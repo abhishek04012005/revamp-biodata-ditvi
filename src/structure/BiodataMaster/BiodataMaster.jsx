@@ -41,13 +41,8 @@ const BiodataMaster = () => {
   const [styles, setStyles] = useState(DEFAULT_STYLES);
   const [modelDetails, setModelDetails] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-    const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const [selectedBackground, setSelectedBackground] = useState("1111");
-  const [notification, setNotification] = useState({
-    show: false,
-    message: "",
-    type: "success",
-  });
 
   useEffect(() => {
     fetchRequestData();
@@ -146,51 +141,72 @@ const BiodataMaster = () => {
          <script>
           document.title = "Biodata";
         </script>
-        <style>
-            @page {
-                size: A4;
-                margin: 0;
-            }
-            body {
-                margin: 0;
-                padding: 0;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-            .biodata-master-a4-container {
-                width: 210mm;
-                min-height: 297mm;
-                margin: 0;
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                padding: 0;
-                background-image: url("${getBiodataBackgroundImage(
-                  selectedBackground
-                )}");
-            }
-
-            /* Theme-specific styles */
-
-             .biodata-master-bio-table {
-      border-collapse: collapse;
-              }
-
- .biodata-master .biodata-master-photo-frame {
-      border-color: ${currentTheme.PHOTO_FRAME.BORDER_COLOR} !important;
+      <style>
+    /* Page Setup */
+    @page {
+      size: A4;
+      margin: 0;
     }
+
+    /* Global Print Settings */
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    /* Container Layout */
+    .biodata-master-a4-container {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0;
+      padding: 0;
+      background-image: url("${getBiodataBackgroundImage(selectedBackground)}");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Table Styles */
+    .biodata-master-bio-table {
+      border-collapse: collapse;
+      border: none !important;
+    }
+
+    .biodata-master-bio-table td,
+    .biodata-master-bio-table th {
+    border: none !important;
+      border-bottom: ${styles.table.rowGap} solid transparent !important;
+      text-align: center;
+    }
+
+    /* Photo Frame */
+    .biodata-master-photo-frame {
+  width: ${styles.photo.width} !important;
+  height: ${styles.photo.width} !important;
+  border-radius: 50% !important;
+  border-color: ${getCurrentTheme().PHOTO_FRAME.BORDER_COLOR} !important;
+  overflow: hidden !important;
+}
+
+    /* Typography */
     .biodata-master h3 {
       font-size: ${styles.name.fontSize} !important;
       color: ${currentTheme.HEADINGS.COLOR} !important;
     }
 
-     .biodata-master-flex-section h3 {
+    .biodata-master-flex-section h3 {
       font-size: ${styles.headings.fontSize} !important;
     }
-    .biodata-master h3 {
-      color: ${getCurrentTheme().HEADINGS.COLOR} !important;
+
+     .biodata-master-personal-icon-alignment {
+      display: flex;
+      align-items: center;
     }
+
+    /* Table Headers */
     .biodata-master th {
       font-size: ${styles.table.headerFontSize} !important;
       color: ${currentTheme.TABLE.HEADER.COLOR} !important;
@@ -198,65 +214,66 @@ const BiodataMaster = () => {
         currentTheme.TABLE.HEADER.BACKGROUND_COLOR
       } !important;
     }
+
+    /* Table Data */
     .biodata-master td {
       font-size: ${styles.table.dataFontSize} !important;
       color: ${currentTheme.TABLE.DATA.COLOR} !important;
     }
+
+    /* Icons */
     .biodata-master .biodata-master-section-icon {
       color: ${currentTheme.ICONS.COLOR} !important;
     }
+
+    /* Table Row Styles */
     .biodata-master .biodata-master-bio-table tbody tr {
       background-color: ${currentTheme.TABLE.DATA.BACKGROUND_COLOR} !important;
     }
+
     .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
       background-color: ${
         currentTheme.TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
       } !important;
       border: none !important;
     }
+
     .biodata-master .biodata-master-bio-table thead tr {
       background-color: ${
         currentTheme.TABLE.HEADER.BACKGROUND_COLOR
       } !important;
     }
-          .biodata-master-bio-table td,
-    .biodata-master-bio-table th {
 
-      border-bottom: ${styles.table.rowGap} solid transparent;
-      text-align: center;
+    /* Watermark Styles */
+    .img-watermark {
+      display: ${withWatermark ? "block !important" : "none !important"};
     }
 
-            .img-watermark {
-                display: ${
-                  withWatermark ? "block !important" : "none !important"
-                };
-            }
+    .img-watermark img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0.3;
+      transform: rotate(-45deg);
+    }
 
-            .img-watermark img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                opacity: 0.3;
-                transform: rotate(-45deg);
-            }
+    /* Print Media Query */
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
 
-            @media print {
-                * {
-                    -webkit-print-color-adjust: exact !important;
-                    print-color-adjust: exact !important;
-                    color-adjust: exact !important;
-                }
-                .img-watermark {
-                    display: ${
-                      withWatermark ? "block !important" : "none !important"
-                    };
-                }
-            }
-        </style>
-    `;
+      .img-watermark {
+        display: ${withWatermark ? "block !important" : "none !important"};
+      }
+    }
+  </style>
+`;
 
     // Create a new container with watermark
     const printContent = `
@@ -374,18 +391,47 @@ const BiodataMaster = () => {
           <div className="biodata-master-biodata-page">
             <style>
               {`
-    .biodata-master .biodata-master-photo-frame {
+    /* Photo Frame Styles */
+    .biodata-master-photo-frame {
+      width: ${styles.photo.width} !important;
+      height: ${styles.photo.width} !important;
+      border-radius: 50% !important;
       border-color: ${getCurrentTheme().PHOTO_FRAME.BORDER_COLOR} !important;
+      overflow: hidden !important;
     }
+
+    .biodata-master-personal-icon-alignment {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Typography - Text Styles */
     .biodata-master-name-text h3 {
       font-size: ${styles.name.fontSize} !important;
     }
+
     .biodata-master-flex-section h3 {
       font-size: ${styles.headings.fontSize} !important;
     }
+
     .biodata-master h3 {
       color: ${getCurrentTheme().HEADINGS.COLOR} !important;
     }
+
+    /* Icons */
+    .biodata-master .biodata-master-section-icon {
+      font-size: ${getCurrentTheme().ICONS.FONT_SIZE} !important;
+      color: ${getCurrentTheme().ICONS.COLOR} !important;
+    }
+
+    /* Table Base Styles */
+    .biodata-master .biodata-master-bio-table {
+      --row-gap: ${styles.table.rowGap};
+      border-collapse: collapse;
+      border: none !important;
+    }
+
+    /* Table Header Styles */
     .biodata-master th {
       font-size: ${styles.table.headerFontSize} !important;
       color: ${getCurrentTheme().TABLE.HEADER.COLOR} !important;
@@ -393,49 +439,39 @@ const BiodataMaster = () => {
         getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR
       } !important;
     }
+
+    /* Table Cell Styles */
     .biodata-master td {
       font-size: ${styles.table.dataFontSize} !important;
       color: ${getCurrentTheme().TABLE.DATA.COLOR} !important;
     }
-    .biodata-master .biodata-master-section-icon {
-      font-size: ${getCurrentTheme().ICONS.FONT_SIZE} !important;
-      color: ${getCurrentTheme().ICONS.COLOR} !important;
-    }
-    .biodata-master .biodata-master-bio-table {
-      --row-gap: ${styles.table.rowGap};
-            border-collapse: collapse;
 
-    }
+    /* Table Row Styles */
     .biodata-master .biodata-master-bio-table tbody tr {
       background-color: ${
         getCurrentTheme().TABLE.DATA.BACKGROUND_COLOR
       } !important;
     }
+
     .biodata-master .biodata-master-bio-table tbody tr:nth-child(even) {
       background-color: ${
         getCurrentTheme().TABLE.DATA.ALTERNATE_BACKGROUND_COLOR
       } !important;
     }
+
     .biodata-master .biodata-master-bio-table thead tr {
       background-color: ${
         getCurrentTheme().TABLE.HEADER.BACKGROUND_COLOR
       } !important;
     }
+
+    /* Table Cell Spacing */
     .biodata-master-bio-table td,
     .biodata-master-bio-table th {
       padding: 12px;
       border-bottom: ${styles.table.rowGap} solid transparent;
       text-align: center;
     }
-    .biodata-master-photo-frame {
-  width: ${styles.photo.width} !important;
-  height: ${styles.photo.width} !important;
-  border-radius: 50% !important;
-  border-color: ${getCurrentTheme().PHOTO_FRAME.BORDER_COLOR} !important;
-  overflow: hidden !important;
-}
-
-}
   `}
             </style>
 

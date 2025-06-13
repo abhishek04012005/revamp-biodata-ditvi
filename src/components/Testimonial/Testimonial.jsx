@@ -3,6 +3,7 @@ import "./Testimonial.css";
 import Slider from "react-slick";
 import Container from "../../structure/Container/Container";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
+import { useLocation } from "react-router-dom";
 import {
   ArrowBack,
   ArrowForward,
@@ -66,6 +67,7 @@ const TestimonialCard = ({ data }) => {
 };
 
 const Testimonial = () => {
+  const location = useLocation();
   const settings = {
     dots: true,
     infinite: true,
@@ -82,39 +84,41 @@ const Testimonial = () => {
   };
   return (
     <>
-      <SEO
-        title="Client Testimonials | Biodata Maker Service Reviews"
-        description="Read what our clients say about our biodata creation service. Real testimonials from satisfied customers who used our professional biodata templates."
-        keywords="biodata testimonials, client reviews, biodata service reviews, marriage biodata feedback, customer testimonials"
-        ogImage="https://your-domain.com/images/testimonials-preview.jpg"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "Review",
-          mainEntity: {
-            "@type": "LocalBusiness",
-            name: "Biodata Maker Service",
-            description: "Professional biodata creation service",
-            aggregateRating: {
-              "@type": "AggregateRating",
-              reviewCount: testimonials.length,
-              bestRating: "5",
-              worstRating: "1",
+      {location.pathname !== "/" && (
+        <SEO
+          title="Client Testimonials | Biodata Maker Service Reviews"
+          description="Read what our clients say about our biodata creation service. Real testimonials from satisfied customers who used our professional biodata templates."
+          keywords="biodata testimonials, client reviews, biodata service reviews, marriage biodata feedback, customer testimonials"
+          ogImage="https://your-domain.com/images/testimonials-preview.jpg"
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "Review",
+            mainEntity: {
+              "@type": "LocalBusiness",
+              name: "Biodata Maker Service",
+              description: "Professional biodata creation service",
+              aggregateRating: {
+                "@type": "AggregateRating",
+                reviewCount: testimonials.length,
+                bestRating: "5",
+                worstRating: "1",
+              },
+              review: testimonials.map((testimonial) => ({
+                "@type": "Review",
+                reviewRating: {
+                  "@type": "Rating",
+                  ratingValue: testimonial.rating,
+                },
+                author: {
+                  "@type": "Person",
+                  name: testimonial.name,
+                },
+                reviewBody: testimonial.testimonial,
+              })),
             },
-            review: testimonials.map((testimonial) => ({
-              "@type": "Review",
-              reviewRating: {
-                "@type": "Rating",
-                ratingValue: testimonial.rating,
-              },
-              author: {
-                "@type": "Person",
-                name: testimonial.name,
-              },
-              reviewBody: testimonial.testimonial,
-            })),
-          },
-        }}
-      />
+          }}
+        />
+      )}
       <div className="testimonial">
         <section className="testimonials-section">
           <div className="animated-circle circle-1"></div>

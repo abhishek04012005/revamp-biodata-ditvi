@@ -43,7 +43,7 @@
     color: var(--text-dark);
     font-size: 1.1rem;
     max-width: 600px;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
     opacity: 0;
     animation: fadeIn 0.6s ease-out 0.3s forwards;
 }
@@ -57,5 +57,25 @@
 
     .heading-section-text p {
         font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-body {
+    margin-top: 4rem;
+}
+
+    .heading-section {
+        padding-block: 1rem;
+    }
+
+    .heading-section-text p {
+        font-size: 1.5rem;
+    }
+
+    .header-section-subtitle p {
+        font-size: 1rem;
+        max-width: 90%;
+        margin-bottom: 0;
     }
 }
