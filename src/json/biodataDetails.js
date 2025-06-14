@@ -14,6 +14,22 @@ import BiodataHindi1115 from "../assets/biodata/hindi/biodata-hindi-1115.png"
 import BiodataHindi1116 from "../assets/biodata/hindi/biodata-hindi-1116.png"
 import BiodataHindi1117 from "../assets/biodata/hindi/biodata-hindi-1117.png"
 import BiodataHindi1118 from "../assets/biodata/hindi/biodata-hindi-1118.png"
+import BiodataStudent1111 from "../assets/biodata/student/biodata-student-1111.png"
+import BiodataStudent1112 from "../assets/biodata/student/biodata-student-1112.png"
+import BiodataStudent1113 from "../assets/biodata/student/biodata-student-1113.png"
+import BiodataStudent1114 from "../assets/biodata/student/biodata-student-1114.png"
+import BiodataStudent1115 from "../assets/biodata/student/biodata-student-1115.png"
+import BiodataStudent1116 from "../assets/biodata/student/biodata-student-1116.png"
+import BiodataStudent1117 from "../assets/biodata/student/biodata-student-1117.png"
+import BiodataStudent1118 from "../assets/biodata/student/biodata-student-1118.png"
+import BiodataStudentHindi1111 from "../assets/biodata/studentHindi/biodata-hindi-student-1111.png"
+import BiodataStudentHindi1112 from "../assets/biodata/studentHindi/biodata-hindi-student-1112.png"
+import BiodataStudentHindi1113 from "../assets/biodata/studentHindi/biodata-hindi-student-1113.png"
+import BiodataStudentHindi1114 from "../assets/biodata/studentHindi/biodata-hindi-student-1114.png"
+import BiodataStudentHindi1115 from "../assets/biodata/studentHindi/biodata-hindi-student-1115.png"
+import BiodataStudentHindi1116 from "../assets/biodata/studentHindi/biodata-hindi-student-1116.png"
+import BiodataStudentHindi1117 from "../assets/biodata/studentHindi/biodata-hindi-student-1117.png"
+import BiodataStudentHindi1118 from "../assets/biodata/studentHindi/biodata-hindi-student-1118.png"
 import Languages from "../json/Languages";
 import ModelTypes from "../json/ModelTypes";
 
@@ -23,8 +39,8 @@ const biodataList = [
     modelNumber: "1111",
     image: Biodata1111Img,
     hindiImage: BiodataHindi1111,
-    studentImage: Biodata1111Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1111,
+    hindiStudentImage: BiodataStudentHindi1111,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
@@ -40,8 +56,8 @@ const biodataList = [
     modelNumber: "1112",
     image: Biodata1112Img,
     hindiImage: BiodataHindi1112,
-    studentImage: Biodata1112Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1112,
+    hindiStudentImage: BiodataStudentHindi1112,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
@@ -57,8 +73,8 @@ const biodataList = [
     modelNumber: "1113",
     image: Biodata1113Img,
     hindiImage: BiodataHindi1113,
-    studentImage: Biodata1113Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1113,
+    hindiStudentImage: BiodataStudentHindi1113,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
@@ -74,8 +90,8 @@ const biodataList = [
     modelNumber: "1114",
     image: Biodata1114Img,
     hindiImage: BiodataHindi1114,
-    studentImage: Biodata1114Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1114,
+    hindiStudentImage: BiodataStudentHindi1114,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
@@ -91,8 +107,8 @@ const biodataList = [
     modelNumber: "1115",
     image: Biodata1115Img,
     hindiImage: BiodataHindi1115,
-    studentImage: Biodata1115Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1115,
+    hindiStudentImage: BiodataStudentHindi1115,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
@@ -108,8 +124,8 @@ const biodataList = [
     modelNumber: "1116",
     image: Biodata1116Img,
     hindiImage: BiodataHindi1116,
-    studentImage: Biodata1116Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1116,
+    hindiStudentImage: BiodataStudentHindi1116,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
@@ -125,8 +141,8 @@ const biodataList = [
     modelNumber: "1117",
     image: Biodata1117Img,
     hindiImage: BiodataHindi1117,
-    studentImage: Biodata1117Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1117,
+    hindiStudentImage: BiodataStudentHindi1117,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
@@ -142,8 +158,8 @@ const biodataList = [
     modelNumber: "1118",
     image: Biodata1118Img,
     hindiImage: BiodataHindi1118,
-    studentImage: Biodata1118Img,
-    hindiStudentImage: "/images/hindi-student.jpg",
+    studentImage: BiodataStudent1118,
+    hindiStudentImage: BiodataStudentHindi1118,
     originalPrice: 201,
     discountedPrice: 101,
     discount: 50,
