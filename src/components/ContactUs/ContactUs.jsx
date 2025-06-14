@@ -76,7 +76,7 @@ const ContactUs = () => {
     <>
       {location.pathname !== "/" && (
         <SEO
-          title="Contact Us | Get in Touch with Biodata Maker"
+          title="Contact Us | Get in Touch with Online Biodata Maker"
           description="Contact our team for any questions about our biodata creation service. We're here to help you create the perfect marriage biodata."
           keywords="contact biodata maker, biodata support, marriage biodata help, biodata service contact"
           ogImage={`${window.location.origin}/images/contact-preview.jpg`}
