@@ -23,6 +23,9 @@ create table public.user_details (
   constraint user_details_pkey primary key (id)
 ) TABLESPACE pg_default;
 
+-- Reset the sequence for request_number in user_details
+ALTER SEQUENCE contact_us_number_seq RESTART WITH 111;
+
 -- Biodata Request 
 create table public.biodata_request (
   id uuid not null default gen_random_uuid (),
@@ -108,7 +111,11 @@ create table public.contact_us (
 ) TABLESPACE pg_default;
 
 
--- Add foreign key constraints
+-- First, add UNIQUE constraint to request_number in user_details
+ALTER TABLE public.user_details
+ADD CONSTRAINT user_details_request_number_unique UNIQUE (request_number);
+
+-- Then add the foreign key constraints
 ALTER TABLE public.biodata_request
 ADD CONSTRAINT fk_biodata_request_user_details
 FOREIGN KEY (request_number) 

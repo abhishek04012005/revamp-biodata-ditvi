@@ -8,9 +8,6 @@ import {
   Email,
   Phone,
   ContactMail,
-  Person,
-  AccessTime,
-  Reply,
 } from "@mui/icons-material";
 import "./ContactUsDashboard.css";
 import { ContactUsStorage } from "../../../supabase/ContactUs";
