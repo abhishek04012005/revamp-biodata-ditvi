@@ -77,6 +77,7 @@ const BiodataMaster = () => {
         fetchStatus(response.request_number);
       }
     } catch (error) {
+      setShowErrorModal(true);
       console.error("Error fetching request:", error);
     } finally {
       setIsLoading(false);
@@ -105,11 +106,11 @@ const BiodataMaster = () => {
           setStatusArray(response.status);
           setCurrentStatus(getLatestStatusId(response.status));
         } else {
-          console.error("No request found with the given request number.");
+          setShowErrorModal(true);
         }
       })
       .catch((error) => {
-        console.error("Error fetching request:", error);
+        setShowErrorModal(true);
       });
   };
 

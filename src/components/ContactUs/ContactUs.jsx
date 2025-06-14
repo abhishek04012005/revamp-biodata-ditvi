@@ -25,11 +25,6 @@ const ContactUs = () => {
   const [showError, setShowError] = useState(false);
   const location = useLocation();
 
-  const [notification, setNotification] = useState({
-    show: false,
-    message: "",
-    type: "success",
-  });
 
   const handleChange = (e) => {
     if (e.target.name === "number") {
@@ -279,8 +274,6 @@ const ContactUs = () => {
 
       {showError && (
         <ModalError
-          title="Error!"
-          message="There was an error submitting the form. Please try again."
           onClose={() => setShowError(false)}
         />
       )}

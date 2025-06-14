@@ -98,10 +98,7 @@ const PaymentDashboard = () => {
     }
   };
 
-  const handleExport = () => {
-    // Export functionality implementation
-    console.log("Exporting data...");
-  };
+
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);

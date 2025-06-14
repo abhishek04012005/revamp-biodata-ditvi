@@ -1,15 +1,18 @@
-import React from 'react';
-import { Error, Close } from '@mui/icons-material';
-import './ModalError.css';
+import React from "react";
+import { Error, Close } from "@mui/icons-material";
+import "./ModalError.css";
 
-const ModalError = ({ 
-  title = "Error!", 
-  message = "Something went wrong.", 
-  onClose 
+const ModalError = ({
+  title = "Error!",
+  message = "We're experiencing technical difficulties. Please try again later.",
+  onClose,
 }) => {
   return (
     <div className="modal-error-overlay" onClick={onClose}>
-      <div className="modal-error-container" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-error-container"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="modal-error-content">
           <div className="modal-error-icon-wrapper">
             <Error className="modal-error-icon" />
