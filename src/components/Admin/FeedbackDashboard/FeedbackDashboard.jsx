@@ -5,7 +5,6 @@ import {
   ThumbUp,
   Message,
   Search,
-  Delete,
   Visibility,
   Close,
 } from "@mui/icons-material";

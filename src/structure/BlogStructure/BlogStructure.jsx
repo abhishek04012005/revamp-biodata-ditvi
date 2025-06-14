@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Person, AccessTime, ArrowForward, Article } from "@mui/icons-material";
 import HeaderSection from "../HeaderSection/HeaderSection";
 import Container from "../Container/Container";
-import { IconButton, Tooltip } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
 import BackButton from "../BackButton/BackButton";
 
 const BlogCard = ({ post }) => {

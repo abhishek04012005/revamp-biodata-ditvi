@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./BlogDetail.css";
 import Background from "../../structure/Background/Background";
 import Container from "../../structure/Container/Container";
@@ -11,7 +11,6 @@ import {
   Person,
   CalendarToday,
   AccessTime,
-  ArrowBack,
 } from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
 import blogPosts from "../../json/blog";
@@ -29,7 +28,6 @@ const createSlug = (title) => {
 const BlogDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const baseUrl = window.location.origin;
   const [post, setPost] = useState(null);
   const [relatedPosts, setRelatedPosts] = useState([]);

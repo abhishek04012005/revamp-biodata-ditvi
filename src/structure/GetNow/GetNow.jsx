@@ -15,13 +15,6 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
     mobileNumber: "",
   });
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
