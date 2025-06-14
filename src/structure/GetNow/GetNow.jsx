@@ -23,8 +23,6 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("Form submitted with data:", formData);
-    console.log("Model details:", modelDetails);
     e.preventDefault();
     try {
       setIsLoading(true);
