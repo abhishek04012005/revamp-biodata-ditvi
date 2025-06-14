@@ -161,7 +161,7 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true, showBut
                     setIsPopupOpen(true);
                   }}
                   onPreview={() =>
-                    navigate(`/biodata/${biodata.modelNumber}`, {
+                    navigate(`/biodata/${biodata.modelName}`, {
                       state: { biodata },
                     })
                   }
@@ -187,7 +187,7 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true, showBut
               setIsPopupOpen(true);
             }}
             onPreview={() =>
-              navigate(`/biodata/${biodata.modelNumber}`, {
+              navigate(`/biodata/${biodata.modelName}`, {
                 state: { biodata },
               })
             }

@@ -8,6 +8,7 @@ import { Email, Phone, Person, Message } from "@mui/icons-material";
 import ContactUsImg from "../../assets/contactus.svg";
 import { ContactUsStorage } from "../../supabase/ContactUs";
 import Loader from "../../structure/Loader/Loader";
+import { useLocation } from "react-router-dom";
 import SEO from "../SEO/SEO";
 import ModalSuccess from "../../structure/ModalBox/ModalSuccess/ModalSuccess";
 import ModalError from "../../structure/ModalBox/ModalError/ModalError";
@@ -22,12 +23,8 @@ const ContactUs = () => {
   });
   const [showThankYou, setShowThankYou] = useState(false);
   const [showError, setShowError] = useState(false);
+  const location = useLocation();
 
-  const [notification, setNotification] = useState({
-    show: false,
-    message: "",
-    type: "success",
-  });
 
   const handleChange = (e) => {
     if (e.target.name === "number") {
@@ -77,46 +74,48 @@ const ContactUs = () => {
 
   return (
     <>
-      <SEO
-        title="Contact Us | Get in Touch with Biodata Maker"
-        description="Contact our team for any questions about our biodata creation service. We're here to help you create the perfect marriage biodata."
-        keywords="contact biodata maker, biodata support, marriage biodata help, biodata service contact"
-        ogImage={`${window.location.origin}/images/contact-preview.jpg`}
-        // canonicalUrl={currentUrl}
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          name: "Contact Biodata Maker",
-          // "url": currentUrl,
-          description: "Contact page for Biodata Maker service",
-          publisher: {
-            "@type": "Organization",
-            name: "Biodata Maker",
-            logo: {
-              "@type": "ImageObject",
-              url: `${window.location.origin}/logo.png`,
+      {location.pathname !== "/" && (
+        <SEO
+          title="Contact Us | Get in Touch with Biodata Maker"
+          description="Contact our team for any questions about our biodata creation service. We're here to help you create the perfect marriage biodata."
+          keywords="contact biodata maker, biodata support, marriage biodata help, biodata service contact"
+          ogImage={`${window.location.origin}/images/contact-preview.jpg`}
+          // canonicalUrl={currentUrl}
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact Biodata Maker",
+            // "url": currentUrl,
+            description: "Contact page for Biodata Maker service",
+            publisher: {
+              "@type": "Organization",
+              name: "Biodata Maker",
+              logo: {
+                "@type": "ImageObject",
+                url: `${window.location.origin}/logo.png`,
+              },
             },
-          },
-          mainEntity: {
-            "@type": "Organization",
-            name: "Biodata Maker",
-            contactPoint: {
-              "@type": "ContactPoint",
-              telephone: "+91-XXXXXXXXXX",
-              contactType: "customer service",
-              email: "support@your-domain.com",
-              areaServed: "IN",
-              availableLanguage: ["en", "hi"],
+            mainEntity: {
+              "@type": "Organization",
+              name: "Biodata Maker",
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+91-XXXXXXXXXX",
+                contactType: "customer service",
+                email: "support@your-domain.com",
+                areaServed: "IN",
+                availableLanguage: ["en", "hi"],
+              },
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "IN",
+                addressLocality: "Your City",
+                addressRegion: "Your State",
+              },
             },
-            address: {
-              "@type": "PostalAddress",
-              addressCountry: "IN",
-              addressLocality: "Your City",
-              addressRegion: "Your State",
-            },
-          },
-        }}
-      />
+          }}
+        />
+      )}
       <div className="contact-us">
         <section className="contact">
           <div className="contact-background">
@@ -153,7 +152,6 @@ const ContactUs = () => {
                         value={formData.name}
                         onChange={handleNameChange}
                         onKeyPress={(e) => {
-                          // Prevent non-alphabetic keys (except space and control keys)
                           if (!/[A-Za-z\s]/.test(e.key) && e.key.length === 1) {
                             e.preventDefault();
                           }
@@ -276,8 +274,6 @@ const ContactUs = () => {
 
       {showError && (
         <ModalError
-          title="Error!"
-          message="There was an error submitting the form. Please try again."
           onClose={() => setShowError(false)}
         />
       )}

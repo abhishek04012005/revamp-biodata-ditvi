@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "./GetNow.css";
 import { UserDetailsStorage } from "../../supabase/UserDetails";
 import Loader from "../Loader/Loader";
+import ModalError from "../ModalBox/ModalError/ModalError";
 
 const GetNow = ({ isOpen, onClose, modelDetails }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -58,6 +60,7 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
         },
       });
     } catch (error) {
+      setError(true);
       console.error("Error submitting form:", error);
     } finally {
       setIsLoading(false);
@@ -167,6 +170,11 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
           </button>
         </form>
       </div>
+      {error && (
+        <ModalError
+          onClose={() => setError(false)}
+        />
+      )}
       {isLoading && <Loader />}
     </div>
   );

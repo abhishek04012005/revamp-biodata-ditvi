@@ -14,8 +14,8 @@ export const BIODATA_THEMES = {
       },
       DATA: {
         COLOR: "#9d0d00ff",
-        BACKGROUND_COLOR: "#e7dcc800",
-        ALTERNATE_BACKGROUND_COLOR: "#e7dcc8ff",
+        BACKGROUND_COLOR: "#e7dcc8",
+        ALTERNATE_BACKGROUND_COLOR: "#efdebf00",
       },
     },
     ICONS: {
@@ -25,44 +25,44 @@ export const BIODATA_THEMES = {
   },
   1112: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#7c3aed",
+      BORDER_COLOR: "#af1e23ff",
     },
     HEADINGS: {
-      COLOR: "#5b21b6",
+      COLOR: "#af1e23ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#8b5cf6",
+        BACKGROUND_COLOR: "#af1e23ff",
       },
       DATA: {
-        COLOR: "#1f2937",
-        BACKGROUND_COLOR: "#ffffff",
-        ALTERNATE_BACKGROUND_COLOR: "#f5f3ff",
+        COLOR: "#af1e23ff",
+        BACKGROUND_COLOR: "#ffffff00",
+        ALTERNATE_BACKGROUND_COLOR: "#f5dc99ff",
       },
     },
     ICONS: {
-      COLOR: "#7c3aed",
+      COLOR: "#af1e23ff",
       FONT_SIZE: "24px",
     },
   },
   1113: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#ffffffcd", // Strong but not harsh red
+      BORDER_COLOR: "#ffffff", // Strong but not harsh red
     },
     HEADINGS: {
-      COLOR: "#ffffffcd", // Deeper red for better readability
+      COLOR: "#ffffff", // Deeper red for better readability
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#550000ff", // White text for contrast
-        BACKGROUND_COLOR: "#ffffffcd", // Rich red background
+        BACKGROUND_COLOR: "#D9A3A3", // Rich red background
       },
       DATA: {
         COLOR: "#ffffff", // Dark gray for text
-        BACKGROUND_COLOR: "#6d0e043f", // White background
+        BACKGROUND_COLOR: "#6d0e0400", // White background
         ALTERNATE_BACKGROUND_COLOR: "#ffffff00", // Light red for alternating rows
       },
     },
@@ -73,121 +73,121 @@ export const BIODATA_THEMES = {
   },
   1114: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#0d9488",
+      BORDER_COLOR: "#7e5500ff",
     },
     HEADINGS: {
-      COLOR: "#0f766e",
+      COLOR: "#7e5500ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#14b8a6",
+        BACKGROUND_COLOR: "#e09700ff",
       },
       DATA: {
-        COLOR: "#1f2937",
-        BACKGROUND_COLOR: "#ffffff",
-        ALTERNATE_BACKGROUND_COLOR: "#f0fdfa",
+        COLOR: "#7e5500ff",
+        BACKGROUND_COLOR: "#ffffff00",
+        ALTERNATE_BACKGROUND_COLOR: "#fedfd1ff",
       },
     },
     ICONS: {
-      COLOR: "#0d9488",
+      COLOR: "#7e5500ff",
       FONT_SIZE: "24px",
     },
   },
   1115: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#c2410c",
+      BORDER_COLOR: "#7e5500ff",
     },
     HEADINGS: {
-      COLOR: "#9a3412",
+      COLOR: "#7e5500ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#f77e6bff",
+        BACKGROUND_COLOR: "#daa23aff",
       },
       DATA: {
-        COLOR: "#9a3412",
-        BACKGROUND_COLOR: "#ffffff",
-        ALTERNATE_BACKGROUND_COLOR: "#fff7ed",
+        COLOR: "#7e5500ff",
+        BACKGROUND_COLOR: "#ffffff00",
+        ALTERNATE_BACKGROUND_COLOR: "#faf0c8ff",
       },
     },
     ICONS: {
-      COLOR: "#c2410c",
+      COLOR: "#7e5500ff",
       FONT_SIZE: "24px",
     },
   },
   1116: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#4338ca",
+      BORDER_COLOR: "#ed2165ff",
     },
     HEADINGS: {
-      COLOR: "#3730a3",
+      COLOR: "#ed2165ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#6366f1",
+        BACKGROUND_COLOR: "#f36192ff",
       },
       DATA: {
-        COLOR: "#1f2937",
-        BACKGROUND_COLOR: "#ffffff",
-        ALTERNATE_BACKGROUND_COLOR: "#eef2ff",
+        COLOR: "#ed2165ff",
+        BACKGROUND_COLOR: "#f9b8ceff",
+        ALTERNATE_BACKGROUND_COLOR: "#ffffff00",
       },
     },
     ICONS: {
-      COLOR: "#4338ca",
+      COLOR: "#ed2165ff",
       FONT_SIZE: "24px",
     },
   },
   1117: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#7e22ce",
+      BORDER_COLOR: "#7e5500ff",
     },
     HEADINGS: {
-      COLOR: "#6b21a8",
+      COLOR: "#7e5500ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
         COLOR: "#ffffff",
-        BACKGROUND_COLOR: "#a855f7",
+        BACKGROUND_COLOR: "#e0b69fff",
       },
       DATA: {
-        COLOR: "#1f2937",
-        BACKGROUND_COLOR: "#ffffff",
-        ALTERNATE_BACKGROUND_COLOR: "#faf5ff",
+        COLOR: "#7e5500ff",
+        BACKGROUND_COLOR: "#fedccfff",
+        ALTERNATE_BACKGROUND_COLOR: "#fedccf00",
       },
     },
     ICONS: {
-      COLOR: "#7e22ce",
+      COLOR: "#7e5500ff",
       FONT_SIZE: "24px",
     },
   },
   1118: {
     PHOTO_FRAME: {
-      BORDER_COLOR: "#be185d",
+      BORDER_COLOR: "#9d0d00ff",
     },
     HEADINGS: {
-      COLOR: "#9d174d",
+      COLOR: "#9d0d00ff",
       FONT_SIZE: "24px",
     },
     TABLE: {
       HEADER: {
-        COLOR: "#fce300ff",
+        COLOR: "#ffffff",
         BACKGROUND_COLOR: "#bd3000ff",
       },
       DATA: {
-        COLOR: "#9d174d",
-        BACKGROUND_COLOR: "#fce300ff00",
-        ALTERNATE_BACKGROUND_COLOR: "#ff8905ff",
+        COLOR: "#9d0d00ff",
+        BACKGROUND_COLOR: "#ff9703ff",
+        ALTERNATE_BACKGROUND_COLOR: "#ff970300",
       },
     },
     ICONS: {
-      COLOR: "#be185d",
+      COLOR: "#9d0d00ff",
       FONT_SIZE: "24px",
     },
   },

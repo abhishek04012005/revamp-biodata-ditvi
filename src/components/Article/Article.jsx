@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Background from "../../structure/Background/Background";
-import Container from '../../structure/Container/Container';
+import Container from "../../structure/Container/Container";
 import HeaderSection from "../../structure/HeaderSection/HeaderSection";
-import { 
-  Person, 
-  AccessTime, 
-  ThumbUp, 
-  Share, 
+import {
+  Person,
+  AccessTime,
+  ThumbUp,
+  Share,
   CalendarToday,
   Bookmark,
-  BookmarkBorder 
-} from '@mui/icons-material';
+  BookmarkBorder,
+} from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
-import './Article.css';
-import SEO from '../SEO/SEO';
-import articles from '../../json/article';
+import "./Article.css";
+import SEO from "../SEO/SEO";
+import articles from "../../json/article";
+import ModalError from "../../structure/ModalBox/ModalError/ModalError";
 
 const Article = () => {
   const { slug } = useParams();
@@ -26,23 +27,31 @@ const Article = () => {
   const [hasLiked, setHasLiked] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [error, setError] = useState(false);
   const baseUrl = window.location.origin;
 
   const createSlug = (title) => {
-    return title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+    return title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
   };
 
   useEffect(() => {
-    const currentArticle = articles.find(a => createSlug(a.title) === slug);
+    const currentArticle = articles.find((a) => createSlug(a.title) === slug);
     if (currentArticle) {
       setArticle(currentArticle);
       setRelatedArticles(
         articles
-          .filter(a => a.category === currentArticle.category && a.id !== currentArticle.id)
+          .filter(
+            (a) =>
+              a.category === currentArticle.category &&
+              a.id !== currentArticle.id
+          )
           .slice(0, 3)
       );
     } else {
-      navigate('/articles');
+      navigate("/articles");
     }
   }, [slug, navigate]);
 
@@ -50,7 +59,7 @@ const Article = () => {
     if (!hasLiked && article) {
       setArticle({
         ...article,
-        likes: (article.likes || 0) + 1
+        likes: (article.likes || 0) + 1,
       });
       setHasLiked(true);
     }
@@ -71,6 +80,7 @@ const Article = () => {
           url: url,
         });
       } catch (error) {
+        setError(true);
         console.log("Error sharing:", error);
       }
     } else {
@@ -94,33 +104,35 @@ const Article = () => {
   const seoData = {
     title: article.meta?.title || `${article.title} | Biodata Maker Articles`,
     description: article.meta?.description || article.excerpt,
-    keywords: article.meta?.keywords || `${article.category}, ${article.tags.join(', ')}`,
+    keywords:
+      article.meta?.keywords ||
+      `${article.category}, ${article.tags.join(", ")}`,
     ogImage: article.meta?.ogImage || article.image,
     canonicalUrl: `${baseUrl}/articles/${slug}`,
     schema: {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": article.title,
-      "description": article.excerpt,
-      "image": article.image,
-      "author": {
+      headline: article.title,
+      description: article.excerpt,
+      image: article.image,
+      author: {
         "@type": "Person",
-        "name": article.author
+        name: article.author,
       },
-      "publisher": {
+      publisher: {
         "@type": "Organization",
-        "name": "Biodata Maker",
-        "logo": {
+        name: "Biodata Maker",
+        logo: {
           "@type": "ImageObject",
-          "url": `${baseUrl}/logo.png`
-        }
+          url: `${baseUrl}/logo.png`,
+        },
       },
-      "datePublished": article.date,
-      "dateModified": article.meta?.lastModified || article.date,
-      "articleBody": article.content.replace(/<[^>]+>/g, ''),
-      "keywords": article.tags.join(', '),
-      "articleSection": article.category
-    }
+      datePublished: article.date,
+      dateModified: article.meta?.lastModified || article.date,
+      articleBody: article.content.replace(/<[^>]+>/g, ""),
+      keywords: article.tags.join(", "),
+      articleSection: article.category,
+    },
   };
 
   return (
@@ -131,7 +143,10 @@ const Article = () => {
           <Container>
             <div className="article-wrapper">
               <div className="article-navigation">
-                <button className="article-back" onClick={() => navigate("/articles")}>
+                <button
+                  className="article-back"
+                  onClick={() => navigate("/articles")}
+                >
                   <span>Back</span>
                 </button>
                 <div className="article-actions">
@@ -143,7 +158,9 @@ const Article = () => {
                     <span>{article?.likes || 0}</span>
                   </button>
                   <button
-                    className={`article-bookmark ${isBookmarked ? "active" : ""}`}
+                    className={`article-bookmark ${
+                      isBookmarked ? "active" : ""
+                    }`}
                     onClick={handleBookmark}
                   >
                     {isBookmarked ? <Bookmark /> : <BookmarkBorder />}
@@ -179,9 +196,9 @@ const Article = () => {
               </div>
 
               <div className="article-content">
-                <div 
+                <div
                   className="article-text"
-                  dangerouslySetInnerHTML={{ __html: article.content }} 
+                  dangerouslySetInnerHTML={{ __html: article.content }}
                 />
 
                 <div className="article-tags">
@@ -205,11 +222,16 @@ const Article = () => {
                         key={relatedArticle.id}
                         className="article-related-card"
                         onClick={() =>
-                          navigate(`/articles/${createSlug(relatedArticle.title)}`)
+                          navigate(
+                            `/articles/${createSlug(relatedArticle.title)}`
+                          )
                         }
                       >
                         <div className="related-image">
-                          <img src={relatedArticle.image} alt={relatedArticle.title} />
+                          <img
+                            src={relatedArticle.image}
+                            alt={relatedArticle.title}
+                          />
                           <div className="related-category">
                             {relatedArticle.category}
                           </div>
@@ -239,6 +261,7 @@ const Article = () => {
           </Container>
         </div>
       </Background>
+      {error && <ModalError onClose={() => setError(false)} />}
     </>
   );
 };
