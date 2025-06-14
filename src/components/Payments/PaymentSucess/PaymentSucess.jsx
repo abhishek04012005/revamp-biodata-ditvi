@@ -24,67 +24,67 @@ const PaymentSuccess = () => {
   const [error, setError] = useState(null);
 
   const seoData = {
-    title: `Payment Failed - Request #${requestNumber} | Ditvi Biodata`,
-    description:
-      "Payment failure notification for your biodata request. Retry payment or contact our support team for immediate assistance with your biodata creation service.",
-    keywords:
-      "payment failed, retry payment, biodata payment failure, Ditvi Biodata payment, payment support",
-    ogImage: "/images/payment-failure-og.jpg",
-    canonicalUrl: `https://ditvi.org/payment-failure/${requestNumber}`,
-    noindex: true,
-    schema: {
-      "@context": "https://schema.org",
-      "@type": "FailAction",
-      actionStatus: "FailedActionStatus",
-      error: {
-        "@type": "Thing",
-        name: "Payment Failure",
-        description: "Payment transaction could not be completed",
-      },
-      object: {
-        "@type": "PayAction",
-        priceCurrency: "INR",
-        identifier: requestNumber,
-      },
-      provider: {
-        "@type": "Organization",
-        name: "Ditvi Biodata",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://ditvi.org/images/logo.png",
-        },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+91-9263767441",
-          contactType: "customer service",
-          email: "support@ditvi.org",
-          availableLanguage: ["English", "Hindi"],
-        },
-      },
-      potentialAction: [
-        {
-          "@type": "PayAction",
-          name: "Retry Payment",
-          url: `https://ditvi.org/payment/${requestNumber}`,
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate: "https://ditvi.org/payment/{request_number}",
-          },
-        },
-        {
-          "@type": "ContactAction",
-          name: "Contact Support",
-          url: "https://ditvi.org/contact",
-          contactType: "Customer Support",
-        },
-      ],
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        name: "Payment Failure Page",
-        isAccessibleForFree: true,
-      },
+  title: `Payment Successful - Request #${requestNumber} | Ditvi Biodata`,
+  description: 
+    "Your payment has been successfully processed. Track your biodata creation request status or contact our support team for any assistance.",
+  keywords: 
+    "payment successful, payment confirmation, biodata payment success, Ditvi Biodata payment, track biodata status",
+  ogImage: "/images/payment-success-og.jpg",
+  canonicalUrl: `https://ditvi.org/payment-success/${requestNumber}`,
+  noindex: true,
+  schema: {
+    "@context": "https://schema.org",
+    "@type": "CompletedPaymentAction",
+    actionStatus: "CompletedActionStatus",
+    result: {
+      "@type": "PaymentStatusType",
+      name: "Payment Success",
+      description: "Payment transaction completed successfully"
     },
-  };
+    object: {
+      "@type": "PayAction",
+      priceCurrency: "INR",
+      identifier: requestNumber
+    },
+    provider: {
+      "@type": "Organization",
+      name: "Ditvi Biodata",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://ditvi.org/images/logo.png"
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+91-9263767441",
+        contactType: "customer service",
+        email: "support@ditvi.org",
+        availableLanguage: ["English", "Hindi"]
+      }
+    },
+    potentialAction: [
+      {
+        "@type": "ViewAction",
+        name: "Track Status",
+        url: `https://ditvi.org/track-status/${requestNumber}`,
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://ditvi.org/track-status/{request_number}"
+        }
+      },
+      {
+        "@type": "ContactAction",
+        name: "Contact Support",
+        url: "https://ditvi.org/contact",
+        contactType: "Customer Support"
+      }
+    ],
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      name: "Payment Success Page",
+      isAccessibleForFree: true
+    }
+  }
+};
 
   useEffect(() => {
     fetchPaymentDetails();
