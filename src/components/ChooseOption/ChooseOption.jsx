@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ChooseOption.css";
-import { WhatsApp, Upload, Create, ArrowForward } from "@mui/icons-material";
+import { WhatsApp, Upload, Create } from "@mui/icons-material";
 import Container from "../../structure/Container/Container";
 import { BiodataRequestStorage } from "../../supabase/BiodataRequest";
 import { getWhatsappMessageByStatus } from "../../messages/whatsapp/status";
 import Loader from "../../structure/Loader/Loader";
 import SEO from "../SEO/SEO";
+import chooseOptionImage from '../../assets/chooseoption/1.png'
 
 const OptionCard = ({ icon, title, description, onClick, primary }) => (
   <div className={`option-card ${primary ? "primary" : ""}`} onClick={onClick}>
@@ -102,16 +103,18 @@ const ChooseOption = () => {
       setIsLoading(false);
     }
 
-const messageInfo = {
-    name: userDetails?.name || "",
-    requestNumber: requestNumber
-  };
+    const messageInfo = {
+      name: userDetails?.name || "",
+      requestNumber: requestNumber,
+    };
 
-  const messages = getWhatsappMessageByStatus(0, messageInfo);
-  const requestConfirmationMessage = messages[0]?.message || "";
-  
-  const whatsappUrl = `https://wa.me/919263767441?text=${encodeURIComponent(requestConfirmationMessage)}`;
-  window.open(whatsappUrl, "_blank");
+    const messages = getWhatsappMessageByStatus(0, messageInfo);
+    const requestConfirmationMessage = messages[0]?.message || "";
+
+    const whatsappUrl = `https://wa.me/919263767441?text=${encodeURIComponent(
+      requestConfirmationMessage
+    )}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   const handleUploadBiodata = () => {
@@ -197,21 +200,28 @@ const messageInfo = {
           <div className="choose-hero">
             <div className="hero-left">
               <img
-                src="https://www.georgiaaquarium.org/wp-content/uploads/2018/08/common-bottlenose-dolphin.jpg"
+                src={chooseOptionImage}
                 alt="Biodata Creation"
                 className="hero-image"
               />
             </div>
             <div className="hero-right">
-              <h1 className="hero-title">Create Your Perfect Biodata</h1>
+              {/* <h1 className="hero-title">Create Your Perfect Biodata</h1> */}
               <p className="hero-description">
-                Your journey to finding the perfect match begins with a
-                well-crafted biodata. Let us help you create a biodata that
-                truly represents you and your values.
+                Craft a compelling biodata that showcases your unique qualities
+                and aspirations. Our expert team ensures your biodata stands
+                out, making your search for the perfect life partner more
+                meaningful and successful. With years of experience in creating
+                professional biodatas, we understand what matters most in
+                matrimonial profiles. Our attention to detail, cultural
+                sensitivity, and modern design approach help present your best
+                self to potential matches. Whether you're a professional,
+                student, or entrepreneur, we tailor your biodata to highlight
+                your strengths and values.
               </p>
               <div className="hero-stats">
                 <div className="stat-item">
-                  <span className="stat-number">5000+</span>
+                  <span className="stat-number">500+</span>
                   <span className="stat-label">Happy Customers</span>
                 </div>
                 <div className="stat-item">
@@ -219,10 +229,6 @@ const messageInfo = {
                   <span className="stat-label">Customer Rating</span>
                 </div>
               </div>
-              <button className="hero-cta" onClick={() => navigate("/pricing")}>
-                Get Started Today
-                <ArrowForward />
-              </button>
             </div>
           </div>
         </Container>

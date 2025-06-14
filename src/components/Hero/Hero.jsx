@@ -4,7 +4,9 @@ import Container from '../../structure/Container/Container'
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Biodata1111 from '../../assets/biodata/biodata-1111.png'
+import Carousel1 from '../../assets/hero/carousel1.png'
+import Carousel2 from '../../assets/hero/carousel2.png'
+import Carousel3 from '../../assets/hero/carousel3.png'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom';
 
@@ -113,13 +115,13 @@ const Hero = () => {
                             <div className="image-wrapper">
                                 <Slider {...settings} className="hero-carousel">
                                     <div className="carousel-slide">
-                                        <img src={Biodata1111} alt="Biodata Template 1" />
+                                        <img src={Carousel1} alt="Biodata Template 1" />
                                     </div>
                                     <div className="carousel-slide">
-                                        <img src="https://i.pinimg.com/474x/26/d3/63/26d3632f120fca324a6ef3139b580897.jpg" alt="Biodata Template 2" />
+                                        <img src={Carousel2} alt='carousel'/>
                                     </div>
                                     <div className="carousel-slide">
-                                        <img src="https://images.unsplash.com/photo-1570481662006-a3a1374699e8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVsZmlufGVufDB8fDB8fHww" alt="Biodata Template 3" />
+                                        <img src={Carousel3} alt="Biodata Template 3" />
                                     </div>
                                 </Slider>
                                 <div className="floating-card card-1">

@@ -9,7 +9,7 @@ export const getRazorpayOptions = ({
     amount: Math.round(paymentRequest.amount * 100), // amount in paisa
     currency: "INR",
     name: "Ditvi Biodata",
-    description: `Payment for Test Request #${requestNumber}`,
+    description: `Payment for Request #${requestNumber}`,
     handler: async function (response) {
       await handlePaymentSuccess(response, paymentRequest.id);
     },
