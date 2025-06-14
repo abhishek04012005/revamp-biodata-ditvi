@@ -113,7 +113,7 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true, showBut
     pauseOnHover: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    centerMode: false, // Changed to false for better alignment
+    centerMode: false, 
     responsive: [
       {
         breakpoint: 1440,
