@@ -99,3 +99,4 @@ ALTER SEQUENCE contact_us_number_seq RESTART WITH 111;
 
 -- DROP TABLE public.biodata_request ;
 -- DROP TABLE public.production_request ;
+-- DROP TABLE public.payment_request ;
