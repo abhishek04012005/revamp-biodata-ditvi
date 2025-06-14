@@ -9,6 +9,10 @@ create table public.admin_login (
   constraint admin_login_pkey primary key (id)
 ) TABLESPACE pg_default;
 
+-- Insert default admin user
+insert into public.admin_login (id, username, password, name, active, created_at)
+values (gen_random_uuid(), 'admin', 'Admin@3112', 'Super Admin', true, now());
+
 -- User Details 
 create table public.user_details (
   id uuid not null default gen_random_uuid (),
@@ -102,3 +106,38 @@ create table public.contact_us (
   created_at timestamp with time zone null default now(),
   constraint contact_us_pkey primary key (id)
 ) TABLESPACE pg_default;
+
+
+-- Add foreign key constraints
+ALTER TABLE public.biodata_request
+ADD CONSTRAINT fk_biodata_request_user_details
+FOREIGN KEY (request_number) 
+REFERENCES public.user_details(request_number);
+
+ALTER TABLE public.production_request
+ADD CONSTRAINT fk_production_request_user_details
+FOREIGN KEY (request_number) 
+REFERENCES public.user_details(request_number);
+
+ALTER TABLE public.payment_request
+ADD CONSTRAINT fk_payment_request_user_details
+FOREIGN KEY (request_number) 
+REFERENCES public.user_details(request_number);
+
+ALTER TABLE public.user_feedback
+ADD CONSTRAINT fk_user_feedback_user_details
+FOREIGN KEY (request_number) 
+REFERENCES public.user_details(request_number);
+
+-- Add indexes to improve foreign key performance
+CREATE INDEX idx_biodata_request_number 
+ON public.biodata_request(request_number);
+
+CREATE INDEX idx_production_request_number 
+ON public.production_request(request_number);
+
+CREATE INDEX idx_payment_request_number 
+ON public.payment_request(request_number);
+
+CREATE INDEX idx_user_feedback_request_number 
+ON public.user_feedback(request_number);

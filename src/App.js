@@ -111,7 +111,7 @@ function App() {
                       <Route path="/" element={<Main />} />
                       <Route path="biodata" element={<AllBiodata />} />
                       <Route
-                        path="biodata/:modelNumber"
+                        path="biodata/:modelName"
                         element={<BiodataDetail />}
                       />
                       <Route path="/articles" element={<ArticleBox />} />

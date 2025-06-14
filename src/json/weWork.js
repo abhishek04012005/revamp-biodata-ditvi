@@ -3,9 +3,9 @@ const weWork = [
     number: 1,
     title: "Select & Submit",
     steps: [
-      "Select a design which you like, click on get now button.",
-      "Fill your name, WhatsApp number and submit it.",
-      "You will receive a link from us to share your biodata details on your WhatsApp.",
+      "Select a design which you like, click on 'Get Now' button.",
+      "Fill your Name, WhatsApp Number and submit it.",
+      "Choose your preferred method: Share via WhatsApp, Upload Existing Biodata, or Create new Biodata.",
     ],
     icon: "🎨",
   },
@@ -13,8 +13,8 @@ const weWork = [
     number: 2,
     title: "Review & Approve",
     steps: [
-      "Fill your details and submit it to us.",
       "You will receive customized traditional biodata with watermark.",
+      "Review the biodata carefully, If you want to make any changes, reply with your feedback.",
       "Ensure you are satisfied with biodata.",
     ],
     icon: "✨",
