@@ -46,7 +46,7 @@ function App() {
     <HelmetProvider>
       <div className="App">
         <AdminProvider>
-          <Router basename="/revamp-biodata-ditvi">
+          <Router basename="/">
             <ScrollToTop />
             <Routes>
               {/* Admin Routes */}
