@@ -86,7 +86,7 @@ const WhatsAppMessageByStatus = [
         id: "payment_received",
         title: "Ditvi Biodata - Payment Confirmation",
         message: `Dear *$$name$$* 🎉
-                Thank you for your payment of amount ₹ *$$amount$$*  for Request No: *$$requestNumber$$*.
+                Thank you for payment of amount ₹ *$$amount$$*  for Request No: *$$requestNumber$$*.
                 We're processing your final biodata and will share it shortly.
                 Your trust means the world to us! 💖
                 Check your real-time status here: $$statusLink$$

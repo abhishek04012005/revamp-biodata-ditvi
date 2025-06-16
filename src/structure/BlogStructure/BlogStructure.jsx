@@ -84,7 +84,7 @@ const BlogStructure = ({
                 onClick={() => navigate("/blog")}
               >
                 <Article />
-                <span>More Blogs</span>
+                <span>View More</span>
                 <ArrowForward />
               </button>
             </div>

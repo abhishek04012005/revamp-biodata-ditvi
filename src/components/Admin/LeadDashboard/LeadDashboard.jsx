@@ -9,6 +9,7 @@ import {
   Campaign,
   Visibility,
   Close,
+  Description
 } from "@mui/icons-material";
 import "./LeadDashboard.css";
 import { UserDetailsStorage } from "../../../supabase/UserDetails";
@@ -158,6 +159,7 @@ const LeadDashboard = () => {
                 <thead>
                   <tr>
                     <th>Request No.</th>
+                    <th>Biodata Model No.</th>
                     <th>Name</th>
                     <th>Whatsapp Number</th>
                     <th>Date</th>
@@ -168,6 +170,8 @@ const LeadDashboard = () => {
                   {filteredLeads.map((lead) => (
                     <tr key={lead.id}>
                       <td>{lead.request_number}</td>
+                      <td>{lead.model_details?.modelNumber || "N/A"}</td>
+
                       <td>{lead.user_details?.name}</td>
                       <td>{lead.user_details?.mobileNumber}</td>
                       <td>{formatDate(lead.created_at)}</td>
@@ -239,6 +243,16 @@ const LeadDashboard = () => {
 
                 <div className="lead-info-item">
                   <div className="info-label">
+                    <Description className="label-icon" />
+                    <span>Biodata Model No.</span>
+                  </div>
+                  <div className="info-value">
+                    {selectedLead.model_details?.modelNumber || "N/A"}
+                  </div>
+                </div>
+
+                <div className="lead-info-item">
+                  <div className="info-label">
                     <WhatsApp className="label-icon" />
                     <span>WhatsApp Number</span>
                   </div>
@@ -266,7 +280,7 @@ const LeadDashboard = () => {
 
               <div className="modal-actions">
                 <button
-                  className="action-btn whatsapp-btn"
+                  className="lead-action-btn lead-whatsapp-btn"
                   onClick={() =>
                     handleWhatsAppClick(selectedLead.user_details?.mobileNumber)
                   }
@@ -274,7 +288,7 @@ const LeadDashboard = () => {
                   <WhatsApp /> Contact on WhatsApp
                 </button>
                 <button
-                  className="action-btn close-btn"
+                  className="lead-action-btn lead-close-btn"
                   onClick={() => setSelectedLead(null)}
                 >
                   <Close /> Close Details

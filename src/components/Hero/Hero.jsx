@@ -5,8 +5,8 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Carousel1 from '../../assets/hero/carousel1.png'
-import Carousel2 from '../../assets/hero/carousel2.png'
-import Carousel3 from '../../assets/hero/carousel3.png'
+import Carousel2 from '../../assets/biodata/biodata-1116.png'
+import Carousel3 from '../../assets/biodata/biodata-1117.png'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom';
 
@@ -89,7 +89,7 @@ const Hero = () => {
                                 </h2>
                                 <div className="hero-buttons">
                                     <button className="primary-btn" onClick={handleGetStarted}>
-                                        Get Started
+                                        Create Biodata
                                         <span className="btn-shine"></span>
                                     </button>
                                     <button className="secondary-btn" onClick={() => navigate('/whyus')}>

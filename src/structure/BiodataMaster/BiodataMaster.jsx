@@ -298,9 +298,16 @@ const BiodataMaster = () => {
     // Replace page content with biodata content and print styles
     document.body.innerHTML = printStyles + printContent;
 
-    document.title = `Biodata - ${requestNumber} ${
+    const titleText = `Biodata - ${requestNumber} ${
       withWatermark ? "Watermarked" : "Original"
     }`;
+    const titleElement = document.createElement("title");
+    titleElement.textContent = titleText;
+    const existingTitle = document.getElementsByTagName("title")[0];
+    if (existingTitle) {
+      document.head.removeChild(existingTitle);
+    }
+    document.head.appendChild(titleElement);
 
     // Print after a small delay to ensure styles are applied
     setTimeout(() => {

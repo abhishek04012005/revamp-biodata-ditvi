@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: var(--primary-color, #9d0d00);
+  background: var(--secondary-color);
 }
 
 .admin-navbar-background {
