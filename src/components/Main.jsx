@@ -9,6 +9,7 @@ import Testimonial from './Testimonial/Testimonial'
 import SEO from './SEO/SEO'
 import { maintenanceConfig } from '../json/maintenancePopup';
 import MaintenancePopup from './MaintenancePopup/MaintenancePopup';
+import LeadMagnet from '../structure/LeadMagnet/LeadMagnet';
 
 
 const Main = () => {
@@ -69,6 +70,7 @@ const Main = () => {
                     onClose={() => setShowMaintenance(false)}
                 />
             )}
+            <LeadMagnet/>
             <Hero />
             <BiodataHome />
             <WhyUs />

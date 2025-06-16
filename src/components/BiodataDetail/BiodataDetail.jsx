@@ -242,6 +242,9 @@ const BiodataDetail = () => {
       </Background>
       <GetNow
         isOpen={isPopupOpen}
+        heading={`Request Biodata`}
+        paragraph={`Please fill these details.`}
+        buttonTitle={`Save and Continue`}
         onClose={() => {
           setIsPopupOpen(false);
           setSelectedModel("");

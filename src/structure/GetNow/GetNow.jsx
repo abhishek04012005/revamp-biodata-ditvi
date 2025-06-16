@@ -6,7 +6,14 @@ import Loader from "../Loader/Loader";
 import ModalError from "../ModalBox/ModalError/ModalError";
 import { logEvent } from "../../utils/analytics";
 
-const GetNow = ({ isOpen, onClose, modelDetails }) => {
+const GetNow = ({
+  isOpen,
+  onClose,
+  modelDetails,
+  heading = "Request Biodata",
+  paragraph = "Please fill these details.",
+  buttonTitle = "Save and Continue",
+}) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -102,8 +109,8 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
           &times;
         </button>
         <div className="getnow-header">
-          <h2>Request Biodata</h2>
-          <p>Please fill these details.</p>
+          <h2>{heading}</h2>
+          <p>{paragraph}</p>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="getnow-form-group">
@@ -161,7 +168,7 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
           </div>
 
           <button type="submit" className="getnow-submit-button">
-            Save & Continue
+            {buttonTitle}
           </button>
         </form>
       </div>

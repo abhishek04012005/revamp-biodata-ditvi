@@ -106,6 +106,10 @@ const Hero = () => {
                                         <span className="stat-number">100%</span>
                                         <span className="stat-label">Satisfaction</span>
                                     </div>
+                                      <div className="stat-item">
+                                        <span className="stat-number">24 X 7</span>
+                                        <span className="stat-label">Customer Support</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

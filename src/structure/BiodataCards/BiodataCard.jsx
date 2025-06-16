@@ -97,7 +97,13 @@ const BioDataCardStructure = ({
   </>
 );
 
-const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true, showButton }) => {
+const BiodataCard = ({
+  title,
+  biodataDetails,
+  subtitle,
+  isSlider = true,
+  showButton,
+}) => {
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedModel, setSelectedModel] = useState("");
@@ -113,7 +119,7 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true, showBut
     pauseOnHover: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    centerMode: false, 
+    centerMode: false,
     responsive: [
       {
         breakpoint: 1440,
@@ -229,6 +235,9 @@ const BiodataCard = ({ title, biodataDetails, subtitle, isSlider = true, showBut
       </section>
       <GetNow
         isOpen={isPopupOpen}
+        heading={`Request Biodata`}
+        paragraph={`Please fill these details.`}
+        buttonTitle={`Save and Continue`}
         onClose={() => {
           setIsPopupOpen(false);
           setSelectedModel("");

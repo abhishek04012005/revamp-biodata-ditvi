@@ -169,7 +169,7 @@ const LeadDashboard = () => {
                 <tbody>
                   {filteredLeads.map((lead) => (
                     <tr key={lead.id}>
-                      {console.log("Lead", lead)}
+            
 
                       <td>{lead.request_number}</td>
                       <td>{lead.model_details?.modelNumber || "N/A"}</td>
