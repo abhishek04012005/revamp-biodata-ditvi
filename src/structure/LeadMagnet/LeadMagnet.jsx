@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import GetNow from "../../structure/GetNow/GetNow";
-import "./LeadMagnet.css";
+
 
 const LeadMagnet = () => {
   const [showGetNow, setShowGetNow] = useState(true);
