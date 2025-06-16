@@ -9,7 +9,7 @@ import {
   Campaign,
   Visibility,
   Close,
-  Description
+  Description,
 } from "@mui/icons-material";
 import "./LeadDashboard.css";
 import { UserDetailsStorage } from "../../../supabase/UserDetails";
@@ -169,6 +169,8 @@ const LeadDashboard = () => {
                 <tbody>
                   {filteredLeads.map((lead) => (
                     <tr key={lead.id}>
+                      {console.log("Lead", lead)}
+
                       <td>{lead.request_number}</td>
                       <td>{lead.model_details?.modelNumber || "N/A"}</td>
 
@@ -185,7 +187,7 @@ const LeadDashboard = () => {
                         </button>
                         {lead.user_details?.mobileNumber && (
                           <button
-                            className="whatsapp-btn"
+                            className="leads-whatsapp-btn"
                             onClick={() =>
                               handleWhatsAppClick(
                                 lead.user_details?.mobileNumber

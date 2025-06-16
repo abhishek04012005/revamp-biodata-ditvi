@@ -20,6 +20,7 @@ import { getRazorpayOptions } from "./PaymentConfig";
 import Loader from "../../../structure/Loader/Loader";
 import { maskMobileNumber } from "../../../utils/MobileNumberHelper";
 import SEO from "../../SEO/SEO";
+import { logEvent } from "../../../utils/analytics";
 
 const Payment = () => {
   const { requestNumber } = useParams();

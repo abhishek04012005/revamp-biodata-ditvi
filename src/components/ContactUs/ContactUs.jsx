@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import SEO from "../SEO/SEO";
 import ModalSuccess from "../../structure/ModalBox/ModalSuccess/ModalSuccess";
 import ModalError from "../../structure/ModalBox/ModalError/ModalError";
+import { logEvent } from "../../utils/analytics";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,6 @@ const ContactUs = () => {
   const [showThankYou, setShowThankYou] = useState(false);
   const [showError, setShowError] = useState(false);
   const location = useLocation();
-
 
   const handleChange = (e) => {
     if (e.target.name === "number") {
@@ -61,6 +61,7 @@ const ContactUs = () => {
     } finally {
       setLoading(false);
     }
+    logEvent("Contact Form", "Submit", "Contact Form Submission");
   };
 
   const handleNameChange = (e) => {
@@ -272,11 +273,7 @@ const ContactUs = () => {
         />
       )}
 
-      {showError && (
-        <ModalError
-          onClose={() => setShowError(false)}
-        />
-      )}
+      {showError && <ModalError onClose={() => setShowError(false)} />}
 
       {loading && <Loader />}
     </>

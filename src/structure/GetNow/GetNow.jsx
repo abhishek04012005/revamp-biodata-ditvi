@@ -4,6 +4,7 @@ import "./GetNow.css";
 import { UserDetailsStorage } from "../../supabase/UserDetails";
 import Loader from "../Loader/Loader";
 import ModalError from "../ModalBox/ModalError/ModalError";
+import { logEvent } from "../../utils/analytics";
 
 const GetNow = ({ isOpen, onClose, modelDetails }) => {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
     } finally {
       setIsLoading(false);
     }
+    logEvent("Get Now", "Submit", "Get Now");
   };
 
   const handleOverlayClick = (e) => {
@@ -163,11 +165,7 @@ const GetNow = ({ isOpen, onClose, modelDetails }) => {
           </button>
         </form>
       </div>
-      {error && (
-        <ModalError
-          onClose={() => setError(false)}
-        />
-      )}
+      {error && <ModalError onClose={() => setError(false)} />}
       {isLoading && <Loader />}
     </div>
   );

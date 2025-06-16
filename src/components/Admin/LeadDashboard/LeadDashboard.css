@@ -170,7 +170,7 @@
 }
 
 /* WhatsApp Button */
-.whatsapp-btn {
+.leads-whatsapp-btn {
     background: #25D366;
     color: white;
     border: none;
@@ -184,7 +184,7 @@
     justify-content: center;
 }
 
-.whatsapp-btn:hover {
+.leads-whatsapp-btn:hover {
     background: #128C7E;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);

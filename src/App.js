@@ -1,6 +1,8 @@
+import React, { useEffect } from 'react';
 import "./App.css";
 import Main from "./components/Main";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { initGA, logPageView } from "./utils/analytics";
 import AdminRoute from "./components/Admin/AdminContext/AdminRoute";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -42,11 +44,20 @@ import ArticleBox from "./components/ArticleBox/ArticleBox";
 import LeadDashboard from "./components/Admin/LeadDashboard/LeadDashboard";
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    initGA();
+  }, []);
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
+
   return (
     <HelmetProvider>
       <div className="App">
         <AdminProvider>
-          <Router basename="/">
             <ScrollToTop />
             <Routes>
               {/* Admin Routes */}
@@ -166,7 +177,6 @@ function App() {
                 }
               />
             </Routes>
-          </Router>
         </AdminProvider>
       </div>
     </HelmetProvider>
