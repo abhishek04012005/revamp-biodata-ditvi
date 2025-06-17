@@ -83,7 +83,7 @@ const Feedback = () => {
     keywords:
       "biodata feedback, customer review, Ditvi Biodata review, marriage biodata service feedback",
     ogImage: "/images/feedback-og.jpg",
-    canonicalUrl: `https://ditvi.org/feedback/${requestNumber}`,
+    canonicalUrl: `https://biodata.ditvi.org/feedback/${requestNumber}`,
     noindex: true,
     schema: {
       "@context": "https://schema.org",
@@ -96,7 +96,7 @@ const Feedback = () => {
           name: "Ditvi Biodata",
           logo: {
             "@type": "ImageObject",
-            url: "https://ditvi.org/images/logo.png",
+            url: "https://biodata.ditvi.org/images/logo.png",
           },
         },
       },
@@ -130,7 +130,7 @@ const Feedback = () => {
         "@type": "ReviewAction",
         target: {
           "@type": "EntryPoint",
-          urlTemplate: `https://ditvi.org/feedback/${requestNumber}`,
+          urlTemplate: `https://biodata.ditvi.org/feedback/${requestNumber}`,
         },
         actionStatus: showThankYou
           ? "CompletedActionStatus"

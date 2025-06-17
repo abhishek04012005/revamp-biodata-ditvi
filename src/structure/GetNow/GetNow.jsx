@@ -13,6 +13,7 @@ const GetNow = ({
   heading = "Request Biodata",
   paragraph = "Please fill these details.",
   buttonTitle = "Save and Continue",
+  isLeadMagnet = false,
 }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -49,17 +50,22 @@ const GetNow = ({
       // Close the modal
       onClose();
 
-      // Navigate to check-option route
-      navigate("/choose-option", {
-        state: {
-          requestNumber: userDetail.request_number,
-          userDetails: {
-            name: formData.name,
-            mobileNumber: formData.mobileNumber,
+      if (isLeadMagnet) {
+        logEvent("Lead Magnet", "Submit", "Success");
+        navigate("/biodata");
+      } else {
+        logEvent("Get Now", "Submit", "Success");
+        navigate("/choose-option", {
+          state: {
+            requestNumber: userDetail.request_number,
+            userDetails: {
+              name: formData.name,
+              mobileNumber: formData.mobileNumber,
+            },
+            modelDetails: modelDetails,
           },
-          modelDetails: modelDetails,
-        },
-      });
+        });
+      }
     } catch (error) {
       setError(true);
       console.error("Error submitting form:", error);

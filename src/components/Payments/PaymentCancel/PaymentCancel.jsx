@@ -26,7 +26,7 @@ const PaymentCancel = () => {
     keywords:
       "payment cancelled, retry payment, biodata payment, Ditvi Biodata payment, payment support",
     ogImage: "/images/payment-cancel-og.jpg",
-    canonicalUrl: `https://ditvi.org/payment-cancel/${requestNumber}`,
+    canonicalUrl: `https://biodata.ditvi.org/payment-cancel/${requestNumber}`,
     noindex: true,
     schema: {
       "@context": "https://schema.org",

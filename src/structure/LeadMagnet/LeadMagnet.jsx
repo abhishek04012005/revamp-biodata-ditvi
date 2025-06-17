@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import GetNow from "../../structure/GetNow/GetNow";
 
-
 const LeadMagnet = () => {
   const [showGetNow, setShowGetNow] = useState(true);
   const [showLeadMagnet, setShowLeadMagnet] = useState(true);
@@ -15,7 +14,7 @@ const LeadMagnet = () => {
 
   return (
     <>
-      {showLeadMagnet && (
+      { showLeadMagnet && (
         <GetNow
           heading={`Get 8 Free Biodata Sample and Biodata Tips`}
           paragraph={`Fill the details to get on your Whatsapp`}
@@ -26,6 +25,7 @@ const LeadMagnet = () => {
             setShowLeadMagnet(false);
           }}
           modelDetails={sampleBiodataDetails}
+          isLeadMagnet={true}
         />
       )}
     </>
